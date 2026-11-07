@@ -4,81 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#090b16" />
-    <meta name="description" content="Khám phá HaruBot — bot Discord giải trí với âm nhạc, lyrics và trò chơi." />
-    <title>HaruBot Activity</title>
-    <script type="module" crossorigin src="./index-D5G1Y0Y2.js"></script>
-    <link rel="stylesheet" crossorigin href="./index-CGGvLpZl.css">
+    <meta name="description" content="Khám phá HaruBot — nghe nhạc, xem lyrics, câu cá và chơi game cùng bạn bè trên Discord." />
+    <title>HaruBot — Music & Games</title>
+    <script type="module" crossorigin src="./index-BLc2kLr-.js"></script>
+    <link rel="stylesheet" crossorigin href="./index-B6qivjvs.css">
   </head>
   <body>
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
+    <div class="glow glow-one"></div><div class="glow glow-two"></div>
     <main class="shell">
       <header class="topbar">
-        <a class="brand" href="#home" aria-label="HaruBot">
-          <span class="brand-mark">H</span>
-          <span>HARU<span class="brand-light">BOT</span></span>
-        </a>
-        <span class="live-pill"><span class="live-dot"></span><span id="connection-label">DISCORD ACTIVITY</span></span>
+        <a class="brand" href="#home" aria-label="HaruBot"><span class="brand-mark">H</span><span>HARU<span class="brand-light">BOT</span></span></a>
+        <div class="header-tools">
+          <a class="nav-guide" href="#commands" data-i18n="navCommands">Lệnh & cách dùng</a>
+          <div class="language-switch" role="group" aria-label="Choose language">
+            <button class="language-option active" id="lang-vi" type="button" aria-pressed="true">VI</button>
+            <button class="language-option" id="lang-en" type="button" aria-pressed="false">EN</button>
+          </div>
+          <span class="live-pill"><span class="live-dot"></span><span id="connection-label">BẢN XEM TRƯỚC HARUBOT</span></span>
+        </div>
       </header>
 
       <section class="hero" id="home">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> NHẠC HAY · GAME VUI · CÙNG BẠN BÈ</p>
-          <h1>Chơi vui<br /><span>cùng Haru.</span></h1>
-          <p class="intro">Nghe nhạc, xem lyrics đồng bộ, thả cần câu cá và tích lũy RuCoin ngay trong máy chủ Discord của bạn.</p>
+          <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">NHẠC HAY · GAME VUI · CÙNG BẠN BÈ</span></p>
+          <h1><span data-i18n="titleLine1">Chơi vui</span><br /><span class="gradient-text" data-i18n="titleLine2">cùng Haru.</span></h1>
+          <p class="intro" data-i18n="intro">Nghe nhạc, xem lyrics đồng bộ, thả cần câu cá và tích lũy RuCoin ngay trong máy chủ Discord của bạn.</p>
           <div class="actions">
-            <button class="button button-primary" id="invite-button" type="button">
-              <span>Thêm HaruBot</span><span aria-hidden="true">↗</span>
-            </button>
-            <button class="button button-secondary" id="support-button" type="button">
-              <span class="discord-glyph" aria-hidden="true">◉</span><span>Máy chủ cộng đồng</span>
-            </button>
+            <button class="button button-primary" id="invite-button" type="button"><span data-i18n="invite">Thêm HaruBot</span><span aria-hidden="true">↗</span></button>
+            <button class="button button-secondary" id="support-button" type="button"><span class="discord-glyph" aria-hidden="true">◉</span><span data-i18n="community">Máy chủ cộng đồng</span></button>
           </div>
           <p class="hint" id="hint">Mở Activity này trong Discord để bắt đầu khám phá.</p>
+          <div class="quick-tags"><span>♫ <span data-i18n="tagMusic">Âm nhạc</span></span><span>🎣 <span data-i18n="tagFishing">Câu cá</span></span><span>◈ RuCoin</span></div>
         </div>
 
-        <div class="hero-art" aria-label="Minh họa bảng nhạc HaruBot">
+        <div class="hero-art" aria-label="HaruBot music and fishing illustrations">
           <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <div class="music-card">
-            <div class="card-head"><span class="tiny-brand"><span class="tiny-mark">H</span> HARUBOT</span><span class="equalizer"><i></i><i></i><i></i><i></i><i></i></span></div>
-            <div class="showcase-art">
-              <div class="album-art"><div class="vinyl"><span></span></div><div class="album-sparkle">✦</div></div>
-              <div class="mini-aquarium" aria-label="Minh họa các loài cá trong trò câu cá">
+          <div class="showcase-grid">
+            <article class="showcase-card music-showcase">
+              <div class="card-head"><span class="tiny-brand"><span class="tiny-mark">H</span> HARUBOT</span><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+              <div class="album-art" role="img" aria-label="Colorful music player illustration"><div class="vinyl"><span></span></div><div class="album-sparkle">✦</div><span class="album-bars">♫ ♪</span></div>
+              <p class="card-kicker" data-i18n="musicKicker">ÂM NHẠC</p>
+              <h2 data-i18n="musicTitle">Bật bài yêu thích.</h2>
+              <p class="card-caption" data-i18n="musicCaption">Playlist · Điều khiển dễ dàng</p>
+              <div class="mini-progress"><span></span></div>
+            </article>
+            <article class="showcase-card fish-showcase">
+              <div class="card-head"><span class="tiny-brand"><span class="tiny-mark coin-mark">◈</span> RUCOIN</span><span class="tiny-status"><span class="live-dot"></span> GAME</span></div>
+              <div class="mini-aquarium" aria-label="Minh họa cá hoạt hình trong hồ">
                 <span class="bubble bubble-a"></span><span class="bubble bubble-b"></span><span class="bubble bubble-c"></span>
-                <svg class="fish fish-one" viewBox="0 0 120 68" role="img" aria-label="Cá vàng">
-                  <defs><linearGradient id="goldfish" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe08b"/><stop offset="1" stop-color="#f28a6b"/></linearGradient></defs>
-                  <path d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z" fill="url(#goldfish)"/><path d="M28 34 7 16l4 18-4 18 21-18Z" fill="#f28a6b"/><path d="M52 18 64 5l7 16M52 50l12 13 7-16" fill="#ffc36c"/><circle cx="77" cy="29" r="3" fill="#161a2b"/><path d="M48 34q11-9 19 0-8 11-19 0Z" fill="#fff5d2" opacity=".48"/>
-                </svg>
-                <svg class="fish fish-two" viewBox="0 0 120 68" role="img" aria-label="Cá xanh">
-                  <defs><linearGradient id="bluefish" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9af0dc"/><stop offset="1" stop-color="#647fea"/></linearGradient></defs>
-                  <path d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z" fill="url(#bluefish)"/><path d="M28 34 7 16l4 18-4 18 21-18Z" fill="#7696ef"/><path d="M52 18 64 5l7 16M52 50l12 13 7-16" fill="#8fe4db"/><circle cx="77" cy="29" r="3" fill="#161a2b"/><path d="M48 34q11-9 19 0-8 11-19 0Z" fill="#e9ffff" opacity=".48"/>
-                </svg>
-                <svg class="fish fish-three" viewBox="0 0 120 68" role="img" aria-label="Cá tím">
-                  <defs><linearGradient id="purplefish" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2b2e9"/><stop offset="1" stop-color="#9979ff"/></linearGradient></defs>
-                  <path d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z" fill="url(#purplefish)"/><path d="M28 34 7 16l4 18-4 18 21-18Z" fill="#b18aea"/><path d="M52 18 64 5l7 16M52 50l12 13 7-16" fill="#efb8ec"/><circle cx="77" cy="29" r="3" fill="#161a2b"/><path d="M48 34q11-9 19 0-8 11-19 0Z" fill="#fff1ff" opacity=".48"/>
-                </svg>
-                <span class="water-label">CÂU CÁ CÙNG HARU</span>
+                <svg class="fish fish-one" viewBox="0 0 120 68" role="img" aria-label="Gold fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+                <svg class="fish fish-two" viewBox="0 0 120 68" role="img" aria-label="Blue fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+                <svg class="fish fish-three" viewBox="0 0 120 68" role="img" aria-label="Pink fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+                <span class="water-label" data-i18n="waterLabel">HỒ CÁ HARU</span>
               </div>
-            </div>
-            <p class="track-kicker">ÂM NHẠC VÀ TRÒ CHƠI TRONG SERVER</p>
-            <h2>Từ playlist<br />đến hồ cá.</h2>
-            <div class="fake-progress"><span></span></div>
-            <div class="track-meta"><span>Nghe nhạc · Câu cá · RuCoin</span><span>♡</span></div>
+              <p class="card-kicker" data-i18n="fishKicker">CÂU CÁ & TÍCH LŨY</p>
+              <h2 data-i18n="fishTitle">Thử vận may nào!</h2>
+              <p class="card-caption" data-i18n="fishCaption">Câu cá · Chơi game · RuCoin</p>
+              <div class="coin-pill"><span>◈</span><span data-i18n="coinLabel">Kiếm RuCoin cùng bạn bè</span></div>
+            </article>
           </div>
-          <div class="floating-note note-one">♫</div><div class="floating-note note-two">✦</div><div class="floating-note note-three">♪</div>
+          <div class="floating-note note-one">♫</div><div class="floating-note note-two">✦</div><div class="floating-note note-three">◈</div>
         </div>
       </section>
 
-      <section class="section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> KHÁM PHÁ HARUBOT</p><h2>Mỗi server, thêm một cuộc vui.</h2><p>Giải trí cùng bạn bè với những tính năng quen thuộc và các trò chơi cộng đồng.</p></section>
-      <section class="features" aria-label="Tính năng HaruBot">
-        <article class="feature-card"><span class="feature-icon icon-music">♫</span><div><h3>Âm nhạc</h3><p>Phát bài yêu thích, quản lý hàng chờ bằng nút bấm.</p></div><span class="card-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon icon-lyrics">≋</span><div><h3>Lyrics đồng bộ</h3><p>Hát theo từng dòng lyrics ngay trong khung chat.</p></div><span class="card-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon icon-play">🎣</span><div><h3>Câu cá</h3><p>Thả cần và khám phá những loài cá trong trò chơi.</p></div><span class="card-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon icon-coin">◈</span><div><h3>RuCoin</h3><p>Chơi game và tích lũy RuCoin cùng cộng đồng.</p></div><span class="card-arrow">↗</span></article>
-        <article class="feature-card"><span class="feature-icon icon-community">✧</span><div><h3>Trò chơi cộng đồng</h3><p>Thêm hoạt động vui vẻ để mọi người cùng tham gia.</p></div><span class="card-arrow">↗</span></article>
+      <section class="guide-section" id="commands">
+        <div class="section-heading guide-heading"><p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="guideEyebrow">BẮT ĐẦU NHANH</span></p><h2 data-i18n="guideTitle">Cách dùng & tất cả lệnh</h2><p data-i18n="guideIntro">Chọn lệnh Discord gợi ý hoặc nhập lệnh có prefix trong kênh chat.</p></div>
+        <div class="how-to-grid">
+          <article class="how-to-card"><span class="step-number">01</span><div><h3 data-i18n="stepOneTitle">Gọi danh sách lệnh</h3><p data-i18n="stepOneText">Gõ /help trong server để mở bảng hướng dẫn tương tác và lọc theo nhóm tính năng.</p></div></article>
+          <article class="how-to-card"><span class="step-number">02</span><div><h3 data-i18n="stepTwoTitle">Chọn một tính năng</h3><p data-i18n="stepTwoText">Ví dụ /play để phát nhạc, /fish để câu cá hoặc /daily để nhận RuCoin hằng ngày.</p></div></article>
+          <article class="how-to-card"><span class="step-number">03</span><div><h3 data-i18n="stepThreeTitle">Đổi ngôn ngữ hoặc prefix</h3><p data-i18n="stepThreeText">Quản trị viên dùng /language để chọn ngôn ngữ và /prefix để đổi prefix dạng chữ.</p></div></article>
+        </div>
+        <div class="command-browser">
+          <div class="command-toolbar"><div><p class="card-kicker" data-i18n="commandEyebrow">DANH SÁCH LỆNH</p><h3 data-i18n="commandTitle">Tìm lệnh HaruBot</h3></div><span class="command-count" id="command-count"></span></div>
+          <div class="command-filters"><label class="search-box"><span aria-hidden="true">⌕</span><input id="command-search" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Tìm tên lệnh hoặc tính năng" /></label><label class="select-wrap"><span class="sr-only" data-i18n="filterLabel">Lọc nhóm lệnh</span><select id="command-category" aria-label="Filter command category"></select></label></div>
+          <div class="command-list" id="command-list" aria-live="polite"></div>
+          <p class="command-note" data-i18n="commandNote">Lệnh Premium, VIP và lệnh chủ bot có giới hạn quyền riêng. Gõ /help trong Discord để xem danh sách trực tiếp của bot.</p>
+        </div>
       </section>
 
-      <footer class="footer"><span>Made for good moments <span class="heart">♥</span></span><span>HaruBot · by haruki_kino</span></footer>
+      <section class="section-heading"><p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="explore">KHÁM PHÁ HARUBOT</span></p><h2 data-i18n="sectionTitle">Mỗi server, thêm một cuộc vui.</h2><p data-i18n="sectionIntro">Giải trí cùng bạn bè với những tính năng quen thuộc và các trò chơi cộng đồng.</p></section>
+      <section class="features" aria-label="HaruBot features">
+        <article class="feature-card"><span class="feature-icon icon-music">♫</span><div><h3 data-i18n="featureMusic">Âm nhạc</h3><p data-i18n="featureMusicText">Phát bài yêu thích, quản lý hàng chờ bằng nút bấm.</p></div><span class="card-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon icon-lyrics">≋</span><div><h3 data-i18n="featureLyrics">Lyrics đồng bộ</h3><p data-i18n="featureLyricsText">Hát theo từng dòng lyrics ngay trong khung chat.</p></div><span class="card-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon icon-play">🎣</span><div><h3 data-i18n="featureFishing">Câu cá</h3><p data-i18n="featureFishingText">Thả cần và khám phá những loài cá trong trò chơi.</p></div><span class="card-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon icon-coin">◈</span><div><h3>RuCoin</h3><p data-i18n="featureCoinText">Chơi game và tích lũy RuCoin cùng cộng đồng.</p></div><span class="card-arrow">↗</span></article>
+        <article class="feature-card"><span class="feature-icon icon-community">✧</span><div><h3 data-i18n="featureGames">Trò chơi cộng đồng</h3><p data-i18n="featureGamesText">Thêm hoạt động vui vẻ để mọi người cùng tham gia.</p></div><span class="card-arrow">↗</span></article>
+      </section>
+      <footer class="footer"><span data-i18n="footerMade">Made for good moments <span class="heart">♥</span></span><span>HaruBot · by haruki_kino</span></footer>
     </main>
   </body>
 </html>
