@@ -15,6 +15,8 @@
       <header class="topbar">
         <a class="brand" href="#home" aria-label="HaruBot"><img class="brand-mark" src="./haru-avatar.webp" alt="" /><span>HARU<span class="brand-light">BOT</span></span></a>
         <div class="header-tools">
+          <a class="nav-guide" href="#dashboard" style="color: #38bdf8; font-weight: 700;">🎛️ Web Dashboard</a>
+          <a class="nav-guide" href="#fishing-demo" style="color: #38bdf8; font-weight: 700;">🎣 Fishing RPG Pro</a>
           <a class="nav-guide" href="#commands" data-i18n="navCommands">Lệnh & cách dùng</a>
           <div class="language-switch" role="group" aria-label="Choose language">
             <button class="language-option active" id="lang-vi" type="button" aria-pressed="true">VI</button>
@@ -67,6 +69,748 @@
         </div>
       </section>
 
+      
+      <!-- ==================== HARUBOT WEB DASHBOARD ==================== -->
+      <section class="guide-section" id="dashboard" style="margin-top: 48px;">
+        <div class="section-heading guide-heading">
+          <p class="eyebrow"><span class="eyebrow-line"></span><span>ĐIỀU KHIỂN TRỰC TUYẾN</span></p>
+          <h2>HaruBot Web Controller</h2>
+          <p>Điều khiển phát nhạc, bộ lọc âm thanh MusicFX và quản lý hàng chờ trực tiếp từ trình duyệt trên mọi thiết bị.</p>
+        </div>
+
+        <div style="background: rgba(14, 18, 34, 0.85); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); backdrop-filter: blur(12px);">
+          <!-- Dashboard Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #38bdf8); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 16px rgba(56,189,248,0.4);">
+                🎧
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 17px; color: #fff; font-weight: 700;">Bảng Điều Khiển Âm Nhạc · Haruki Starlight</h3>
+                <span style="font-size: 13px; color: #94a3b8;"><span style="display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #22c55e;"></span>Trực tuyến · Voice Channel: <strong style="color: #38bdf8;">🔊 ╎Chill Lounge</strong></span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <span style="font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-weight: 600;">HaruBot v2.4 Live</span>
+            </div>
+          </div>
+
+          <!-- Main Controller Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            
+            <!-- Left: Current Player Card -->
+            <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+                  <div id="dash-cover-art" style="width: 78px; height: 78px; border-radius: 14px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(56,189,248,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: hidden;">
+                    <span id="dash-cover-icon" style="transition: transform 0.3s;">🎵</span>
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #38bdf8;"></div>
+                  </div>
+                  <div style="flex: 1; overflow: hidden;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                      <span style="font-size: 10px; font-weight: 800; background: #38bdf8; color: #090b16; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">ĐANG PHÁT</span>
+                      <span id="dash-source-badge" style="font-size: 11px; color: #94a3b8;">YouTube / Spotify</span>
+                    </div>
+                    <h4 id="dash-track-title" style="margin: 0 0 4px 0; font-size: 16px; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Vùng An Toàn - B Ray</h4>
+                    <p id="dash-track-artist" style="margin: 0; font-size: 13px; color: #94a3b8;">Kênh: B Ray Official · Yêu cầu bởi: It's Haru</p>
+                  </div>
+                </div>
+
+                <!-- Progress Bar & Time -->
+                <div style="margin-bottom: 16px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-family: monospace;">
+                    <span id="dash-time-curr">01:28</span>
+                    <div style="display: flex; align-items: center; gap: 4px; color: #38bdf8;">
+                      <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; animation: pulseDot 1s infinite alternate;"></span>
+                      <span id="dash-fx-indicator">Bass Thường (Trầm nhẹ)</span>
+                    </div>
+                    <span id="dash-time-total">04:26</span>
+                  </div>
+                  <div id="dash-progress-track" style="height: 7px; background: rgba(255,255,255,0.1); border-radius: 4px; cursor: pointer; position: relative; overflow: hidden;" onclick="seekAudio(event)">
+                    <div id="dash-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 4px; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- Discord Row 1 Buttons -->
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px;">
+                  <button class="button button-secondary" style="padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;" onclick="sendBotCommand('pause')" title="Tạm dừng / Tiếp tục">
+                    <span id="dash-play-icon">⏸️</span>
+                  </button>
+                  <button class="button button-secondary" style="padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;" onclick="sendBotCommand('skip')" title="Bỏ qua bài (Skip)">
+                    ⏭️
+                  </button>
+                  <button class="button button-secondary" style="padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center; background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #f87171;" onclick="sendBotCommand('stop')" title="Dừng phát">
+                    ⏹️
+                  </button>
+                  <button id="dash-loop-btn" class="button button-secondary" style="padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;" onclick="toggleLoop()" title="Chế độ lặp">
+                    🔁 <span id="dash-loop-text" style="font-size: 11px; margin-left: 3px;">Tắt</span>
+                  </button>
+                  <button id="dash-shuffle-btn" class="button button-secondary" style="padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;" onclick="toggleShuffle()" title="Xáo trộn hàng chờ">
+                    🔀
+                  </button>
+                </div>
+
+                <!-- Discord Row 2 Buttons -->
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                  <button class="button button-secondary" style="padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;" onclick="seekRelative(-15)" title="Tua lại 15 giây">
+                    ⏪ -15s
+                  </button>
+                  <button class="button button-secondary" style="padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;" onclick="seekRelative(15)" title="Tua tới 15 giây">
+                    ⏩ +15s
+                  </button>
+                  <button class="button button-secondary" style="padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;" onclick="openLyricsModal()" title="Xem lời bài hát (Lyrics)">
+                    🎤 Lời
+                  </button>
+                  <button class="button button-secondary" style="padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('fx-section').scrollIntoView({behavior:'smooth'})" title="Bộ lọc MusicFX">
+                    🎛️ FX
+                  </button>
+                  <button class="button button-secondary" style="padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;" onclick="toggleQueueModal()" title="Xem danh sách hàng chờ">
+                    📜 Hàng chờ
+                  </button>
+                </div>
+              </div>
+
+              <!-- Volume Control -->
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);">
+                <span id="dash-vol-icon" style="font-size: 16px;">🔊</span>
+                <input id="dash-vol-slider" type="range" min="0" max="150" value="100" style="flex: 1; accent-color: #38bdf8; cursor: pointer;" oninput="updateVolume(this.value)">
+                <span id="dash-vol-value" style="font-size: 13px; font-weight: 700; color: #e2e8f0; min-width: 46px; text-align: right;">100%</span>
+              </div>
+            </div>
+
+            <!-- Right: Add Song & MusicFX Panel -->
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <!-- Quick Add Song -->
+              <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px;">
+                <label style="display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;">
+                  ➕ Thêm bài hát vào hàng chờ (Queue)
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input id="web-song-input" type="text" placeholder="Dán link YouTube / Spotify hoặc tên bài hát..." style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none;" onkeydown="if(event.key==='Enter')addSongToQueue()">
+                  <button class="button button-primary" style="padding: 10px 18px; font-size: 13px; white-space: nowrap;" onclick="addSongToQueue()">
+                    Phát ngay ♫
+                  </button>
+                </div>
+                <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                  <button class="pill-btn" onclick="quickAddSuggest('Đường Tôi Chở Em Về - buitruonglinh')">Đường Tôi Chở Em Về</button>
+                  <button class="pill-btn" onclick="quickAddSuggest('Chẳng Còn Thời Gian Ấy - Bem')">Chẳng Còn Thời Gian Ấy</button>
+                  <button class="pill-btn" onclick="quickAddSuggest('Nắng Lung Linh - Nguyễn Thương')">Nắng Lung Linh</button>
+                </div>
+              </div>
+
+              <!-- MusicFX 10 Filters -->
+              <div id="fx-section" style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px; flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <label style="font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 0;">
+                    🎛️ 10 Bộ Lọc Âm Thanh MusicFX
+                  </label>
+                  <span id="current-fx-name" style="font-size: 11px; padding: 3px 8px; border-radius: 12px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 600;">Bass Thường</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
+                  <button class="fx-btn active" onclick="setMusicFX('bass_soft', 'Bass Thường (Trầm nhẹ)', this)">🎸 Bass Thường</button>
+                  <button class="fx-btn" onclick="setMusicFX('bass_boost', 'Siêu Bass (Bassboost Căng)', this)">💥 Siêu Bass</button>
+                  <button class="fx-btn" onclick="setMusicFX('nightcore', 'Nightcore (Tốc độ & Tone cao)', this)">⚡ Nightcore</button>
+                  <button class="fx-btn" onclick="setMusicFX('8d', '8D Audio (Âm vòm đảo chiều)', this)">🎧 8D Audio</button>
+                  <button class="fx-btn" onclick="setMusicFX('lofi', 'Lofi Chill (Ấm áp, thư thái)', this)">☕ Lofi Chill</button>
+                  <button class="fx-btn" onclick="setMusicFX('radio', 'Loa Phát Thanh (Cổ điển)', this)">📻 Loa Cổ Điển</button>
+                  <button class="fx-btn" onclick="setMusicFX('anime', 'Anime Cute (Nhẹ nhàng trong sáng)', this)">🌸 Anime Cute</button>
+                  <button class="fx-btn" onclick="setMusicFX('studio', 'Phòng Thu VIP (Crystal Clear)', this)">🎙️ Phòng Thu VIP</button>
+                  <button class="fx-btn" onclick="setMusicFX('surround', 'Âm Vòm 3D Không Gian', this)">🌌 Âm Vòm 3D</button>
+                  <button class="fx-btn" onclick="setMusicFX('none', 'Tắt FX (Âm thanh gốc)', this)">❌ Tắt Toàn Bộ</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== HARUBOT FISHING RPG ULTIMATE ==================== -->
+      <section class="guide-section" id="fishing-demo" style="margin-top: 40px;">
+        <div class="section-heading guide-heading">
+          <p class="eyebrow"><span class="eyebrow-line"></span><span>CHUẨN CƠ CHẾ BOT 100% · 13 ADVANCED MODULES</span></p>
+          <h2>Haruki Fishing RPG Ultimate Simulator</h2>
+          <p>Trải nghiệm toàn diện: 4 Nhóm Loot (Cá, Rương Báu, Nguyên Liệu, Trang Bị), Xưởng Rèn Cường Hóa, Thủy Cung Nuôi Cá Nhận RuCoin Thụ Động, Săn Trùm Boss Duel, Thời Tiết Trăng Máu & Bảng Kỹ Năng Ngư Dân!</p>
+        </div>
+
+        <div style="background: linear-gradient(180deg, rgba(14, 25, 48, 0.95) 0%, rgba(9, 13, 26, 0.98) 100%); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 24px; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); backdrop-filter: blur(12px);">
+          
+          <!-- Top Bar: Level, Title, Weather, RuCoin & Inventory Pill -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="position: relative;">
+                <div style="width: 52px; height: 52px; border-radius: 14px; background: radial-gradient(circle, #38bdf8 0%, #0369a1 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 20px rgba(56,189,248,0.5);">
+                  🎣
+                </div>
+                <span id="player-level-badge" style="position: absolute; bottom: -6px; right: -6px; background: #f59e0b; color: #090b16; font-size: 11px; font-weight: 900; padding: 2px 6px; border-radius: 10px; border: 2px solid #090b16;">Lv.1</span>
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <h3 id="player-title" style="margin: 0; font-size: 18px; color: #fff; font-weight: 700;">Ngư Dân Tập Sự</h3>
+                  <span id="equipped-gear-badge" style="font-size: 11px; background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); padding: 2px 8px; border-radius: 10px;">Chưa mang trang bị</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                  <!-- EXP bar -->
+                  <div style="width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                    <div id="player-exp-bar" style="width: 25%; height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 3px;"></div>
+                  </div>
+                  <span id="player-exp-text" style="font-size: 11px; color: #94a3b8; font-family: monospace;">25/100 EXP</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats & Wallet -->
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <!-- Weather pill (clickable to toggle weather) -->
+              <div id="weather-pill" style="cursor: pointer; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); padding: 6px 12px; border-radius: 16px; font-size: 12px; color: #38bdf8; font-weight: 600;" onclick="cycleWeather()" title="Bấm để đổi thời tiết">
+                <span id="weather-icon">☀️</span> <span id="weather-name">Nắng Ấm (+0%)</span>
+              </div>
+              
+              <!-- RuCoin pill -->
+              <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 7px 14px; border-radius: 18px; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #f59e0b; font-weight: 900; font-size: 15px;">◈</span>
+                <span id="user-rucoin" style="color: #fff; font-weight: 800; font-size: 14px; font-family: monospace;">1,250</span>
+                <span style="color: #f59e0b; font-size: 11px; font-weight: 600;">RuCoin</span>
+              </div>
+
+              <button class="button button-secondary" style="padding: 7px 14px; font-size: 12px;" onclick="openInventoryModal()">
+                🎒 Túi đồ (<span id="fish-count" style="color: #38bdf8; font-weight: 700;">0</span>/50)
+              </button>
+            </div>
+          </div>
+
+          <!-- Feature Navigation Tabs (Hồ Câu, Xưởng Rèn, Thủy Cung, Săn Trùm, Kỹ Năng) -->
+          <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; overflow-x: auto;">
+            <button id="tab-lake-btn" class="nav-tab active" onclick="switchFishingTab('lake')">🎣 Hồ Câu & Săn Bắt</button>
+            <button id="tab-forge-btn" class="nav-tab" onclick="switchFishingTab('forge')">🔨 Xưởng Rèn & Cường Hóa</button>
+            <button id="tab-aquarium-btn" class="nav-tab" onclick="switchFishingTab('aquarium')">🐠 Thủy Cung Sinh RuCoin</button>
+            <button id="tab-boss-btn" class="nav-tab" onclick="switchFishingTab('boss')">⚔️ Đấu Trùm Leviathan</button>
+            <button id="tab-skills-btn" class="nav-tab" onclick="switchFishingTab('skills')">📜 Kỹ Năng & Kỷ Lục</button>
+          </div>
+
+          <!-- TAB 1: LAKE CANVAS & CONTROLS -->
+          <div id="fishing-tab-lake">
+            <!-- Lake View Canvas Screen -->
+            <div id="fishing-lake" style="position: relative; height: 280px; background: radial-gradient(circle at 50% 120%, #1e3a8a 0%, #0c1a36 60%, #060d1d 100%); border-radius: 18px; border: 1px solid rgba(56, 189, 248, 0.2); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: inset 0 0 50px rgba(0,0,0,0.6); transition: background 0.5s ease;">
+              
+              <!-- Dynamic Weather Overlay -->
+              <div id="weather-overlay" style="position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.5s;"></div>
+
+              <!-- Underwater ripples -->
+              <div class="water-ripple ripple-1"></div>
+              <div class="water-ripple ripple-2"></div>
+              
+              <!-- Swimming fish silhouettes -->
+              <div class="lake-fish fish-swim-1">🐟</div>
+              <div class="lake-fish fish-swim-2">🦈</div>
+              <div class="lake-fish fish-swim-3">✨</div>
+
+              <!-- Floating Bobber -->
+              <div id="fishing-bobber" style="display: none; position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                <div id="bobber-icon" style="font-size: 46px; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));">🪝</div>
+                <div style="width: 36px; height: 10px; background: rgba(56,189,248,0.5); border-radius: 50%; margin: -8px auto 0 auto; filter: blur(2px);"></div>
+              </div>
+
+              <!-- Lake Status Text Display -->
+              <div id="lake-status" style="text-align: center; z-index: 5; padding: 0 20px;">
+                <h3 id="lake-main-text" style="color: #f1f5f9; margin: 0 0 6px 0; font-size: 22px; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+                  Mặt hồ đang êm đềm
+                </h3>
+                <p id="lake-sub-text" style="color: #94a3b8; margin: 0; font-size: 14px;">
+                  Chọn Quần đảo, Cần câu và Mồi câu bên dưới, sau đó bấm <strong>Thả Cần Câu</strong>!
+                </p>
+              </div>
+
+              <!-- Big Bite Alert Button (Instant Reel) -->
+              <button id="reel-btn" class="button" style="display: none; position: absolute; z-index: 20; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; font-size: 20px; font-weight: 800; padding: 18px 42px; border-radius: 50px; border: 2px solid #fecaca; box-shadow: 0 0 35px rgba(239,68,68,0.9); animation: pulseBite 0.6s infinite alternate; cursor: pointer;" onclick="onPlayerReel()">
+                ⚡ GIẬT CẦN NGAY! 🎣
+              </button>
+
+              <!-- QTE Tension Reeling Overlay (For Rare/Legendary/Mythic Fish) -->
+              <div id="qte-container" style="display: none; position: absolute; inset: 0; background: rgba(5, 8, 18, 0.92); z-index: 30; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+                <div style="background: rgba(15, 23, 42, 0.9); border: 2px solid #f59e0b; border-radius: 18px; padding: 20px 30px; text-align: center; max-width: 440px; width: 100%; box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);">
+                  <span id="qte-round-badge" style="display: inline-block; font-size: 12px; font-weight: 800; background: #f59e0b; color: #090b16; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;">LƯỢT 1/3: GIẰNG CO CĂNG DÂY</span>
+                  <h3 id="qte-prompt-title" style="color: #fff; margin: 0 0 6px 0; font-size: 18px;">Cá đang vùng vẫy dữ dội!</h3>
+                  <p id="qte-prompt-desc" style="color: #94a3b8; font-size: 13px; margin: 0 0 14px 0;">Quan sát hành động của cá và chọn nút phản xạ chuẩn xác trong thời gian đếm ngược!</p>
+                  
+                  <!-- QTE Timer bar -->
+                  <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 16px;">
+                    <div id="qte-timer-bar" style="width: 100%; height: 100%; background: #ef4444; transition: width 0.05s linear;"></div>
+                  </div>
+
+                  <!-- 3 QTE Actions -->
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <button class="button" style="padding: 10px 4px; font-size: 13px; font-weight: 700; background: #dc2626; color: #fff; border: 1px solid #f87171;" onclick="handleQTEAction('pull')">
+                      💪 Kéo mạnh
+                    </button>
+                    <button class="button" style="padding: 10px 4px; font-size: 13px; font-weight: 700; background: #d97706; color: #fff; border: 1px solid #fcd34d;" onclick="handleQTEAction('hold')">
+                      🪢 Giữ dây
+                    </button>
+                    <button class="button" style="padding: 10px 4px; font-size: 13px; font-weight: 700; background: #0284c7; color: #fff; border: 1px solid #7dd3fc;" onclick="handleQTEAction('loosen')">
+                      🌊 Thả lỏng
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Fishing Setup Controls (Islands, Rods, Baits) -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              
+              <!-- Island Selection -->
+              <div style="background: rgba(9, 11, 22, 0.6); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 14px;">
+                <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">
+                  🏝️ CHỌN QUẦN ĐẢO / VỰC NƯỚC
+                </label>
+                <select id="select-island" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 13px; outline: none;" onchange="updateIslandInfo()">
+                  <option value="starter_island" selected>🏝️ Đảo Khởi Nguyên (Nước ngọt & Biển nông)</option>
+                  <option value="swamp_island">🌿 Đầm Lầy Sương Mù (Cá Trê & Arapaima)</option>
+                  <option value="arctic_island">❄️ Băng Đảo Bắc Cực (Cá Tuyết & Quái Ngư Băng)</option>
+                  <option value="volcanic_island">🌋 Biển Lửa Núi Lửa (Cá Dung Nham & Leviathan)</option>
+                  <option value="abyssal_island">🌊 Vực Thẳm Biển Sâu (Cthulhu & Cự Xà Hư Không)</option>
+                  <option value="astral_island">🌌 Biển Sao Vũ Trụ (Cá Tinh Vân & Thần Ngư Omega)</option>
+                </select>
+              </div>
+
+              <!-- Rod Selection with Forge Star indicator -->
+              <div style="background: rgba(9, 11, 22, 0.6); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label style="font-size: 12px; font-weight: 700; color: #94a3b8; margin: 0;">
+                    🎣 CẦN CÂU TRANG BỊ
+                  </label>
+                  <span id="rod-star-level" style="font-size: 11px; color: #f59e0b; font-weight: 700;">Cường hóa: ⭐+0</span>
+                </div>
+                <select id="select-rod" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 13px; outline: none;" onchange="updateRodDisplay()">
+                  <option value="rod_wood">🪵 Cần Gỗ Tập Sự (Tải max 10kg · Luck +0)</option>
+                  <option value="rod_iron">🎋 Cần Sắt Cường Hóa (Tải max 35kg · Luck +0.1)</option>
+                  <option value="rod_steampunk">⚙️ Cần Steampunk Bánh Răng (Tải max 80kg · Luck +1.2)</option>
+                  <option value="rod_sapphire">💎 Cần Lam Ngọc Ma Pháp (Tải max 200kg · Luck +1.5)</option>
+                  <option value="rod_golden_dragon" selected>🐉 Cần Hoàng Kim Long Tộc (Tải max 600kg · Luck +1.9)</option>
+                  <option value="rod_galaxy">🌌 Cần Tinh Vân Ngân Hà (Tải max 20,000kg · Luck +6.6)</option>
+                  <option value="rod_poseidon">🔱 Cần Thần Kích Poseidon (Tải max 135,000kg · Luck +12.1)</option>
+                </select>
+              </div>
+
+              <!-- Bait Selection -->
+              <div style="background: rgba(9, 11, 22, 0.6); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 14px;">
+                <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">
+                  🪱 MỒI CÂU ĐẶC BIỆT
+                </label>
+                <select id="select-bait" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 13px; outline: none;">
+                  <option value="bait_worm">🪱 Mồi Giun Đất (+5% tốc độ cắn · Luck +0.15)</option>
+                  <option value="bait_shrimp" selected>🦐 Mồi Tôm Tươi (Tăng tỉ lệ cá Rare/Epic)</option>
+                  <option value="bait_jellyfish">🪼 Mồi Sứa Phát Quang (Thu hút cá Vực Sâu Abyssal)</option>
+                  <option value="bait_pepper">🌶️ Mồi Ớt Dung Nham (Thu hút cá Đảo Lửa Volcanic)</option>
+                  <option value="bait_stardust">✨ Mồi Bụi Sao Vũ Trụ (Thu hút cá Biển Sao Astral)</option>
+                </select>
+              </div>
+
+            </div>
+
+            <!-- Main Cast Action Button & Quick Tools -->
+            <div style="text-align: center; display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <button id="cast-btn" class="button button-primary" style="padding: 16px 54px; font-size: 17px; font-weight: 800; letter-spacing: 0.5px; border-radius: 30px; box-shadow: 0 10px 30px rgba(56,189,248,0.4);" onclick="startFishing()">
+                🎣 THẢ CẦN CÂU NGAY
+              </button>
+              <button class="button button-secondary" style="padding: 16px 24px; font-size: 14px; border-radius: 30px;" onclick="openCatalogModal()">
+                📖 Bách Khoa Cá (99 loài)
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 2: BLACKSMITH FORGE WORKSHOP -->
+          <div id="fishing-tab-forge" style="display: none;">
+            <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
+                <div>
+                  <h3 style="margin: 0; color: #fff; font-size: 18px;">🔨 Lò Rèn Cường Hóa Cần Câu (Blacksmith)</h3>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">Cường hóa sao cần câu để gia tăng sức chịu tải Max Weight và tăng vĩnh viễn chỉ số May Mắn (Luck)!</p>
+                </div>
+                <div style="text-align: right;">
+                  <span style="font-size: 12px; color: #94a3b8;">Cấp sao hiện tại</span>
+                  <div id="forge-current-stars" style="color: #f59e0b; font-size: 20px; font-weight: 800;">⭐+0</div>
+                </div>
+              </div>
+
+              <!-- Forge Interactive Display -->
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: center;">
+                <!-- Rod preview -->
+                <div style="background: rgba(255,255,255,0.03); border: 2px dashed rgba(56,189,248,0.3); border-radius: 16px; padding: 24px; text-align: center;">
+                  <div style="font-size: 64px; margin-bottom: 10px;">🎣</div>
+                  <h4 id="forge-rod-name" style="color: #fff; margin: 0 0 8px 0; font-size: 17px;">Cần Hoàng Kim Long Tộc</h4>
+                  <div style="display: flex; justify-content: space-around; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; font-size: 13px;">
+                    <div>
+                      <span style="color: #94a3b8; display: block; font-size: 11px;">SỨC CHỊU TẢI</span>
+                      <strong id="forge-rod-weight" style="color: #38bdf8;">600 kg</strong>
+                    </div>
+                    <div>
+                      <span style="color: #94a3b8; display: block; font-size: 11px;">CHỈ SỐ MAY MẮN</span>
+                      <strong id="forge-rod-luck" style="color: #22c55e;">+1.9 Luck</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Upgrade materials & cost -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px;">
+                  <h4 style="color: #cbd5e1; margin: 0 0 12px 0; font-size: 14px;">YÊU CẦU CƯỜNG HÓA LÊN CẤP TIẾP THEO:</h4>
+                  
+                  <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                      <span style="color: #94a3b8;">◈ Phí RuCoin:</span>
+                      <strong id="forge-cost-rucoin" style="color: #f59e0b;">2,500 RuCoin</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                      <span style="color: #94a3b8;">🪨 Thép Tôi Luyện:</span>
+                      <strong id="forge-mat-steel" style="color: #fff;">0 / 2</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                      <span style="color: #94a3b8;">✨ Bụi Sao Thiên Hà:</span>
+                      <strong id="forge-mat-dust" style="color: #fff;">0 / 1</strong>
+                    </div>
+                  </div>
+
+                  <button id="forge-btn" class="button button-primary" style="width: 100%; padding: 12px; font-size: 14px;" onclick="upgradeRodInForge()">
+                    🔨 CƯỜNG HÓA NGAY (Tỉ lệ 100%)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Available Materials Inventory -->
+              <div style="margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+                <h4 style="color: #94a3b8; font-size: 13px; margin: 0 0 12px 0;">KHO NGUYÊN LIỆU ĐANG CÓ (RƠI KHI CÂU CÁ):</h4>
+                <div id="materials-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: AQUARIUM (IDLE RUCOIN GENERATION) -->
+          <div id="fishing-tab-aquarium" style="display: none;">
+            <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                  <h3 style="margin: 0; color: #fff; font-size: 18px;">🐠 Thủy Cung Nuôi Cá (Aquarium)</h3>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">Thả cá câu được vào bể nuôi! Cá trong bể sẽ tự động sinh RuCoin thụ động mỗi 10 giây!</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); padding: 8px 16px; border-radius: 14px; text-align: right;">
+                    <span style="font-size: 11px; color: #94a3b8; display: block;">TÍCH LŨY THỤ ĐỘNG</span>
+                    <strong id="aquarium-pending-rucoin" style="color: #f59e0b; font-size: 16px; font-family: monospace;">+0 RuCoin</strong>
+                  </div>
+                  <button class="button button-primary" style="padding: 10px 18px; font-size: 13px;" onclick="collectAquariumIncome()">
+                    💰 Thu Hoạch
+                  </button>
+                </div>
+              </div>
+
+              <!-- Aquarium Glass Tank Simulation -->
+              <div id="aquarium-tank" style="position: relative; height: 260px; background: radial-gradient(circle at 50% 120%, #0369a1 0%, #082f49 60%, #031424 100%); border-radius: 18px; border: 2px solid rgba(56,189,248,0.4); overflow: hidden; margin-bottom: 20px; box-shadow: inset 0 0 40px rgba(0,0,0,0.7);">
+                <!-- Rising bubbles -->
+                <div class="aqua-bubble b1"></div>
+                <div class="aqua-bubble b2"></div>
+                <div class="aqua-bubble b3"></div>
+                <div class="aqua-bubble b4"></div>
+                
+                <!-- Tank interior container for swimming user fish -->
+                <div id="aquarium-fishes-container" style="position: absolute; inset: 0;">
+                  <!-- Dynamically rendered swimming fish elements -->
+                </div>
+
+                <div id="aquarium-empty-msg" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; text-align: center; pointer-events: none;">
+                  <span style="font-size: 40px; margin-bottom: 8px;">🫧</span>
+                  <p style="margin: 0; font-size: 14px;">Bể thủy cung đang trống!<br>Hãy vào <strong>Túi đồ</strong> bấm <strong>[Thả vào Thủy Cung]</strong> để bắt đầu nhận RuCoin thụ động!</p>
+                </div>
+              </div>
+
+              <!-- Aquarium summary -->
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #94a3b8;">
+                <span>Sức chứa bể: <strong id="aquarium-capacity-text" style="color: #38bdf8;">0 / 12 con</strong></span>
+                <span>Tốc độ sinh lời: <strong id="aquarium-rate-text" style="color: #22c55e;">+0 RuCoin / 10s</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: BOSS DUEL (SĂN THỦY QUÁI LEVIATHAN) -->
+          <div id="fishing-tab-boss" style="display: none;">
+            <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px; text-align: center;">
+              <span style="display: inline-block; font-size: 11px; font-weight: 800; background: #ef4444; color: #fff; padding: 3px 12px; border-radius: 12px; margin-bottom: 10px; text-transform: uppercase;">
+                ĐẠI CHIẾN SĂN TRÙM THỜI GIAN THỰC
+              </span>
+              <h3 style="color: #fff; margin: 0 0 6px 0; font-size: 22px;">Thủy Quái Nham Thạch Leviathan [BOSS]</h3>
+              <p style="color: #94a3b8; font-size: 13px; margin: 0 0 20px 0;">Bấm liên tục nút [⚡ KÉO CẦN TẤN CÔNG] để rút cạn thanh máu HP của Thủy Quái trước khi hết 20 giây!</p>
+
+              <!-- Boss Arena -->
+              <div style="background: radial-gradient(circle at 50% 50%, #450a0a 0%, #1a0404 70%, #090b16 100%); border: 2px solid #ef4444; border-radius: 18px; padding: 30px 20px; margin-bottom: 20px; position: relative; overflow: hidden;">
+                <div id="boss-sprite" style="font-size: 80px; filter: drop-shadow(0 0 25px rgba(239,68,68,0.8)); margin-bottom: 12px; transition: transform 0.1s;">
+                  🌋
+                </div>
+
+                <!-- Boss HP Bar -->
+                <div style="max-width: 480px; margin: 0 auto 12px auto;">
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; color: #fecaca; margin-bottom: 4px; font-weight: 700;">
+                    <span>HP THỦY QUÁI</span>
+                    <span id="boss-hp-text">1,000 / 1,000</span>
+                  </div>
+                  <div style="height: 12px; background: rgba(0,0,0,0.5); border-radius: 6px; overflow: hidden; border: 1px solid rgba(239,68,68,0.4);">
+                    <div id="boss-hp-bar" style="width: 100%; height: 100%; background: linear-gradient(90deg, #ef4444, #f97316); border-radius: 6px; transition: width 0.1s linear;"></div>
+                  </div>
+                </div>
+
+                <!-- Boss Countdown Timer -->
+                <div style="font-size: 14px; color: #f59e0b; font-weight: 700;">
+                  Thời gian còn lại: <span id="boss-timer-text" style="font-size: 18px; font-family: monospace;">20.0s</span>
+                </div>
+              </div>
+
+              <!-- Boss Action Buttons -->
+              <div style="display: flex; justify-content: center; gap: 12px;">
+                <button id="boss-start-btn" class="button button-primary" style="padding: 14px 40px; font-size: 16px; font-weight: 800;" onclick="startBossDuel()">
+                  ⚔️ BẮT ĐẦU SĂN TRÙM
+                </button>
+                <button id="boss-attack-btn" class="button" style="display: none; padding: 14px 40px; font-size: 18px; font-weight: 900; background: #dc2626; color: #fff; border: 2px solid #fecaca; box-shadow: 0 0 25px rgba(220,38,38,0.8); cursor: pointer;" onclick="attackBoss()">
+                  ⚡ KÉO CẦN TẤN CÔNG! (-35 HP)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: SKILLS TREE & TROPHIES -->
+          <div id="fishing-tab-skills" style="display: none;">
+            <div style="background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px;">
+              
+              <!-- Personal Best Record (Trophy) -->
+              <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.05) 100%); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(245,158,11,0.2); display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                    🏆
+                  </div>
+                  <div>
+                    <span style="font-size: 11px; font-weight: 800; color: #f59e0b; text-transform: uppercase;">KỶ LỤC CÁ KHỦNG NHẤT CỦA BẠN</span>
+                    <h4 id="trophy-fish-name" style="margin: 2px 0 0 0; color: #fff; font-size: 17px;">Chưa có kỷ lục nào</h4>
+                    <p id="trophy-fish-stats" style="margin: 0; font-size: 12px; color: #94a3b8;">Hãy thả cần để lập kỷ lục đầu tiên!</p>
+                  </div>
+                </div>
+                <div id="trophy-serial-badge" style="display: none; background: rgba(0,0,0,0.4); border: 1px solid #f59e0b; padding: 4px 12px; border-radius: 12px; font-family: monospace; font-size: 13px; color: #f59e0b; font-weight: 700;">
+                  SERIAL #0001
+                </div>
+              </div>
+
+              <!-- Skills Tree -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">🌲 Cây Kỹ Năng Ngư Dân (Skills Tree)</h4>
+                <span style="font-size: 13px; color: #94a3b8;">Điểm kỹ năng khả dụng: <strong id="skill-points-text" style="color: #38bdf8;">0 điểm</strong></span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+                <!-- Skill 1 -->
+                <div class="skill-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="color: #fff; font-size: 14px;">🎯 Mắt Đại Dương</strong>
+                    <span id="skill-lvl-1" style="font-size: 11px; color: #38bdf8; font-weight: 700;">Lv.0 / 3</span>
+                  </div>
+                  <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">Hiển thị trước bóng cá và tỉ lệ cắn câu dưới mặt nước.</p>
+                  <button class="button button-secondary" style="width: 100%; padding: 6px; font-size: 12px;" onclick="upgradeSkill(1)">Nâng cấp (1 ĐTB)</button>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="skill-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="color: #fff; font-size: 14px;">⚡ Kéo Thần Tốc</strong>
+                    <span id="skill-lvl-2" style="font-size: 11px; color: #38bdf8; font-weight: 700;">Lv.0 / 3</span>
+                  </div>
+                  <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">Giảm 25% thời gian chờ cá cắn câu ở mọi quần đảo.</p>
+                  <button class="button button-secondary" style="width: 100%; padding: 6px; font-size: 12px;" onclick="upgradeSkill(2)">Nâng cấp (1 ĐTB)</button>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="color: #fff; font-size: 14px;">🎣 Kéo Cá Đôi (Double Catch)</strong>
+                    <span id="skill-lvl-3" style="font-size: 11px; color: #38bdf8; font-weight: 700;">Lv.0 / 3</span>
+                  </div>
+                  <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">Cơ hội 20% câu được 2 con cá cùng lúc chỉ trong một lần thả cần!</p>
+                  <button class="button button-secondary" style="width: 100%; padding: 6px; font-size: 12px;" onclick="upgradeSkill(3)">Nâng cấp (1 ĐTB)</button>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="color: #fff; font-size: 14px;">🍀 Phước Lành Biển Cả</strong>
+                    <span id="skill-lvl-4" style="font-size: 11px; color: #38bdf8; font-weight: 700;">Lv.0 / 3</span>
+                  </div>
+                  <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px 0;">Tăng vĩnh viễn +1.5 chỉ số May Mắn (Luck) cho mọi loại cần câu.</p>
+                  <button class="button button-secondary" style="width: 100%; padding: 6px; font-size: 12px;" onclick="upgradeSkill(4)">Nâng cấp (1 ĐTB)</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Catch Fish Result Modal -->
+      <div id="catch-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: linear-gradient(145deg, #131b31 0%, #0a0e1c 100%); border: 2px solid #38bdf8; border-radius: 24px; padding: 28px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.8); animation: zoomIn 0.3s ease;">
+          <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;">
+            <span id="modal-rarity-badge" style="font-size: 12px; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase;">MYTHIC</span>
+            <span id="modal-serial-badge" style="display: none; font-size: 11px; font-weight: 800; background: rgba(255,255,255,0.1); color: #f59e0b; border: 1px solid #f59e0b; padding: 3px 8px; border-radius: 14px; font-family: monospace;">#0042</span>
+          </div>
+          <div id="modal-fish-icon-wrap" style="width: 120px; height: 120px; margin: 0 auto 16px auto; border-radius: 22px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 64px; box-shadow: 0 0 30px rgba(56,189,248,0.3);">
+            🐟
+          </div>
+          <h2 id="modal-fish-name" style="color: #fff; margin: 0 0 6px 0; font-size: 22px; font-weight: 700;">Thủy Quái Nham Thạch Leviathan</h2>
+          <div id="modal-mutation-badge" style="display: inline-block; font-size: 11px; font-weight: 700; color: #fbbf24; background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); padding: 2px 10px; border-radius: 12px; margin-bottom: 12px;">
+            ✦ Đột biến: Hoàng Kim (x3.5 Giá)
+          </div>
+          <p id="modal-fish-stats" style="color: #94a3b8; font-size: 14px; margin: 0 0 18px 0;">Chiều dài: 450.2 cm · Trọng lượng: 18,750 kg</p>
+          
+          <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 14px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: left;">
+              <span style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">GIÁ TRỊ QUY ĐỔI</span>
+              <span id="modal-fish-price" style="color: #f59e0b; font-weight: 800; font-size: 19px; font-family: monospace;">+15,300 RuCoin</span>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">KINH NGHIỆM</span>
+              <span id="modal-fish-exp" style="color: #38bdf8; font-weight: 700; font-size: 14px;">+85 EXP</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="button button-secondary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="keepFishInBackpack()">
+              🎒 Vào túi
+            </button>
+            <button class="button button-secondary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="putFishInAquarium()">
+              🐠 Thủy Cung
+            </button>
+            <button class="button button-primary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="sellFishImmediately()">
+              💰 Bán ngay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chest Opening Modal -->
+      <div id="chest-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #f59e0b; border-radius: 24px; padding: 30px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(245,158,11,0.4); animation: zoomIn 0.3s ease;">
+          <span style="display: inline-block; font-size: 11px; font-weight: 800; background: #f59e0b; color: #090b16; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; text-transform: uppercase;">
+            🎁 PHÁT HIỆN RƯƠNG BÁU ĐẠI DƯƠNG
+          </span>
+          <div id="chest-icon-anim" style="font-size: 72px; margin-bottom: 14px; animation: pulseBite 1s infinite alternate;">
+            📦
+          </div>
+          <h2 id="chest-name" style="color: #fff; margin: 0 0 6px 0; font-size: 22px;">Rương Vàng Hải Tặc</h2>
+          <p id="chest-desc" style="color: #94a3b8; font-size: 13px; margin: 0 0 20px 0;">Bấm mở rương để nhận kho báu RuCoin, nguyên liệu rèn và mồi câu hiếm!</p>
+          
+          <div id="chest-rewards-wrap" style="display: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 20px; text-align: left;">
+            <!-- Rewards list dynamically rendered -->
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button id="open-chest-action-btn" class="button button-primary" style="flex: 1; padding: 12px;" onclick="performChestOpen()">
+              ✨ MỞ RƯƠNG NGAY
+            </button>
+            <button id="close-chest-btn" class="button button-secondary" style="display: none; flex: 1; padding: 12px;" onclick="closeChestModal()">
+              Đóng lại
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Drawer Modal (Fish, Materials, Gear Tabs) -->
+      <div id="inv-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #0f1629; border: 1px solid rgba(56,189,248,0.3); border-radius: 22px; padding: 24px; max-width: 540px; width: 100%; max-height: 80vh; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 24px;">🎒</span>
+              <h3 style="margin: 0; color: #fff; font-size: 18px;">Túi Đồ Ngư Dân</h3>
+            </div>
+            <button style="background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;" onclick="closeInventoryModal()">✕</button>
+          </div>
+
+          <!-- Inventory Sub Tabs (Cá, Nguyên Liệu, Trang Bị) -->
+          <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+            <button id="inv-tab-fish-btn" class="pill-btn active" onclick="switchInvTab('fish')">🐟 Túi Cá (<span id="inv-fish-tab-count">0</span>)</button>
+            <button id="inv-tab-mat-btn" class="pill-btn" onclick="switchInvTab('mat')">🧰 Nguyên Liệu (<span id="inv-mat-tab-count">0</span>)</button>
+            <button id="inv-tab-gear-btn" class="pill-btn" onclick="switchInvTab('gear')">⚙️ Trang Bị (<span id="inv-gear-tab-count">0</span>)</button>
+          </div>
+
+          <div id="inv-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; margin-bottom: 16px;">
+            <!-- Render items dynamically -->
+          </div>
+          
+          <div id="inv-footer-bar" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px; color: #94a3b8;">Tổng giá trị cá: <strong id="inv-total-val" style="color: #f59e0b;">0 RuCoin</strong></span>
+            <button class="button button-primary" style="padding: 10px 20px; font-size: 13px;" onclick="sellAllFish()">
+              💰 Bán tất cả lấy RuCoin
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fish Catalog Modal (99 species) -->
+      <div id="catalog-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #0f1629; border: 1px solid rgba(56,189,248,0.3); border-radius: 22px; padding: 24px; max-width: 680px; width: 100%; max-height: 85vh; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+            <div>
+              <h3 style="margin: 0; color: #fff; font-size: 18px;">📖 Bách Khoa Toàn Thư Cá (12 Bậc Rarity)</h3>
+              <p style="margin: 0; font-size: 12px; color: #94a3b8;">Dữ liệu gốc từ 4 server Fishing Game 1, 2, 3, 4 trên Haruki Bot Discord</p>
+            </div>
+            <button style="background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;" onclick="closeCatalogModal()">✕</button>
+          </div>
+          <div id="catalog-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 6px;">
+            <!-- Rarity tiers rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Lyrics Sync Modal -->
+      <div id="lyrics-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #0f1629; border: 1px solid rgba(56,189,248,0.3); border-radius: 22px; padding: 24px; max-width: 480px; width: 100%; max-height: 75vh; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+            <div>
+              <h3 style="margin: 0; color: #fff; font-size: 17px;">🎤 Lời Bài Hát Đồng Bộ (Lyrics)</h3>
+              <p id="lyrics-song-title" style="margin: 0; font-size: 12px; color: #38bdf8;">Vùng An Toàn - B Ray</p>
+            </div>
+            <button style="background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;" onclick="closeLyricsModal()">✕</button>
+          </div>
+          <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; text-align: center; padding: 10px 0; font-size: 15px; color: #cbd5e1; line-height: 1.6;">
+            <p style="color: #64748b;">[Intro: B Ray]</p>
+            <p>Và nếu như em bước ra khỏi vùng an toàn...</p>
+            <p style="color: #38bdf8; font-weight: 700; font-size: 17px; background: rgba(56,189,248,0.1); padding: 8px 12px; border-radius: 10px;">Liệu rằng em có thấy một bầu trời bình yên hơn không?</p>
+            <p>Đừng để những nỗi sợ níu chân em lại,</p>
+            <p>Vì cuộc đời này đâu có mấy lần đôi mươi...</p>
+            <p style="color: #64748b;">[Verse 1]</p>
+            <p>Anh đã thấy em khóc trong những đêm dài,</p>
+            <p>Tự trách bản thân sao không thể làm hài lòng tất cả...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Queue List Modal -->
+      <div id="queue-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #0f1629; border: 1px solid rgba(56,189,248,0.3); border-radius: 22px; padding: 24px; max-width: 500px; width: 100%; max-height: 75vh; display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 22px;">📜</span>
+              <h3 style="margin: 0; color: #fff; font-size: 17px;">Hàng Chờ Bài Hát (Queue)</h3>
+            </div>
+            <button style="background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;" onclick="toggleQueueModal()">✕</button>
+          </div>
+          <div id="queue-list-container" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+            <!-- Render queue list -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Notification -->
+      <div id="web-toast" style="display: none; position: fixed; bottom: 24px; right: 24px; z-index: 1000; background: #0f172a; border: 1px solid #38bdf8; color: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; animation: slideUp 0.3s ease;">
+        <span id="toast-icon">✨</span>
+        <span id="toast-msg">Thông báo</span>
+      </div>
+
       <section class="guide-section" id="commands">
         <div class="section-heading guide-heading"><p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="guideEyebrow">BẮT ĐẦU NHANH</span></p><h2 data-i18n="guideTitle">Cách dùng & tất cả lệnh</h2><p data-i18n="guideIntro">Chọn lệnh Discord gợi ý hoặc nhập lệnh có prefix trong kênh chat.</p></div>
         <div class="how-to-grid">
@@ -92,5 +836,1617 @@
       </section>
       <footer class="footer"><span data-i18n="footerMade">Made for good moments <span class="heart">♥</span></span><span>HaruBot · by haruki_kino</span></footer>
     </main>
+      <style>
+      /* Custom UI Styles for Controller & Fishing RPG Pro */
+      .nav-tab {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #94a3b8;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .nav-tab:hover {
+        background: rgba(56,189,248,0.15);
+        color: #38bdf8;
+      }
+      .nav-tab.active {
+        background: linear-gradient(135deg, rgba(56,189,248,0.25), rgba(129,140,248,0.25));
+        color: #38bdf8;
+        border-color: #38bdf8;
+        font-weight: 700;
+        box-shadow: 0 0 14px rgba(56,189,248,0.3);
+      }
+      .pill-btn {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #94a3b8;
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .pill-btn:hover {
+        background: rgba(56,189,248,0.15);
+        color: #38bdf8;
+        border-color: #38bdf8;
+      }
+      .pill-btn.active {
+        background: #38bdf8;
+        color: #090b16;
+        font-weight: 700;
+      }
+      .skill-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 14px;
+      }
+      .fx-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: #cbd5e1;
+        padding: 8px 10px;
+        font-size: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.2s;
+      }
+      .fx-btn:hover {
+        background: rgba(56,189,248,0.12);
+        color: #38bdf8;
+        border-color: rgba(56,189,248,0.3);
+      }
+      .fx-btn.active {
+        background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(129,140,248,0.2));
+        color: #38bdf8;
+        border-color: #38bdf8;
+        font-weight: 700;
+        box-shadow: 0 0 12px rgba(56,189,248,0.25);
+      }
+      .water-ripple {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(56,189,248,0.15);
+        pointer-events: none;
+      }
+      .ripple-1 {
+        width: 380px;
+        height: 180px;
+        top: 35%;
+        left: 20%;
+        animation: pulseRipple 4s infinite ease-out;
+      }
+      .ripple-2 {
+        width: 500px;
+        height: 240px;
+        top: 25%;
+        left: 30%;
+        animation: pulseRipple 5s infinite 2s ease-out;
+      }
+      @keyframes pulseRipple {
+        0% { transform: scale(0.6); opacity: 0.6; }
+        100% { transform: scale(1.4); opacity: 0; }
+      }
+      .lake-fish {
+        position: absolute;
+        opacity: 0.25;
+        font-size: 28px;
+        pointer-events: none;
+        filter: blur(1px);
+      }
+      .fish-swim-1 { top: 60%; animation: swimAcross 14s infinite linear; }
+      .fish-swim-2 { top: 25%; animation: swimAcrossBack 18s infinite linear; }
+      .fish-swim-3 { top: 75%; animation: swimAcross 22s infinite 5s linear; }
+      @keyframes swimAcross {
+        0% { left: -60px; transform: scaleX(1); }
+        49% { transform: scaleX(1); }
+        50% { left: calc(100% + 60px); transform: scaleX(-1); }
+        99% { transform: scaleX(-1); }
+        100% { left: -60px; transform: scaleX(1); }
+      }
+      @keyframes swimAcrossBack {
+        0% { right: -60px; transform: scaleX(-1); }
+        49% { transform: scaleX(-1); }
+        50% { right: calc(100% + 60px); transform: scaleX(1); }
+        99% { transform: scaleX(1); }
+        100% { right: -60px; transform: scaleX(-1); }
+      }
+      .aqua-bubble {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: riseBubble 4s infinite linear;
+      }
+      .b1 { left: 15%; animation-duration: 3.5s; animation-delay: 0s; }
+      .b2 { left: 45%; animation-duration: 4.8s; animation-delay: 1.2s; }
+      .b3 { left: 70%; animation-duration: 3.2s; animation-delay: 2.1s; }
+      .b4 { left: 88%; animation-duration: 5.2s; animation-delay: 0.6s; }
+      @keyframes riseBubble {
+        0% { bottom: -20px; opacity: 0; transform: translateX(0); }
+        20% { opacity: 0.7; }
+        80% { opacity: 0.7; }
+        100% { bottom: 100%; opacity: 0; transform: translateX(15px); }
+      }
+      @keyframes bobberFloat {
+        0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(0deg); }
+        50% { transform: translate(-50%, -50%) translateY(-10px) rotate(-6deg); }
+      }
+      @keyframes bobberBite {
+        0%, 100% { transform: translate(-50%, -50%) translateY(14px) rotate(15deg); }
+        50% { transform: translate(-50%, -50%) translateY(22px) rotate(-15deg); }
+      }
+      @keyframes pulseBite {
+        0% { transform: scale(1); box-shadow: 0 0 25px rgba(239,68,68,0.7); }
+        100% { transform: scale(1.08); box-shadow: 0 0 50px rgba(239,68,68,1); }
+      }
+      @keyframes pulseDot { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+      @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+
+    <script>
+      // =========================================================================
+      // 1. HARUBOT FISHING RPG SIMULATOR (100% EXACT 13 ADVANCED DISCORD BOT MODULES)
+      // =========================================================================
+
+      // 12 Rarities
+      const RARITIES = {
+        common: { rank: 1, name: "Common", vnName: "Thường", color: "#94a3b8", weight: 6000, multi: 1, exp: 10 },
+        uncommon: { rank: 2, name: "Uncommon", vnName: "Không phổ biến", color: "#22c55e", weight: 2500, multi: 1, exp: 20 },
+        rare: { rank: 3, name: "Rare", vnName: "Hiếm", color: "#38bdf8", weight: 1000, multi: 1, exp: 35 },
+        epic: { rank: 4, name: "Epic", vnName: "Sử Thi", color: "#a855f7", weight: 350, multi: 1, exp: 60 },
+        legendary: { rank: 5, name: "Legendary", vnName: "Huyền Thoại", color: "#f59e0b", weight: 110, multi: 1, exp: 120 },
+        mythic: { rank: 6, name: "Mythic", vnName: "Thần Thoại", color: "#ef4444", weight: 30, multi: 1, exp: 250 },
+        ancient: { rank: 7, name: "Ancient", vnName: "Thái Cổ Lam", color: "#06b6d4", weight: 8, multi: 1, exp: 500 },
+        transcendent: { rank: 8, name: "Transcendent", vnName: "Siêu Việt Tinh Vân", color: "#ec4899", weight: 2, multi: 1, exp: 1000 },
+        eternity: { rank: 9, name: "Eternity", vnName: "Vĩnh Hằng Hoàng Kim", color: "#fbbf24", weight: 0.5, multi: 5, exp: 3000 },
+        infinity: { rank: 10, name: "Infinity", vnName: "Vô Cực Hư Không", color: "#818cf8", weight: 0.1, multi: 25, exp: 8000 },
+        genesis: { rank: 11, name: "Genesis", vnName: "Sáng Thế Khai Thiên", color: "#f43f5e", weight: 0.02, multi: 150, exp: 25000 },
+        omega: { rank: 12, name: "Omega", vnName: "Tối Cao Dị Thường", color: "#e11d48", weight: 0.002, multi: 1000, exp: 100000 }
+      };
+
+      // 11 Mutations
+      const MUTATIONS = [
+        { id: "normal", name: "Hệ Thường", multi: 1, prefix: "" },
+        { id: "albino", name: "Bạch Tạng", multi: 2, prefix: "Bạch Tạng · " },
+        { id: "golden", name: "Hoàng Kim", multi: 3.5, prefix: "Hoàng Kim · " },
+        { id: "cursed", name: "Nguyền Rủa", multi: 5, prefix: "Nguyền Rủa · " },
+        { id: "void", name: "Nhiễm Hư Không", multi: 7, prefix: "Hư Không · " },
+        { id: "diamond", name: "Tinh Thể Kim Cương", multi: 10, prefix: "Kim Cương · " },
+        { id: "glitch", name: "Lỗi Kỹ Thuật Số", multi: 15, prefix: "Glitch Neon · " },
+        { id: "celestial", name: "Thần Quang Cầu Vồng", multi: 25, prefix: "Thần Quang · " }
+      ];
+
+      // 4 Chest Types (Rương Báu)
+      const CHESTS = [
+        { id: "crate", name: "Thùng Gỗ Trôi Dạt", icon: "🪵", minCoins: 200, maxCoins: 800, matChance: 0.4, exp: 25 },
+        { id: "iron", name: "Rương Sắt Khóa Kín", icon: "🔒", minCoins: 1200, maxCoins: 4500, matChance: 0.7, exp: 60 },
+        { id: "gold", name: "Rương Vàng Hải Tặc", icon: "👑", minCoins: 15000, maxCoins: 65000, matChance: 0.95, exp: 200 },
+        { id: "cosmic", name: "Rương Vũ Trụ Tối Thượng", icon: "🌌", minCoins: 350000, maxCoins: 2500000, matChance: 1.0, exp: 1000 }
+      ];
+
+      // Materials Catalog (Nguyên liệu rèn)
+      const MATERIALS_CATALOG = {
+        oak_wood: { id: "oak_wood", name: "Gỗ Thần Cổ Thụ", icon: "🪵", rarity: "common" },
+        hard_steel: { id: "hard_steel", name: "Thép Tôi Luyện", icon: "🪨", rarity: "uncommon" },
+        ice_scale: { id: "ice_scale", name: "Vảy Rồng Băng", icon: "❄️", rarity: "rare" },
+        lava_core: { id: "lava_core", name: "Lõi Núi Lửa", icon: "🔥", rarity: "epic" },
+        stardust: { id: "stardust", name: "Bụi Sao Thiên Hà", icon: "✨", rarity: "legendary" },
+        diamond_shard: { id: "diamond_shard", name: "Mảnh Kim Cương Hư Không", icon: "💎", rarity: "mythic" }
+      };
+
+      // Gears Catalog (Trang bị / Phụ kiện)
+      const GEARS_CATALOG = [
+        { id: "ring_glass", name: "Nhẫn Thủy Tinh May Mắn", icon: "💍", luckBonus: 0.5, weightBonus: 50 },
+        { id: "ring_gold", name: "Nhẫn Hoàng Kim Biển Cả", icon: "👑", luckBonus: 1.8, weightBonus: 300 },
+        { id: "hook_silver", name: "Móc Câu Dạ Quang", icon: "🪝", luckBonus: 1.0, weightBonus: 500 },
+        { id: "line_titan", name: "Dây Cước Titan Cường Lực", icon: "🧵", luckBonus: 0.8, weightBonus: 2500 },
+        { id: "amulet_poseidon", name: "Bùa Hộ Mệnh Poseidon", icon: "🔱", luckBonus: 5.0, weightBonus: 15000 }
+      ];
+
+      // Rod properties
+      const RODS = {
+        rod_wood: { name: "Cần Gỗ Tập Sự", maxWeight: 10, luck: 0, cooldown: 8 },
+        rod_iron: { name: "Cần Sắt Cường Hóa", maxWeight: 35, luck: 0.1, cooldown: 7 },
+        rod_steampunk: { name: "Cần Steampunk Bánh Răng", maxWeight: 80, luck: 1.2, cooldown: 6 },
+        rod_sapphire: { name: "Cần Lam Ngọc Ma Pháp", maxWeight: 200, luck: 1.5, cooldown: 5 },
+        rod_golden_dragon: { name: "Cần Hoàng Kim Long Tộc", maxWeight: 600, luck: 1.9, cooldown: 4.5 },
+        rod_galaxy: { name: "Cần Tinh Vân Ngân Hà", maxWeight: 20000, luck: 6.6, cooldown: 3.8 },
+        rod_poseidon: { name: "Cần Thần Kích Poseidon", maxWeight: 135000, luck: 12.1, cooldown: 3.0 }
+      };
+
+      // Bait properties
+      const BAITS = {
+        bait_worm: { name: "Mồi Giun Đất", luck: 0.15, biteSpeedMulti: 1.15 },
+        bait_shrimp: { name: "Mồi Tôm Tươi", luck: 0.35, biteSpeedMulti: 1.25 },
+        bait_jellyfish: { name: "Mồi Sứa Phát Quang", luck: 0.5, biteSpeedMulti: 1.35 },
+        bait_pepper: { name: "Mồi Ớt Dung Nham", luck: 0.85, biteSpeedMulti: 1.45 },
+        bait_stardust: { name: "Mồi Bụi Sao Vũ Trụ", luck: 1.25, biteSpeedMulti: 1.6 }
+      };
+
+      // 4 Weather Types
+      const WEATHERS = [
+        { id: "sunny", name: "Nắng Ấm", icon: "☀️", desc: "Mặt hồ phẳng lặng (+0% buff)", luckBonus: 0, biteMulti: 1.0, mythicMulti: 1 },
+        { id: "storm", name: "Mưa Bão Biển", icon: "🌧️", desc: "Cá cắn nhanh 35% · Tăng +35% cá Rare/Epic", luckBonus: 1.0, biteMulti: 1.35, mythicMulti: 1.5 },
+        { id: "fog", name: "Sương Mù Huyền Ảo", icon: "🌫️", desc: "Tăng +40% tỉ lệ Đột Biến (Mutations)", luckBonus: 0.5, biteMulti: 1.1, mutationChance: 0.35, mythicMulti: 1.8 },
+        { id: "bloodmoon", name: "Trăng Máu Thần Bí", icon: "🩸", desc: "SIÊU SỰ KIỆN: Tăng x5 tỉ lệ Mythic, Ancient & Omega!", luckBonus: 4.0, biteMulti: 1.5, mythicMulti: 5.0 }
+      ];
+
+      // Fish Catalog Database
+      const FISH_DATABASE = [
+        // COMMON
+        { id: "17_orange_clownfish", name: "Cá Hề Cam", icon: "🐠", rarity: "common", island: "starter_island", minW: 0.2, maxW: 1.5, price: 15, emote: "Orange_clownfish (FG 1)" },
+        { id: "18_blue_tropical_tang", name: "Cá Đuối Xanh", icon: "🐟", rarity: "common", island: "starter_island", minW: 0.5, maxW: 3.0, price: 25, emote: "Blue_tropical_tang (FG 1)" },
+        { id: "21_mud_river_catfish", name: "Cá Trê Đầm Lầy", icon: "🐡", rarity: "common", island: "swamp_island", minW: 50, maxW: 200, price: 36, emote: "Mud_river_catfish (FG 1)" },
+        
+        // UNCOMMON
+        { id: "19_spiky_pufferfish", name: "Cá Nóc Gai", icon: "🐡", rarity: "uncommon", island: "starter_island", minW: 1, maxW: 4, price: 45, emote: "Spiky_pufferfish (FG 1)" },
+        { id: "25_frost_arctic_cod", name: "Cá Tuyết Bắc Cực", icon: "🐟", rarity: "uncommon", island: "arctic_island", minW: 100, maxW: 400, price: 84, emote: "Frost_arctic_cod (FG 2)" },
+        { id: "sprite_pink_coral_seahorse", name: "Cá Ngựa San Hô Hồng", icon: "🦐", rarity: "uncommon", island: "starter_island", minW: 0.4, maxW: 4.2, price: 48, emote: "Pink_coral_seahorse (FG 1)" },
+
+        // RARE
+        { id: "20_emerald_sea_turtle", name: "Rùa Biển Ngọc Bích", icon: "🐢", rarity: "rare", island: "starter_island", minW: 15, maxW: 60, price: 180, emote: "Rmerald_sea_turtle (FG 1)" },
+        { id: "22_high_voltage_electric_eel", name: "Lươn Điện Cao Thế", icon: "⚡", rarity: "rare", island: "swamp_island", minW: 150, maxW: 600, price: 180, emote: "High_voltage_electric_eel (FG 2)" },
+        { id: "29_molten_lava_koi", name: "Cá Koi Dung Nham", icon: "🔥", rarity: "rare", island: "volcanic_island", minW: 550, maxW: 2200, price: 396, emote: "Molten_lava_koi (FG 2)" },
+
+        // EPIC
+        { id: "23_giant_red_tail_arapaima", name: "Cá Hải Tượng Cổ Đại - Arapaima", icon: "🦈", rarity: "epic", island: "swamp_island", minW: 375, maxW: 1500, price: 600, emote: "Giant_red_tail_arapaima (FG 2)" },
+        { id: "26_crystalline_ice_swordfish", name: "Cá Kiếm Tinh Thể Băng", icon: "⚔️", rarity: "epic", island: "arctic_island", minW: 625, maxW: 2500, price: 910, emote: "Crystalline_ice_swordfish (FG 2)" },
+        { id: "30_obsidian_armored_catfish", name: "Cá Trê Thiết Giáp Hắc Diện Thạch", icon: "🛡️", rarity: "epic", island: "volcanic_island", minW: 1250, maxW: 5000, price: 1260, emote: "Obsidian_armored_catfish (FG 2)" },
+
+        // LEGENDARY
+        { id: "31_albino_swamp_alligator", name: "Cá Sấu Bạch Tạng Đầm Lầy", icon: "🐊", rarity: "legendary", island: "swamp_island", minW: 1250, maxW: 5000, price: 1800, emote: "Albino_swamp_alligator (FG 3)" },
+        { id: "32_horned_unicorn_narwhal", name: "Cá Voi Kỳ Lân Narwhal", icon: "🦄", rarity: "legendary", island: "arctic_island", minW: 2000, maxW: 8000, price: 3080, emote: "Horned_unicorn_narwhal (FG 3)" },
+        { id: "33_flaming_phoenix_betta", name: "Cá Phượng Hoàng Lửa", icon: "🦚", rarity: "legendary", island: "volcanic_island", minW: 3000, maxW: 12000, price: 4500, emote: "Flaming_phoenix_betta (FG 3)" },
+
+        // MYTHIC
+        { id: "34_yeti_furred_deep_angler", name: "Quái Ngư Lông Tuyết Yeti", icon: "❄️", rarity: "mythic", island: "arctic_island", minW: 3750, maxW: 15000, price: 7000, emote: "Yeti_furred_deep_angler (FG 3)" },
+        { id: "35_magma_chamber_leviathan", name: "Thủy Quái Nham Thạch Leviathan", icon: "🌋", rarity: "mythic", island: "volcanic_island", minW: 7500, maxW: 30000, price: 15300, emote: "Magma_chamber_leviathan (FG 3)" },
+        { id: "36_eldritch_void_kraken_spawn", name: "Bạch Tuộc Hư Không Cthulhu", icon: "🐙", rarity: "mythic", island: "abyssal_island", minW: 7500, maxW: 30000, price: 15200, emote: "Eldritch_void_kraken_spawn (FG 3)" },
+
+        // ANCIENT
+        { id: "39_nebula_galaxy_whale", name: "Cá Voi Tinh Vân Ngân Hà", icon: "🌌", rarity: "ancient", island: "astral_island", minW: 7500, maxW: 30000, price: 100000, emote: "Nebula_galaxy_whale (FG 4)" },
+        { id: "mini_black_hole_ray", name: "Cá Đuối Vortex Hố Đen Nhỏ", icon: "🌀", rarity: "ancient", island: "astral_island", minW: 3750, maxW: 15000, price: 27892, emote: "Mini_black_hole_vortex_ray (FG 4)" },
+
+        // TRANSCENDENT
+        { id: "40_omniverse_dragon_carp", name: "Long Ngư Vũ Trụ Tối Thượng", icon: "🐉", rarity: "transcendent", island: "astral_island", minW: 12500, maxW: 50000, price: 400000, emote: "Omniverse_dragon_carp (FG 4)" },
+        { id: "abyssal_world_serpent", name: "Cự Xà Nuốt Thế Giới Vực Sâu", icon: "🐍", rarity: "transcendent", island: "abyssal_island", minW: 7500, maxW: 30000, price: 30125, emote: "Abyssal_world_devourer_serpent (FG 4)" },
+
+        // ETERNITY
+        { id: "immortal_vermilion_phoenix", name: "Chu Tước Bất Diệt Ngư", icon: "🔥", rarity: "eternity", island: "volcanic_island", minW: 32000, maxW: 40000, price: 1250000000, emote: "Immortal_vermilion_phoenix_fish (FG 4)" },
+        { id: "eternity_chronos_whale", name: "Cá Voi Thời Gian Chronos", icon: "⏳", rarity: "eternity", island: "astral_island", minW: 28000, maxW: 42000, price: 2500000000, emote: "Eternity_chronos_whale (FG 4)" },
+
+        // INFINITY
+        { id: "apeiron_dimensional_serpent", name: "Mãng Xà Vô Cực Apeiron", icon: "♾️", rarity: "infinity", island: "astral_island", minW: 36000, maxW: 46000, price: 12500000000, emote: "Apeiron_dimensional_serpent (FG 4)" },
+        { id: "infinite_multiverse_jellyfish", name: "Sứa Đa Vũ Trụ Vô Tận", icon: "🪼", rarity: "infinity", island: "astral_island", minW: 34000, maxW: 46000, price: 12500000000, emote: "Infinite_multiverse_translucent_ (FG 4)" },
+
+        // GENESIS
+        { id: "genesis_big_bang_dragon", name: "Thần Long Khai Thiên Big Bang", icon: "🌠", rarity: "genesis", island: "astral_island", minW: 43000, maxW: 50000, price: 75000000000, emote: "Genesis_big_bang_singularity_dra (FG 4)" },
+
+        // OMEGA
+        { id: "the_omega_anomaly", name: "Thần Ngư Hư Vô Omega", icon: "👁️", rarity: "omega", island: "astral_island", minW: 47000, maxW: 50000, price: 500000000000, emote: "The_omega_anomaly (FG 4)" }
+      ];
+
+      // Player State & Persistence
+      let userRuCoin = parseInt(localStorage.getItem("haru_rucoin") || "1250");
+      let userInventory = JSON.parse(localStorage.getItem("haru_inventory") || "[]");
+      let userMaterials = JSON.parse(localStorage.getItem("haru_materials") || "{\"hard_steel\": 3, \"oak_wood\": 5, \"stardust\": 1}");
+      let userGears = JSON.parse(localStorage.getItem("haru_gears") || "[]");
+      let equippedGear = JSON.parse(localStorage.getItem("haru_equipped_gear") || "null");
+      
+      let playerLevel = parseInt(localStorage.getItem("haru_level") || "1");
+      let playerExp = parseInt(localStorage.getItem("haru_exp") || "25");
+      let skillPoints = parseInt(localStorage.getItem("haru_skill_points") || "0");
+      let skillsUnlocked = JSON.parse(localStorage.getItem("haru_skills") || "{\"1\":0,\"2\":0,\"3\":0,\"4\":0}");
+
+      let rodStarLevels = JSON.parse(localStorage.getItem("haru_rod_stars") || "{}"); // rodKey -> star
+      let aquariumFishes = JSON.parse(localStorage.getItem("haru_aquarium") || "[]");
+      let aquariumPendingCoins = parseInt(localStorage.getItem("haru_aquarium_pending") || "0");
+      let personalBest = JSON.parse(localStorage.getItem("haru_trophy") || "null");
+
+      let currentWeatherIndex = 0;
+      let fishingState = "idle"; // idle, waiting, bite, qte
+      let biteTimer = null;
+      let currentPendingFish = null;
+      let currentPendingChest = null;
+      let qteRound = 1;
+      let qteScore = 0;
+      let qteTargetAction = "pull";
+      let qteTimeout = null;
+      let qteInterval = null;
+
+      // Boss duel state
+      let bossHP = 1000;
+      let bossTimer = 20.0;
+      let bossInterval = null;
+      let bossActive = false;
+
+      // Titles based on Level
+      function getPlayerTitle(lvl) {
+        if (lvl < 5) return "Ngư Dân Tập Sự";
+        if (lvl < 10) return "Thợ Câu Dày Dạn";
+        if (lvl < 20) return "Kẻ Săn Thủy Quái";
+        if (lvl < 35) return "Bá Chủ Đại Dương";
+        return "Thần Câu Vũ Trụ";
+      }
+
+      function updateStatsUI() {
+        document.getElementById("user-rucoin").innerText = userRuCoin.toLocaleString();
+        document.getElementById("fish-count").innerText = userInventory.length;
+        document.getElementById("player-level-badge").innerText = "Lv." + playerLevel;
+        document.getElementById("player-title").innerText = getPlayerTitle(playerLevel);
+
+        let maxExp = playerLevel * 100;
+        let pct = Math.min(100, (playerExp / maxExp) * 100);
+        document.getElementById("player-exp-bar").style.width = pct + "%";
+        document.getElementById("player-exp-text").innerText = playerExp + "/" + maxExp + " EXP";
+
+        if (equippedGear) {
+          document.getElementById("equipped-gear-badge").innerText = "Đã trang bị: " + equippedGear.name;
+        } else {
+          document.getElementById("equipped-gear-badge").innerText = "Chưa mang trang bị";
+        }
+
+        updateRodDisplay();
+
+        // Save
+        localStorage.setItem("haru_rucoin", userRuCoin);
+        localStorage.setItem("haru_inventory", JSON.stringify(userInventory));
+        localStorage.setItem("haru_materials", JSON.stringify(userMaterials));
+        localStorage.setItem("haru_gears", JSON.stringify(userGears));
+        localStorage.setItem("haru_equipped_gear", JSON.stringify(equippedGear));
+        localStorage.setItem("haru_level", playerLevel);
+        localStorage.setItem("haru_exp", playerExp);
+        localStorage.setItem("haru_skill_points", skillPoints);
+        localStorage.setItem("haru_skills", JSON.stringify(skillsUnlocked));
+        localStorage.setItem("haru_rod_stars", JSON.stringify(rodStarLevels));
+        localStorage.setItem("haru_aquarium", JSON.stringify(aquariumFishes));
+        localStorage.setItem("haru_aquarium_pending", aquariumPendingCoins);
+        localStorage.setItem("haru_trophy", JSON.stringify(personalBest));
+      }
+
+      function addPlayerExp(amount) {
+        playerExp += amount;
+        let maxExp = playerLevel * 100;
+        if (playerExp >= maxExp) {
+          playerLevel++;
+          playerExp -= maxExp;
+          skillPoints++;
+          showToast("🎉 CHÚC MỪNG! Bạn đã thăng cấp lên Lv." + playerLevel + "! (+1 Điểm Kỹ Năng)", "⭐");
+          playLevelUpSound();
+        }
+        updateStatsUI();
+      }
+
+      function switchFishingTab(tabId) {
+        const tabs = ["lake", "forge", "aquarium", "boss", "skills"];
+        tabs.forEach(t => {
+          document.getElementById("fishing-tab-" + t).style.display = t === tabId ? "block" : "none";
+          const btn = document.getElementById("tab-" + t + "-btn");
+          if (btn) {
+            if (t === tabId) btn.classList.add("active");
+            else btn.classList.remove("active");
+          }
+        });
+        if (tabId === "forge") renderForgeTab();
+        if (tabId === "aquarium") renderAquariumTab();
+        if (tabId === "skills") renderSkillsTab();
+      }
+
+      // Weather Cycle
+      function cycleWeather() {
+        currentWeatherIndex = (currentWeatherIndex + 1) % WEATHERS.length;
+        const w = WEATHERS[currentWeatherIndex];
+        document.getElementById("weather-icon").innerText = w.icon;
+        document.getElementById("weather-name").innerText = w.name + " (+" + w.luckBonus + " Luck)";
+        
+        const overlay = document.getElementById("weather-overlay");
+        const lake = document.getElementById("fishing-lake");
+        
+        if (w.id === "storm") {
+          lake.style.background = "radial-gradient(circle at 50% 120%, #1e293b 0%, #0f172a 60%, #020617 100%)";
+          overlay.style.background = "rgba(14, 165, 233, 0.1)";
+          overlay.style.opacity = "1";
+        } else if (w.id === "fog") {
+          lake.style.background = "radial-gradient(circle at 50% 120%, #334155 0%, #1e293b 60%, #090b16 100%)";
+          overlay.style.background = "rgba(255, 255, 255, 0.08)";
+          overlay.style.opacity = "1";
+        } else if (w.id === "bloodmoon") {
+          lake.style.background = "radial-gradient(circle at 50% 120%, #881337 0%, #4c0519 60%, #090b16 100%)";
+          overlay.style.background = "rgba(225, 29, 72, 0.15)";
+          overlay.style.opacity = "1";
+        } else {
+          lake.style.background = "radial-gradient(circle at 50% 120%, #1e3a8a 0%, #0c1a36 60%, #060d1d 100%)";
+          overlay.style.opacity = "0";
+        }
+
+        showToast("Thời tiết đổi sang: " + w.icon + " " + w.name + " · " + w.desc, "🌤️");
+      }
+
+      function updateRodDisplay() {
+        const rodKey = document.getElementById("select-rod").value;
+        const star = rodStarLevels[rodKey] || 0;
+        document.getElementById("rod-star-level").innerText = "Cường hóa: ⭐+" + star;
+      }
+
+      function updateIslandInfo() {
+        const island = document.getElementById("select-island").value;
+        showToast("Đã di chuyển tới: " + document.getElementById("select-island").selectedOptions[0].text.split(" (")[0], "⛵");
+      }
+
+      // Fishing Mechanics
+      function startFishing() {
+        if (fishingState !== "idle") return;
+        fishingState = "waiting";
+
+        const bobber = document.getElementById("fishing-bobber");
+        const bobberIcon = document.getElementById("bobber-icon");
+        const lakeText = document.getElementById("lake-main-text");
+        const lakeSub = document.getElementById("lake-sub-text");
+        const castBtn = document.getElementById("cast-btn");
+        const reelBtn = document.getElementById("reel-btn");
+
+        bobber.style.display = "block";
+        bobber.style.animation = "bobberFloat 1.8s ease-in-out infinite";
+        bobberIcon.innerText = "🪝";
+        lakeText.innerText = "Đang thả câu xuống hồ...";
+        lakeText.style.color = "#38bdf8";
+        lakeSub.innerText = "Quan sát phao câu và chuẩn bị phản xạ...";
+        castBtn.style.opacity = "0.5";
+        castBtn.disabled = true;
+        reelBtn.style.display = "none";
+
+        // Speed reduction from Skill 2 (Kéo Thần Tốc)
+        const skill2Lv = skillsUnlocked["2"] || 0;
+        const skillSpeedMulti = 1 + skill2Lv * 0.15;
+
+        const baitKey = document.getElementById("select-bait").value;
+        const bait = BAITS[baitKey] || BAITS.bait_worm;
+        const weather = WEATHERS[currentWeatherIndex];
+
+        const baseWait = 3500;
+        const biteDelay = Math.max(1600, (baseWait / (bait.biteSpeedMulti * weather.biteMulti * skillSpeedMulti)) + (Math.random() * 1800 - 800));
+
+        playCastSound();
+
+        biteTimer = setTimeout(() => {
+          triggerFishBite();
+        }, biteDelay);
+      }
+
+      function triggerFishBite() {
+        fishingState = "bite";
+        const bobber = document.getElementById("fishing-bobber");
+        const bobberIcon = document.getElementById("bobber-icon");
+        const lakeText = document.getElementById("lake-main-text");
+        const lakeSub = document.getElementById("lake-sub-text");
+        const reelBtn = document.getElementById("reel-btn");
+
+        bobber.style.animation = "bobberBite 0.25s infinite alternate";
+        bobberIcon.innerText = "💥";
+        lakeText.innerText = "⚡ CÁ ĐÃ CẮN CÂU!";
+        lakeText.style.color = "#ef4444";
+        lakeSub.innerText = "Bấm nút GIẬT CẦN NGAY!";
+        reelBtn.style.display = "block";
+
+        playBiteSound();
+
+        biteTimer = setTimeout(() => {
+          if (fishingState === "bite") {
+            fishEscaped("Cá đã nhả mồi và bơi mất vì giật cần quá muộn!");
+          }
+        }, 3500);
+      }
+
+      function onPlayerReel() {
+        if (fishingState !== "bite") return;
+        clearTimeout(biteTimer);
+        document.getElementById("reel-btn").style.display = "none";
+
+        // Roll Loot Class (76% fish, 12% chest, 7% material, 5% gear)
+        const roll = Math.random() * 100;
+
+        if (roll < 76) {
+          // Loot: Fish
+          handleFishLootRoll();
+        } else if (roll < 88) {
+          // Loot: Chest (12%)
+          handleChestLootRoll();
+        } else if (roll < 95) {
+          // Loot: Material (7%)
+          handleMaterialLootRoll();
+        } else {
+          // Loot: Gear (5%)
+          handleGearLootRoll();
+        }
+      }
+
+      function handleFishLootRoll() {
+        const chosenFish = rollFishLoot();
+        currentPendingFish = chosenFish;
+
+        // Rod weight check
+        const rodKey = document.getElementById("select-rod").value;
+        const rod = RODS[rodKey] || RODS.rod_wood;
+        const star = rodStarLevels[rodKey] || 0;
+        const starWeightBoost = 1 + star * 0.25;
+        const gearWeightBoost = equippedGear ? equippedGear.weightBonus : 0;
+        const totalMaxWeight = (rod.maxWeight * starWeightBoost) + gearWeightBoost;
+
+        if (chosenFish.weightKg > totalMaxWeight) {
+          fishingState = "idle";
+          resetLakeUI();
+          showToast("💥 ĐỨT DÂY CÂU! " + chosenFish.name + " (" + chosenFish.weightKg.toLocaleString() + " kg) quá nặng so với sức tải của cần (" + Math.floor(totalMaxWeight).toLocaleString() + " kg)! Hãy nâng cấp cần ở Xưởng Rèn!", "⚠️");
+          return;
+        }
+
+        // QTE Trigger for rank >= 5
+        const rarityRank = RARITIES[chosenFish.rarity].rank;
+        if (rarityRank >= 5) {
+          startQTEChallenge();
+        } else {
+          catchSuccess(chosenFish);
+        }
+      }
+
+      function rollFishLoot() {
+        const selectedIsland = document.getElementById("select-island").value;
+        const rodKey = document.getElementById("select-rod").value;
+        const baitKey = document.getElementById("select-bait").value;
+        const weather = WEATHERS[currentWeatherIndex];
+
+        const rod = RODS[rodKey] || RODS.rod_wood;
+        const bait = BAITS[baitKey] || BAITS.bait_worm;
+        const star = rodStarLevels[rodKey] || 0;
+        const gearLuck = equippedGear ? equippedGear.luckBonus : 0;
+        const skill4Lv = skillsUnlocked["4"] || 0;
+
+        const totalLuck = rod.luck + (star * 0.5) + bait.luck + weather.luckBonus + gearLuck + (skill4Lv * 0.5);
+
+        let candidates = FISH_DATABASE.filter(f => f.island === selectedIsland);
+        if (candidates.length === 0) candidates = FISH_DATABASE;
+
+        let pool = [];
+        candidates.forEach(f => {
+          let baseWeight = RARITIES[f.rarity].weight;
+          let rank = RARITIES[f.rarity].rank;
+          if (rank >= 6 && weather.mythicMulti) baseWeight *= weather.mythicMulti;
+          let weight = baseWeight * Math.min(15.0, 1 + totalLuck * rank * 0.28);
+          pool.push({ fish: f, weight: weight });
+        });
+
+        const totalW = pool.reduce((acc, cur) => acc + cur.weight, 0);
+        let randomW = Math.random() * totalW;
+        let selected = pool[0].fish;
+        for (let item of pool) {
+          if (randomW <= item.weight) {
+            selected = item.fish;
+            break;
+          }
+          randomW -= item.weight;
+        }
+
+        // Mutation roll
+        let mutation = MUTATIONS[0];
+        let mutRate = weather.mutationChance || 0.15;
+        if (Math.random() < mutRate) {
+          const mutIndex = 1 + Math.floor(Math.random() * (MUTATIONS.length - 1));
+          mutation = MUTATIONS[mutIndex];
+        }
+
+        const weightKg = parseFloat((selected.minW + Math.random() * (selected.maxW - selected.minW)).toFixed(1));
+        const lengthCm = parseFloat((Math.pow(weightKg, 0.45) * 24 + Math.random() * 8).toFixed(1));
+        const finalPrice = Math.floor(selected.price * RARITIES[selected.rarity].multi * mutation.multi);
+
+        // Generate serial for rank >= 5
+        let serial = null;
+        if (RARITIES[selected.rarity].rank >= 5) {
+          serial = "#" + (Math.floor(Math.random() * 9000) + 1000);
+        }
+
+        return {
+          ...selected,
+          weightKg: weightKg,
+          lengthCm: lengthCm,
+          mutation: mutation,
+          finalPrice: finalPrice,
+          serial: serial,
+          exp: RARITIES[selected.rarity].exp
+        };
+      }
+
+      // QTE Tension Reeling Game
+      function startQTEChallenge() {
+        fishingState = "qte";
+        qteRound = 1;
+        qteScore = 0;
+        document.getElementById("qte-container").style.display = "flex";
+        runNextQTERound();
+      }
+
+      function runNextQTERound() {
+        if (qteRound > 3) {
+          document.getElementById("qte-container").style.display = "none";
+          if (qteScore >= 2) {
+            catchSuccess(currentPendingFish);
+          } else {
+            fishEscaped("Cá đã giằng đứt dây và thoát mất vì chỉ căng dây chuẩn " + qteScore + "/3 lượt!");
+          }
+          return;
+        }
+
+        document.getElementById("qte-round-badge").innerText = "LƯỢT " + qteRound + "/3: GIẰNG CO CĂNG DÂY";
+        const actions = ["pull", "hold", "loosen"];
+        qteTargetAction = actions[Math.floor(Math.random() * actions.length)];
+
+        const titleEl = document.getElementById("qte-prompt-title");
+        const descEl = document.getElementById("qte-prompt-desc");
+
+        if (qteTargetAction === "pull") {
+          titleEl.innerText = "🔴 Cá đang vùng vẫy dữ dội!";
+          descEl.innerText = "Bấm [💪 Kéo mạnh] để ghìm chặt cá!";
+        } else if (qteTargetAction === "hold") {
+          titleEl.innerText = "🟡 Dây câu đang căng vừa phải!";
+          descEl.innerText = "Bấm [🪢 Giữ dây] để duy trì sức căng!";
+        } else {
+          titleEl.innerText = "🔵 Cá đang lao thẳng xuống đáy vực!";
+          descEl.innerText = "Bấm [🌊 Thả lỏng] để tránh đứt dây!";
+        }
+
+        const timerBar = document.getElementById("qte-timer-bar");
+        timerBar.style.width = "100%";
+        let start = Date.now();
+        const duration = 2200;
+
+        clearInterval(qteInterval);
+        qteInterval = setInterval(() => {
+          let elapsed = Date.now() - start;
+          let remainingPct = Math.max(0, 100 - (elapsed / duration) * 100);
+          timerBar.style.width = remainingPct + "%";
+        }, 50);
+
+        clearTimeout(qteTimeout);
+        qteTimeout = setTimeout(() => {
+          clearInterval(qteInterval);
+          showToast("Trượt lượt " + qteRound + "!", "❌");
+          qteRound++;
+          runNextQTERound();
+        }, duration);
+      }
+
+      function handleQTEAction(chosenAction) {
+        if (fishingState !== "qte") return;
+        clearTimeout(qteTimeout);
+        clearInterval(qteInterval);
+
+        if (chosenAction === qteTargetAction) {
+          qteScore++;
+          showToast("Chuẩn xác! (+1 điểm)", "✨");
+        } else {
+          showToast("Bấm sai thao tác!", "❌");
+        }
+
+        qteRound++;
+        setTimeout(runNextQTERound, 400);
+      }
+
+      function catchSuccess(fish) {
+        fishingState = "idle";
+        resetLakeUI();
+        currentPendingFish = fish;
+
+        // Check Trophy Personal Best
+        if (!personalBest || fish.weightKg > personalBest.weightKg) {
+          personalBest = fish;
+          showToast("🏆 KỶ LỤC MỚI! Đây là con cá to nhất bạn từng câu được!", "🎉");
+        }
+
+        // Add Exp
+        addPlayerExp(fish.exp);
+
+        // Check Skill 3: Double Catch (20% chance)
+        const skill3Lv = skillsUnlocked["3"] || 0;
+        if (skill3Lv > 0 && Math.random() < (skill3Lv * 0.1)) {
+          showToast("🎣 KÉO CÁ ĐÔI! Bạn đã vớt được 2 con cá cùng lúc!", "✨");
+          userInventory.unshift(fish);
+        }
+
+        const modal = document.getElementById("catch-modal");
+        const rarity = RARITIES[fish.rarity];
+
+        const badgeEl = document.getElementById("modal-rarity-badge");
+        badgeEl.innerText = rarity.name + " (" + rarity.vnName + ")";
+        badgeEl.style.background = rarity.color;
+        badgeEl.style.color = "#090b16";
+
+        const serialBadge = document.getElementById("modal-serial-badge");
+        if (fish.serial) {
+          serialBadge.style.display = "inline-block";
+          serialBadge.innerText = "SERIAL " + fish.serial;
+        } else {
+          serialBadge.style.display = "none";
+        }
+
+        document.getElementById("modal-fish-icon-wrap").innerText = fish.icon;
+        document.getElementById("modal-fish-icon-wrap").style.borderColor = rarity.color;
+        document.getElementById("modal-fish-name").innerText = fish.mutation.prefix + fish.name;
+        
+        const mutBadge = document.getElementById("modal-mutation-badge");
+        if (fish.mutation.id !== "normal") {
+          mutBadge.style.display = "inline-block";
+          mutBadge.innerText = "✦ Đột biến: " + fish.mutation.name + " (x" + fish.mutation.multi + " Giá)";
+        } else {
+          mutBadge.style.display = "none";
+        }
+
+        document.getElementById("modal-fish-stats").innerText = "Chiều dài: " + fish.lengthCm + " cm · Cân nặng: " + fish.weightKg.toLocaleString() + " kg";
+        document.getElementById("modal-fish-price").innerText = "+" + fish.finalPrice.toLocaleString() + " RuCoin";
+        document.getElementById("modal-fish-exp").innerText = "+" + fish.exp + " EXP";
+
+        modal.style.display = "flex";
+      }
+
+      function keepFishInBackpack() {
+        if (currentPendingFish) {
+          userInventory.unshift(currentPendingFish);
+          updateStatsUI();
+          showToast("Đã lưu " + currentPendingFish.name + " vào Túi cá!", "🎒");
+        }
+        document.getElementById("catch-modal").style.display = "none";
+      }
+
+      function putFishInAquarium() {
+        if (aquariumFishes.length >= 12) {
+          showToast("Thủy cung đã đầy (tối đa 12 con)! Hãy bán bớt cá trong bể.", "⚠️");
+          return;
+        }
+        if (currentPendingFish) {
+          aquariumFishes.push(currentPendingFish);
+          updateStatsUI();
+          showToast("Đã thả " + currentPendingFish.name + " vào Thủy Cung sinh lời!", "🐠");
+        }
+        document.getElementById("catch-modal").style.display = "none";
+      }
+
+      function sellFishImmediately() {
+        if (currentPendingFish) {
+          userRuCoin += currentPendingFish.finalPrice;
+          updateStatsUI();
+          showToast("Đã bán " + currentPendingFish.name + " lấy +" + currentPendingFish.finalPrice.toLocaleString() + " RuCoin!", "💰");
+        }
+        document.getElementById("catch-modal").style.display = "none";
+      }
+
+      // Handle Chest Loot
+      function handleChestLootRoll() {
+        fishingState = "idle";
+        resetLakeUI();
+        
+        // Pick chest tier
+        let chest = CHESTS[0];
+        const r = Math.random();
+        if (r < 0.5) chest = CHESTS[0]; // Wooden crate
+        else if (r < 0.8) chest = CHESTS[1]; // Iron lockbox
+        else if (r < 0.95) chest = CHESTS[2]; // Pirate gold chest
+        else chest = CHESTS[3]; // Cosmic chest
+
+        currentPendingChest = chest;
+
+        document.getElementById("chest-name").innerText = chest.name;
+        document.getElementById("chest-icon-anim").innerText = chest.icon;
+        document.getElementById("chest-desc").innerText = "Kéo lên thành công 1 " + chest.name + "! Bấm Mở Rương để khám phá phần thưởng!";
+        document.getElementById("chest-rewards-wrap").style.display = "none";
+        document.getElementById("open-chest-action-btn").style.display = "block";
+        document.getElementById("close-chest-btn").style.display = "none";
+        document.getElementById("chest-modal").style.display = "flex";
+      }
+
+      function performChestOpen() {
+        if (!currentPendingChest) return;
+        const chest = currentPendingChest;
+
+        const coins = Math.floor(chest.minCoins + Math.random() * (chest.maxCoins - chest.minCoins));
+        userRuCoin += coins;
+        addPlayerExp(chest.exp);
+
+        let rewardListHtml = `<div style="font-size:14px; color:#f59e0b; margin-bottom:6px;"><strong>+${coins.toLocaleString()} RuCoin</strong></div>`;
+
+        // Check if material drops
+        if (Math.random() < chest.matChance) {
+          const matKeys = Object.keys(MATERIALS_CATALOG);
+          const randKey = matKeys[Math.floor(Math.random() * matKeys.length)];
+          const mat = MATERIALS_CATALOG[randKey];
+          userMaterials[randKey] = (userMaterials[randKey] || 0) + 1;
+          rewardListHtml += `<div style="font-size:13px; color:#38bdf8;">+1 ${mat.icon} ${mat.name} (Nguyên liệu rèn)</div>`;
+        }
+
+        playChestSound();
+
+        document.getElementById("chest-rewards-wrap").innerHTML = rewardListHtml;
+        document.getElementById("chest-rewards-wrap").style.display = "block";
+        document.getElementById("open-chest-action-btn").style.display = "none";
+        document.getElementById("close-chest-btn").style.display = "block";
+
+        updateStatsUI();
+      }
+
+      function closeChestModal() {
+        document.getElementById("chest-modal").style.display = "none";
+      }
+
+      // Handle Material Loot
+      function handleMaterialLootRoll() {
+        fishingState = "idle";
+        resetLakeUI();
+        const matKeys = Object.keys(MATERIALS_CATALOG);
+        const randKey = matKeys[Math.floor(Math.random() * matKeys.length)];
+        const mat = MATERIALS_CATALOG[randKey];
+        userMaterials[randKey] = (userMaterials[randKey] || 0) + 1;
+        addPlayerExp(15);
+        updateStatsUI();
+        showToast("🧰 KÉO LÊN NGUYÊN LIỆU: +1 " + mat.icon + " " + mat.name + "! Dùng để rèn cần câu ở Xưởng Rèn!", "✨");
+      }
+
+      // Handle Gear Loot
+      function handleGearLootRoll() {
+        fishingState = "idle";
+        resetLakeUI();
+        const gear = GEARS_CATALOG[Math.floor(Math.random() * GEARS_CATALOG.length)];
+        userGears.push(gear);
+        addPlayerExp(30);
+        updateStatsUI();
+        showToast("⚙️ KÉO LÊN TRANG BỊ HIẾM: " + gear.icon + " " + gear.name + " (+ " + gear.luckBonus + " Luck)! Mở Túi Đồ để trang bị!", "💍");
+      }
+
+      function fishEscaped(msg) {
+        fishingState = "idle";
+        resetLakeUI();
+        showToast(msg, "💨");
+      }
+
+      function resetLakeUI() {
+        document.getElementById("fishing-bobber").style.display = "none";
+        document.getElementById("reel-btn").style.display = "none";
+        document.getElementById("qte-container").style.display = "none";
+        document.getElementById("lake-main-text").innerText = "Mặt hồ đang êm đềm";
+        document.getElementById("lake-main-text").style.color = "#f1f5f9";
+        document.getElementById("lake-sub-text").innerText = "Chọn Quần đảo, Cần câu và Mồi câu bên dưới, sau đó bấm Thả Cần Câu!";
+        document.getElementById("cast-btn").style.opacity = "1";
+        document.getElementById("cast-btn").disabled = false;
+      }
+
+      // =========================================================================
+      // 2. BLACKSMITH FORGE & WORKSHOP
+      // =========================================================================
+      function renderForgeTab() {
+        const rodKey = document.getElementById("select-rod").value;
+        const rod = RODS[rodKey] || RODS.rod_wood;
+        const star = rodStarLevels[rodKey] || 0;
+
+        document.getElementById("forge-current-stars").innerText = "⭐+" + star;
+        document.getElementById("forge-rod-name").innerText = rod.name;
+
+        const maxW = Math.floor(rod.maxWeight * (1 + star * 0.25));
+        const luck = (rod.luck + star * 0.5).toFixed(1);
+        document.getElementById("forge-rod-weight").innerText = maxW.toLocaleString() + " kg";
+        document.getElementById("forge-rod-luck").innerText = "+" + luck + " Luck";
+
+        const cost = (star + 1) * 2500;
+        document.getElementById("forge-cost-rucoin").innerText = cost.toLocaleString() + " RuCoin";
+
+        const reqSteel = Math.min(5, star + 1);
+        const reqDust = star >= 3 ? 1 : 0;
+        document.getElementById("forge-mat-steel").innerText = (userMaterials["hard_steel"] || 0) + " / " + reqSteel;
+        document.getElementById("forge-mat-dust").innerText = (userMaterials["stardust"] || 0) + " / " + reqDust;
+
+        // Render materials grid
+        const grid = document.getElementById("materials-grid");
+        grid.innerHTML = "";
+        Object.keys(MATERIALS_CATALOG).forEach(k => {
+          const m = MATERIALS_CATALOG[k];
+          const qty = userMaterials[k] || 0;
+          const div = document.createElement("div");
+          div.style.background = "rgba(255,255,255,0.04)";
+          div.style.border = "1px solid rgba(255,255,255,0.08)";
+          div.style.borderRadius = "10px";
+          div.style.padding = "8px";
+          div.style.textAlign = "center";
+          div.innerHTML = `
+            <div style="font-size:22px;">${m.icon}</div>
+            <div style="font-size:12px; color:#fff; font-weight:600;">${m.name}</div>
+            <div style="font-size:11px; color:#38bdf8;">Số lượng: ${qty}</div>
+          `;
+          grid.appendChild(div);
+        });
+      }
+
+      function upgradeRodInForge() {
+        const rodKey = document.getElementById("select-rod").value;
+        const star = rodStarLevels[rodKey] || 0;
+        if (star >= 10) {
+          showToast("Cần câu đã đạt cấp sao tối đa (⭐+10)!", "✨");
+          return;
+        }
+
+        const cost = (star + 1) * 2500;
+        const reqSteel = Math.min(5, star + 1);
+        const reqDust = star >= 3 ? 1 : 0;
+
+        if (userRuCoin < cost) {
+          showToast("Bạn không đủ RuCoin để rèn (Cần " + cost.toLocaleString() + " RuCoin)!", "❌");
+          return;
+        }
+        if ((userMaterials["hard_steel"] || 0) < reqSteel) {
+          showToast("Bạn thiếu Thép Tôi Luyện! Hãy đi câu cá để kiếm nguyên liệu.", "❌");
+          return;
+        }
+        if (reqDust > 0 && (userMaterials["stardust"] || 0) < reqDust) {
+          showToast("Bạn thiếu Bụi Sao Thiên Hà!", "❌");
+          return;
+        }
+
+        // Deduct
+        userRuCoin -= cost;
+        userMaterials["hard_steel"] -= reqSteel;
+        if (reqDust > 0) userMaterials["stardust"] -= reqDust;
+
+        rodStarLevels[rodKey] = star + 1;
+        playForgeSound();
+        addPlayerExp(100);
+        updateStatsUI();
+        renderForgeTab();
+
+        showToast("🔨 RÈN THÀNH CÔNG! Cần câu đã thăng cấp lên ⭐+" + (star + 1) + "!", "🎉");
+      }
+
+      // =========================================================================
+      // 3. AQUARIUM & IDLE RUCOIN
+      // =========================================================================
+      function renderAquariumTab() {
+        const tank = document.getElementById("aquarium-fishes-container");
+        const emptyMsg = document.getElementById("aquarium-empty-msg");
+        tank.innerHTML = "";
+
+        if (aquariumFishes.length === 0) {
+          emptyMsg.style.display = "flex";
+        } else {
+          emptyMsg.style.display = "none";
+          aquariumFishes.forEach((f, idx) => {
+            const el = document.createElement("div");
+            el.style.position = "absolute";
+            el.style.left = (10 + (idx * 22) % 80) + "%";
+            el.style.top = (15 + (idx * 18) % 65) + "%";
+            el.style.fontSize = "32px";
+            el.style.animation = "swimAcross " + (12 + (idx % 5) * 2) + "s infinite ease-in-out alternate";
+            el.innerHTML = f.icon;
+            el.title = f.name + " (" + RARITIES[f.rarity].name + ")";
+            tank.appendChild(el);
+          });
+        }
+
+        let ratePerTick = 0;
+        aquariumFishes.forEach(f => {
+          ratePerTick += Math.max(5, Math.floor(f.finalPrice * 0.005));
+        });
+
+        document.getElementById("aquarium-capacity-text").innerText = aquariumFishes.length + " / 12 con";
+        document.getElementById("aquarium-rate-text").innerText = "+" + ratePerTick.toLocaleString() + " RuCoin / 10s";
+        document.getElementById("aquarium-pending-rucoin").innerText = "+" + aquariumPendingCoins.toLocaleString() + " RuCoin";
+      }
+
+      function collectAquariumIncome() {
+        if (aquariumPendingCoins <= 0) {
+          showToast("Chưa có RuCoin tích lũy nào để thu hoạch!", "ℹ️");
+          return;
+        }
+        userRuCoin += aquariumPendingCoins;
+        showToast("Đã thu hoạch +" + aquariumPendingCoins.toLocaleString() + " RuCoin từ Thủy Cung!", "💰");
+        aquariumPendingCoins = 0;
+        updateStatsUI();
+        renderAquariumTab();
+      }
+
+      // 10s interval for aquarium income
+      setInterval(() => {
+        if (aquariumFishes.length > 0) {
+          let income = 0;
+          aquariumFishes.forEach(f => {
+            income += Math.max(5, Math.floor(f.finalPrice * 0.005));
+          });
+          aquariumPendingCoins += income;
+          const el = document.getElementById("aquarium-pending-rucoin");
+          if (el) el.innerText = "+" + aquariumPendingCoins.toLocaleString() + " RuCoin";
+        }
+      }, 10000);
+
+      // =========================================================================
+      // 4. BOSS DUEL EVENT (LEVIATHAN)
+      // =========================================================================
+      function startBossDuel() {
+        bossActive = true;
+        bossHP = 1000;
+        bossTimer = 20.0;
+        document.getElementById("boss-start-btn").style.display = "none";
+        document.getElementById("boss-attack-btn").style.display = "block";
+        document.getElementById("boss-hp-bar").style.width = "100%";
+        document.getElementById("boss-hp-text").innerText = "1,000 / 1,000";
+
+        clearInterval(bossInterval);
+        bossInterval = setInterval(() => {
+          bossTimer -= 0.1;
+          if (bossTimer <= 0) {
+            clearInterval(bossInterval);
+            bossActive = false;
+            document.getElementById("boss-start-btn").style.display = "inline-block";
+            document.getElementById("boss-attack-btn").style.display = "none";
+            document.getElementById("boss-timer-text").innerText = "0.0s";
+            showToast("Hết giờ! Thủy Quái Leviathan đã lặn trốn mất!", "💨");
+          } else {
+            document.getElementById("boss-timer-text").innerText = bossTimer.toFixed(1) + "s";
+          }
+        }, 100);
+      }
+
+      function attackBoss() {
+        if (!bossActive) return;
+        const dmg = 35 + Math.floor(Math.random() * 20);
+        bossHP = Math.max(0, bossHP - dmg);
+        
+        const pct = (bossHP / 1000) * 100;
+        document.getElementById("boss-hp-bar").style.width = pct + "%";
+        document.getElementById("boss-hp-text").innerText = bossHP + " / 1,000";
+
+        // Sprite shake
+        const sprite = document.getElementById("boss-sprite");
+        sprite.style.transform = "scale(1.2) rotate(" + (Math.random() * 16 - 8) + "deg)";
+        setTimeout(() => sprite.style.transform = "scale(1)", 80);
+
+        if (bossHP <= 0) {
+          clearInterval(bossInterval);
+          bossActive = false;
+          document.getElementById("boss-start-btn").style.display = "inline-block";
+          document.getElementById("boss-attack-btn").style.display = "none";
+          
+          userRuCoin += 50000;
+          addPlayerExp(500);
+          showToast("🏆 ĐẠI THẮNG! Bạn đã hạ gục Thủy Quái Nham Thạch Leviathan! Nhận +50,000 RuCoin và +500 EXP!", "🎉");
+          playLevelUpSound();
+        }
+      }
+
+      // =========================================================================
+      // 5. SKILLS TREE & TROPHIES
+      // =========================================================================
+      function renderSkillsTab() {
+        document.getElementById("skill-points-text").innerText = skillPoints + " điểm";
+        [1, 2, 3, 4].forEach(i => {
+          document.getElementById("skill-lvl-" + i).innerText = "Lv." + (skillsUnlocked[i] || 0) + " / 3";
+        });
+
+        if (personalBest) {
+          document.getElementById("trophy-fish-name").innerText = personalBest.name;
+          document.getElementById("trophy-fish-stats").innerText = "Cân nặng: " + personalBest.weightKg.toLocaleString() + " kg · Dài: " + personalBest.lengthCm + " cm · Độ hiếm: " + RARITIES[personalBest.rarity].name;
+          if (personalBest.serial) {
+            const badge = document.getElementById("trophy-serial-badge");
+            badge.style.display = "block";
+            badge.innerText = "SERIAL " + personalBest.serial;
+          }
+        }
+      }
+
+      function upgradeSkill(skillId) {
+        if (skillPoints <= 0) {
+          showToast("Bạn không có Điểm Kỹ Năng khả dụng! Hãy thăng cấp để nhận thêm điểm.", "ℹ️");
+          return;
+        }
+        let cur = skillsUnlocked[skillId] || 0;
+        if (cur >= 3) {
+          showToast("Kỹ năng này đã đạt cấp tối đa (Lv.3)!", "✨");
+          return;
+        }
+        skillPoints--;
+        skillsUnlocked[skillId] = cur + 1;
+        updateStatsUI();
+        renderSkillsTab();
+        showToast("Đã nâng cấp kỹ năng lên Lv." + (cur + 1) + "!", "🌟");
+      }
+
+      // =========================================================================
+      // 6. INVENTORY & TABS (FISH, MATERIALS, GEAR)
+      // =========================================================================
+      let currentInvTab = "fish";
+
+      function openInventoryModal() {
+        document.getElementById("inv-modal").style.display = "flex";
+        switchInvTab("fish");
+      }
+
+      function closeInventoryModal() {
+        document.getElementById("inv-modal").style.display = "none";
+      }
+
+      function switchInvTab(tab) {
+        currentInvTab = tab;
+        ["fish", "mat", "gear"].forEach(t => {
+          const btn = document.getElementById("inv-tab-" + t + "-btn");
+          if (btn) {
+            if (t === tab) btn.classList.add("active");
+            else btn.classList.remove("active");
+          }
+        });
+
+        document.getElementById("inv-fish-tab-count").innerText = userInventory.length;
+        document.getElementById("inv-mat-tab-count").innerText = Object.values(userMaterials).reduce((a,b)=>a+b, 0);
+        document.getElementById("inv-gear-tab-count").innerText = userGears.length;
+
+        const listEl = document.getElementById("inv-list");
+        const footer = document.getElementById("inv-footer-bar");
+        listEl.innerHTML = "";
+
+        if (tab === "fish") {
+          footer.style.display = "flex";
+          let totalVal = 0;
+          if (userInventory.length === 0) {
+            listEl.innerHTML = "<p style=\'text-align:center; color:#64748b; margin:30px 0;\'>Túi cá đang trống! Hãy đi câu để thu thập cá.</p>";
+          } else {
+            userInventory.forEach((f, idx) => {
+              totalVal += f.finalPrice;
+              const rarity = RARITIES[f.rarity];
+              const div = document.createElement("div");
+              div.style.background = "rgba(255,255,255,0.04)";
+              div.style.border = "1px solid rgba(255,255,255,0.08)";
+              div.style.borderRadius = "12px";
+              div.style.padding = "10px 14px";
+              div.style.display = "flex";
+              div.style.justifyContent = "space-between";
+              div.style.alignItems = "center";
+              div.innerHTML = `
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <span style="font-size:26px;">${f.icon}</span>
+                  <div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span style="font-size:10px; font-weight:800; background:${rarity.color}; color:#090b16; padding:1px 6px; border-radius:4px;">${rarity.name}</span>
+                      <strong style="color:#fff; font-size:14px;">${f.mutation.prefix}${f.name}</strong>
+                    </div>
+                    <span style="font-size:12px; color:#94a3b8;">${f.weightKg} kg · ${f.lengthCm} cm ${f.serial ? "· " + f.serial : ""}</span>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="color:#f59e0b; font-weight:700; font-size:13px;">+${f.finalPrice.toLocaleString()} ◈</span>
+                  <button class="button button-secondary" style="padding:4px 8px; font-size:11px;" onclick="sellSingleFish(${idx})">Bán</button>
+                  <button class="button button-secondary" style="padding:4px 8px; font-size:11px;" onclick="moveFishToTank(${idx})">Bể nuôi</button>
+                </div>
+              `;
+              listEl.appendChild(div);
+            });
+          }
+          document.getElementById("inv-total-val").innerText = totalVal.toLocaleString() + " RuCoin";
+        } else if (tab === "mat") {
+          footer.style.display = "none";
+          Object.keys(MATERIALS_CATALOG).forEach(k => {
+            const m = MATERIALS_CATALOG[k];
+            const qty = userMaterials[k] || 0;
+            const div = document.createElement("div");
+            div.style.background = "rgba(255,255,255,0.04)";
+            div.style.border = "1px solid rgba(255,255,255,0.08)";
+            div.style.borderRadius = "12px";
+            div.style.padding = "10px 14px";
+            div.style.display = "flex";
+            div.style.justifyContent = "space-between";
+            div.style.alignItems = "center";
+            div.innerHTML = `
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-size:26px;">${m.icon}</span>
+                <div>
+                  <strong style="color:#fff; font-size:14px;">${m.name}</strong>
+                  <div style="font-size:12px; color:#94a3b8;">Dùng tại Xưởng Rèn</div>
+                </div>
+              </div>
+              <strong style="color:#38bdf8; font-size:15px;">x${qty}</strong>
+            `;
+            listEl.appendChild(div);
+          });
+        } else if (tab === "gear") {
+          footer.style.display = "none";
+          if (userGears.length === 0) {
+            listEl.innerHTML = "<p style=\'text-align:center; color:#64748b; margin:30px 0;\'>Bạn chưa có trang bị nào! Hãy câu cá để nhặt được trang bị hiếm.</p>";
+          } else {
+            userGears.forEach((g, idx) => {
+              const isEquipped = equippedGear && equippedGear.id === g.id;
+              const div = document.createElement("div");
+              div.style.background = isEquipped ? "rgba(56,189,248,0.12)" : "rgba(255,255,255,0.04)";
+              div.style.border = isEquipped ? "1px solid #38bdf8" : "1px solid rgba(255,255,255,0.08)";
+              div.style.borderRadius = "12px";
+              div.style.padding = "10px 14px";
+              div.style.display = "flex";
+              div.style.justifyContent = "space-between";
+              div.style.alignItems = "center";
+              div.innerHTML = `
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <span style="font-size:26px;">${g.icon}</span>
+                  <div>
+                    <strong style="color:#fff; font-size:14px;">${g.name}</strong>
+                    <div style="font-size:12px; color:#38bdf8;">+${g.luckBonus} Luck · +${g.weightBonus} kg Tải</div>
+                  </div>
+                </div>
+                <button class="button ${isEquipped ? "button-primary" : "button-secondary"}" style="padding:5px 12px; font-size:12px;" onclick="toggleEquipGear(${idx})">
+                  ${isEquipped ? "Đang đeo" : "Trang bị"}
+                </button>
+              `;
+              listEl.appendChild(div);
+            });
+          }
+        }
+      }
+
+      function toggleEquipGear(idx) {
+        const g = userGears[idx];
+        if (equippedGear && equippedGear.id === g.id) {
+          equippedGear = null;
+          showToast("Đã tháo trang bị " + g.name, "ℹ️");
+        } else {
+          equippedGear = g;
+          showToast("Đã trang bị " + g.name + " (+ " + g.luckBonus + " Luck)!", "✨");
+        }
+        updateStatsUI();
+        switchInvTab("gear");
+      }
+
+      function moveFishToTank(idx) {
+        if (aquariumFishes.length >= 12) {
+          showToast("Bể thủy cung đã đầy (tối đa 12 con)!", "⚠️");
+          return;
+        }
+        const fish = userInventory.splice(idx, 1)[0];
+        aquariumFishes.push(fish);
+        updateStatsUI();
+        switchInvTab("fish");
+        showToast("Đã chuyển " + fish.name + " vào Thủy Cung!", "🐠");
+      }
+
+      function sellSingleFish(idx) {
+        const f = userInventory[idx];
+        userRuCoin += f.finalPrice;
+        userInventory.splice(idx, 1);
+        updateStatsUI();
+        switchInvTab("fish");
+        showToast("Đã bán " + f.name + " lấy +" + f.finalPrice.toLocaleString() + " RuCoin!", "💰");
+      }
+
+      function sellAllFish() {
+        if (userInventory.length === 0) return;
+        let total = 0;
+        userInventory.forEach(f => total += f.finalPrice);
+        userRuCoin += total;
+        userInventory = [];
+        updateStatsUI();
+        switchInvTab("fish");
+        showToast("Đã bán toàn bộ túi cá! Nhận +" + total.toLocaleString() + " RuCoin!", "🎉");
+      }
+
+      function openCatalogModal() {
+        const modal = document.getElementById("catalog-modal");
+        const listEl = document.getElementById("catalog-list");
+        listEl.innerHTML = "";
+
+        Object.keys(RARITIES).forEach(rKey => {
+          const rarity = RARITIES[rKey];
+          const fishes = FISH_DATABASE.filter(f => f.rarity === rKey);
+          if (fishes.length === 0) return;
+
+          const section = document.createElement("div");
+          section.style.background = "rgba(255,255,255,0.03)";
+          section.style.border = "1px solid " + rarity.color + "44";
+          section.style.borderRadius = "14px";
+          section.style.padding = "14px";
+
+          section.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-size:12px; font-weight:800; background:${rarity.color}; color:#090b16; padding:3px 10px; border-radius:12px;">BẬC ${rarity.rank}: ${rarity.name.toUpperCase()} (${rarity.vnName})</span>
+              <span style="font-size:12px; color:#94a3b8;">Hệ số: x${rarity.multi}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+              ${fishes.map(f => `
+                <div style="display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:8px;">
+                  <span style="font-size:20px;">${f.icon}</span>
+                  <div>
+                    <div style="font-size:13px; color:#fff; font-weight:600;">${f.name}</div>
+                    <div style="font-size:11px; color:#38bdf8;">${f.emote} · ${f.price} RuCoin</div>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          `;
+          listEl.appendChild(section);
+        });
+
+        modal.style.display = "flex";
+      }
+
+      function closeCatalogModal() {
+        document.getElementById("catalog-modal").style.display = "none";
+      }
+
+      // Audio effects via Web Audio API
+      function playBiteSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        } catch(e) {}
+      }
+
+      function playCastSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.18);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.2);
+        } catch(e) {}
+      }
+
+      function playChestSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+            gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.08 + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.08);
+            osc.stop(ctx.currentTime + i * 0.08 + 0.3);
+          });
+        } catch(e) {}
+      }
+
+      function playLevelUpSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          [440, 554.37, 659.25, 880].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.1);
+            gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.1 + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.1);
+            osc.stop(ctx.currentTime + i * 0.1 + 0.35);
+          });
+        } catch(e) {}
+      }
+
+      function playForgeSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(1200, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.18, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.15);
+        } catch(e) {}
+      }
+
+      // =========================================================================
+      // 7. HARUBOT WEB DASHBOARD (LIVE CONTROLLER & MUSICFX)
+      // =========================================================================
+
+      let isPlaying = true;
+      let currentProgress = 33;
+      let loopMode = 0;
+      let isShuffle = false;
+      let currentFX = "bass_soft";
+      let songQueue = [
+        { title: "Vùng An Toàn", artist: "B Ray", duration: "04:26", source: "YouTube" },
+        { title: "Đường Tôi Chở Em Về", artist: "buitruonglinh", duration: "03:30", source: "Spotify" },
+        { title: "Chẳng Còn Thời Gian Ấy", artist: "Bem", duration: "03:30", source: "Spotify" },
+        { title: "Nắng Lung Linh", artist: "Nguyễn Thương", duration: "03:30", source: "YouTube" },
+        { title: "Chàng Trai Bất Tử", artist: "An Vũ", duration: "03:30", source: "YouTube" }
+      ];
+
+      setInterval(() => {
+        if (isPlaying) {
+          currentProgress += 0.35;
+          if (currentProgress > 100) currentProgress = 0;
+          document.getElementById("dash-progress-bar").style.width = currentProgress + "%";
+          
+          let totalSecs = 266;
+          let currSecs = Math.floor((currentProgress / 100) * totalSecs);
+          let m = Math.floor(currSecs / 60);
+          let s = currSecs % 60;
+          document.getElementById("dash-time-curr").innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+        }
+      }, 1000);
+
+      function sendBotCommand(cmd) {
+        if (cmd === "pause") {
+          isPlaying = !isPlaying;
+          document.getElementById("dash-play-icon").innerText = isPlaying ? "⏸️" : "▶️";
+          showToast(isPlaying ? "Đã tiếp tục phát nhạc!" : "Đã tạm dừng phát nhạc!", isPlaying ? "▶️" : "⏸️");
+        } else if (cmd === "skip") {
+          if (songQueue.length > 1) {
+            songQueue.shift();
+            loadCurrentTrack(songQueue[0]);
+            showToast("Đã bỏ qua bài! Chuyển tới: " + songQueue[0].title, "⏭️");
+          } else {
+            showToast("Hàng chờ đã hết bài!", "ℹ️");
+          }
+        } else if (cmd === "stop") {
+          isPlaying = false;
+          currentProgress = 0;
+          document.getElementById("dash-progress-bar").style.width = "0%";
+          document.getElementById("dash-play-icon").innerText = "▶️";
+          showToast("Đã dừng phát nhạc và rời kênh thoại!", "⏹️");
+        }
+      }
+
+      function loadCurrentTrack(track) {
+        currentProgress = 0;
+        document.getElementById("dash-track-title").innerText = track.title + " - " + track.artist;
+        document.getElementById("dash-track-artist").innerText = "Kênh: " + track.artist + " · Nguồn: " + track.source;
+        document.getElementById("dash-time-total").innerText = track.duration;
+        document.getElementById("lyrics-song-title").innerText = track.title + " - " + track.artist;
+      }
+
+      function toggleLoop() {
+        loopMode = (loopMode + 1) % 3;
+        const labels = ["Tắt", "1 Bài", "Tất Cả"];
+        document.getElementById("dash-loop-text").innerText = labels[loopMode];
+        showToast("Chế độ lặp: " + labels[loopMode], "🔁");
+      }
+
+      function toggleShuffle() {
+        isShuffle = !isShuffle;
+        const btn = document.getElementById("dash-shuffle-btn");
+        if (isShuffle) {
+          btn.style.color = "#38bdf8";
+          btn.style.borderColor = "#38bdf8";
+          showToast("Đã bật chế độ xáo trộn hàng chờ!", "🔀");
+        } else {
+          btn.style.color = "";
+          btn.style.borderColor = "";
+          showToast("Đã tắt xáo trộn hàng chờ!", "🔀");
+        }
+      }
+
+      function seekRelative(secs) {
+        currentProgress = Math.max(0, Math.min(100, currentProgress + (secs / 266) * 100));
+        document.getElementById("dash-progress-bar").style.width = currentProgress + "%";
+        showToast((secs > 0 ? "Tua tới +" : "Tua lại ") + secs + "s!", "⏩");
+      }
+
+      function seekAudio(e) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        currentProgress = Math.max(0, Math.min(100, pos * 100));
+        document.getElementById("dash-progress-bar").style.width = currentProgress + "%";
+        showToast("Đã tua tới " + Math.floor(currentProgress) + "%", "📍");
+      }
+
+      function updateVolume(val) {
+        document.getElementById("dash-vol-value").innerText = val + "%";
+        const icon = document.getElementById("dash-vol-icon");
+        if (val == 0) icon.innerText = "🔇";
+        else if (val < 50) icon.innerText = "🔉";
+        else icon.innerText = "🔊";
+      }
+
+      function setMusicFX(key, label, btn) {
+        currentFX = key;
+        document.querySelectorAll(".fx-btn").forEach(b => b.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+        document.getElementById("current-fx-name").innerText = label.split(" (")[0];
+        document.getElementById("dash-fx-indicator").innerText = label;
+        showToast("Đã kích hoạt bộ lọc: " + label, "🎛️");
+      }
+
+      function addSongToQueue() {
+        const input = document.getElementById("web-song-input");
+        const val = input.value.trim();
+        if (!val) return;
+        
+        let newSong = { title: val, artist: "Haru Streamer", duration: "03:45", source: "Web Player" };
+        songQueue.push(newSong);
+        input.value = "";
+        showToast("Đã thêm vào hàng chờ: " + newSong.title, "➕");
+      }
+
+      function quickAddSuggest(song) {
+        document.getElementById("web-song-input").value = song;
+        addSongToQueue();
+      }
+
+      function toggleQueueModal() {
+        const modal = document.getElementById("queue-modal");
+        const list = document.getElementById("queue-list-container");
+        list.innerHTML = "";
+
+        songQueue.forEach((s, idx) => {
+          const div = document.createElement("div");
+          div.style.background = idx === 0 ? "rgba(56,189,248,0.1)" : "rgba(255,255,255,0.04)";
+          div.style.border = idx === 0 ? "1px solid #38bdf8" : "1px solid rgba(255,255,255,0.08)";
+          div.style.borderRadius = "10px";
+          div.style.padding = "10px 14px";
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.style.alignItems = "center";
+          div.innerHTML = `
+            <div>
+              <span style="font-size:11px; font-weight:800; color:${idx === 0 ? "#38bdf8" : "#94a3b8"};">#${idx + 1} ${idx === 0 ? "· ĐANG PHÁT" : ""}</span>
+              <div style="font-size:14px; color:#fff; font-weight:600;">${s.title}</div>
+              <div style="font-size:12px; color:#94a3b8;">${s.artist}</div>
+            </div>
+            <span style="font-size:12px; color:#64748b; font-family:monospace;">${s.duration}</span>
+          `;
+          list.appendChild(div);
+        });
+
+        modal.style.display = "flex";
+      }
+
+      function openLyricsModal() {
+        document.getElementById("lyrics-modal").style.display = "flex";
+      }
+
+      function closeLyricsModal() {
+        document.getElementById("lyrics-modal").style.display = "none";
+      }
+
+      function showToast(msg, icon) {
+        const toast = document.getElementById("web-toast");
+        document.getElementById("toast-msg").innerText = msg;
+        document.getElementById("toast-icon").innerText = icon || "✨";
+        toast.style.display = "flex";
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.style.display = "none";
+        }, 3200);
+      }
+
+      // Initialize on DOM Ready
+      document.addEventListener("DOMContentLoaded", () => {
+        updateStatsUI();
+        renderSkillsTab();
+      });
+    </script>
+
   </body>
 </html>
