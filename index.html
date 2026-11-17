@@ -678,23 +678,23 @@
           
           <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 14px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
             <div style="text-align: left;">
-              <span style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">GIÁ TRỊ QUY ĐỔI</span>
+              <span id="modal-fish-value-label" style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">GIÁ TRỊ QUY ĐỔI</span>
               <span id="modal-fish-price" style="color: #f59e0b; font-weight: 800; font-size: 19px; font-family: monospace;">+15,300 RuCoin</span>
             </div>
             <div style="text-align: right;">
-              <span style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">KINH NGHIỆM</span>
+              <span id="modal-fish-exp-label" style="font-size: 11px; color: #94a3b8; display: block; font-weight: 600;">KINH NGHIỆM</span>
               <span id="modal-fish-exp" style="color: #38bdf8; font-weight: 700; font-size: 14px;">+85 EXP</span>
             </div>
           </div>
 
           <div style="display: flex; gap: 8px;">
-            <button class="button button-secondary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="keepFishInBackpack()">
+            <button id="modal-btn-keep" class="button button-secondary" data-i18n="modalBtnBackpack" style="flex: 1; padding: 11px; font-size: 12px;" onclick="keepFishInBackpack()">
               🎒 Vào túi
             </button>
-            <button class="button button-secondary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="putFishInAquarium()">
+            <button id="modal-btn-aquarium" class="button button-secondary" data-i18n="modalBtnAquarium" style="flex: 1; padding: 11px; font-size: 12px;" onclick="putFishInAquarium()">
               🐠 Thủy Cung
             </button>
-            <button class="button button-primary" style="flex: 1; padding: 11px; font-size: 12px;" onclick="sellFishImmediately()">
+            <button id="modal-btn-sell" class="button button-primary" data-i18n="modalBtnSell" style="flex: 1; padding: 11px; font-size: 12px;" onclick="sellFishImmediately()">
               💰 Bán ngay
             </button>
           </div>
@@ -704,7 +704,7 @@
       <!-- Chest Opening Modal -->
       <div id="chest-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
         <div style="background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #f59e0b; border-radius: 24px; padding: 30px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(245,158,11,0.4); animation: zoomIn 0.3s ease;">
-          <span style="display: inline-block; font-size: 11px; font-weight: 800; background: #f59e0b; color: #090b16; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; text-transform: uppercase;">
+          <span id="chest-badge-text" data-i18n="chestBadge" style="display: inline-block; font-size: 11px; font-weight: 800; background: #f59e0b; color: #090b16; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; text-transform: uppercase;">
             🎁 PHÁT HIỆN RƯƠNG BÁU ĐẠI DƯƠNG
           </span>
           <div id="chest-icon-anim" style="font-size: 72px; margin-bottom: 14px; animation: pulseBite 1s infinite alternate;">
@@ -1868,10 +1868,10 @@
 
       // 4 Chest Types (Rương Báu)
       const CHESTS = [
-        { id: "crate", name: "Thùng Gỗ Trôi Dạt", icon: "🪵", minCoins: 200, maxCoins: 800, matChance: 0.4, exp: 25 },
-        { id: "iron", name: "Rương Sắt Khóa Kín", icon: "🔒", minCoins: 1200, maxCoins: 4500, matChance: 0.7, exp: 60 },
-        { id: "gold", name: "Rương Vàng Hải Tặc", icon: "👑", minCoins: 15000, maxCoins: 65000, matChance: 0.95, exp: 200 },
-        { id: "cosmic", name: "Rương Vũ Trụ Tối Thượng", icon: "🌌", minCoins: 350000, maxCoins: 2500000, matChance: 1.0, exp: 1000 }
+        { id: "crate", name: "Thùng Gỗ Trôi Dạt", nameEn: "Driftwood Crate", descEn: "Driftwood Crate with starter coins and common materials.", icon: "🪵", minCoins: 200, maxCoins: 800, matChance: 0.4, exp: 25 },
+        { id: "iron", name: "Rương Sắt Khóa Kín", nameEn: "Locked Iron Chest", descEn: "Reinforced iron chest containing precious RuCoin and forging steel.", icon: "🔒", minCoins: 1200, maxCoins: 4500, matChance: 0.7, exp: 60 },
+        { id: "gold", name: "Rương Vàng Hải Tặc", nameEn: "Pirate Gold Chest", descEn: "Sunken pirate treasure box bursting with gold and rare gems.", icon: "👑", minCoins: 15000, maxCoins: 65000, matChance: 0.95, exp: 200 },
+        { id: "cosmic", name: "Rương Vũ Trụ Tối Thượng", nameEn: "Ultimate Cosmic Chest", descEn: "Legendary astral lockbox containing celestial stardust and divine fortune.", icon: "🌌", minCoins: 350000, maxCoins: 2500000, matChance: 1.0, exp: 1000 }
       ];
 
       // Materials Catalog (Nguyên liệu rèn)
@@ -1886,16 +1886,16 @@
 
       // Gears Catalog (Trang bị / Phụ kiện)
       const GEARS_CATALOG = [
-        { id: "ring_glass", name: "Nhẫn Thủy Tinh May Mắn", icon: "💍", luckBonus: 0.5, weightBonus: 50 },
-        { id: "ring_gold", name: "Nhẫn Hoàng Kim Biển Cả", icon: "👑", luckBonus: 1.8, weightBonus: 300 },
-        { id: "hook_silver", name: "Móc Câu Dạ Quang", icon: "🪝", luckBonus: 1.0, weightBonus: 500 },
-        { id: "line_titan", name: "Dây Cước Titan Cường Lực", icon: "🧵", luckBonus: 0.8, weightBonus: 2500 },
-        { id: "amulet_poseidon", name: "Bùa Hộ Mệnh Poseidon", icon: "🔱", luckBonus: 5.0, weightBonus: 15000 }
+        { id: "ring_glass", name: "Nhẫn Thủy Tinh May Mắn", nameEn: "Lucky Glass Ring", icon: "💍", luckBonus: 0.5, weightBonus: 50 },
+        { id: "ring_gold", name: "Nhẫn Hoàng Kim Biển Cả", nameEn: "Golden Ocean Ring", icon: "👑", luckBonus: 1.8, weightBonus: 300 },
+        { id: "hook_silver", name: "Móc Câu Dạ Quang", nameEn: "Luminescent Hook", icon: "🪝", luckBonus: 1.0, weightBonus: 500 },
+        { id: "line_titan", name: "Dây Cước Titan Cường Lực", nameEn: "Reinforced Titan Line", icon: "🧵", luckBonus: 0.8, weightBonus: 2500 },
+        { id: "amulet_poseidon", name: "Bùa Hộ Mệnh Poseidon", nameEn: "Poseidon Amulet", icon: "🔱", luckBonus: 5.0, weightBonus: 15000 }
       ];
 
       // Rod properties
       const RODS = {
-        rod_wood: { name: "Cần Gỗ Tập Sự", maxWeight: 10, luck: 0, cooldown: 8 },
+        rod_wood: { name: "Cần Gỗ Tập Sự", nameEn: "Ancient Sacred Wood", maxWeight: 10, luck: 0, cooldown: 8 },
         rod_iron: { name: "Cần Sắt Cường Hóa", maxWeight: 35, luck: 0.1, cooldown: 7 },
         rod_steampunk: { name: "Cần Steampunk Bánh Răng", maxWeight: 80, luck: 1.2, cooldown: 6 },
         rod_sapphire: { name: "Cần Lam Ngọc Ma Pháp", maxWeight: 200, luck: 1.5, cooldown: 5 },
@@ -1910,7 +1910,7 @@
         bait_shrimp: { name: "Mồi Tôm Tươi", luck: 0.35, biteSpeedMulti: 1.25 },
         bait_jellyfish: { name: "Mồi Sứa Phát Quang", luck: 0.5, biteSpeedMulti: 1.35 },
         bait_pepper: { name: "Mồi Ớt Dung Nham", luck: 0.85, biteSpeedMulti: 1.45 },
-        bait_stardust: { name: "Mồi Bụi Sao Vũ Trụ", luck: 1.25, biteSpeedMulti: 1.6 }
+        bait_stardust: { name: "Mồi Bụi Sao Vũ Trụ", nameEn: "Galaxy Stardust", luck: 1.25, biteSpeedMulti: 1.6 }
       };
 
       // 4 Weather Types
@@ -1924,56 +1924,56 @@
       // Fish Catalog Database
       const FISH_DATABASE = [
         // COMMON
-        { id: "17_orange_clownfish", name: "Cá Hề Cam", icon: "🐠", rarity: "common", island: "starter_island", minW: 0.2, maxW: 1.5, price: 15, emote: "Orange_clownfish (FG 1)" },
-        { id: "18_blue_tropical_tang", name: "Cá Đuối Xanh", icon: "🐟", rarity: "common", island: "starter_island", minW: 0.5, maxW: 3.0, price: 25, emote: "Blue_tropical_tang (FG 1)" },
-        { id: "21_mud_river_catfish", name: "Cá Trê Đầm Lầy", icon: "🐡", rarity: "common", island: "swamp_island", minW: 50, maxW: 200, price: 36, emote: "Mud_river_catfish (FG 1)" },
+        { id: "17_orange_clownfish", name: "Cá Hề Cam", nameEn: "Orange Clownfish", icon: "🐠", rarity: "common", island: "starter_island", minW: 0.2, maxW: 1.5, price: 15, emote: "Orange_clownfish (FG 1)" },
+        { id: "18_blue_tropical_tang", name: "Cá Đuối Xanh", nameEn: "Blue Tropical Tang", icon: "🐟", rarity: "common", island: "starter_island", minW: 0.5, maxW: 3.0, price: 25, emote: "Blue_tropical_tang (FG 1)" },
+        { id: "21_mud_river_catfish", name: "Cá Trê Đầm Lầy", nameEn: "Mud River Catfish", icon: "🐡", rarity: "common", island: "swamp_island", minW: 50, maxW: 200, price: 36, emote: "Mud_river_catfish (FG 1)" },
         
         // UNCOMMON
-        { id: "19_spiky_pufferfish", name: "Cá Nóc Gai", icon: "🐡", rarity: "uncommon", island: "starter_island", minW: 1, maxW: 4, price: 45, emote: "Spiky_pufferfish (FG 1)" },
-        { id: "25_frost_arctic_cod", name: "Cá Tuyết Bắc Cực", icon: "🐟", rarity: "uncommon", island: "arctic_island", minW: 100, maxW: 400, price: 84, emote: "Frost_arctic_cod (FG 2)" },
-        { id: "sprite_pink_coral_seahorse", name: "Cá Ngựa San Hô Hồng", icon: "🦐", rarity: "uncommon", island: "starter_island", minW: 0.4, maxW: 4.2, price: 48, emote: "Pink_coral_seahorse (FG 1)" },
+        { id: "19_spiky_pufferfish", name: "Cá Nóc Gai", nameEn: "Spiky Pufferfish", icon: "🐡", rarity: "uncommon", island: "starter_island", minW: 1, maxW: 4, price: 45, emote: "Spiky_pufferfish (FG 1)" },
+        { id: "25_frost_arctic_cod", name: "Cá Tuyết Bắc Cực", nameEn: "Frost Arctic Cod", icon: "🐟", rarity: "uncommon", island: "arctic_island", minW: 100, maxW: 400, price: 84, emote: "Frost_arctic_cod (FG 2)" },
+        { id: "sprite_pink_coral_seahorse", name: "Cá Ngựa San Hô Hồng", nameEn: "Pink Coral Seahorse", icon: "🦐", rarity: "uncommon", island: "starter_island", minW: 0.4, maxW: 4.2, price: 48, emote: "Pink_coral_seahorse (FG 1)" },
 
         // RARE
-        { id: "20_emerald_sea_turtle", name: "Rùa Biển Ngọc Bích", icon: "🐢", rarity: "rare", island: "starter_island", minW: 15, maxW: 60, price: 180, emote: "Rmerald_sea_turtle (FG 1)" },
-        { id: "22_high_voltage_electric_eel", name: "Lươn Điện Cao Thế", icon: "⚡", rarity: "rare", island: "swamp_island", minW: 150, maxW: 600, price: 180, emote: "High_voltage_electric_eel (FG 2)" },
-        { id: "29_molten_lava_koi", name: "Cá Koi Dung Nham", icon: "🔥", rarity: "rare", island: "volcanic_island", minW: 550, maxW: 2200, price: 396, emote: "Molten_lava_koi (FG 2)" },
+        { id: "20_emerald_sea_turtle", name: "Rùa Biển Ngọc Bích", nameEn: "Emerald Sea Turtle", icon: "🐢", rarity: "rare", island: "starter_island", minW: 15, maxW: 60, price: 180, emote: "Rmerald_sea_turtle (FG 1)" },
+        { id: "22_high_voltage_electric_eel", name: "Lươn Điện Cao Thế", nameEn: "High Voltage Electric Eel", icon: "⚡", rarity: "rare", island: "swamp_island", minW: 150, maxW: 600, price: 180, emote: "High_voltage_electric_eel (FG 2)" },
+        { id: "29_molten_lava_koi", name: "Cá Koi Dung Nham", nameEn: "Molten Lava Koi", icon: "🔥", rarity: "rare", island: "volcanic_island", minW: 550, maxW: 2200, price: 396, emote: "Molten_lava_koi (FG 2)" },
 
         // EPIC
-        { id: "23_giant_red_tail_arapaima", name: "Cá Hải Tượng Cổ Đại - Arapaima", icon: "🦈", rarity: "epic", island: "swamp_island", minW: 375, maxW: 1500, price: 600, emote: "Giant_red_tail_arapaima (FG 2)" },
-        { id: "26_crystalline_ice_swordfish", name: "Cá Kiếm Tinh Thể Băng", icon: "⚔️", rarity: "epic", island: "arctic_island", minW: 625, maxW: 2500, price: 910, emote: "Crystalline_ice_swordfish (FG 2)" },
-        { id: "30_obsidian_armored_catfish", name: "Cá Trê Thiết Giáp Hắc Diện Thạch", icon: "🛡️", rarity: "epic", island: "volcanic_island", minW: 1250, maxW: 5000, price: 1260, emote: "Obsidian_armored_catfish (FG 2)" },
+        { id: "23_giant_red_tail_arapaima", name: "Cá Hải Tượng Cổ Đại - Arapaima", nameEn: "Ancient Arapaima Gigas", icon: "🦈", rarity: "epic", island: "swamp_island", minW: 375, maxW: 1500, price: 600, emote: "Giant_red_tail_arapaima (FG 2)" },
+        { id: "26_crystalline_ice_swordfish", name: "Cá Kiếm Tinh Thể Băng", nameEn: "Crystal Ice Swordfish", icon: "⚔️", rarity: "epic", island: "arctic_island", minW: 625, maxW: 2500, price: 910, emote: "Crystalline_ice_swordfish (FG 2)" },
+        { id: "30_obsidian_armored_catfish", name: "Cá Trê Thiết Giáp Hắc Diện Thạch", nameEn: "Obsidian Armored Catfish", icon: "🛡️", rarity: "epic", island: "volcanic_island", minW: 1250, maxW: 5000, price: 1260, emote: "Obsidian_armored_catfish (FG 2)" },
 
         // LEGENDARY
-        { id: "31_albino_swamp_alligator", name: "Cá Sấu Bạch Tạng Đầm Lầy", icon: "🐊", rarity: "legendary", island: "swamp_island", minW: 1250, maxW: 5000, price: 1800, emote: "Albino_swamp_alligator (FG 3)" },
-        { id: "32_horned_unicorn_narwhal", name: "Cá Voi Kỳ Lân Narwhal", icon: "🦄", rarity: "legendary", island: "arctic_island", minW: 2000, maxW: 8000, price: 3080, emote: "Horned_unicorn_narwhal (FG 3)" },
-        { id: "33_flaming_phoenix_betta", name: "Cá Phượng Hoàng Lửa", icon: "🦚", rarity: "legendary", island: "volcanic_island", minW: 3000, maxW: 12000, price: 4500, emote: "Flaming_phoenix_betta (FG 3)" },
+        { id: "31_albino_swamp_alligator", name: "Cá Sấu Bạch Tạng Đầm Lầy", nameEn: "Albino Swamp Alligator", icon: "🐊", rarity: "legendary", island: "swamp_island", minW: 1250, maxW: 5000, price: 1800, emote: "Albino_swamp_alligator (FG 3)" },
+        { id: "32_horned_unicorn_narwhal", name: "Cá Voi Kỳ Lân Narwhal", nameEn: "Horned Unicorn Narwhal", icon: "🦄", rarity: "legendary", island: "arctic_island", minW: 2000, maxW: 8000, price: 3080, emote: "Horned_unicorn_narwhal (FG 3)" },
+        { id: "33_flaming_phoenix_betta", name: "Cá Phượng Hoàng Lửa", nameEn: "Flaming Phoenix Betta", icon: "🦚", rarity: "legendary", island: "volcanic_island", minW: 3000, maxW: 12000, price: 4500, emote: "Flaming_phoenix_betta (FG 3)" },
 
         // MYTHIC
-        { id: "34_yeti_furred_deep_angler", name: "Quái Ngư Lông Tuyết Yeti", icon: "❄️", rarity: "mythic", island: "arctic_island", minW: 3750, maxW: 15000, price: 7000, emote: "Yeti_furred_deep_angler (FG 3)" },
-        { id: "35_magma_chamber_leviathan", name: "Thủy Quái Nham Thạch Leviathan", icon: "🌋", rarity: "mythic", island: "volcanic_island", minW: 7500, maxW: 30000, price: 15300, emote: "Magma_chamber_leviathan (FG 3)" },
-        { id: "36_eldritch_void_kraken_spawn", name: "Bạch Tuộc Hư Không Cthulhu", icon: "🐙", rarity: "mythic", island: "abyssal_island", minW: 7500, maxW: 30000, price: 15200, emote: "Eldritch_void_kraken_spawn (FG 3)" },
+        { id: "34_yeti_furred_deep_angler", name: "Quái Ngư Lông Tuyết Yeti", nameEn: "Yeti Furred Deep Angler", icon: "❄️", rarity: "mythic", island: "arctic_island", minW: 3750, maxW: 15000, price: 7000, emote: "Yeti_furred_deep_angler (FG 3)" },
+        { id: "35_magma_chamber_leviathan", name: "Thủy Quái Nham Thạch Leviathan", nameEn: "Magma Chamber Leviathan", icon: "🌋", rarity: "mythic", island: "volcanic_island", minW: 7500, maxW: 30000, price: 15300, emote: "Magma_chamber_leviathan (FG 3)" },
+        { id: "36_eldritch_void_kraken_spawn", name: "Bạch Tuộc Hư Không Cthulhu", nameEn: "Eldritch Void Kraken Cthulhu", icon: "🐙", rarity: "mythic", island: "abyssal_island", minW: 7500, maxW: 30000, price: 15200, emote: "Eldritch_void_kraken_spawn (FG 3)" },
 
         // ANCIENT
-        { id: "39_nebula_galaxy_whale", name: "Cá Voi Tinh Vân Ngân Hà", icon: "🌌", rarity: "ancient", island: "astral_island", minW: 7500, maxW: 30000, price: 100000, emote: "Nebula_galaxy_whale (FG 4)" },
-        { id: "mini_black_hole_ray", name: "Cá Đuối Vortex Hố Đen Nhỏ", icon: "🌀", rarity: "ancient", island: "astral_island", minW: 3750, maxW: 15000, price: 27892, emote: "Mini_black_hole_vortex_ray (FG 4)" },
+        { id: "39_nebula_galaxy_whale", name: "Cá Voi Tinh Vân Ngân Hà", nameEn: "Nebula Galaxy Whale", icon: "🌌", rarity: "ancient", island: "astral_island", minW: 7500, maxW: 30000, price: 100000, emote: "Nebula_galaxy_whale (FG 4)" },
+        { id: "mini_black_hole_ray", name: "Cá Đuối Vortex Hố Đen Nhỏ", nameEn: "Mini Black Hole Vortex Ray", icon: "🌀", rarity: "ancient", island: "astral_island", minW: 3750, maxW: 15000, price: 27892, emote: "Mini_black_hole_vortex_ray (FG 4)" },
 
         // TRANSCENDENT
-        { id: "40_omniverse_dragon_carp", name: "Long Ngư Vũ Trụ Tối Thượng", icon: "🐉", rarity: "transcendent", island: "astral_island", minW: 12500, maxW: 50000, price: 400000, emote: "Omniverse_dragon_carp (FG 4)" },
-        { id: "abyssal_world_serpent", name: "Cự Xà Nuốt Thế Giới Vực Sâu", icon: "🐍", rarity: "transcendent", island: "abyssal_island", minW: 7500, maxW: 30000, price: 30125, emote: "Abyssal_world_devourer_serpent (FG 4)" },
+        { id: "40_omniverse_dragon_carp", name: "Long Ngư Vũ Trụ Tối Thượng", nameEn: "Omniverse Dragon Carp", icon: "🐉", rarity: "transcendent", island: "astral_island", minW: 12500, maxW: 50000, price: 400000, emote: "Omniverse_dragon_carp (FG 4)" },
+        { id: "abyssal_world_serpent", name: "Cự Xà Nuốt Thế Giới Vực Sâu", nameEn: "Abyssal World Devourer Serpent", icon: "🐍", rarity: "transcendent", island: "abyssal_island", minW: 7500, maxW: 30000, price: 30125, emote: "Abyssal_world_devourer_serpent (FG 4)" },
 
         // ETERNITY
-        { id: "immortal_vermilion_phoenix", name: "Chu Tước Bất Diệt Ngư", icon: "🔥", rarity: "eternity", island: "volcanic_island", minW: 32000, maxW: 40000, price: 1250000000, emote: "Immortal_vermilion_phoenix_fish (FG 4)" },
-        { id: "eternity_chronos_whale", name: "Cá Voi Thời Gian Chronos", icon: "⏳", rarity: "eternity", island: "astral_island", minW: 28000, maxW: 42000, price: 2500000000, emote: "Eternity_chronos_whale (FG 4)" },
+        { id: "immortal_vermilion_phoenix", name: "Chu Tước Bất Diệt Ngư", nameEn: "Immortal Vermilion Phoenix Fish", icon: "🔥", rarity: "eternity", island: "volcanic_island", minW: 32000, maxW: 40000, price: 1250000000, emote: "Immortal_vermilion_phoenix_fish (FG 4)" },
+        { id: "eternity_chronos_whale", name: "Cá Voi Thời Gian Chronos", nameEn: "Eternity Chronos Whale", icon: "⏳", rarity: "eternity", island: "astral_island", minW: 28000, maxW: 42000, price: 2500000000, emote: "Eternity_chronos_whale (FG 4)" },
 
         // INFINITY
-        { id: "apeiron_dimensional_serpent", name: "Mãng Xà Vô Cực Apeiron", icon: "♾️", rarity: "infinity", island: "astral_island", minW: 36000, maxW: 46000, price: 12500000000, emote: "Apeiron_dimensional_serpent (FG 4)" },
-        { id: "infinite_multiverse_jellyfish", name: "Sứa Đa Vũ Trụ Vô Tận", icon: "🪼", rarity: "infinity", island: "astral_island", minW: 34000, maxW: 46000, price: 12500000000, emote: "Infinite_multiverse_translucent_ (FG 4)" },
+        { id: "apeiron_dimensional_serpent", name: "Mãng Xà Vô Cực Apeiron", nameEn: "Apeiron Dimensional Serpent", icon: "♾️", rarity: "infinity", island: "astral_island", minW: 36000, maxW: 46000, price: 12500000000, emote: "Apeiron_dimensional_serpent (FG 4)" },
+        { id: "infinite_multiverse_jellyfish", name: "Sứa Đa Vũ Trụ Vô Tận", nameEn: "Infinite Multiverse Jellyfish", icon: "🪼", rarity: "infinity", island: "astral_island", minW: 34000, maxW: 46000, price: 12500000000, emote: "Infinite_multiverse_translucent_ (FG 4)" },
 
         // GENESIS
-        { id: "genesis_big_bang_dragon", name: "Thần Long Khai Thiên Big Bang", icon: "🌠", rarity: "genesis", island: "astral_island", minW: 43000, maxW: 50000, price: 75000000000, emote: "Genesis_big_bang_singularity_dra (FG 4)" },
+        { id: "genesis_big_bang_dragon", name: "Thần Long Khai Thiên Big Bang", nameEn: "Genesis Big Bang Singularity Dragon", icon: "🌠", rarity: "genesis", island: "astral_island", minW: 43000, maxW: 50000, price: 75000000000, emote: "Genesis_big_bang_singularity_dra (FG 4)" },
 
         // OMEGA
-        { id: "the_omega_anomaly", name: "Thần Ngư Hư Vô Omega", icon: "👁️", rarity: "omega", island: "astral_island", minW: 47000, maxW: 50000, price: 500000000000, emote: "The_omega_anomaly (FG 4)" }
+        { id: "the_omega_anomaly", name: "Thần Ngư Hư Vô Omega", nameEn: "The Omega Anomaly Void Fish", icon: "👁️", rarity: "omega", island: "astral_island", minW: 47000, maxW: 50000, price: 500000000000, emote: "The_omega_anomaly (FG 4)" }
       ];
 
       // Player State & Persistence
@@ -1997,6 +1997,124 @@
       let fishingState = "idle"; // idle, waiting, bite, qte
       let biteTimer = null;
       let currentPendingFish = null;
+
+      const I18N_TERMS = {
+        // Chests
+        "Thùng Gỗ Trôi Dạt": "Driftwood Crate",
+        "Rương Sắt Khóa Kín": "Locked Iron Chest",
+        "Rương Vàng Hải Tặc": "Pirate Gold Chest",
+        "Rương Vũ Trụ Tối Thượng": "Ultimate Cosmic Chest",
+        
+        // 28 Fish
+        "Cá Hề Cam": "Orange Clownfish",
+        "Cá Đuối Xanh": "Blue Tropical Tang",
+        "Cá Trê Đầm Lầy": "Mud River Catfish",
+        "Cá Nóc Gai": "Spiky Pufferfish",
+        "Cá Tuyết Bắc Cực": "Frost Arctic Cod",
+        "Cá Ngựa San Hô Hồng": "Pink Coral Seahorse",
+        "Rùa Biển Ngọc Bích": "Emerald Sea Turtle",
+        "Lươn Điện Cao Thế": "High Voltage Electric Eel",
+        "Cá Koi Dung Nham": "Molten Lava Koi",
+        "Cá Hải Tượng Cổ Đại - Arapaima": "Ancient Arapaima Gigas",
+        "Cá Kiếm Tinh Thể Băng": "Crystal Ice Swordfish",
+        "Cá Trê Thiết Giáp Hắc Diện Thạch": "Obsidian Armored Catfish",
+        "Cá Sấu Bạch Tạng Đầm Lầy": "Albino Swamp Alligator",
+        "Cá Voi Kỳ Lân Narwhal": "Horned Unicorn Narwhal",
+        "Cá Phượng Hoàng Lửa": "Flaming Phoenix Betta",
+        "Quái Ngư Lông Tuyết Yeti": "Yeti Furred Deep Angler",
+        "Thủy Quái Nham Thạch Leviathan": "Magma Chamber Leviathan",
+        "Bạch Tuộc Hư Không Cthulhu": "Eldritch Void Kraken Cthulhu",
+        "Cá Voi Tinh Vân Ngân Hà": "Nebula Galaxy Whale",
+        "Cá Đuối Vortex Hố Đen Nhỏ": "Mini Black Hole Vortex Ray",
+        "Long Ngư Vũ Trụ Tối Thượng": "Omniverse Dragon Carp",
+        "Cự Xà Nuốt Thế Giới Vực Sâu": "Abyssal World Devourer Serpent",
+        "Chu Tước Bất Diệt Ngư": "Immortal Vermilion Phoenix Fish",
+        "Cá Voi Thời Gian Chronos": "Eternity Chronos Whale",
+        "Mãng Xà Vô Cực Apeiron": "Apeiron Dimensional Serpent",
+        "Sứa Đa Vũ Trụ Vô Tận": "Infinite Multiverse Jellyfish",
+        "Thần Long Khai Thiên Big Bang": "Genesis Big Bang Singularity Dragon",
+        "Thần Ngư Hư Vô Omega": "The Omega Anomaly Void Fish",
+
+        // Materials
+        "Thép Tôi Luyện": "Tempered Steel",
+        "Gỗ Thần Cổ Thụ": "Ancient Sacred Wood",
+        "Vảy Rồng Băng": "Frost Dragon Scale",
+        "Lõi Núi Lửa": "Volcano Core",
+        "Mảnh Kim Cương Hư Không": "Void Diamond Shard",
+        "Bụi Sao Thiên Hà": "Galaxy Stardust",
+
+        // Gears
+        "Nhẫn Thủy Tinh May Mắn": "Lucky Glass Ring",
+        "Nhẫn Hoàng Kim Biển Cả": "Golden Ocean Ring",
+        "Móc Câu Dạ Quang": "Luminescent Hook",
+        "Dây Cước Titan Cường Lực": "Reinforced Titan Line",
+        "Bùa Hộ Mệnh Poseidon": "Poseidon Amulet",
+
+        // Rods
+        "Cần Gỗ Tập Sự": "Novice Wooden Rod",
+        "Cần Sắt Cường Hóa": "Reinforced Iron Rod",
+        "Cần Steampunk Bánh Răng": "Steampunk Gear Rod",
+        "Cần Lam Ngọc Ma Pháp": "Sapphire Magic Rod",
+        "Cần Hoàng Kim Long Tộc": "Golden Dragon Rod",
+        "Cần Tinh Vân Ngân Hà": "Galaxy Nebula Rod",
+        "Cần Thần Kích Poseidon": "Poseidon Trident Rod",
+
+        // Baits
+        "Mồi Giun Đất": "Earthworm Bait",
+        "Mồi Tôm Tươi": "Fresh Shrimp Bait",
+        "Mồi Sứa Phát Quang": "Bioluminescent Jellyfish Bait",
+        "Mồi Ớt Dung Nham": "Lava Chili Bait",
+        "Mồi Bụi Sao Vũ Trụ": "Cosmic Stardust Bait",
+
+        // Mutations
+        "Bạch Tạng": "Albino",
+        "Hoàng Kim": "Golden",
+        "Hư Không": "Void",
+        "Kim Cương": "Diamond",
+        "Nguyền Rủa": "Cursed",
+        "Thần Quang": "Divine Light",
+
+        // Rarities
+        "Phổ thông": "Common",
+        "Không phổ biến": "Uncommon",
+        "Hiếm": "Rare",
+        "Sử thi": "Epic",
+        "Huyền thoại": "Legendary",
+        "Thần thoại": "Mythic",
+        "Thái Cổ Lam": "Ancient",
+        "Siêu Việt Tinh Vân": "Transcendent",
+        "Vĩnh Hằng Hoàng Kim": "Eternity",
+        "Vô Cực Hư Không": "Infinity",
+        "Sáng Thế Khai Thiên": "Genesis",
+        "Tối Cao Dị Thường": "Omega Anomaly",
+
+        // Titles
+        "Ngư Dân Tập Sự": "Novice Angler",
+        "Thợ Câu Dày Dạn": "Seasoned Angler",
+        "Bá Chủ Đại Dương": "Ocean Conqueror",
+        "Kẻ Săn Thủy Quái": "Monster Hunter",
+        "Thần Câu Vũ Trụ": "Cosmic Legend",
+
+        // Weathers
+        "Nắng Ấm": "Warm Sunny",
+        "Mưa Rào": "Gentle Rain",
+        "Bão Sét": "Thunderstorm",
+        "Sương Mù Huyền Ảo": "Mystic Fog",
+        "Trăng Máu": "Blood Moon"
+      };
+
+      function tr(text) {
+        if (!text) return text;
+        if (currentLanguage === "en") {
+          return I18N_TERMS[text] || text;
+        }
+        return text;
+      }
+
+
+      
+      
+
       let currentPendingChest = null;
       let qteRound = 1;
       let qteScore = 0;
@@ -2055,7 +2173,7 @@
           playerLevel++;
           playerExp -= maxExp;
           skillPoints++;
-          showToast("🎉 CHÚC MỪNG! Bạn đã thăng cấp lên Lv." + playerLevel + "! (+1 Điểm Kỹ Năng)", "⭐");
+          showToast(currentLanguage === "en" ? ("🎉 CONGRATULATIONS! You leveled up to Lv." + playerLevel + "! (+1 Skill Point)") : ("🎉 CHÚC MỪNG! Bạn đã thăng cấp lên Lv." + playerLevel + "! (+1 Điểm Kỹ Năng)"), "⭐");
           playLevelUpSound();
         }
         updateStatsUI();
@@ -2210,20 +2328,88 @@
         const chosenFish = rollFishLoot();
         currentPendingFish = chosenFish;
 
-        // Rod weight check
         const rodKey = document.getElementById("select-rod").value;
         const rod = RODS[rodKey] || RODS.rod_wood;
         const star = rodStarLevels[rodKey] || 0;
         const starWeightBoost = 1 + star * 0.25;
         const gearWeightBoost = equippedGear ? equippedGear.weightBonus : 0;
-        const totalMaxWeight = (rod.maxWeight * starWeightBoost) + gearWeightBoost;
+        const totalMaxWeight = (rod.maxWeight * starWeightBoost) * (1 + gearWeightBoost);
 
         if (chosenFish.weightKg > totalMaxWeight) {
           fishingState = "idle";
           resetLakeUI();
-          showToast("💥 ĐỨT DÂY CÂU! " + chosenFish.name + " (" + chosenFish.weightKg.toLocaleString() + " kg) quá nặng so với sức tải của cần (" + Math.floor(totalMaxWeight).toLocaleString() + " kg)! Hãy nâng cấp cần ở Xưởng Rèn!", "⚠️");
+          playSnapSound();
+          if (currentLanguage === "en") {
+            showToast("💥 LINE SNAPPED! Fish (" + chosenFish.weightKg.toLocaleString() + " kg) was too heavy for rod capacity (" + totalMaxWeight.toLocaleString() + " kg)! Enhance rod at Forge!", "💥");
+          } else {
+            showToast("💥 ĐỨT DÂY CÂU! Cá (" + chosenFish.weightKg.toLocaleString() + " kg) quá nặng so với sức tải của cần (" + totalMaxWeight.toLocaleString() + " kg)! Hãy nâng cấp cần ở Xưởng Rèn!", "💥");
+          }
           return;
         }
+
+        fishingState = "idle";
+        resetLakeUI();
+        playCatchSuccessSound();
+
+        const rarityObj = RARITIES[chosenFish.rarity] || { name: "Common", color: "#38bdf8" };
+        const rBadge = document.getElementById("modal-rarity-badge");
+        rBadge.innerText = (currentLanguage === "en" ? (rarityObj.nameEn || tr(rarityObj.name)) : rarityObj.name).toUpperCase();
+        rBadge.style.background = rarityObj.color + "22";
+        rBadge.style.color = rarityObj.color;
+        rBadge.style.border = "1px solid " + rarityObj.color;
+
+        const sBadge = document.getElementById("modal-serial-badge");
+        if (chosenFish.serial) {
+          sBadge.innerText = chosenFish.serial;
+          sBadge.style.display = "inline-block";
+        } else {
+          sBadge.style.display = "none";
+        }
+
+        const iconWrap = document.getElementById("modal-fish-icon-wrap");
+        if (chosenFish.emoteUrl) {
+          iconWrap.innerHTML = `<img src="${chosenFish.emoteUrl}" style="width:96px; height:96px; object-fit:contain; filter:drop-shadow(0 0 16px ${rarityObj.color});" />`;
+        } else {
+          iconWrap.innerHTML = chosenFish.icon;
+        }
+        iconWrap.style.border = "2px solid " + rarityObj.color;
+        iconWrap.style.boxShadow = "0 0 30px " + rarityObj.color + "66";
+
+        const mutBadge = document.getElementById("modal-mutation-badge");
+        if (chosenFish.mutation) {
+          const mutName = tr(chosenFish.mutation.name);
+          const mutSuffix = currentLanguage === "en" ? (" (x" + chosenFish.mutation.multiplier + " Value)") : (" (x" + chosenFish.mutation.multiplier + " Giá)");
+          const mutPrefix = currentLanguage === "en" ? "✦ Mutation: " : "✦ Đột biến: ";
+          mutBadge.innerText = mutPrefix + mutName + mutSuffix;
+          mutBadge.style.color = chosenFish.mutation.color;
+          mutBadge.style.display = "inline-block";
+        } else {
+          mutBadge.style.display = "none";
+        }
+
+        const fishDisplayName = tr(chosenFish.name);
+        document.getElementById("modal-fish-name").innerText = fishDisplayName;
+        document.getElementById("modal-fish-price").innerText = "+" + chosenFish.finalPrice.toLocaleString() + " RuCoin";
+        document.getElementById("modal-fish-exp").innerText = "+" + chosenFish.exp + " EXP";
+        
+        if (currentLanguage === "en") {
+          document.getElementById("modal-fish-stats").innerText = "Length: " + chosenFish.lengthCm + " cm · Weight: " + chosenFish.weightKg.toLocaleString() + " kg";
+          document.getElementById("modal-btn-keep").innerText = "🎒 Backpack";
+          document.getElementById("modal-btn-aquarium").innerText = "🐠 Aquarium";
+          document.getElementById("modal-btn-sell").innerText = "💰 Sell Now";
+          if (document.getElementById("modal-fish-value-label")) document.getElementById("modal-fish-value-label").innerText = "VALUE";
+          if (document.getElementById("modal-fish-exp-label")) document.getElementById("modal-fish-exp-label").innerText = "EXPERIENCE";
+        } else {
+          document.getElementById("modal-fish-stats").innerText = "Chiều dài: " + chosenFish.lengthCm + " cm · Cân nặng: " + chosenFish.weightKg.toLocaleString() + " kg";
+          document.getElementById("modal-btn-keep").innerText = "🎒 Vào túi";
+          document.getElementById("modal-btn-aquarium").innerText = "🐠 Thủy Cung";
+          document.getElementById("modal-btn-sell").innerText = "💰 Bán ngay";
+          if (document.getElementById("modal-fish-value-label")) document.getElementById("modal-fish-value-label").innerText = "GIÁ TRỊ QUY ĐỔI";
+          if (document.getElementById("modal-fish-exp-label")) document.getElementById("modal-fish-exp-label").innerText = "KINH NGHIỆM";
+        }
+
+        document.getElementById("catch-modal").style.display = "flex";
+      }
 
         // QTE Trigger for rank >= 5
         const rarityRank = RARITIES[chosenFish.rarity].rank;
@@ -2320,7 +2506,7 @@
           return;
         }
 
-        document.getElementById("qte-round-badge").innerText = "LƯỢT " + qteRound + "/3: GIẰNG CO CĂNG DÂY";
+        document.getElementById("qte-round-badge").innerText = (currentLanguage === "en" ? ("ROUND " + qteRound + "/3: TENSION BATTLE") : ("LƯỢT " + qteRound + "/3: GIẰNG CO CĂNG DÂY"));
         const actions = ["pull", "hold", "loosen"];
         qteTargetAction = actions[Math.floor(Math.random() * actions.length)];
 
@@ -2366,7 +2552,7 @@
 
         if (chosenAction === qteTargetAction) {
           qteScore++;
-          showToast("Chuẩn xác! (+1 điểm)", "✨");
+          showToast(currentLanguage === "en" ? "Accurate! (+1 point)" : "Chuẩn xác! (+1 điểm)", "✨");
         } else {
           showToast("Bấm sai thao tác!", "❌");
         }
@@ -2435,20 +2621,31 @@
         if (currentPendingFish) {
           userInventory.unshift(currentPendingFish);
           updateStatsUI();
-          showToast("Đã lưu " + currentPendingFish.name + " vào Túi cá!", "🎒");
+          const fName = tr(currentPendingFish.name);
+          showToast(currentLanguage === "en" ? ("Saved " + fName + " to Backpack!") : ("Đã lưu " + fName + " vào Túi cá!"), "🎒");
         }
+        document.getElementById("catch-modal").style.display = "none";
+      }
         document.getElementById("catch-modal").style.display = "none";
       }
 
       function putFishInAquarium() {
         if (aquariumFishes.length >= 12) {
-          showToast("Thủy cung đã đầy (tối đa 12 con)! Hãy bán bớt cá trong bể.", "⚠️");
+          showToast(currentLanguage === "en" ? "Aquarium is full (max 12 fish)! Sell some fish in tank." : "Thủy cung đã đầy (tối đa 12 con)! Hãy bán bớt cá trong bể.", "⚠️");
           return;
         }
         if (currentPendingFish) {
           aquariumFishes.push(currentPendingFish);
           updateStatsUI();
-          showToast("Đã thả " + currentPendingFish.name + " vào Thủy Cung sinh lời!", "🐠");
+          const fName = tr(currentPendingFish.name);
+          showToast(currentLanguage === "en" ? ("Sent " + fName + " to Aquarium!") : ("Đã thả " + fName + " vào Thủy Cung sinh lời!"), "🐠");
+        }
+        document.getElementById("catch-modal").style.display = "none";
+      }
+        if (currentPendingFish) {
+          aquariumFishes.push(currentPendingFish);
+          updateStatsUI();
+          showToast(currentLanguage === "en" ? ("Sent " + getItemName(currentPendingFish) + " to Aquarium!") : ("Đã thả " + getItemName(currentPendingFish) + " vào Thủy Cung sinh lời!"), "🐠");
         }
         document.getElementById("catch-modal").style.display = "none";
       }
@@ -2457,8 +2654,11 @@
         if (currentPendingFish) {
           userRuCoin += currentPendingFish.finalPrice;
           updateStatsUI();
-          showToast("Đã bán " + currentPendingFish.name + " lấy +" + currentPendingFish.finalPrice.toLocaleString() + " RuCoin!", "💰");
+          const fName = tr(currentPendingFish.name);
+          showToast(currentLanguage === "en" ? ("Sold " + fName + " for +" + currentPendingFish.finalPrice.toLocaleString() + " RuCoin!") : ("Đã bán " + fName + " lấy +" + currentPendingFish.finalPrice.toLocaleString() + " RuCoin!"), "💰");
         }
+        document.getElementById("catch-modal").style.display = "none";
+      }
         document.getElementById("catch-modal").style.display = "none";
       }
 
@@ -2467,19 +2667,42 @@
         fishingState = "idle";
         resetLakeUI();
         
-        // Pick chest tier
         let chest = CHESTS[0];
         const r = Math.random();
-        if (r < 0.5) chest = CHESTS[0]; // Wooden crate
-        else if (r < 0.8) chest = CHESTS[1]; // Iron lockbox
-        else if (r < 0.95) chest = CHESTS[2]; // Pirate gold chest
-        else chest = CHESTS[3]; // Cosmic chest
+        if (r < 0.5) chest = CHESTS[0];
+        else if (r < 0.8) chest = CHESTS[1];
+        else if (r < 0.95) chest = CHESTS[2];
+        else chest = CHESTS[3];
 
         currentPendingChest = chest;
 
-        document.getElementById("chest-name").innerText = chest.name;
+        const chestDisplayName = tr(chest.name);
+        document.getElementById("chest-name").innerText = chestDisplayName;
         document.getElementById("chest-icon-anim").innerText = chest.icon;
-        document.getElementById("chest-desc").innerText = "Kéo lên thành công 1 " + chest.name + "! Bấm Mở Rương để khám phá phần thưởng!";
+        
+        if (currentLanguage === "en") {
+          document.getElementById("chest-desc").innerText = "Successfully reeled in 1 " + chestDisplayName + "! Click Open Chest to discover rewards!";
+          document.getElementById("chest-badge-text").innerText = "🎁 OCEAN TREASURE DISCOVERED";
+          document.getElementById("open-chest-action-btn").innerText = "✨ OPEN CHEST NOW";
+          document.getElementById("close-chest-btn").innerText = "Close";
+        } else {
+          document.getElementById("chest-desc").innerText = "Kéo lên thành công 1 " + chestDisplayName + "! Bấm Mở Rương để khám phá phần thưởng!";
+          document.getElementById("chest-badge-text").innerText = "🎁 PHÁT HIỆN RƯƠNG BÁU ĐẠI DƯƠNG";
+          document.getElementById("open-chest-action-btn").innerText = "✨ MỞ RƯƠNG NGAY";
+          document.getElementById("close-chest-btn").innerText = "Đóng lại";
+        }
+
+        document.getElementById("chest-rewards-wrap").style.display = "none";
+        document.getElementById("open-chest-action-btn").style.display = "block";
+        document.getElementById("close-chest-btn").style.display = "none";
+        document.getElementById("chest-modal").style.display = "flex";
+      } else {
+          document.getElementById("chest-desc").innerText = "Kéo lên thành công 1 " + chestDisplayName + "! Bấm Mở Rương để khám phá phần thưởng!";
+          document.getElementById("chest-badge-text").innerText = "🎁 PHÁT HIỆN RƯƠNG BÁU ĐẠI DƯƠNG";
+          document.getElementById("open-chest-action-btn").innerText = "✨ MỞ RƯƠNG NGAY";
+          document.getElementById("close-chest-btn").innerText = "Đóng lại";
+        }
+
         document.getElementById("chest-rewards-wrap").style.display = "none";
         document.getElementById("open-chest-action-btn").style.display = "block";
         document.getElementById("close-chest-btn").style.display = "none";
@@ -2496,14 +2719,25 @@
 
         let rewardListHtml = `<div style="font-size:14px; color:#f59e0b; margin-bottom:6px;"><strong>+${coins.toLocaleString()} RuCoin</strong></div>`;
 
-        // Check if material drops
         if (Math.random() < chest.matChance) {
           const matKeys = Object.keys(MATERIALS_CATALOG);
           const randKey = matKeys[Math.floor(Math.random() * matKeys.length)];
           const mat = MATERIALS_CATALOG[randKey];
           userMaterials[randKey] = (userMaterials[randKey] || 0) + 1;
-          rewardListHtml += `<div style="font-size:13px; color:#38bdf8;">+1 ${mat.icon} ${mat.name} (Nguyên liệu rèn)</div>`;
+          const matName = tr(mat.name);
+          const matSuffix = currentLanguage === "en" ? "(Forging Material)" : "(Nguyên liệu rèn)";
+          rewardListHtml += `<div style="font-size:13px; color:#38bdf8;">+1 ${mat.icon} ${matName} ${matSuffix}</div>`;
         }
+
+        playChestSound();
+
+        document.getElementById("chest-rewards-wrap").innerHTML = rewardListHtml;
+        document.getElementById("chest-rewards-wrap").style.display = "block";
+        document.getElementById("open-chest-action-btn").style.display = "none";
+        document.getElementById("close-chest-btn").style.display = "block";
+
+        updateStatsUI();
+      }
 
         playChestSound();
 
@@ -2684,7 +2918,7 @@
 
       function collectAquariumIncome() {
         if (aquariumPendingCoins <= 0) {
-          showToast("Chưa có RuCoin tích lũy nào để thu hoạch!", "ℹ️");
+          showToast(currentLanguage === "en" ? "No accumulated RuCoin to harvest yet!" : "Chưa có RuCoin tích lũy nào để thu hoạch!", "ℹ️");
           return;
         }
         userRuCoin += aquariumPendingCoins;
@@ -2728,7 +2962,7 @@
             document.getElementById("boss-start-btn").style.display = "inline-block";
             document.getElementById("boss-attack-btn").style.display = "none";
             document.getElementById("boss-timer-text").innerText = "0.0s";
-            showToast("Hết giờ! Thủy Quái Leviathan đã lặn trốn mất!", "💨");
+            showToast(currentLanguage === "en" ? "Time up! The Leviathan submerged and escaped!" : "Hết giờ! Thủy Quái Leviathan đã lặn trốn mất!", "💨");
           } else {
             document.getElementById("boss-timer-text").innerText = bossTimer.toFixed(1) + "s";
           }
@@ -2757,7 +2991,7 @@
           
           userRuCoin += 50000;
           addPlayerExp(500);
-          showToast("🏆 ĐẠI THẮNG! Bạn đã hạ gục Thủy Quái Nham Thạch Leviathan! Nhận +50,000 RuCoin và +500 EXP!", "🎉");
+          showToast(currentLanguage === "en" ? "🏆 VICTORY! Defeated Magma Leviathan! Earned +50,000 RuCoin and +500 EXP!" : "🏆 ĐẠI THẮNG! Bạn đã hạ gục Thủy Quái Nham Thạch Leviathan! Nhận +50,000 RuCoin và +500 EXP!", "🎉");
           playLevelUpSound();
         }
       }
