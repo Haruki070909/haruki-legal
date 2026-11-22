@@ -1311,3 +1311,225 @@ svg[fill="none"] {
   color: #ffffff !important;
 }
 
+
+
+/* ========================================================
+   EXPLOSIVE CYBERPUNK 2.0 VISUAL SYSTEM (MAGIC BEAMS & SPARKS)
+   ======================================================== */
+
+/* --- Continuous Flowing Text Gradient --- */
+.gradient-text-flowing {
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 25%, #818cf8 50%, #34d399 75%, #38bdf8 100%) !important;
+  background-size: 300% 300% !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: textFlow 6s ease infinite !important;
+  display: inline-block;
+}
+
+@keyframes textFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Interactive Ambient Cyber Spotlight --- */
+#cyber-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(650px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), rgba(56, 189, 248, 0.12), rgba(168, 85, 247, 0.06), transparent 70%);
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+}
+
+/* --- Magic Rotating Neon Border Beams --- */
+.bot-card {
+  position: relative;
+  background: #080c1a !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.bot-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, var(--card-beam, #38bdf8) 350deg, #ffffff 360deg);
+  animation: rotateLaser 4s linear infinite;
+  z-index: -2;
+  opacity: 0.65;
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+
+.bot-card::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: #080c1a;
+  border-radius: inherit;
+  z-index: -1;
+  transition: background 0.35s ease;
+}
+
+.bot-card.harubot {
+  --card-beam: #38bdf8;
+  --card-glow: rgba(56, 189, 248, 0.45);
+}
+
+.bot-card.harumod {
+  --card-beam: #10b981;
+  --card-glow: rgba(16, 185, 129, 0.45);
+}
+
+.bot-card:hover {
+  transform: translateY(-8px) scale(1.015) !important;
+}
+
+.bot-card:hover::before {
+  opacity: 1;
+  animation-duration: 2s;
+  filter: brightness(1.3) drop-shadow(0 0 12px var(--card-beam));
+}
+
+.bot-card.harubot:hover {
+  box-shadow: 0 30px 60px -12px rgba(56, 189, 248, 0.4), 0 0 45px rgba(56, 189, 248, 0.25), inset 0 0 30px rgba(56, 189, 248, 0.12) !important;
+}
+
+.bot-card.harumod:hover {
+  box-shadow: 0 30px 60px -12px rgba(16, 185, 129, 0.4), 0 0 45px rgba(16, 185, 129, 0.25), inset 0 0 30px rgba(16, 185, 129, 0.12) !important;
+}
+
+@keyframes rotateLaser {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Avatar Epic Holographic Pulsing --- */
+.bot-avatar-box {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease !important;
+}
+
+.bot-avatar-box::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+  animation: avatarRingPing 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.bot-card.harubot .bot-avatar-box { color: #38bdf8; }
+.bot-card.harumod .bot-avatar-box { color: #10b981; }
+
+@keyframes avatarRingPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.bot-card:hover .bot-avatar-box {
+  transform: scale(1.12) rotate(3deg) !important;
+}
+
+.bot-card.harubot:hover .bot-avatar-box {
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.8) !important;
+}
+
+.bot-card.harumod:hover .bot-avatar-box {
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.8) !important;
+}
+
+/* --- Feature Items: Futuristic Sliding High-Tech Strip --- */
+.bot-features-list li {
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  cursor: default;
+}
+
+.bot-features-list li:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  transform: translateX(10px) !important;
+  border-left: 2px solid var(--card-beam, #38bdf8);
+}
+
+.bot-features-list li:hover .feat-icon-badge {
+  transform: scale(1.2) rotate(4deg) !important;
+  box-shadow: 0 0 25px var(--card-beam, #38bdf8) !important;
+  border-color: var(--card-beam, #38bdf8) !important;
+}
+
+/* --- High-Gloss Button Shimmer Laser Sweep --- */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease !important;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-25deg);
+  animation: btnSweep 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btnSweep {
+  0%, 65% { left: -120%; }
+  100% { left: 220%; }
+}
+
+.btn:hover {
+  transform: translateY(-4px) scale(1.03) !important;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.55), 0 0 20px rgba(56, 189, 248, 0.4) !important;
+  filter: brightness(1.15) !important;
+}
+
+.btn-emerald:hover {
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.55), 0 0 20px rgba(16, 185, 129, 0.4) !important;
+  filter: brightness(1.15) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* --- Click Spark Particle Container --- */
+.cyber-spark {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 99999;
+  animation: sparkFade 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sparkFade {
+  0% { transform: scale(1) translate(0, 0); opacity: 1; }
+  100% { transform: scale(0) translate(var(--tx), var(--ty)); opacity: 0; }
+}
+
