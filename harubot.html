@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -1750,7 +1750,7 @@ select option {
  // =========================================================================
  // DUAL-LANGUAGE SYSTEM (VIETNAMESE & ENGLISH) FOR HARUBOT & FISHING RPG PRO
  // =========================================================================
- let currentLang = localStorage.getItem("haruki_lang") || "vi";
+ let currentLang = localStorage.getItem("haruki_lang") || "en";
 
  const I18N_DICTIONARY = {
  vi: {
@@ -4154,7 +4154,7 @@ select option {
  if (viBtn) viBtn.addEventListener("click", () =>setAppLanguage("vi"));
  if (enBtn) enBtn.addEventListener("click", () =>setAppLanguage("en"));
 
- const savedLang = localStorage.getItem("haruki_lang") || "vi";
+ const savedLang = localStorage.getItem("haruki_lang") || "en";
  setAppLanguage(savedLang);
  });
 
