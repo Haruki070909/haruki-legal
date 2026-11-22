@@ -658,3 +658,384 @@ footer {
 .legal-table tr:hover {
   background: rgba(255, 255, 255, 0.04) !important;
 }
+
+/* ========================================================
+   HARUKI ECOSYSTEM - PIXEL PERFECT ALIGNMENT & BESPOKE ICONS
+   ======================================================== */
+
+/* Navbar Brand - Symmetrical vertical alignment */
+.brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+  height: 42px !important;
+  vertical-align: middle !important;
+}
+
+.brand-avatar-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+  flex-shrink: 0;
+}
+
+.brand-avatar {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border: none !important;
+}
+
+.brand-name {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.brand-badge {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  padding: 4px 9px !important;
+  border-radius: 999px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* Bespoke SVG Icons */
+.svg-icon {
+  width: 1.15em;
+  height: 1.15em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  fill: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn .svg-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+/* Feature List with Custom Vector Badges */
+.bot-features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding: 0;
+}
+
+.bot-features-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+}
+
+.feat-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feat-icon-badge.cyan {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+.feat-icon-badge.emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+}
+
+.feat-icon-badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.bot-features-list li:hover .feat-icon-badge {
+  transform: scale(1.1);
+}
+
+/* Button Row - Exact 44px uniform symmetry */
+.bot-btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bot-btn-row .btn {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 0 16px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3) !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.45) !important;
+}
+
+.btn-emerald {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-emerald:hover {
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45) !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f1f5f9 !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  transform: translateY(-2px) scale(1.01) !important;
+}
+
+/* Legal Links below buttons */
+.bot-legal-links {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 0.85rem !important;
+  padding-top: 10px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  margin-top: 2px !important;
+}
+
+.bot-legal-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: var(--text-muted) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.bot-legal-links a:hover {
+  color: var(--accent-cyan) !important;
+}
+
+.bot-legal-links a svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* About Avatar & Decoration - Clean circle, ZERO ugly cyan border */
+.about-avatar-wrap {
+  position: relative !important;
+  width: 130px !important;
+  height: 130px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.about-avatar {
+  width: 114px !important;
+  height: 114px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  display: block !important;
+}
+
+.avatar-decoration {
+  position: absolute !important;
+  top: -10px !important;
+  left: -10px !important;
+  width: 150px !important;
+  height: 150px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  border: none !important;
+}
+
+.status-indicator {
+  position: absolute !important;
+  bottom: 8px !important;
+  right: 8px !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  border: 3px solid #0b0f19 !important;
+  z-index: 3 !important;
+}
+
+/* Watcher Section Radar Pulse */
+.watcher-icon-box {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #a855f7;
+  flex-shrink: 0;
+}
+
+.watcher-icon-box svg {
+  width: 22px;
+  height: 22px;
+}
+
+.radar-sweep-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(168, 85, 247, 0.6);
+  animation: radarPing 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes radarPing {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  75%, 100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* Cyber Canvas Background */
+#cyber-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+/* 3D Glass Card Tilt & Reflection */
+.bot-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+
+/* Prominent Glowing White Vector Badges */
+.feat-icon-badge {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 11px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.feat-icon-badge.cyan {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(99, 102, 241, 0.2)) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.6) !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.32), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
+}
+
+.feat-icon-badge.emerald {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.2)) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.32), inset 0 0 10px rgba(16, 185, 129, 0.15) !important;
+}
+
+.feat-icon-badge svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.feat-icon-badge.cyan svg.fill-white,
+.feat-icon-badge.emerald svg.fill-white {
+  fill: #ffffff !important;
+}
+
+.bot-features-list li:hover .feat-icon-badge {
+  transform: scale(1.12) translateY(-2px) !important;
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.55) !important;
+}
+
+.bot-features-list li:hover .feat-icon-badge.emerald {
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.55) !important;
+}
+
+/* Button & Link Icons Glow */
+.btn svg, .bot-legal-links a svg {
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  stroke: #ffffff;
+}

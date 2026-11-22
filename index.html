@@ -8,10 +8,12 @@
   <link rel="stylesheet" href="./shared.css">
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
+    /* Full Page Hero & Canvas Styling */
     .hero-portal {
-      padding: 100px 0 70px 0;
+      padding: 90px 0 60px 0;
       text-align: center;
       position: relative;
+      z-index: 1;
     }
     .hero-badge-row {
       display: flex;
@@ -24,12 +26,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-subtle);
       font-size: 0.85rem;
       color: var(--text-secondary);
+      backdrop-filter: blur(12px);
     }
     .hero-pill .dot {
       width: 8px;
@@ -42,8 +45,13 @@
       background: var(--accent-emerald);
       box-shadow: 0 0 10px var(--accent-emerald);
     }
+    .hero-pill .pill-svg {
+      width: 14px;
+      height: 14px;
+      color: #a855f7;
+    }
     .hero-title {
-      font-size: 3.5rem;
+      font-size: 3.4rem;
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1.15;
@@ -53,7 +61,7 @@
       margin-right: auto;
     }
     .hero-subtitle {
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       color: var(--text-secondary);
       max-width: 760px;
       margin: 0 auto 36px auto;
@@ -83,7 +91,7 @@
       flex-direction: column;
       justify-content: space-between;
       backdrop-filter: blur(16px);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
     }
     .bot-card::before {
@@ -98,16 +106,14 @@
     }
     .bot-card.harubot:hover {
       border-color: var(--border-glow-cyan);
-      box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
-      transform: translateY(-4px);
+      box-shadow: 0 20px 45px -12px rgba(56, 189, 248, 0.28);
     }
     .bot-card.harubot::before {
       background: linear-gradient(90deg, #38bdf8, #6366f1);
     }
     .bot-card.harumod:hover {
       border-color: var(--border-glow-emerald);
-      box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.2);
-      transform: translateY(-4px);
+      box-shadow: 0 20px 45px -12px rgba(16, 185, 129, 0.28);
     }
     .bot-card.harumod::before {
       background: linear-gradient(90deg, #10b981, #06b6d4);
@@ -118,18 +124,38 @@
       gap: 18px;
       margin-bottom: 20px;
     }
-    .bot-avatar {
-      width: 68px;
-      height: 68px;
+    .bot-avatar-box {
+      width: 64px;
+      height: 64px;
       border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .bot-avatar-box.cyan {
+      border: 2px solid rgba(56, 189, 248, 0.5);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+    }
+    .bot-avatar-box.emerald {
+      border: 2px solid rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+    }
+    .bot-avatar {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: block;
     }
     .bot-header-info h3 {
       font-size: 1.6rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .bot-tagline {
       font-size: 0.95rem;
@@ -138,26 +164,9 @@
     }
     .bot-desc {
       color: #cbd5e1;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       margin-bottom: 24px;
       line-height: 1.6;
-    }
-    .bot-features-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .bot-features-list li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.92rem;
-      color: #e2e8f0;
-    }
-    .bot-features-list li .icon {
-      font-size: 1.1rem;
     }
     .bot-card-footer {
       border-top: 1px solid var(--border-subtle);
@@ -166,318 +175,138 @@
       flex-direction: column;
       gap: 14px;
     }
-    .bot-btn-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .bot-legal-links {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      padding-top: 8px;
-    }
-    .bot-legal-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .bot-legal-links a:hover {
-      color: var(--accent-cyan);
-      text-decoration: underline;
-    }
 
-    /* About Section */
-    .about-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 48px;
-      backdrop-filter: blur(16px);
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    .about-avatar-wrap {
-      position: relative;
-      width: 136px;
-      height: 136px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .about-avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 50% !important;
-      object-fit: cover;
-      border: none !important;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
-    }
-    .avatar-decoration {
-      position: absolute;
-      top: -12%;
-      left: -12%;
-      width: 124%;
-      height: 124%;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .status-indicator {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 4px solid #070913;
-      z-index: 3;
-      transition: all 0.3s ease;
-    }
-    .about-content h3 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .about-content p {
-      color: #cbd5e1;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    .about-tags {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .about-tag {
-      padding: 6px 14px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-
-    /* Legal Table Matrix */
-    .legal-matrix-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-top: 24px;
-    }
+    /* Legal Table Styling */
     .legal-table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
-    }
-    .legal-table th, .legal-table td {
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border-subtle);
+      margin-top: 20px;
+      font-size: 0.95rem;
     }
     .legal-table th {
-      background: rgba(255, 255, 255, 0.03);
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
+      text-align: left;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
     }
-    .legal-table tr:hover {
+    .legal-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+    .legal-table tr:hover td {
       background: rgba(255, 255, 255, 0.02);
     }
     .url-chip {
       font-family: monospace;
       font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
       color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.08);
-      padding: 4px 8px;
-      border-radius: 4px;
       word-break: break-all;
     }
 
-    @media (max-width: 850px) {
+    /* Responsive */
+    @media (max-width: 900px) {
       .bot-cards-grid {
         grid-template-columns: 1fr;
-      }
-      .about-box {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .about-avatar-wrap {
-        margin: 0 auto;
       }
       .hero-title {
         font-size: 2.5rem;
       }
+      .navbar-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .bot-btn-row {
+        grid-template-columns: 1fr;
+      }
     }
-  
-    .avatar-decoration {
-      position: absolute;
-      top: -14px;
-      left: -14px;
-      width: 168px;
-      height: 168px;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .status-indicator {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 4px solid #070913;
-      z-index: 3;
-      transition: all 0.3s ease;
-    }
-    .status-indicator.online { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
-    .status-indicator.idle { background-color: #eab308; box-shadow: 0 0 12px #eab308; }
-    .status-indicator.dnd { background-color: #ef4444; box-shadow: 0 0 12px #ef4444; }
-    .status-indicator.offline { background-color: #64748b; }
-
-    .status-pill-live {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      margin-left: 10px;
-      vertical-align: middle;
-    }
-    .status-pill-live .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: #64748b;
-    }
-    .status-pill-live .dot.online { background-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
-    .status-pill-live .dot.idle { background-color: #eab308; box-shadow: 0 0 8px #eab308; }
-    .status-pill-live .dot.dnd { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
-    .status-pill-live .dot.offline { background-color: #64748b; }
-
-    .discord-activity-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      background: rgba(88, 101, 242, 0.12);
-      border: 1px solid rgba(88, 101, 242, 0.3);
-      font-size: 0.88rem;
-      color: #c7d2fe;
-      margin-bottom: 14px;
-    }
-
-    .spotify-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: rgba(30, 215, 96, 0.08);
-      border: 1px solid rgba(30, 215, 96, 0.3);
-      border-radius: var(--radius-md);
-      padding: 12px 18px;
-      margin: 16px 0;
-      max-width: 480px;
-    }
-    .spotify-art {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    .spotify-badge {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      color: #1ed760;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    .spotify-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 360px;
-    }
-    .spotify-artist {
-      font-size: 0.82rem;
-      color: #94a3b8;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 360px;
-    }
-
-    </style>
+  </style>
 </head>
 <body>
-  <div class="glow-blob glow-top-left"></div>
-  <div class="glow-blob glow-mid-right"></div>
-  <div class="glow-blob glow-bottom-left"></div>
 
-  <div class="container">
-    <nav class="navbar">
+  <!-- Cyber Animated Constellation Canvas Background -->
+  <canvas id="cyber-canvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-content">
       <a href="./index.html" class="brand">
-        <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar">
-        <span>HARUKI <span class="brand-badge">ECOSYSTEM</span></span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#about" class="nav-link" data-i18n="navAbout">Về Tác Giả</a></li>
-        <li><a href="#harubot" class="nav-link" data-i18n="navHaruBot">HaruBot</a></li>
-        <li><a href="#harumod" class="nav-link" data-i18n="navHaruMod">HaruMod</a></li>
-        <li><a href="#watcher" class="nav-link" data-i18n="navWatcher">Watcher</a></li>
-        <li><a href="#legal" class="nav-link" data-i18n="navLegal">Điều Khoản & Bảo Mật</a></li>
-      </ul>
-      <div class="nav-cta">
-        <div class="language-switch" role="group" aria-label="Choose language">
-          <button class="lang-opt active" id="portal-lang-vi" onclick="setPortalLanguage('vi')" type="button">VI</button>
-          <button class="lang-opt" id="portal-lang-en" onclick="setPortalLanguage('en')" type="button">EN</button>
+        <div class="brand-avatar-box">
+          <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar">
         </div>
-        <a href="https://discord.gg/gardenofdream" target="_blank" class="btn btn-secondary btn-sm">
-          <span>💬 Garden of Dream</span>
-        </a>
-      </div>
-    </nav>
+        <span class="brand-name">HARUKI</span>
+        <span class="brand-badge">ECOSYSTEM</span>
+      </a>
 
-    <!-- Hero -->
-    <header class="hero-portal">
-      <div class="hero-badge-row">
-        <div class="hero-pill"><span class="dot"></span> HaruBot V2 Online</div>
-        <div class="hero-pill"><span class="dot emerald"></span> HaruMod Pro Online</div>
-        <div class="hero-pill">⚡ Powered by Host 24/7</div>
-      </div>
-      <h1 class="hero-title" data-i18n="heroTitle">
-        Nâng tầm máy chủ Discord cùng <span class="gradient-text-cyan">HaruBot</span> & <span class="gradient-text-emerald">HaruMod</span>
-      </h1>
-      <p class="hero-subtitle" data-i18n="heroSubtitle">
-        Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.
-      </p>
-      <div class="hero-actions">
-        <a href="#harubot" class="btn btn-primary">
-          <span data-i18n="btnExploreBot">🎮 Khám phá HaruBot</span>
-        </a>
-        <a href="#harumod" class="btn btn-emerald">
-          <span data-i18n="btnExploreMod">🛡️ Khám phá HaruMod</span>
-        </a>
-        <a href="#legal" class="btn btn-secondary">
-          <span data-i18n="btnLegal">📋 Điều Khoản & Pháp Lý</span>
-        </a>
-      </div>
-    </header>
+      <nav class="nav-links">
+        <a href="#about" data-i18n="navAbout">Về Tác Giả</a>
+        <a href="#harubot" data-i18n="navHaruBot">HaruBot</a>
+        <a href="#harumod" data-i18n="navHaruMod">HaruMod</a>
+        <a href="#watcher" data-i18n="navWatcher">Watcher</a>
+        <a href="#legal" data-i18n="navLegal">Điều Khoản & Bảo Mật</a>
+      </nav>
 
-    <!-- Bot Showcase Dual Grid -->
+      <div style="display:flex; align-items:center; gap:12px;">
+        <!-- Language Switcher -->
+        <div class="lang-switch-wrap">
+          <button id="portal-lang-vi" class="lang-btn active" onclick="setPortalLanguage('vi')">VI</button>
+          <button id="portal-lang-en" class="lang-btn" onclick="setPortalLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Portal Section -->
+  <section class="hero-portal container">
+    <div class="hero-badge-row">
+      <span class="hero-pill">
+        <span class="dot"></span>
+        <span data-i18n="heroPill1">HaruBot V2 Trực Tuyến</span>
+      </span>
+      <span class="hero-pill">
+        <span class="dot emerald"></span>
+        <span data-i18n="heroPill2">HaruMod Pro Trực Tuyến</span>
+      </span>
+      <span class="hero-pill">
+        <span class="pill-svg"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <span data-i18n="heroPill3">Hạ Tầng Host 24/7</span>
+      </span>
+    </div>
+
+    <h1 class="hero-title" data-i18n="heroTitle">
+      Nâng tầm máy chủ Discord cùng <span class="gradient-text-cyan">HaruBot</span> & <span class="gradient-text-emerald">HaruMod</span>
+    </h1>
+
+    <p class="hero-subtitle" data-i18n="heroSubtitle">
+      Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#harubot" class="btn btn-primary">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15.5" cy="10.5" r="1" fill="currentColor"/><circle cx="17.5" cy="13.5" r="1" fill="currentColor"/></svg>
+        <span data-i18n="btnExploreBot">Khám Phá HaruBot</span>
+      </a>
+      <a href="#harumod" class="btn btn-emerald">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span data-i18n="btnExploreMod">Khám Phá HaruMod</span>
+      </a>
+      <a href="#legal" class="btn btn-secondary">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
+        <span data-i18n="btnLegal">Văn Bản Pháp Lý</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Bots Showcase Section -->
     <section id="bots">
       <div class="section-head">
         <span class="section-tag" data-i18n="secTagBots">HAI DÒNG SẢN PHẨM RIÊNG BIỆT</span>
@@ -490,34 +319,60 @@
         <article class="bot-card harubot" id="harubot">
           <div>
             <div class="bot-header">
-              <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="bot-avatar">
+              <div class="bot-avatar-box cyan">
+                <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="bot-avatar">
+              </div>
               <div class="bot-header-info">
-                <h3>HaruBot <span style="font-size:0.8rem; font-weight:600; color:#38bdf8; background:rgba(56,189,248,0.12); padding:3px 8px; border-radius:12px;">Entertainment</span></h3>
-                <p class="bot-tagline">Nhạc hay · Game vui · RPG Câu cá Pro · Kinh tế RuCoin</p>
+                <h3>HaruBot <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); padding:3px 10px; border-radius:12px;">Entertainment</span></h3>
+                <p class="bot-tagline" data-i18n="botTagline1">Nhạc hay · Game vui · RPG Câu cá Pro · Kinh tế RuCoin</p>
               </div>
             </div>
-            <p class="bot-desc">
+            <p class="bot-desc" data-i18n="botDesc1">
               HaruBot (Lil' Harus) là con bot giải trí thế hệ mới mang đến không gian âm nhạc sống động, bảng điều khiển Web Dashboard trực quan, hệ thống câu cá thời gian thực độc quyền với hơn 40 loài cá và cơ chế thăng hoa cấp độ (Ascension).
             </p>
             <ul class="bot-features-list">
-              <li><span class="icon">🎵</span> Trình phát nhạc Hi-Fi, Lyrics đồng bộ thời gian thực</li>
-              <li><span class="icon">🎛️</span> Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)</li>
-              <li><span class="icon">🎣</span> Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động</li>
-              <li><span class="icon">💎</span> Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân</li>
+              <li>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3.25a.75.75 0 0 0-.95-.72l-10 2.5A.75.75 0 0 0 8 5.75V15.2a3.5 3.5 0 1 0 1.5 2.92V8.4l8.5-2.12v6.92a3.5 3.5 0 1 0 1.5 2.92V3.25z"/></svg></span>
+                <span data-i18n="feat1_1">Trình phát nhạc Hi-Fi, Lyrics đồng bộ thời gian thực</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><circle cx="4" cy="12" r="2.5" fill="currentColor"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><circle cx="20" cy="14" r="2.5" fill="currentColor"/></svg></span>
+                <span data-i18n="feat1_2">Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7a4.5 4.5 0 0 1-9 0v-2"/><path d="m3 11 3 2.5"/><path d="M15 10c1.5-1 3.5-1 5 0M14 14c2-1 4.5-1 6.5 0"/></svg></span>
+                <span data-i18n="feat1_3">Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="10" y2="9"/><line x1="17" y1="3" x2="14" y2="9"/></svg></span>
+                <span data-i18n="feat1_4">Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="8" cy="11" r="3"/><path d="M14 9h4M14 13h4M4 18c0-2 2-3 4-3s4 1 4 3"/></svg></span>
+                <span data-i18n="feat1_5">Thẻ hồ sơ cá nhân tùy chỉnh & Bảng xếp hạng máy chủ</span>
+              </li>
             </ul>
           </div>
           <div class="bot-card-footer">
             <div class="bot-btn-row">
-              <a href="./harubot/index.html" class="btn btn-primary" style="justify-content:center;">
-                <span data-i18n="btnOpenBot">🌐 Mở Trang HaruBot</span>
+              <a href="./harubot/index.html" class="btn btn-primary">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span data-i18n="btnOpenBot">Mở Trang HaruBot</span>
               </a>
-              <a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
-                <span data-i18n="btnInviteBot">➕ Mời HaruBot</span>
+              <a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span data-i18n="btnInviteBot">Mời HaruBot</span>
               </a>
             </div>
             <div class="bot-legal-links">
-              <a href="./harubot/terms.html">📄 Điều khoản sử dụng (ToS)</a>
-              <a href="./harubot/privacy.html">🔒 Chính sách quyền riêng tư</a>
+              <a href="./harubot/terms.html">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span data-i18n="linkTosBot">Điều khoản sử dụng (ToS)</span>
+              </a>
+              <a href="./harubot/privacy.html">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
+                <span data-i18n="linkPrivacyBot">Chính sách quyền riêng tư</span>
+              </a>
             </div>
           </div>
         </article>
@@ -526,35 +381,60 @@
         <article class="bot-card harumod" id="harumod">
           <div>
             <div class="bot-header">
-              <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="bot-avatar" style="border: 2px solid rgba(16, 185, 129, 0.5); box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);">
+              <div class="bot-avatar-box emerald">
+                <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="bot-avatar">
+              </div>
               <div class="bot-header-info">
-                <h3>HaruMod <span style="font-size:0.8rem; font-weight:600; color:#10b981; background:rgba(16,185,129,0.12); padding:3px 8px; border-radius:12px;">Security & Mod</span></h3>
-                <p class="bot-tagline">Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ</p>
+                <h3>HaruMod <span style="font-size:0.75rem; font-weight:700; color:#10b981; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:3px 10px; border-radius:12px;">Security & Mod</span></h3>
+                <p class="bot-tagline" data-i18n="botTagline2">Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ</p>
               </div>
             </div>
-            <p class="bot-desc">
+            <p class="bot-desc" data-i18n="botDesc2">
               HaruMod là lá chắn an ninh toàn diện bảo vệ máy chủ Discord. Hỗ trợ hệ thống bẫy Honeypot, giám sát Anti-Wizz Staff, bộ lọc Auto-Mod đa tầng, ghi nhận 36 sự kiện log tách biệt 6 kênh và hệ thống Ticket/Forms chuyên nghiệp.
             </p>
             <ul class="bot-features-list">
-              <li><span class="icon">🚨</span> Honeypot Channels & Anti-Nuke khóa máy chủ khi phát hiện phá hoại</li>
-              <li><span class="icon">🛑</span> Auto-Mod đa tầng: Chặn link lừa đảo, file nguy hiểm (.exe, .bat), spam</li>
-              <li><span class="icon">📜</span> 36 Action Logs tách riêng 6 kênh (Mod, Tin nhắn, Thành viên, Voice...)</li>
-              <li><span class="icon">🎫</span> Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal</li>
-              <li><span class="icon">⚡</span> Hybrid Commands song song Prefix <code>h?</code> và Slash <code>/</code></li>
+              <li>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                <span data-i18n="feat2_1">Honeypot Bait Channels & Anti-Nuke khóa máy chủ khi raid</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="4"/><line x1="9" y1="14" x2="15" y2="8"/></svg></span>
+                <span data-i18n="feat2_2">Auto-Mod đa tầng: Chặn link lừa đảo, file độc hại, spam</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+                <span data-i18n="feat2_3">36 Action Logs tách riêng 6 kênh độc lập (Mod, Tin nhắn, Voice...)</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2M22 12a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><line x1="12" y1="6" x2="12" y2="18" stroke-dasharray="2 2"/></svg></span>
+                <span data-i18n="feat2_4">Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal</span>
+              </li>
+              <li>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+                <span data-i18n="feat2_5">Kiến trúc Hybrid Commands song song Prefix h? và Slash /</span>
+              </li>
             </ul>
           </div>
           <div class="bot-card-footer">
             <div class="bot-btn-row">
-              <a href="./harumod/index.html" class="btn btn-emerald" style="justify-content:center;">
-                <span data-i18n="btnOpenMod">🛡️ Mở Trang HaruMod</span>
+              <a href="./harumod/index.html" class="btn btn-emerald">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span data-i18n="btnOpenMod">Mở Trang HaruMod</span>
               </a>
-              <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
-                <span data-i18n="btnInviteMod">➕ Mời HaruMod</span>
+              <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span data-i18n="btnInviteMod">Mời HaruMod</span>
               </a>
             </div>
             <div class="bot-legal-links">
-              <a href="./harumod/terms.html">📄 Điều khoản sử dụng (ToS)</a>
-              <a href="./harumod/privacy.html">🔒 Chính sách quyền riêng tư</a>
+              <a href="./harumod/terms.html">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span data-i18n="linkTosMod">Điều khoản sử dụng (ToS)</span>
+              </a>
+              <a href="./harumod/privacy.html">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
+                <span data-i18n="linkPrivacyMod">Chính sách quyền riêng tư</span>
+              </a>
             </div>
           </div>
         </article>
@@ -562,21 +442,24 @@
     </section>
 
     <!-- Watcher Section -->
-    <section id="watcher">
-      <div class="card" style="border-left:4px solid var(--accent-purple);">
+    <section id="watcher" style="margin-top: 50px;">
+      <div class="card" style="border-left:4px solid var(--accent-purple); position:relative; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
           <div>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-              <span style="font-size:1.5rem;">📡</span>
-              <h3 style="font-size:1.4rem; font-weight:800;">Haru Bot Status Watcher</h3>
-              <span style="font-size:0.75rem; background:rgba(168,85,247,0.15); color:var(--accent-purple); padding:3px 8px; border-radius:12px; font-weight:700;">Service Daemon</span>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+              <div class="watcher-icon-box">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19a16 16 0 0 1 16 0"/><path d="M7 16a11 11 0 0 1 10 0"/><path d="M10 13a6 6 0 0 1 4 0"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
+                <span class="radar-sweep-ring"></span>
+              </div>
+              <h3 style="font-size:1.4rem; font-weight:800;" data-i18n="watcherTitle">Haru Bot Status Watcher</h3>
+              <span style="font-size:0.75rem; background:rgba(168,85,247,0.15); color:var(--accent-purple); border:1px solid rgba(168,85,247,0.3); padding:3px 10px; border-radius:12px; font-weight:700;">Service Daemon</span>
             </div>
-            <p style="color:var(--text-secondary); max-width:700px; font-size:0.95rem;">
+            <p style="color:var(--text-secondary); max-width:720px; font-size:0.95rem; line-height:1.6;" data-i18n="watcherDesc">
               Bot giám sát độc lập hoạt động 24/7 trên Host, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.
             </p>
           </div>
           <div>
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); padding:10px 18px; border-radius:10px; font-family:monospace; font-size:0.85rem; color:#a855f7;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.3); padding:10px 18px; border-radius:10px; font-family:monospace; font-size:0.85rem; color:#c084fc; box-shadow:0 0 15px rgba(168,85,247,0.15);">
               Uptime: 99.99% · 0 Downtime
             </div>
           </div>
@@ -585,8 +468,8 @@
     </section>
 
     <!-- About Developer -->
-    <section id="about">
-            <div class="about-box">
+    <section id="about" style="margin-top: 50px;">
+      <div class="about-box">
         <div class="about-avatar-wrap">
           <img id="discord-avatar" src="./haru-avatar.webp" alt="Haruki" class="about-avatar">
           <img id="discord-decoration" class="avatar-decoration" src="" style="display:none;" alt="">
@@ -594,96 +477,107 @@
         </div>
         <div class="about-content">
           <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-            <span class="section-tag" style="margin-bottom:0;">NHÀ PHÁT TRIỂN</span>
+            <span class="section-tag" style="margin-bottom:0;" data-i18n="secTagAbout">NHÀ PHÁT TRIỂN</span>
             <span id="discord-live-pill" class="status-pill-live">
               <span id="discord-live-dot" class="dot offline"></span>
               <span id="discord-live-text">Discord: haruki_kino</span>
             </span>
+            <span id="discord-activity-pill" class="status-pill-live" style="display:none; border-color:rgba(56,189,248,0.3); background:rgba(56,189,248,0.08);">
+              <span id="activity-icon" style="display:inline-flex; align-items:center;"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span>
+              <span id="activity-text" style="color:#e0f2fe;">Đang hoạt động</span>
+            </span>
           </div>
 
-          <h3 id="discord-name-heading">Haruki (<span style="color:var(--accent-cyan);">@haruki_kino</span>)</h3>
+          <h3 id="discord-name-heading" style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">Haruki (<span style="color:var(--accent-cyan);">@haruki_kino</span>)</h3>
           
-          <!-- Live Activity / Custom Status -->
-          <div id="discord-activity-pill" class="discord-activity-pill" style="display:none;">
-            <span id="activity-icon">💬</span>
-            <span id="activity-text"></span>
-          </div>
+          <p id="about-bio" style="color:var(--text-secondary); line-height:1.6; margin-bottom:16px;" data-i18n="aboutBio">
+            Xin chào! Mình là Haruki, lập trình viên độc lập đam mê phát triển các ứng dụng bot Discord và dịch vụ tự động hóa tối tân. Với mong muốn mang lại trải nghiệm mượt mà, tin cậy và an toàn nhất cho cộng đồng, mình đã sáng lập máy chủ <strong>Garden of Dream</strong> cùng hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong>.
+          </p>
 
-          <!-- Live Spotify -->
-          <div id="spotify-card" class="spotify-card" style="display:none;">
-            <img id="spotify-art" class="spotify-art" src="" alt="Album Art">
-            <div style="overflow:hidden;">
-              <div class="spotify-badge">🎧 ĐANG NGHE SPOTIFY TRÊN DISCORD</div>
+          <!-- Spotify Live Widget -->
+          <div id="spotify-card" class="spotify-widget" style="display:none;">
+            <img id="spotify-art" src="" alt="Album Art" class="spotify-art">
+            <div class="spotify-info">
+              <span class="spotify-badge">
+                <span class="spotify-wave"></span><span class="spotify-wave"></span><span class="spotify-wave"></span>
+                ĐANG NGHE SPOTIFY
+              </span>
               <div id="spotify-title" class="spotify-title">Tên bài hát</div>
               <div id="spotify-artist" class="spotify-artist">Nghệ sĩ</div>
             </div>
           </div>
 
-          <p>
-            Xin chào! Tôi là Haruki, một nhà phát triển độc lập đam mê xây dựng các sản phẩm tự động hóa và bot Discord chất lượng cao. Với mong muốn mang lại sự trải nghiệm mượt mà, ổn định và an toàn cho cộng đồng, tôi sáng lập và vận hành hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong> cùng máy chủ <strong>Garden of Dream</strong>.
-          </p>
-          <div class="about-tags">
-            <span class="about-tag">👨‍💻 Discord Bot Developer</span>
-            <span class="about-tag">Node.js / TypeScript</span>
-            <span class="about-tag">Python & Automation</span>
-            <span class="about-tag">Founder: Garden of Dream</span>
-            <span class="about-tag">Server Infrastructure & Security</span>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
+            <a href="https://discord.com/users/1028500296059596961" target="_blank" class="btn btn-secondary btn-sm">
+              <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+              <span>Discord Profile</span>
+            </a>
+            <a href="https://discord.gg/w7Bty4kZ8k" target="_blank" class="btn btn-secondary btn-sm">
+              <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-6h2v6zm0-8h-2V7h2v1z"/></svg>
+              <span>Garden of Dream</span>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Legal & Verification Directory -->
-    <section id="legal">
+    <!-- Legal & Terms Section -->
+    <section id="legal" style="margin-top: 60px; margin-bottom: 80px;">
       <div class="section-head">
-        <span class="section-tag">TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD</span>
-        <h2 class="section-title">Điều Khoản Dịch Vụ & Quyền Riêng Tư</h2>
-        <p class="section-desc">
-          Các liên kết chính thức dùng cho việc công khai minh bạch và khai báo trên Discord Developer Portal.
-        </p>
+        <span class="section-tag" data-i18n="secTagLegal">TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD</span>
+        <h2 class="section-title" data-i18n="secTitleLegal">Điều Khoản Dịch Vụ & Chính Sách Quyền Riêng Tư</h2>
+        <p class="section-desc" data-i18n="secDescLegal">Đường dẫn chính thức dùng để khai báo trên Discord Developer Portal.</p>
       </div>
 
-      <div class="legal-matrix-card">
+      <div class="card" style="padding:0; overflow:hidden;">
         <table class="legal-table">
           <thead>
             <tr>
-              <th>Dịch Vụ / Bot</th>
-              <th>Văn Bản</th>
-              <th>Đường Dẫn Chính Thức (Public URL)</th>
-              <th>Thao Tác</th>
+              <th data-i18n="thService">Dịch Vụ / Bot</th>
+              <th data-i18n="thDoc">Tài Liệu</th>
+              <th data-i18n="thUrl">Đường Dẫn Chính Thức (Public URL)</th>
+              <th style="text-align:right;" data-i18n="thAction">Thao Tác</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>HaruMod</strong> (ID: <code>1573727590538289283</code>)</td>
-              <td><span style="color:#10b981; font-weight:700;">Terms of Service</span></td>
-              <td><span class="url-chip" id="url-mod-tos">https://haruki070909.github.io/haruki-legal/harumod/terms.html</span></td>
-              <td>
-                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-tos')">📋 Copy</button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>HaruMod</strong> (ID: <code>1573727590538289283</code>)</td>
-              <td><span style="color:#10b981; font-weight:700;">Privacy Policy</span></td>
-              <td><span class="url-chip" id="url-mod-privacy">https://haruki070909.github.io/haruki-legal/harumod/privacy.html</span></td>
-              <td>
-                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-privacy')">📋 Copy</button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>HaruBot</strong> (ID: <code>1559612562008572084</code>)</td>
-              <td><span style="color:#38bdf8; font-weight:700;">Terms of Service</span></td>
+              <td><strong>HaruBot</strong> <span style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.1); padding:2px 8px; border-radius:10px;">ID: 1559...</span></td>
+              <td>Terms of Service</td>
               <td><span class="url-chip" id="url-bot-tos">https://haruki070909.github.io/haruki-legal/harubot/terms.html</span></td>
-              <td>
-                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-tos')">📋 Copy</button>
+              <td style="text-align:right;">
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-tos')">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                </button>
               </td>
             </tr>
             <tr>
-              <td><strong>HaruBot</strong> (ID: <code>1559612562008572084</code>)</td>
-              <td><span style="color:#38bdf8; font-weight:700;">Privacy Policy</span></td>
+              <td><strong>HaruBot</strong> <span style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.1); padding:2px 8px; border-radius:10px;">ID: 1559...</span></td>
+              <td>Privacy Policy</td>
               <td><span class="url-chip" id="url-bot-privacy">https://haruki070909.github.io/haruki-legal/harubot/privacy.html</span></td>
-              <td>
-                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-privacy')">📋 Copy</button>
+              <td style="text-align:right;">
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-privacy')">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HaruMod</strong> <span style="font-size:0.75rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 8px; border-radius:10px;">ID: 1573...</span></td>
+              <td>Terms of Service</td>
+              <td><span class="url-chip" id="url-mod-tos">https://haruki070909.github.io/haruki-legal/harumod/terms.html</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-tos')">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HaruMod</strong> <span style="font-size:0.75rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 8px; border-radius:10px;">ID: 1573...</span></td>
+              <td>Privacy Policy</td>
+              <td><span class="url-chip" id="url-mod-privacy">https://haruki070909.github.io/haruki-legal/harumod/privacy.html</span></td>
+              <td style="text-align:right;">
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-privacy')">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -691,56 +585,37 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="brand" style="margin-bottom:12px;">
-            <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar" style="width:32px; height:32px;">
-            <span>HARUKI ECOSYSTEM</span>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <a href="./index.html" class="brand" style="margin-bottom:8px;">
+          <div class="brand-avatar-box">
+            <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar">
           </div>
-          <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; max-width:320px;">
-            Hệ sinh thái bot Discord hiện đại, bảo mật và thân thiện. Xây dựng và duy trì bởi Haruki (haruki_kino).
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>HaruBot</h4>
-          <ul class="footer-links">
-            <li><a href="./harubot/index.html">Trang Giới Thiệu</a></li>
-            <li><a href="./harubot/terms.html">Điều khoản sử dụng</a></li>
-            <li><a href="./harubot/privacy.html">Chính sách bảo mật</a></li>
-            <li><a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank">Mời HaruBot</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>HaruMod</h4>
-          <ul class="footer-links">
-            <li><a href="./harumod/index.html">Trang Giới Thiệu</a></li>
-            <li><a href="./harumod/terms.html">Điều khoản sử dụng</a></li>
-            <li><a href="./harumod/privacy.html">Chính sách bảo mật</a></li>
-            <li><a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank">Mời HaruMod</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Cộng Đồng</h4>
-          <ul class="footer-links">
-            <li><a href="https://discord.gg/gardenofdream" target="_blank">Discord Garden of Dream</a></li>
-            <li><a href="https://github.com/Haruki070909" target="_blank">GitHub Profile</a></li>
-            <li><a href="https://discord.gg/gardenofdream" target="_blank">Dedicated Cloud Host</a></li>
-          </ul>
-        </div>
+          <span class="brand-name">HARUKI</span>
+          <span class="brand-badge">ECOSYSTEM</span>
+        </a>
+        <p style="color:var(--text-secondary); font-size:0.9rem; max-width:400px; margin-top:8px;" data-i18n="footerDesc">
+          Hệ sinh thái bot Discord hiện đại, an toàn và tối ưu cho người dùng. Phát triển và vận hành bởi Haruki (haruki_kino).
+        </p>
       </div>
-      <div class="footer-bottom">
-        <div>© 2026 Haruki (haruki_kino). Bản quyền được bảo lưu.</div>
-        <div>Hosted on GitHub Pages · Running 24/7 on Dedicated Host</div>
+      <div style="text-align:right;">
+        <p style="color:var(--text-muted); font-size:0.85rem;" data-i18n="footerCopy">
+          &copy; 2026 Haruki (haruki_kino). All rights reserved.
+        </p>
       </div>
-    </footer>
+    </div>
+  </footer>
+
+  <!-- Toast Copy Notification -->
+  <div id="copy-toast" style="display:none; position:fixed; bottom:24px; right:24px; background:#10b981; color:#fff; padding:12px 20px; border-radius:10px; font-weight:600; box-shadow:0 10px 25px rgba(0,0,0,0.5); z-index:9999; align-items:center; gap:8px;">
+    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> <span>Đã sao chép liên kết vào bộ nhớ tạm!</span>
   </div>
 
-  <div id="copy-toast" class="copy-toast">
-    <span>✅</span> <span id="toast-text">Đã sao chép liên kết vào bộ nhớ tạm!</span>
-  </div>
-
+  <!-- Interactive Scripts -->
   <script>
     function copyLink(elementId) {
       const text = document.getElementById(elementId).innerText;
@@ -762,7 +637,7 @@
       if (!d || !d.discord_user) return;
       const user = d.discord_user;
 
-      // 1. Avatar (supports Animated GIF if Nitro)
+      // 1. Avatar (Nitro animated or static)
       if (user.avatar) {
         const ext = user.avatar.startsWith("a_") ? "gif" : "webp";
         const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=256`;
@@ -772,7 +647,7 @@
         }
       }
 
-      // 2. Avatar Decoration (Nitro decorations)
+      // 2. Avatar Decoration
       const decoEl = document.getElementById("discord-decoration");
       if (user.avatar_decoration_data && user.avatar_decoration_data.asset) {
         decoEl.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png`;
@@ -835,16 +710,14 @@
         let emojiText = "";
         if (customStatus.emoji) {
           if (customStatus.emoji.id) {
-            emojiText = `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.webp?size=44" style="width:18px;height:18px;vertical-align:middle;margin-right:4px;">`;
+            emojiText = `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.webp?size=44" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;">`;
           } else {
             emojiText = `${customStatus.emoji.name} `;
           }
         }
-        document.getElementById("activity-icon").innerHTML = "💬";
         document.getElementById("activity-text").innerHTML = `${emojiText}${customStatus.state}`;
       } else if (otherActivity) {
         activityPill.style.display = "inline-flex";
-        document.getElementById("activity-icon").innerHTML = "🎮";
         document.getElementById("activity-text").innerText = `Đang chơi: ${otherActivity.name}`;
       } else if (activityPill) {
         activityPill.style.display = "none";
@@ -853,28 +726,29 @@
 
     // Initial REST fetch
     fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
-      .then(res => res.json())
+      .then(r => r.json())
       .then(res => {
-        if (res.success && res.data) {
-          updatePresenceUI(res.data);
-        }
+        if (res.success && res.data) updatePresenceUI(res.data);
       })
-      .catch(() => {});
+      .catch(e => console.log("Lanyard fetch error", e));
 
-    // Real-time WebSocket connection
-    function initLanyardSocket() {
+    // WebSocket real-time subscription
+    let lanyardWs;
+    function connectLanyardWs() {
       try {
-        const ws = new WebSocket("wss://api.lanyard.rest/socket");
-        let heartbeatTimer = null;
+        lanyardWs = new WebSocket("wss://api.lanyard.rest/socket");
+        let heartbeatInterval;
 
-        ws.onmessage = (event) => {
+        lanyardWs.onmessage = (event) => {
           const msg = JSON.parse(event.data);
-          if (msg.op === 1) { // Hello
-            heartbeatTimer = setInterval(() => {
-              ws.send(JSON.stringify({ op: 3 }));
+          if (msg.op === 1) {
+            heartbeatInterval = setInterval(() => {
+              if (lanyardWs.readyState === WebSocket.OPEN) {
+                lanyardWs.send(JSON.stringify({ op: 3 }));
+              }
             }, msg.d.heartbeat_interval);
 
-            ws.send(JSON.stringify({
+            lanyardWs.send(JSON.stringify({
               op: 2,
               d: { subscribe_to_id: DISCORD_USER_ID }
             }));
@@ -883,18 +757,18 @@
           }
         };
 
-        ws.onclose = () => {
-          if (heartbeatTimer) clearInterval(heartbeatTimer);
-          setTimeout(initLanyardSocket, 6000);
+        lanyardWs.onclose = () => {
+          clearInterval(heartbeatInterval);
+          setTimeout(connectLanyardWs, 5000);
         };
-      } catch(e) {}
+      } catch(err) {
+        console.log("WebSocket connect error", err);
+      }
     }
-
-    initLanyardSocket();
+    connectLanyardWs();
   </script>
 
-
-  <!-- Full Bilingual Translation Engine for Portal -->
+  <!-- Internationalization (VI/EN) Engine - CLEAN TEXT LABELS WITHOUT RAW EMOJIS -->
   <script>
     const PORTAL_I18N = {
       vi: {
@@ -905,12 +779,12 @@
         navLegal: "Điều Khoản & Bảo Mật",
         heroPill1: "HaruBot V2 Trực Tuyến",
         heroPill2: "HaruMod Pro Trực Tuyến",
-        heroPill3: "⚡ Hạ Tầng Host 24/7",
+        heroPill3: "Hạ Tầng Host 24/7",
         heroTitle: "Nâng tầm máy chủ Discord cùng <span class=\"gradient-text-cyan\">HaruBot</span> & <span class=\"gradient-text-emerald\">HaruMod</span>",
         heroSubtitle: "Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.",
-        btnExploreBot: "🎮 Khám phá HaruBot",
-        btnExploreMod: "🛡️ Khám phá HaruMod",
-        btnLegal: "📋 Điều Khoản & Pháp Lý",
+        btnExploreBot: "Khám Phá HaruBot",
+        btnExploreMod: "Khám Phá HaruMod",
+        btnLegal: "Văn Bản Pháp Lý",
         secTagBots: "HAI DÒNG SẢN PHẨM RIÊNG BIỆT",
         secTitleBots: "Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn",
         secDescBots: "Mỗi bot được xây dựng và tối ưu chuyên sâu cho từng mục đích riêng biệt.",
@@ -920,50 +794,51 @@
         feat1_2: "Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)",
         feat1_3: "Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động",
         feat1_4: "Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân",
-        btnOpenBot: "🌐 Mở Trang HaruBot",
-        btnInviteBot: "➕ Mời HaruBot",
-        linkTosBot: "📄 Điều khoản sử dụng (ToS)",
-        linkPrivacyBot: "🔒 Chính sách quyền riêng tư",
+        feat1_5: "Thẻ hồ sơ cá nhân tùy chỉnh & Bảng xếp hạng máy chủ",
+        btnOpenBot: "Mở Trang HaruBot",
+        btnInviteBot: "Mời HaruBot",
+        linkTosBot: "Điều khoản sử dụng (ToS)",
+        linkPrivacyBot: "Chính sách quyền riêng tư",
         botTagline2: "Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ",
         botDesc2: "HaruMod là lá chắn an ninh toàn diện bảo vệ máy chủ Discord. Hỗ trợ hệ thống bẫy Honeypot, giám sát Anti-Wizz Staff, bộ lọc Auto-Mod đa tầng, ghi nhận 36 sự kiện log tách biệt 6 kênh và hệ thống Ticket/Forms chuyên nghiệp.",
-        feat2_1: "Honeypot Channels & Anti-Nuke khóa máy chủ khi phát hiện phá hoại",
-        feat2_2: "Auto-Mod đa tầng: Chặn link lừa đảo, file nguy hiểm (.exe, .bat), spam",
-        feat2_3: "36 Action Logs tách riêng 6 kênh (Mod, Tin nhắn, Thành viên, Voice...)",
+        feat2_1: "Honeypot Bait Channels & Anti-Nuke khóa máy chủ khi raid",
+        feat2_2: "Auto-Mod đa tầng: Chặn link lừa đảo, file độc hại, spam",
+        feat2_3: "36 Action Logs tách riêng 6 kênh độc lập (Mod, Tin nhắn, Voice...)",
         feat2_4: "Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal",
-        feat2_5: "Hybrid Commands song song Prefix h? và Slash /",
-        btnOpenMod: "🛡️ Mở Trang HaruMod",
-        btnInviteMod: "➕ Mời HaruMod",
-        linkTosMod: "📄 Điều khoản sử dụng (ToS)",
-        linkPrivacyMod: "🔒 Chính sách quyền riêng tư",
+        feat2_5: "Kiến trúc Hybrid Commands song song Prefix h? và Slash /",
+        btnOpenMod: "Mở Trang HaruMod",
+        btnInviteMod: "Mời HaruMod",
+        linkTosMod: "Điều khoản sử dụng (ToS)",
+        linkPrivacyMod: "Chính sách quyền riêng tư",
         watcherTitle: "Haru Bot Status Watcher",
         watcherDesc: "Bot giám sát độc lập hoạt động 24/7 trên Host, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.",
         secTagAbout: "NHÀ PHÁT TRIỂN",
-        aboutBio: "Xin chào! Tôi là Haruki, một nhà phát triển độc lập đam mê xây dựng các sản phẩm tự động hóa và bot Discord chất lượng cao. Với mong muốn mang lại sự trải nghiệm mượt mà, ổn định và an toàn cho cộng đồng, tôi sáng lập và vận hành hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong> cùng máy chủ <strong>Garden of Dream</strong>.",
+        aboutBio: "Xin chào! Mình là Haruki, lập trình viên độc lập đam mê phát triển các ứng dụng bot Discord và dịch vụ tự động hóa tối tân. Với mong muốn mang lại trải nghiệm mượt mà, tin cậy và an toàn nhất cho cộng đồng, mình đã sáng lập máy chủ <strong>Garden of Dream</strong> cùng hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong>.",
         secTagLegal: "TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD",
-        secTitleLegal: "Điều Khoản Dịch Vụ & Quyền Riêng Tư",
-        secDescLegal: "Các liên kết chính thức dùng cho việc công khai minh bạch và khai báo trên Discord Developer Portal.",
+        secTitleLegal: "Điều Khoản Dịch Vụ & Chính Sách Quyền Riêng Tư",
+        secDescLegal: "Đường dẫn chính thức dùng để khai báo trên Discord Developer Portal.",
         thService: "Dịch Vụ / Bot",
-        thDoc: "Văn Bản",
+        thDoc: "Tài Liệu",
         thUrl: "Đường Dẫn Chính Thức (Public URL)",
         thAction: "Thao Tác",
-        copyBtn: "📋 Copy",
-        footerDesc: "Hệ sinh thái bot Discord hiện đại, bảo mật và thân thiện. Xây dựng và duy trì bởi Haruki (haruki_kino).",
-        footerCopy: "© 2026 Haruki (haruki_kino). Bản quyền được bảo lưu."
+        copyBtn: "Sao chép",
+        footerDesc: "Hệ sinh thái bot Discord hiện đại, an toàn và tối ưu cho người dùng. Phát triển và vận hành bởi Haruki (haruki_kino).",
+        footerCopy: "© 2026 Haruki (haruki_kino). All rights reserved."
       },
       en: {
-        navAbout: "About Creator",
+        navAbout: "About Author",
         navHaruBot: "HaruBot",
         navHaruMod: "HaruMod",
         navWatcher: "Watcher",
         navLegal: "Legal & Privacy",
         heroPill1: "HaruBot V2 Online",
         heroPill2: "HaruMod Pro Online",
-        heroPill3: "⚡ Powered by Host 24/7",
+        heroPill3: "Powered by Host 24/7",
         heroTitle: "Elevate Your Discord Server with <span class=\"gradient-text-cyan\">HaruBot</span> & <span class=\"gradient-text-emerald\">HaruMod</span>",
         heroSubtitle: "Official portal of developer <strong>Haruki (haruki_kino)</strong>. Comprehensive solutions from Hi-Fi music, RPG fishing simulation, to anti-nuke security and 36-event audit moderation.",
-        btnExploreBot: "🎮 Explore HaruBot",
-        btnExploreMod: "🛡️ Explore HaruMod",
-        btnLegal: "📋 Legal & Policies",
+        btnExploreBot: "Explore HaruBot",
+        btnExploreMod: "Explore HaruMod",
+        btnLegal: "Legal & Policies",
         secTagBots: "TWO DISTINCT PRODUCT LINES",
         secTitleBots: "Choose the Perfect Bot for Your Server",
         secDescBots: "Each bot is architected and deeply optimized for its dedicated purpose.",
@@ -973,10 +848,11 @@
         feat1_2: "Web Dashboard with live controls & 10 audio filters (8D, Bassboost)",
         feat1_3: "RPG Fishing ecosystem with dynamic lakes, rods, baits & talents",
         feat1_4: "RuCoin economy, black market, Ascension titles & user cards",
-        btnOpenBot: "🌐 Open HaruBot",
-        btnInviteBot: "➕ Invite HaruBot",
-        linkTosBot: "📄 Terms of Service (ToS)",
-        linkPrivacyBot: "🔒 Privacy Policy",
+        feat1_5: "Customizable Profile Cards & Server Leaderboards",
+        btnOpenBot: "Open HaruBot",
+        btnInviteBot: "Invite HaruBot",
+        linkTosBot: "Terms of Service (ToS)",
+        linkPrivacyBot: "Privacy Policy",
         botTagline2: "Maximum Security · Anti-Nuke · 36 Action Logs · Tickets",
         botDesc2: "HaruMod is an impenetrable multi-layer security shield for Discord servers. Features honeypot bait channels, staff anti-wizz monitor, multi-tiered auto-mod, 36 action log streams across 6 channels, and modal ticket forms.",
         feat2_1: "Honeypot Bait Channels & Anti-Nuke server lockdown on raid",
@@ -984,10 +860,10 @@
         feat2_3: "36 Granular Action Logs routed to 6 independent log channels",
         feat2_4: "1-on-1 Ticket Panels with HTML transcripts & Discord Modal forms",
         feat2_5: "Hybrid Command architecture: Prefix h? and Slash / in parallel",
-        btnOpenMod: "🛡️ Open HaruMod",
-        btnInviteMod: "➕ Invite HaruMod",
-        linkTosMod: "📄 Terms of Service (ToS)",
-        linkPrivacyMod: "🔒 Privacy Policy",
+        btnOpenMod: "Open HaruMod",
+        btnInviteMod: "Invite HaruMod",
+        linkTosMod: "Terms of Service (ToS)",
+        linkPrivacyMod: "Privacy Policy",
         watcherTitle: "Haru Bot Status Watcher",
         watcherDesc: "Independent service daemon operating 24/7 on Host, continuously monitoring heartbeats of HaruBot and HaruMod, automatically recovering and alerting on incidents.",
         secTagAbout: "THE DEVELOPER",
@@ -999,7 +875,7 @@
         thDoc: "Document",
         thUrl: "Official Public URL",
         thAction: "Actions",
-        copyBtn: "📋 Copy",
+        copyBtn: "Copy",
         footerDesc: "Modern, secure, and user-first Discord bot ecosystem. Built and maintained by Haruki (haruki_kino).",
         footerCopy: "© 2026 Haruki (haruki_kino). All rights reserved."
       }
@@ -1035,6 +911,123 @@
     document.addEventListener("DOMContentLoaded", () => {
       const saved = localStorage.getItem("haruki_lang") || "vi";
       setPortalLanguage(saved);
+    });
+  </script>
+
+  <!-- Interactive 60fps Starfield Constellation Canvas -->
+  <script>
+    const canvas = document.getElementById("cyber-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    window.addEventListener("mouseout", () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(Math.floor((width * height) / 12000), 100);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 2 + 1,
+          color: Math.random() > 0.5 ? "rgba(56, 189, 248, " : "rgba(16, 185, 129, ",
+          alpha: Math.random() * 0.6 + 0.2
+        });
+      }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw and update particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx = -p.vx;
+        if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+        // Mouse interaction
+        if (mouse.x !== null) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            p.x -= (dx / dist) * force * 1.5;
+            p.y -= (dy / dist) * force * 1.5;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ")";
+        ctx.fill();
+
+        // Connect constellation lines
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+
+  <!-- 3D Card Tilt Physics with Specular Light Reflection -->
+  <script>
+    document.querySelectorAll(".bot-card").forEach(card => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5.5;
+        const rotateY = ((x - centerX) / centerX) * 5.5;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
     });
   </script>
 
