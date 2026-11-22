@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haruki Developer & Bots Ecosystem — HaruBot & HaruMod</title>
   <meta name="description" content="Trang chủ chính thức của nhà phát triển Haruki (haruki_kino) và hệ sinh thái Discord Bots: HaruBot (Giải trí, Âm nhạc, Câu cá RPG) và HaruMod (Bảo mật, Anti-Nuke, Quản trị máy chủ).">
-  <link rel="stylesheet" href="./shared.css?v=3.6">
+  <link rel="stylesheet" href="./shared.css?v=4.0">
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
 
@@ -1528,26 +1528,7 @@
     animateParticles();
   </script>
 
-  <!-- 3D Card Tilt Physics with Specular Light Reflection -->
-  <script>
-    document.querySelectorAll(".bot-card").forEach(card => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -5.5;
-        const rotateY = ((x - centerX) / centerX) * 5.5;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
-      });
-
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-      });
-    });
-  </script>
+  <!-- High-End 3D Elevation & Aura Glow handled seamlessly via GPU-accelerated CSS (Zero Jitter) -->
 
 
   <!-- Smooth Scrolling with Navbar Offset Calculation -->

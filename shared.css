@@ -1165,45 +1165,149 @@ svg[fill="none"] {
   fill: #ffffff !important;
 }
 
-
 /* ========================================================
-   ROCK-SOLID STABILITY - ZERO HOVER JUMPS OR TEXT OVERLAPS
+   HIGH-END BUTTERY-SMOOTH CYBERPUNK EFFECTS (ZERO JITTER, NO TEXT OVERLAP)
    ======================================================== */
-.bot-card, .card, .feature-card, .btn, .btn-primary, .btn-emerald, .btn-secondary, .pill-btn, .fx-btn, .feat-icon-badge {
-  transform: none !important;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, filter 0.25s ease !important;
+.navbar {
+  width: 100% !important;
+  background: rgba(7, 9, 20, 0.82) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+  padding: 14px 0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
 }
 
-.bot-card:hover, .card:hover, .feature-card:hover, .btn:hover, .btn-primary:hover, .btn-emerald:hover, .btn-secondary:hover, .pill-btn:hover, .fx-btn:hover, .feat-icon-badge:hover {
-  transform: none !important;
+.navbar-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
 }
 
-.btn:hover, .btn-primary:hover, .btn-emerald:hover {
-  filter: brightness(1.12) !important;
+/* --- Bot Cards Smooth 3D Elevation & Radiant Aura --- */
+.bot-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease !important;
+  will-change: transform, box-shadow;
+  overflow: hidden;
+}
+
+.bot-card::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.bot-card:hover::after {
+  opacity: 1;
 }
 
 .bot-card.harubot:hover {
-  border-color: rgba(56, 189, 248, 0.7) !important;
-  box-shadow: 0 0 35px rgba(56, 189, 248, 0.35) !important;
+  transform: translateY(-6px) scale(1.012) !important;
+  border-color: rgba(56, 189, 248, 0.75) !important;
+  box-shadow: 0 25px 50px -10px rgba(56, 189, 248, 0.32), 0 0 35px rgba(56, 189, 248, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 .bot-card.harumod:hover {
+  transform: translateY(-6px) scale(1.012) !important;
+  border-color: rgba(16, 185, 129, 0.75) !important;
+  box-shadow: 0 25px 50px -10px rgba(16, 185, 129, 0.32), 0 0 35px rgba(16, 185, 129, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Avatar Breathing Pulse on Card Hover */
+.bot-card:hover .bot-avatar-box {
+  transform: scale(1.08) rotate(2deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.bot-card.harubot:hover .bot-avatar-box {
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.65) !important;
+}
+.bot-card.harumod:hover .bot-avatar-box {
+  box-shadow: 0 0 28px rgba(16, 185, 129, 0.65) !important;
+}
+
+/* --- Feature Items: Horizontal Slide Indent (NEVER Overlaps Text Vertically) --- */
+.bot-features-list li {
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease !important;
+  cursor: default;
+}
+
+.bot-features-list li:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+  transform: translateX(8px) !important;
+}
+
+.bot-features-list li:hover .feat-icon-badge {
+  transform: scale(1.15) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+.bot-card.harubot .bot-features-list li:hover .feat-icon-badge {
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.6) !important;
+  border-color: rgba(56, 189, 248, 0.7) !important;
+}
+
+.bot-card.harumod .bot-features-list li:hover .feat-icon-badge {
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.6) !important;
   border-color: rgba(16, 185, 129, 0.7) !important;
-  box-shadow: 0 0 35px rgba(16, 185, 129, 0.35) !important;
 }
 
-.hero-actions {
-  display: flex !important;
-  gap: 16px !important;
-  justify-content: center !important;
-  align-items: center !important;
-  margin-top: 36px !important;
-  margin-bottom: 28px !important;
-  flex-wrap: wrap !important;
+/* --- Action Buttons: Elevated Lift & Neon Glow --- */
+.btn {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease, background 0.25s ease !important;
+  will-change: transform, box-shadow;
 }
 
-.bot-card-footer {
-  margin-top: 28px !important;
-  padding-top: 24px !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+.btn:hover {
+  transform: translateY(-3px) scale(1.02) !important;
 }
+
+.btn-primary:hover {
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.45) !important;
+  filter: brightness(1.1) !important;
+}
+
+.btn-emerald:hover {
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45) !important;
+  filter: brightness(1.1) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* --- General Feature Cards & Badges --- */
+.feature-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+.feature-card:hover {
+  transform: translateY(-4px) scale(1.01) !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 15px 35px -8px rgba(16, 185, 129, 0.25) !important;
+}
+
+.server-badge:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  background: rgba(99, 102, 241, 0.28) !important;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5) !important;
+  color: #ffffff !important;
+}
+
