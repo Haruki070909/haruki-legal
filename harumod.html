@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HaruMod — Discord Security, Anti-Nuke & Server Management Bot</title>
   <meta name="description" content="HaruMod là bot Discord bảo mật và quản lý máy chủ toàn diện: Anti-Nuke, Honeypot channels, Auto-Mod đa tầng, 36 Action Logs, Ticket panels, Dynamic Voice và Smart Roles.">
-  <link rel="stylesheet" href="./shared.css?v=3.0">
+  <link rel="stylesheet" href="./shared.css?v=3.2">
   <link rel="icon" type="image/png" href="./harumod-avatar.png">
   <style>
     html {
@@ -94,7 +94,7 @@
     }
     .feature-card:hover {
       border-color: var(--border-glow-emerald);
-      transform: translateY(-4px);
+      transform: none !important;
       box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.25);
     }
     .feature-card:hover::before {
@@ -186,6 +186,31 @@
       }
     }
   </style>
+
+<style>
+.hero-actions {
+  display: flex !important;
+  gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 36px !important;
+  margin-bottom: 24px !important;
+  flex-wrap: wrap !important;
+}
+.hero-actions .btn {
+  transform: none !important;
+}
+.hero-actions .btn:hover {
+  transform: none !important;
+  filter: brightness(1.15) !important;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.5) !important;
+}
+.feature-card:hover {
+  transform: none !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3) !important;
+}
+</style>
+
 </head>
 <body>
 
@@ -312,50 +337,50 @@
           <tbody>
             <tr>
               <td><span class="code-badge">h?ban / /ban</span></td>
-              <td><code>@user [thời gian] [lý do]</code></td>
-              <td data-i18n="c1">Cấm thành viên khỏi máy chủ, hỗ trợ cấm tạm thời (tempban)</td>
+              <td><code>@user [duration] [reason]</code></td>
+              <td data-i18n="c1">Ban user from server, supports tempban duration</td>
               <td>Ban Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?kick / /kick</span></td>
-              <td><code>@user [lý do]</code></td>
-              <td data-i18n="c2">Trục xuất thành viên ngay lập tức</td>
+              <td><code>@user [reason]</code></td>
+              <td data-i18n="c2">Kick user immediately from the server</td>
               <td>Kick Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?mute / /mute</span></td>
-              <td><code>@user [thời gian] [lý do]</code></td>
-              <td data-i18n="c3">Hạn chế chat/voice thành viên qua Timeout Discord API</td>
+              <td><code>@user [duration] [reason]</code></td>
+              <td data-i18n="c3">Mute/Timeout member via Discord native Timeout API</td>
               <td>Moderate Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?hardmute / /hardmute</span></td>
-              <td><code>@user [lý do]</code></td>
-              <td data-i18n="c4">Tước toàn bộ quyền và vai trò, chỉ để lại vai trò Muted cách ly</td>
+              <td><code>@user [reason]</code></td>
+              <td data-i18n="c4">Strip all roles and assign Muted quarantine role</td>
               <td>Manage Roles</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?warn / /warn</span></td>
-              <td><code>@user [lý do]</code></td>
-              <td data-i18n="c5">Cảnh cáo vi phạm và tự động kích hoạt phạt bậc thang (3 warn = Mute)</td>
+              <td><code>@user [reason]</code></td>
+              <td data-i18n="c5">Warn member with ladder punishment (3 warns = auto mute)</td>
               <td>Moderate Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?purge / /purge</span></td>
-              <td><code>[số lượng: 1-100] [@user]</code></td>
-              <td data-i18n="c6">Xóa tin nhắn hàng loạt siêu tốc, tự động xuất file log nội dung vừa xóa</td>
+              <td><code>[amount: 1-100] [@user]</code></td>
+              <td data-i18n="c6">Bulk delete messages with attached text transcript</td>
               <td>Manage Messages</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?lock / /lock</span></td>
               <td><code>[#channel]</code></td>
-              <td data-i18n="c7">Khóa kênh chat ngăn chặn spam hoặc raid trong trường hợp khẩn cấp</td>
+              <td data-i18n="c7">Lockdown channel to prevent raids or spam</td>
               <td>Manage Channels</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?ticket / /ticket</span></td>
               <td><code>setup</code></td>
-              <td data-i18n="c8">Khởi tạo giao diện Ticket Panel tương tác với Embed và Buttons</td>
+              <td data-i18n="c8">Initialize interactive ticket panel with embed and buttons</td>
               <td>Administrator</td>
             </tr>
           </tbody>

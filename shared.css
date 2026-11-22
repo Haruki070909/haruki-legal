@@ -161,7 +161,7 @@ body {
   box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
 }
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: none !important;
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
 }
 
@@ -181,7 +181,7 @@ body {
   box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
 }
 .btn-emerald:hover {
-  transform: translateY(-2px);
+  transform: none !important;
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
@@ -191,7 +191,7 @@ body {
   box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);
 }
 .btn-purple:hover {
-  transform: translateY(-2px);
+  transform: none !important;
   box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
 
@@ -212,7 +212,7 @@ body {
 
 .card:hover {
   border-color: rgba(255, 255, 255, 0.18);
-  transform: translateY(-3px);
+  transform: none !important;
 }
 
 /* Section styling */
@@ -574,7 +574,7 @@ footer {
 /* Floating Sparkle Pulse */
 @keyframes floatPulse {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: none !important; }
 }
 
 .hero-pill {
@@ -594,13 +594,13 @@ footer {
 }
 
 .bot-card.harubot:hover {
-  transform: translateY(-6px);
+  transform: none !important;
   border-color: rgba(56, 189, 248, 0.6);
   box-shadow: 0 24px 50px -12px rgba(56, 189, 248, 0.3), 0 0 25px rgba(56, 189, 248, 0.15);
 }
 
 .bot-card.harumod:hover {
-  transform: translateY(-6px);
+  transform: none !important;
   border-color: rgba(16, 185, 129, 0.6);
   box-shadow: 0 24px 50px -12px rgba(16, 185, 129, 0.3), 0 0 25px rgba(16, 185, 129, 0.15);
 }
@@ -614,7 +614,7 @@ footer {
 }
 
 .bot-card:hover .bot-avatar {
-  transform: scale(1.08) rotate(-1deg);
+  transform: none !important;
 }
 
 .bot-card.harubot .bot-avatar {
@@ -828,7 +828,7 @@ footer {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.01) !important;
+  transform: none !important;
   box-shadow: 0 8px 24px rgba(14, 165, 233, 0.45) !important;
 }
 
@@ -840,7 +840,7 @@ footer {
 }
 
 .btn-emerald:hover {
-  transform: translateY(-2px) scale(1.01) !important;
+  transform: none !important;
   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45) !important;
 }
 
@@ -853,7 +853,7 @@ footer {
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(255, 255, 255, 0.28) !important;
-  transform: translateY(-2px) scale(1.01) !important;
+  transform: none !important;
 }
 
 /* Legal Links below buttons */
@@ -1026,7 +1026,7 @@ footer {
 }
 
 .bot-features-list li:hover .feat-icon-badge {
-  transform: scale(1.12) translateY(-2px) !important;
+  transform: none !important;
   box-shadow: 0 0 22px rgba(56, 189, 248, 0.55) !important;
 }
 
@@ -1163,4 +1163,47 @@ svg[fill="none"] {
 
 .btn svg.fill-white {
   fill: #ffffff !important;
+}
+
+
+/* ========================================================
+   ROCK-SOLID STABILITY - ZERO HOVER JUMPS OR TEXT OVERLAPS
+   ======================================================== */
+.bot-card, .card, .feature-card, .btn, .btn-primary, .btn-emerald, .btn-secondary, .pill-btn, .fx-btn, .feat-icon-badge {
+  transform: none !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, filter 0.25s ease !important;
+}
+
+.bot-card:hover, .card:hover, .feature-card:hover, .btn:hover, .btn-primary:hover, .btn-emerald:hover, .btn-secondary:hover, .pill-btn:hover, .fx-btn:hover, .feat-icon-badge:hover {
+  transform: none !important;
+}
+
+.btn:hover, .btn-primary:hover, .btn-emerald:hover {
+  filter: brightness(1.12) !important;
+}
+
+.bot-card.harubot:hover {
+  border-color: rgba(56, 189, 248, 0.7) !important;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.35) !important;
+}
+
+.bot-card.harumod:hover {
+  border-color: rgba(16, 185, 129, 0.7) !important;
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.35) !important;
+}
+
+.hero-actions {
+  display: flex !important;
+  gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 36px !important;
+  margin-bottom: 28px !important;
+  flex-wrap: wrap !important;
+}
+
+.bot-card-footer {
+  margin-top: 28px !important;
+  padding-top: 24px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }

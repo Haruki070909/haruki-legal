@@ -43,7 +43,7 @@
  .topbar-btn:hover {
  background: rgba(255, 255, 255, 0.12);
  border-color: rgba(255, 255, 255, 0.25);
- transform: translateY(-1px);
+ transform: none !important;
  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
  color: #ffffff;
  }
@@ -185,6 +185,35 @@
 }
 
 </style>
+
+<style>
+.hero-actions {
+  display: flex !important;
+  gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 36px !important;
+  margin-bottom: 24px !important;
+  flex-wrap: wrap !important;
+}
+.hero-actions .btn {
+  transform: none !important;
+}
+.hero-actions .btn:hover {
+  transform: none !important;
+  filter: brightness(1.15) !important;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.5) !important;
+}
+.feature-card:hover {
+  transform: none !important;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3) !important;
+}
+.fx-btn:hover, .game-tab-btn:hover, .pill-btn:hover {
+  transform: none !important;
+  filter: brightness(1.12) !important;
+}
+</style>
+
 </head>
 <body>
 <div class="glow glow-one"></div><div class="glow glow-two"></div>
@@ -195,7 +224,7 @@
 <a class="topbar-btn purple" href="./index.html">
 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="navHome">Trang Chủ</span>
 </a>
-<a class="topbar-btn emerald" href="./harumod.html?v=3.0">
+<a class="topbar-btn emerald" href="./harumod.html?v=3.2">
 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span data-i18n="navHaruMod">HaruMod</span>
 </a>
 <a class="topbar-btn" href="./harubot-terms.html">

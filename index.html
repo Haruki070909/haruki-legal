@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haruki Developer & Bots Ecosystem — HaruBot & HaruMod</title>
   <meta name="description" content="Trang chủ chính thức của nhà phát triển Haruki (haruki_kino) và hệ sinh thái Discord Bots: HaruBot (Giải trí, Âm nhạc, Câu cá RPG) và HaruMod (Bảo mật, Anti-Nuke, Quản trị máy chủ).">
-  <link rel="stylesheet" href="./shared.css?v=3.0">
+  <link rel="stylesheet" href="./shared.css?v=3.2">
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
 
@@ -381,7 +381,7 @@
       filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.85)) !important;
     }
     .bot-features-list li:hover .feat-icon-badge {
-      transform: scale(1.15) translateY(-2px) !important;
+      transform: none !important;
       box-shadow: 0 0 24px rgba(56, 189, 248, 0.6) !important;
     }
     .bot-features-list li:hover .feat-icon-badge.emerald {
@@ -426,7 +426,7 @@
       box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35) !important;
     }
     .btn-primary:hover {
-      transform: translateY(-2px) scale(1.01) !important;
+      transform: none !important;
       box-shadow: 0 8px 25px rgba(14, 165, 233, 0.5) !important;
     }
     .btn-emerald {
@@ -436,7 +436,7 @@
       box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35) !important;
     }
     .btn-emerald:hover {
-      transform: translateY(-2px) scale(1.01) !important;
+      transform: none !important;
       box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important;
     }
     .btn-secondary {
@@ -447,7 +447,7 @@
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.1) !important;
       border-color: rgba(255, 255, 255, 0.3) !important;
-      transform: translateY(-2px) scale(1.01) !important;
+      transform: none !important;
     }
     .bot-legal-links {
       display: flex !important;
@@ -721,6 +721,31 @@
       }
     }
   </style>
+
+<style>
+/* Perfect symmetrical leveling for bot cards */
+.bots-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+  gap: 32px !important;
+  align-items: stretch !important;
+}
+.bot-card {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transform: none !important;
+}
+.bot-card:hover {
+  transform: none !important;
+}
+.bot-btn-row .btn:hover {
+  transform: none !important;
+  filter: brightness(1.15) !important;
+}
+</style>
+
 </head>
 <body>
 
@@ -849,7 +874,7 @@
           </div>
           <div class="bot-card-footer">
             <div class="bot-btn-row">
-              <a href="./harubot.html?v=3.0" class="btn btn-primary">
+              <a href="./harubot.html?v=3.2" class="btn btn-primary">
                 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 <span data-i18n="btnOpenBot">Mở Trang HaruBot</span>
               </a>
@@ -911,7 +936,7 @@
           </div>
           <div class="bot-card-footer">
             <div class="bot-btn-row">
-              <a href="./harumod.html?v=3.0" class="btn btn-emerald">
+              <a href="./harumod.html?v=3.2" class="btn btn-emerald">
                 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
                 <span data-i18n="btnOpenMod">Mở Trang HaruMod</span>
               </a>
