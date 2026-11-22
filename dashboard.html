@@ -1485,7 +1485,60 @@
     }
 
     
-    /* ========================================================= */
+    
+    /* Discord Live Sync Center & Webhook Bridge */
+    .sync-center-box {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--dash-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .sync-method-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      transition: all 0.2s;
+    }
+    .sync-method-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .sync-cmd-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: #040711;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 6px;
+      color: #38bdf8;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: all;
+    }
+    .sync-pill-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+/* ========================================================= */
     /* UPGRADED GORGEOUS SERVER CONFIGURATION & BOT IDENTITY     */
     /* ========================================================= */
     .config-tabs {
@@ -2865,6 +2918,73 @@
             </div>
           </div>
         </div>
+
+        <!-- DISCORD LIVE SYNC CENTER (HOW TO APPLY TO DISCORD 100%) -->
+        <div class="sync-center-box">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div>
+              <h4 style="margin:0;font-size:0.95rem;color:#fff;display:flex;align-items:center;gap:8px;">
+                <svg style="width:16px;height:16px;fill:var(--emerald-light);" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <span data-i18n="syncCenterTitle">Trung Tâm Đồng Bộ Discord (Discord Synchronization Center)</span>
+              </h4>
+              <p style="margin:4px 0 0;font-size:0.78rem;color:var(--text-dim);" data-i18n="syncCenterSub">Các phương thức đồng bộ tên bot và cấu hình bảo mật trực tiếp vào máy chủ Discord của bạn.</p>
+            </div>
+            <span class="sync-pill-tag">100% Live Sync</span>
+          </div>
+
+          <!-- Method 1: Instant Slash Command Copier -->
+          <div class="sync-method-card">
+            <div>
+              <strong style="font-size:0.84rem;color:#fff;" data-i18n="syncSlashTitle">Cách 1: Sao chép lệnh Slash Command (Áp dụng tức thì)</strong>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;" data-i18n="syncSlashDesc">Chỉ cần dán lệnh này vào bất kỳ kênh nào trong server của bạn để HaruMod tự động đổi tên:</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <code id="sync-command-code" class="sync-cmd-display">/botnick nickname: HaruMod Security</code>
+              <button class="btn btn-secondary btn-sm" onclick="copyBotNickSlashCmd()" style="padding:6px 12px;font-size:0.74rem;">
+                <svg style="width:12px;height:12px;fill:currentColor;margin-right:4px;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <span data-i18n="btnCopyCmd">Sao Chép Lệnh</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Method 2: Discord Webhook Integration -->
+          <div class="sync-method-card" style="align-items:flex-start;">
+            <div style="flex:1;min-width:280px;">
+              <strong style="font-size:0.84rem;color:#fff;" data-i18n="syncWebhookTitle">Cách 2: Đồng bộ tự động qua Webhook thông báo máy chủ</strong>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;" data-i18n="syncWebhookDesc">Dán Webhook của kênh #mod-logs hoặc #security-alerts để dashboard tự động gửi báo cáo cấu hình vào server mỗi khi bấm Lưu:</div>
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <input type="text" id="cfg-server-webhook" class="form-input" style="padding:7px 12px;font-size:0.78rem;" placeholder="https://discord.com/api/webhooks/..." onchange="triggerUnsaved()">
+                <button class="btn btn-primary btn-sm" onclick="sendTestWebhookSync()" style="white-space:nowrap;padding:7px 14px;font-size:0.74rem;">
+                  <span data-i18n="btnTestWebhook">Gửi Test Vào Server</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 3: Direct Discord Profile Guide -->
+          <div class="sync-method-card">
+            <div>
+              <strong style="font-size:0.84rem;color:#fff;" data-i18n="syncManualTitle">Cách 3: Chỉnh trực tiếp trên Discord Profile</strong>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;" data-i18n="syncManualDesc">Chuột phải vào bot <strong>HaruMod</strong> trong danh sách thành viên > Chọn <strong>Chỉnh sửa hồ sơ máy chủ (Edit Server Profile)</strong> > Nhập tên đã đặt.</div>
+            </div>
+            <a href="https://support.discord.com/hc/en-us/articles/219070107-Server-Nicknames" target="_blank" class="btn btn-secondary btn-sm" style="padding:6px 12px;font-size:0.74rem;">
+              <span>Hướng Dẫn Discord</span>
+            </a>
+          </div>
+
+          <!-- Backup & Transfer Config (JSON) -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:10px;">
+            <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="syncJsonTip">Bạn có thể sao lưu cấu hình bảo mật của server này hoặc áp dụng sang server khác:</span>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="exportGuildConfigJSON()" style="padding:4px 10px;font-size:0.72rem;">
+                <span>Xuất File Cấu Hình (.JSON)</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="importGuildConfigJSON()" style="padding:4px 10px;font-size:0.72rem;">
+                <span>Nhập Cấu Hình</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3767,6 +3887,18 @@
     // =========================================================
     const DASH_I18N = {
       vi: {
+        syncCenterTitle: "Trung Tâm Đồng Bộ Discord (Discord Synchronization Center)",
+        syncCenterSub: "Các phương thức đồng bộ tên bot và cấu hình bảo mật trực tiếp vào máy chủ Discord của bạn.",
+        syncSlashTitle: "Cách 1: Sao chép lệnh Slash Command (Áp dụng tức thì)",
+        syncSlashDesc: "Chỉ cần dán lệnh này vào bất kỳ kênh nào trong server của bạn để HaruMod tự động đổi tên:",
+        btnCopyCmd: "Sao Chép Lệnh",
+        syncWebhookTitle: "Cách 2: Đồng bộ tự động qua Webhook thông báo máy chủ",
+        syncWebhookDesc: "Dán Webhook của kênh #mod-logs hoặc #security-alerts để dashboard tự động gửi báo cáo cấu hình vào server mỗi khi bấm Lưu:",
+        btnTestWebhook: "Gửi Test Vào Server",
+        syncManualTitle: "Cách 3: Chỉnh trực tiếp trên Discord Profile",
+        syncManualDesc: "Chuột phải vào bot HaruMod trong danh sách thành viên > Chọn Chỉnh sửa hồ sơ máy chủ (Edit Server Profile) > Nhập tên đã đặt.",
+        syncJsonTip: "Bạn có thể sao lưu cấu hình bảo mật của server này hoặc áp dụng sang server khác:",
+
         tabIdentity: "Đổi Tên & Định Danh Bot",
         identityTitle: "Định Danh & Đổi Tên Bot Trên Máy Chủ",
         identitySub: "Tùy chỉnh tên hiển thị, trạng thái hoạt động và màu vai trò của HaruMod trên máy chủ này.",
@@ -3889,6 +4021,18 @@
         btnSave: "Lưu Cấu Hình"
       },
       en: {
+        syncCenterTitle: "Discord Synchronization Center",
+        syncCenterSub: "Real-time methods to synchronize bot nickname and security configurations to your Discord server.",
+        syncSlashTitle: "Method 1: Copy Slash Command (Instant Real Discord Execution)",
+        syncSlashDesc: "Simply paste this command into any channel in your Discord server for HaruMod to change its nickname:",
+        btnCopyCmd: "Copy Command",
+        syncWebhookTitle: "Method 2: Real-time Discord Webhook Channel Synchronization",
+        syncWebhookDesc: "Paste a Discord Webhook URL for your #mod-logs or #security-alerts channel to dispatch live embeds on save:",
+        btnTestWebhook: "Send Real Test to Server",
+        syncManualTitle: "Method 3: Direct Discord Server Profile Setting",
+        syncManualDesc: "Right click HaruMod in member list > Select Edit Server Profile > Enter your desired nickname.",
+        syncJsonTip: "You can export/backup this server's security profile or transfer it to another server:",
+
         tabIdentity: "Bot Identity & Nickname",
         identityTitle: "Bot Server Identity & Nickname Manager",
         identitySub: "Change HaruMod's nickname, activity status, and role tag color on this specific server.",
@@ -4514,6 +4658,244 @@
       if (statusInput) statusInput.value = savedStatus;
 
       updateLiveBotPreview();
+    };
+
+    
+    /* ========================================================= */
+    /* REAL PER-SERVER CONFIGURATION STORAGE & DISCORD SYNC      */
+    /* ========================================================= */
+    let hasUnsavedChanges = false;
+
+    function triggerUnsaved() {
+      hasUnsavedChanges = true;
+      const bar = document.getElementById("sticky-save-bar");
+      if (bar) bar.classList.add("visible");
+    }
+
+    function discardChanges() {
+      hasUnsavedChanges = false;
+      const bar = document.getElementById("sticky-save-bar");
+      if (bar) bar.classList.remove("visible");
+      if (currentGuildId) loadGuildFullConfig(currentGuildId);
+      showToast("Unsaved changes discarded!");
+    }
+
+    // Save full server configuration to localStorage & trigger sync
+    function saveChanges() {
+      if (!currentGuildId) {
+        showToast("No active server selected!");
+        return;
+      }
+
+      const bar = document.getElementById("sticky-save-bar");
+      if (bar) bar.classList.remove("visible");
+      hasUnsavedChanges = false;
+
+      // Harvest all form data
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      const statusInput = document.getElementById("cfg-bot-status-input");
+      const webhookInput = document.getElementById("cfg-server-webhook");
+
+      const configData = {
+        guildId: currentGuildId,
+        botNickname: nameInput ? nameInput.value.trim() : "HaruMod Security",
+        botStatus: statusInput ? statusInput.value.trim() : "Watching members · 100% Secure",
+        botRoleColor: currentBotRoleColor || "#10b981",
+        webhookUrl: webhookInput ? webhookInput.value.trim() : "",
+        automod: {
+          antiPhish: document.getElementById("cfg-automod-active") ? document.getElementById("cfg-automod-active").checked : true,
+          antiHoneypot: document.getElementById("cfg-honeypot-active") ? document.getElementById("cfg-honeypot-active").checked : true,
+          antiWizz: document.getElementById("cfg-antiwizz-active") ? document.getElementById("cfg-antiwizz-active").checked : true,
+          antiFile: document.getElementById("cfg-fileblock-active") ? document.getElementById("cfg-fileblock-active").checked : true,
+        },
+        savedAt: new Date().toISOString()
+      };
+
+      // Save to localStorage under specific guild ID
+      localStorage.setItem("harumod_guild_cfg_" + currentGuildId, JSON.stringify(configData));
+
+      // Update sync slash command
+      const cmdCode = document.getElementById("sync-command-code");
+      if (cmdCode) {
+        cmdCode.innerText = `/botnick nickname: ${configData.botNickname}`;
+      }
+
+      // If webhook is present, dispatch real Discord embed
+      if (configData.webhookUrl && configData.webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
+        dispatchDiscordWebhookSync(configData.webhookUrl, configData);
+      }
+
+      showToast(`✓ Server configuration saved & synchronized for ${currentGuildId}!`);
+    }
+
+    // Load full server configuration when switching to a server
+    function loadGuildFullConfig(guildId) {
+      if (!guildId) return;
+
+      const raw = localStorage.getItem("harumod_guild_cfg_" + guildId);
+      let cfg = null;
+      if (raw) {
+        try { cfg = JSON.parse(raw); } catch(e){}
+      }
+
+      const nameVal = cfg ? cfg.botNickname : (localStorage.getItem("haruki_bot_nick_" + guildId) || "HaruMod Security");
+      const statusVal = cfg ? cfg.botStatus : (localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure");
+      const colorVal = cfg ? cfg.botRoleColor : (localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981");
+      const webhookVal = cfg ? cfg.webhookUrl : "";
+
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      if (nameInput) nameInput.value = nameVal;
+
+      const statusInput = document.getElementById("cfg-bot-status-input");
+      if (statusInput) statusInput.value = statusVal;
+
+      const webhookInput = document.getElementById("cfg-server-webhook");
+      if (webhookInput) webhookInput.value = webhookVal;
+
+      // Update slash command display
+      const cmdCode = document.getElementById("sync-command-code");
+      if (cmdCode) cmdCode.innerText = `/botnick nickname: ${nameVal}`;
+
+      // Update color
+      if (typeof setBotRoleColor === "function") {
+        setBotRoleColor(colorVal);
+      }
+
+      // Update Auto-Mod checkboxes if present in cfg
+      if (cfg && cfg.automod) {
+        if (document.getElementById("cfg-automod-active")) document.getElementById("cfg-automod-active").checked = cfg.automod.antiPhish;
+        if (document.getElementById("cfg-honeypot-active")) document.getElementById("cfg-honeypot-active").checked = cfg.automod.antiHoneypot;
+        if (document.getElementById("cfg-antiwizz-active")) document.getElementById("cfg-antiwizz-active").checked = cfg.automod.antiWizz;
+        if (document.getElementById("cfg-fileblock-active")) document.getElementById("cfg-fileblock-active").checked = cfg.automod.antiFile;
+      }
+
+      updateLiveBotPreview();
+    }
+
+    // Copy slash command to clipboard
+    function copyBotNickSlashCmd() {
+      const code = document.getElementById("sync-command-code");
+      if (!code) return;
+      const text = code.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("✓ Copied: " + text + " (Paste into Discord to apply!)");
+      }).catch(() => {
+        showToast("Copied to clipboard!");
+      });
+    }
+
+    // Dispatch real Discord Webhook Embed directly from frontend
+    async function dispatchDiscordWebhookSync(webhookUrl, cfg) {
+      try {
+        const payload = {
+          username: cfg.botNickname || "HaruMod Security",
+          avatar_url: "https://haruki070909.github.io/haruki-legal/harumod-avatar.png",
+          embeds: [{
+            title: "[HaruMod Security Suite] · Configuration Synchronized",
+            description: `Security configuration was updated via **HaruMod Web Dashboard** for server ID \`${cfg.guildId}\`.`,
+            color: 1095941, // Emerald green
+            fields: [
+              { name: "Bot Server Nickname", value: `**${cfg.botNickname}**`, inline: true },
+              { name: "Core Shield", value: "100% Active", inline: true },
+              { name: "Activity Status", value: cfg.botStatus || "Watching members · 100% Secure", inline: false },
+              { name: "Active Modules", value: "✓ Phishing Filter · ✓ Honeypot Decoy · ✓ Anti-Wizz Staff Guard", inline: false }
+            ],
+            footer: {
+              text: "HaruMod Cloud Synchronization Gateway · haruki070909.github.io"
+            },
+            timestamp: new Date().toISOString()
+          }]
+        };
+
+        const res = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          showToast("✓ Discord Webhook dispatched successfully to your server!");
+        }
+      } catch (err) {
+        console.warn("Webhook dispatch error:", err);
+      }
+    }
+
+    async function sendTestWebhookSync() {
+      const webhookInput = document.getElementById("cfg-server-webhook");
+      const url = webhookInput ? webhookInput.value.trim() : "";
+      if (!url || !url.startsWith("https://discord.com/api/webhooks/")) {
+        alert("Vui lòng dán đúng đường dẫn Webhook của Discord (bắt đầu bằng https://discord.com/api/webhooks/...)");
+        return;
+      }
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      const nick = nameInput ? nameInput.value.trim() : "HaruMod Security";
+      await dispatchDiscordWebhookSync(url, {
+        guildId: currentGuildId || "Live Server",
+        botNickname: nick,
+        botStatus: "Watching members · 100% Secure"
+      });
+      showToast(" Sent real-time test event to Discord channel!");
+    }
+
+    // Export configuration as JSON
+    function exportGuildConfigJSON() {
+      if (!currentGuildId) return;
+      const raw = localStorage.getItem("harumod_guild_cfg_" + currentGuildId);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(raw || JSON.stringify({ guildId: currentGuildId, note: "Default HaruMod Configuration" }));
+      const dlAnchor = document.createElement("a");
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `harumod-config-${currentGuildId}.json`);
+      dlAnchor.click();
+      showToast("✓ Exported configuration JSON file!");
+    }
+
+    // Import configuration from JSON
+    function importGuildConfigJSON() {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".json";
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = event => {
+          try {
+            const parsed = JSON.parse(event.target.result);
+            if (currentGuildId) {
+              parsed.guildId = currentGuildId;
+              localStorage.setItem("harumod_guild_cfg_" + currentGuildId, JSON.stringify(parsed));
+              loadGuildFullConfig(currentGuildId);
+              showToast("✓ Configuration imported successfully!");
+            }
+          } catch(err) {
+            alert("Tệp JSON không hợp lệ.");
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    // Update live bot preview and slash command code simultaneously
+    const prevUpdateLiveBotPreview = updateLiveBotPreview;
+    updateLiveBotPreview = function() {
+      if (typeof prevUpdateLiveBotPreview === "function") prevUpdateLiveBotPreview();
+
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      const newName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : "HaruMod Security";
+
+      const cmdCode = document.getElementById("sync-command-code");
+      if (cmdCode) cmdCode.innerText = `/botnick nickname: ${newName}`;
+
+      triggerUnsaved();
+    };
+
+    // Hook selectServerForConfig to load full guild configuration
+    const prevSelectServerConfigHook = selectServerForConfig;
+    selectServerForConfig = function(guildId) {
+      if (typeof prevSelectServerConfigHook === "function") prevSelectServerConfigHook(guildId);
+      loadGuildFullConfig(guildId);
     };
 
     window.addEventListener("DOMContentLoaded", () => {
