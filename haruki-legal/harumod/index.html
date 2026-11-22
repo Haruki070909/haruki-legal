@@ -111,17 +111,21 @@
   <div class="container">
     <nav class="navbar">
       <a href="../index.html" class="brand">
-        <span style="font-size:1.8rem;">🛡️</span>
+        <img src="./harumod-avatar.png" alt="HaruMod" style="width:38px; height:38px; border-radius:12px; border:1px solid rgba(16,185,129,0.4); object-fit:cover;">
         <span>HARUMOD <span class="brand-badge" style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border-color:rgba(16,185,129,0.3);">SECURITY</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="../index.html" class="nav-link">← Về Portal Chính</a></li>
-        <li><a href="#features" class="nav-link">Tính Năng</a></li>
-        <li><a href="#commands" class="nav-link">Lệnh (h? / /)</a></li>
-        <li><a href="./terms.html" class="nav-link">Điều Khoản (ToS)</a></li>
-        <li><a href="./privacy.html" class="nav-link">Bảo Mật (Privacy)</a></li>
+        <li><a href="../index.html" class="nav-link" data-i18n="navBack">← Về Portal Chính</a></li>
+        <li><a href="#features" class="nav-link" data-i18n="navFeatures">Tính Năng</a></li>
+        <li><a href="#commands" class="nav-link" data-i18n="navCommands">Lệnh (h? / /)</a></li>
+        <li><a href="./terms.html" class="nav-link" data-i18n="navTos">Điều Khoản (ToS)</a></li>
+        <li><a href="./privacy.html" class="nav-link" data-i18n="navPrivacy">Bảo Mật (Privacy)</a></li>
       </ul>
       <div class="nav-cta">
+        <div class="language-switch" role="group" aria-label="Choose language">
+          <button class="lang-opt active" id="mod-lang-vi" onclick="setHaruModLanguage('vi')" type="button">VI</button>
+          <button class="lang-opt" id="mod-lang-en" onclick="setHaruModLanguage('en')" type="button">EN</button>
+        </div>
         <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald btn-sm">
           <span>➕ Mời HaruMod</span>
         </a>
@@ -129,11 +133,11 @@
     </nav>
 
     <header class="mod-hero">
-      <div class="mod-hero-tag">🛡️ DISCORD SERVER SECURITY & MODERATION SUITE</div>
-      <h1 class="mod-hero-title">
+      <div class="mod-hero-tag" data-i18n="heroTag">🛡️ DISCORD SERVER SECURITY & MODERATION SUITE</div>
+      <h1 class="mod-hero-title" data-i18n="heroTitle">
         Lá Chắn An Ninh Toàn Diện Cho <br><span class="gradient-text-emerald">Máy Chủ Discord Của Bạn</span>
       </h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" data-i18n="heroSubtitle">
         HaruMod cung cấp cơ chế phòng vệ chủ động với Honeypot bẫy kẻ phá hoại, giám sát Anti-Wizz Staff, tự động hóa kỷ luật đa tầng, ghi nhận 36 sự kiện log độc lập và hệ thống Ticket/Forms chuyên nghiệp.
       </p>
       <div class="hero-actions">
@@ -141,10 +145,10 @@
           <span>➕ Mời HaruMod Vào Server</span>
         </a>
         <a href="./terms.html" class="btn btn-secondary">
-          <span>📄 Điều Khoản Dịch Vụ</span>
+          <span data-i18n="btnTos">📄 Điều Khoản Dịch Vụ</span>
         </a>
         <a href="./privacy.html" class="btn btn-secondary">
-          <span>🔒 Chính Sách Quyền Riêng Tư</span>
+          <span data-i18n="btnPrivacy">🔒 Chính Sách Quyền Riêng Tư</span>
         </a>
       </div>
     </header>
@@ -152,9 +156,9 @@
     <!-- Key Modules Grid -->
     <section id="features">
       <div class="section-head">
-        <span class="section-tag" style="color:var(--accent-emerald);">KIẾN TRÚC MODULAR</span>
-        <h2 class="section-title">6 Tầng Bảo Mật & Quản Trị Vững Chắc</h2>
-        <p class="section-desc">Mọi tính năng được vận hành với In-Memory RAM Cache đảm bảo độ trễ bằng 0.</p>
+        <span class="section-tag" style="color:var(--accent-emerald);" data-i18n="secTagFeat">KIẾN TRÚC MODULAR</span>
+        <h2 class="section-title" data-i18n="secTitleFeat">6 Tầng Bảo Mật & Quản Trị Vững Chắc</h2>
+        <p class="section-desc" data-i18n="secDescFeat">Mọi tính năng được vận hành với In-Memory RAM Cache đảm bảo độ trễ bằng 0.</p>
       </div>
 
       <div class="features-grid">
@@ -199,9 +203,9 @@
     <!-- Commands Cheat-sheet -->
     <section id="commands">
       <div class="section-head">
-        <span class="section-tag" style="color:var(--accent-emerald);">HỆ THỐNG LỆNH HYBRID</span>
-        <h2 class="section-title">Hỗ Trợ Song Song Prefix <code>h?</code> & Slash <code>/</code></h2>
-        <p class="section-desc">Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.</p>
+        <span class="section-tag" style="color:var(--accent-emerald);" data-i18n="secTagCmds">HỆ THỐNG LỆNH HYBRID</span>
+        <h2 class="section-title" data-i18n="secTitleCmds">Hỗ Trợ Song Song Prefix <code>h?</code> & Slash <code>/</code></h2>
+        <p class="section-desc" data-i18n="secDescCmds">Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.</p>
       </div>
 
       <div class="cmd-table-wrap">
@@ -308,5 +312,83 @@
       </div>
     </footer>
   </div>
+
+  <!-- HaruMod Bilingual Engine -->
+  <script>
+    const HARUMOD_I18N = {
+      vi: {
+        navBack: "← Về Portal Chính",
+        navFeatures: "Tính Năng",
+        navCommands: "Lệnh (h? / /)",
+        navTos: "Điều Khoản (ToS)",
+        navPrivacy: "Bảo Mật (Privacy)",
+        btnInviteMod: "➕ Mời HaruMod",
+        heroTag: "🛡️ BẢO MẬT & QUẢN TRỊ MÁY CHỦ DISCORD PRO",
+        heroTitle: "Lá Chắn An Ninh Toàn Diện Cho <br><span class=\"gradient-text-emerald\">Máy Chủ Discord Của Bạn</span>",
+        heroSubtitle: "HaruMod cung cấp cơ chế phòng vệ chủ động với Honeypot bẫy kẻ phá hoại, giám sát Anti-Wizz Staff, tự động hóa kỷ luật đa tầng, ghi nhận 36 sự kiện log độc lập và hệ thống Ticket/Forms chuyên nghiệp.",
+        btnTos: "📄 Điều Khoản Dịch Vụ",
+        btnPrivacy: "🔒 Chính Sách Quyền Riêng Tư",
+        secTagFeat: "KIẾN TRÚC MODULAR",
+        secTitleFeat: "6 Tầng Bảo Mật & Quản Trị Vững Chắc",
+        secDescFeat: "Mọi tính năng được vận hành với In-Memory RAM Cache đảm bảo độ trễ bằng 0.",
+        secTagCmds: "HỆ THỐNG LỆNH HYBRID",
+        secTitleCmds: "Hỗ Trợ Song Song Prefix h? & Slash /",
+        secDescCmds: "Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.",
+        footerCopy: "© 2026 Haruki (haruki_kino). HaruMod Discord Bot."
+      },
+      en: {
+        navBack: "← Back to Portal",
+        navFeatures: "Features",
+        navCommands: "Commands (h? / /)",
+        navTos: "Terms (ToS)",
+        navPrivacy: "Privacy Policy",
+        btnInviteMod: "➕ Invite HaruMod",
+        heroTag: "🛡️ DISCORD SERVER SECURITY & MODERATION SUITE",
+        heroTitle: "Complete Security Shield For <br><span class=\"gradient-text-emerald\">Your Discord Server</span>",
+        heroSubtitle: "HaruMod provides proactive defense with honeypot trap channels, staff anti-wizz monitor, multi-tiered auto-mod, 36 granular action log streams, and modal ticket forms.",
+        btnTos: "📄 Terms of Service",
+        btnPrivacy: "🔒 Privacy Policy",
+        secTagFeat: "MODULAR ARCHITECTURE",
+        secTitleFeat: "6 Tiers of Security & Management",
+        secDescFeat: "All filters run in zero-latency In-Memory RAM Cache.",
+        secTagCmds: "HYBRID COMMAND SYSTEM",
+        secTitleCmds: "Prefix h? & Slash / Supported in Parallel",
+        secDescCmds: "Runs seamlessly on PC and Mobile via a single unified core pipeline.",
+        footerCopy: "© 2026 Haruki (haruki_kino). HaruMod Discord Bot."
+      }
+    };
+
+    function setHaruModLanguage(lang) {
+      const activeLang = (lang === "en") ? "en" : "vi";
+      localStorage.setItem("haruki_lang", activeLang);
+      document.documentElement.lang = activeLang;
+
+      const viBtn = document.getElementById("mod-lang-vi");
+      const enBtn = document.getElementById("mod-lang-en");
+      if (viBtn && enBtn) {
+        if (activeLang === "vi") {
+          viBtn.classList.add("active");
+          enBtn.classList.remove("active");
+        } else {
+          enBtn.classList.add("active");
+          viBtn.classList.remove("active");
+        }
+      }
+
+      const dict = HARUMOD_I18N[activeLang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("haruki_lang") || "vi";
+      setHaruModLanguage(saved);
+    });
+  </script>
+
 </body>
 </html>

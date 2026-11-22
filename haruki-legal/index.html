@@ -202,14 +202,40 @@
     }
     .about-avatar-wrap {
       position: relative;
+      width: 136px;
+      height: 136px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
     .about-avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 28px;
+      width: 100%;
+      height: 100%;
+      border-radius: 50% !important;
       object-fit: cover;
-      border: 3px solid var(--accent-cyan);
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+      border: none !important;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+    }
+    .avatar-decoration {
+      position: absolute;
+      top: -12%;
+      left: -12%;
+      width: 124%;
+      height: 124%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .status-indicator {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 4px solid #070913;
+      z-index: 3;
+      transition: all 0.3s ease;
     }
     .about-content h3 {
       font-size: 1.8rem;
@@ -408,13 +434,17 @@
         <span>HARUKI <span class="brand-badge">ECOSYSTEM</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="#about" class="nav-link">Về Tác Giả</a></li>
-        <li><a href="#harubot" class="nav-link">HaruBot</a></li>
-        <li><a href="#harumod" class="nav-link">HaruMod</a></li>
-        <li><a href="#watcher" class="nav-link">Watcher</a></li>
-        <li><a href="#legal" class="nav-link">Điều Khoản & Bảo Mật</a></li>
+        <li><a href="#about" class="nav-link" data-i18n="navAbout">Về Tác Giả</a></li>
+        <li><a href="#harubot" class="nav-link" data-i18n="navHaruBot">HaruBot</a></li>
+        <li><a href="#harumod" class="nav-link" data-i18n="navHaruMod">HaruMod</a></li>
+        <li><a href="#watcher" class="nav-link" data-i18n="navWatcher">Watcher</a></li>
+        <li><a href="#legal" class="nav-link" data-i18n="navLegal">Điều Khoản & Bảo Mật</a></li>
       </ul>
       <div class="nav-cta">
+        <div class="language-switch" role="group" aria-label="Choose language">
+          <button class="lang-opt active" id="portal-lang-vi" onclick="setPortalLanguage('vi')" type="button">VI</button>
+          <button class="lang-opt" id="portal-lang-en" onclick="setPortalLanguage('en')" type="button">EN</button>
+        </div>
         <a href="https://discord.gg/gardenofdream" target="_blank" class="btn btn-secondary btn-sm">
           <span>💬 Garden of Dream</span>
         </a>
@@ -426,23 +456,23 @@
       <div class="hero-badge-row">
         <div class="hero-pill"><span class="dot"></span> HaruBot V2 Online</div>
         <div class="hero-pill"><span class="dot emerald"></span> HaruMod Pro Online</div>
-        <div class="hero-pill">⚡ Powered by VibeHost 24/7</div>
+        <div class="hero-pill">⚡ Powered by Host 24/7</div>
       </div>
-      <h1 class="hero-title">
+      <h1 class="hero-title" data-i18n="heroTitle">
         Nâng tầm máy chủ Discord cùng <span class="gradient-text-cyan">HaruBot</span> & <span class="gradient-text-emerald">HaruMod</span>
       </h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" data-i18n="heroSubtitle">
         Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.
       </p>
       <div class="hero-actions">
         <a href="#harubot" class="btn btn-primary">
-          <span>🎮 Khám phá HaruBot</span>
+          <span data-i18n="btnExploreBot">🎮 Khám phá HaruBot</span>
         </a>
         <a href="#harumod" class="btn btn-emerald">
-          <span>🛡️ Khám phá HaruMod</span>
+          <span data-i18n="btnExploreMod">🛡️ Khám phá HaruMod</span>
         </a>
         <a href="#legal" class="btn btn-secondary">
-          <span>📋 Điều Khoản & Pháp Lý</span>
+          <span data-i18n="btnLegal">📋 Điều Khoản & Pháp Lý</span>
         </a>
       </div>
     </header>
@@ -450,9 +480,9 @@
     <!-- Bot Showcase Dual Grid -->
     <section id="bots">
       <div class="section-head">
-        <span class="section-tag">HAI DÒNG SẢN PHẨM RIÊNG BIỆT</span>
-        <h2 class="section-title">Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn</h2>
-        <p class="section-desc">Mỗi bot được xây dựng và tối ưu chuyên sâu cho từng mục đích riêng biệt.</p>
+        <span class="section-tag" data-i18n="secTagBots">HAI DÒNG SẢN PHẨM RIÊNG BIỆT</span>
+        <h2 class="section-title" data-i18n="secTitleBots">Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn</h2>
+        <p class="section-desc" data-i18n="secDescBots">Mỗi bot được xây dựng và tối ưu chuyên sâu cho từng mục đích riêng biệt.</p>
       </div>
 
       <div class="bot-cards-grid">
@@ -479,10 +509,10 @@
           <div class="bot-card-footer">
             <div class="bot-btn-row">
               <a href="./harubot/index.html" class="btn btn-primary" style="justify-content:center;">
-                <span>🌐 Mở Trang HaruBot</span>
+                <span data-i18n="btnOpenBot">🌐 Mở Trang HaruBot</span>
               </a>
               <a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
-                <span>➕ Mời HaruBot</span>
+                <span data-i18n="btnInviteBot">➕ Mời HaruBot</span>
               </a>
             </div>
             <div class="bot-legal-links">
@@ -496,9 +526,7 @@
         <article class="bot-card harumod" id="harumod">
           <div>
             <div class="bot-header">
-              <div style="width:68px; height:68px; border-radius:18px; background:linear-gradient(135deg, #10b981, #0f766e); display:flex; align-items:center; justify-content:center; font-size:2rem; border:2px solid rgba(16,185,129,0.3);">
-                🛡️
-              </div>
+              <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="bot-avatar" style="border: 2px solid rgba(16, 185, 129, 0.5); box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);">
               <div class="bot-header-info">
                 <h3>HaruMod <span style="font-size:0.8rem; font-weight:600; color:#10b981; background:rgba(16,185,129,0.12); padding:3px 8px; border-radius:12px;">Security & Mod</span></h3>
                 <p class="bot-tagline">Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ</p>
@@ -518,10 +546,10 @@
           <div class="bot-card-footer">
             <div class="bot-btn-row">
               <a href="./harumod/index.html" class="btn btn-emerald" style="justify-content:center;">
-                <span>🛡️ Mở Trang HaruMod</span>
+                <span data-i18n="btnOpenMod">🛡️ Mở Trang HaruMod</span>
               </a>
               <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
-                <span>➕ Mời HaruMod</span>
+                <span data-i18n="btnInviteMod">➕ Mời HaruMod</span>
               </a>
             </div>
             <div class="bot-legal-links">
@@ -544,7 +572,7 @@
               <span style="font-size:0.75rem; background:rgba(168,85,247,0.15); color:var(--accent-purple); padding:3px 8px; border-radius:12px; font-weight:700;">Service Daemon</span>
             </div>
             <p style="color:var(--text-secondary); max-width:700px; font-size:0.95rem;">
-              Bot giám sát độc lập hoạt động 24/7 trên VibeHost, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.
+              Bot giám sát độc lập hoạt động 24/7 trên Host, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.
             </p>
           </div>
           <div>
@@ -698,13 +726,13 @@
           <ul class="footer-links">
             <li><a href="https://discord.gg/gardenofdream" target="_blank">Discord Garden of Dream</a></li>
             <li><a href="https://github.com/Haruki070909" target="_blank">GitHub Profile</a></li>
-            <li><a href="https://client.vibehost.cloud/" target="_blank">VibeHost Cloud</a></li>
+            <li><a href="https://discord.gg/gardenofdream" target="_blank">Dedicated Cloud Host</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <div>© 2026 Haruki (haruki_kino). Bản quyền được bảo lưu.</div>
-        <div>Hosted on GitHub Pages · Running 24/7 on VibeHost</div>
+        <div>Hosted on GitHub Pages · Running 24/7 on Dedicated Host</div>
       </div>
     </footer>
   </div>
@@ -863,6 +891,151 @@
     }
 
     initLanyardSocket();
+  </script>
+
+
+  <!-- Full Bilingual Translation Engine for Portal -->
+  <script>
+    const PORTAL_I18N = {
+      vi: {
+        navAbout: "Về Tác Giả",
+        navHaruBot: "HaruBot",
+        navHaruMod: "HaruMod",
+        navWatcher: "Watcher",
+        navLegal: "Điều Khoản & Bảo Mật",
+        heroPill1: "HaruBot V2 Trực Tuyến",
+        heroPill2: "HaruMod Pro Trực Tuyến",
+        heroPill3: "⚡ Hạ Tầng Host 24/7",
+        heroTitle: "Nâng tầm máy chủ Discord cùng <span class=\"gradient-text-cyan\">HaruBot</span> & <span class=\"gradient-text-emerald\">HaruMod</span>",
+        heroSubtitle: "Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.",
+        btnExploreBot: "🎮 Khám phá HaruBot",
+        btnExploreMod: "🛡️ Khám phá HaruMod",
+        btnLegal: "📋 Điều Khoản & Pháp Lý",
+        secTagBots: "HAI DÒNG SẢN PHẨM RIÊNG BIỆT",
+        secTitleBots: "Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn",
+        secDescBots: "Mỗi bot được xây dựng và tối ưu chuyên sâu cho từng mục đích riêng biệt.",
+        botTagline1: "Nhạc hay · Game vui · RPG Câu cá Pro · Kinh tế RuCoin",
+        botDesc1: "HaruBot (Lil' Harus) là con bot giải trí thế hệ mới mang đến không gian âm nhạc sống động, bảng điều khiển Web Dashboard trực quan, hệ thống câu cá thời gian thực độc quyền với hơn 40 loài cá và cơ chế thăng hoa cấp độ (Ascension).",
+        feat1_1: "Trình phát nhạc Hi-Fi, Lyrics đồng bộ thời gian thực",
+        feat1_2: "Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)",
+        feat1_3: "Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động",
+        feat1_4: "Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân",
+        btnOpenBot: "🌐 Mở Trang HaruBot",
+        btnInviteBot: "➕ Mời HaruBot",
+        linkTosBot: "📄 Điều khoản sử dụng (ToS)",
+        linkPrivacyBot: "🔒 Chính sách quyền riêng tư",
+        botTagline2: "Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ",
+        botDesc2: "HaruMod là lá chắn an ninh toàn diện bảo vệ máy chủ Discord. Hỗ trợ hệ thống bẫy Honeypot, giám sát Anti-Wizz Staff, bộ lọc Auto-Mod đa tầng, ghi nhận 36 sự kiện log tách biệt 6 kênh và hệ thống Ticket/Forms chuyên nghiệp.",
+        feat2_1: "Honeypot Channels & Anti-Nuke khóa máy chủ khi phát hiện phá hoại",
+        feat2_2: "Auto-Mod đa tầng: Chặn link lừa đảo, file nguy hiểm (.exe, .bat), spam",
+        feat2_3: "36 Action Logs tách riêng 6 kênh (Mod, Tin nhắn, Thành viên, Voice...)",
+        feat2_4: "Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal",
+        feat2_5: "Hybrid Commands song song Prefix h? và Slash /",
+        btnOpenMod: "🛡️ Mở Trang HaruMod",
+        btnInviteMod: "➕ Mời HaruMod",
+        linkTosMod: "📄 Điều khoản sử dụng (ToS)",
+        linkPrivacyMod: "🔒 Chính sách quyền riêng tư",
+        watcherTitle: "Haru Bot Status Watcher",
+        watcherDesc: "Bot giám sát độc lập hoạt động 24/7 trên Host, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.",
+        secTagAbout: "NHÀ PHÁT TRIỂN",
+        aboutBio: "Xin chào! Tôi là Haruki, một nhà phát triển độc lập đam mê xây dựng các sản phẩm tự động hóa và bot Discord chất lượng cao. Với mong muốn mang lại sự trải nghiệm mượt mà, ổn định và an toàn cho cộng đồng, tôi sáng lập và vận hành hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong> cùng máy chủ <strong>Garden of Dream</strong>.",
+        secTagLegal: "TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD",
+        secTitleLegal: "Điều Khoản Dịch Vụ & Quyền Riêng Tư",
+        secDescLegal: "Các liên kết chính thức dùng cho việc công khai minh bạch và khai báo trên Discord Developer Portal.",
+        thService: "Dịch Vụ / Bot",
+        thDoc: "Văn Bản",
+        thUrl: "Đường Dẫn Chính Thức (Public URL)",
+        thAction: "Thao Tác",
+        copyBtn: "📋 Copy",
+        footerDesc: "Hệ sinh thái bot Discord hiện đại, bảo mật và thân thiện. Xây dựng và duy trì bởi Haruki (haruki_kino).",
+        footerCopy: "© 2026 Haruki (haruki_kino). Bản quyền được bảo lưu."
+      },
+      en: {
+        navAbout: "About Creator",
+        navHaruBot: "HaruBot",
+        navHaruMod: "HaruMod",
+        navWatcher: "Watcher",
+        navLegal: "Legal & Privacy",
+        heroPill1: "HaruBot V2 Online",
+        heroPill2: "HaruMod Pro Online",
+        heroPill3: "⚡ Powered by Host 24/7",
+        heroTitle: "Elevate Your Discord Server with <span class=\"gradient-text-cyan\">HaruBot</span> & <span class=\"gradient-text-emerald\">HaruMod</span>",
+        heroSubtitle: "Official portal of developer <strong>Haruki (haruki_kino)</strong>. Comprehensive solutions from Hi-Fi music, RPG fishing simulation, to anti-nuke security and 36-event audit moderation.",
+        btnExploreBot: "🎮 Explore HaruBot",
+        btnExploreMod: "🛡️ Explore HaruMod",
+        btnLegal: "📋 Legal & Policies",
+        secTagBots: "TWO DISTINCT PRODUCT LINES",
+        secTitleBots: "Choose the Perfect Bot for Your Server",
+        secDescBots: "Each bot is architected and deeply optimized for its dedicated purpose.",
+        botTagline1: "Great Music · Fun Games · RPG Fishing Pro · RuCoin Economy",
+        botDesc1: "HaruBot (Lil' Harus) is a next-generation entertainment bot bringing immersive music experiences, an interactive Web Dashboard, an exclusive real-time RPG fishing game with 40+ species, and Ascension levels.",
+        feat1_1: "Hi-Fi Music Player with real-time synced Karaoke lyrics",
+        feat1_2: "Web Dashboard with live controls & 10 audio filters (8D, Bassboost)",
+        feat1_3: "RPG Fishing ecosystem with dynamic lakes, rods, baits & talents",
+        feat1_4: "RuCoin economy, black market, Ascension titles & user cards",
+        btnOpenBot: "🌐 Open HaruBot",
+        btnInviteBot: "➕ Invite HaruBot",
+        linkTosBot: "📄 Terms of Service (ToS)",
+        linkPrivacyBot: "🔒 Privacy Policy",
+        botTagline2: "Maximum Security · Anti-Nuke · 36 Action Logs · Tickets",
+        botDesc2: "HaruMod is an impenetrable multi-layer security shield for Discord servers. Features honeypot bait channels, staff anti-wizz monitor, multi-tiered auto-mod, 36 action log streams across 6 channels, and modal ticket forms.",
+        feat2_1: "Honeypot Bait Channels & Anti-Nuke server lockdown on raid",
+        feat2_2: "Multi-tier Auto-Mod: Anti-phishing, dangerous file blocker (.exe, .bat), spam",
+        feat2_3: "36 Granular Action Logs routed to 6 independent log channels",
+        feat2_4: "1-on-1 Ticket Panels with HTML transcripts & Discord Modal forms",
+        feat2_5: "Hybrid Command architecture: Prefix h? and Slash / in parallel",
+        btnOpenMod: "🛡️ Open HaruMod",
+        btnInviteMod: "➕ Invite HaruMod",
+        linkTosMod: "📄 Terms of Service (ToS)",
+        linkPrivacyMod: "🔒 Privacy Policy",
+        watcherTitle: "Haru Bot Status Watcher",
+        watcherDesc: "Independent service daemon operating 24/7 on Host, continuously monitoring heartbeats of HaruBot and HaruMod, automatically recovering and alerting on incidents.",
+        secTagAbout: "THE DEVELOPER",
+        aboutBio: "Hello! I am Haruki, an independent software developer passionate about building rock-solid Discord bots and automation services. Striving to provide smooth, dependable, and secure experiences, I founded the <strong>Garden of Dream</strong> server and the <strong>HaruBot</strong> & <strong>HaruMod</strong> ecosystem.",
+        secTagLegal: "LEGAL & DISCORD VERIFICATION CENTER",
+        secTitleLegal: "Terms of Service & Privacy Policy",
+        secDescLegal: "Official verified links for transparency and Discord Developer Portal declaration.",
+        thService: "Service / Bot",
+        thDoc: "Document",
+        thUrl: "Official Public URL",
+        thAction: "Actions",
+        copyBtn: "📋 Copy",
+        footerDesc: "Modern, secure, and user-first Discord bot ecosystem. Built and maintained by Haruki (haruki_kino).",
+        footerCopy: "© 2026 Haruki (haruki_kino). All rights reserved."
+      }
+    };
+
+    function setPortalLanguage(lang) {
+      const activeLang = (lang === "en") ? "en" : "vi";
+      localStorage.setItem("haruki_lang", activeLang);
+      document.documentElement.lang = activeLang;
+
+      const viBtn = document.getElementById("portal-lang-vi");
+      const enBtn = document.getElementById("portal-lang-en");
+      if (viBtn && enBtn) {
+        if (activeLang === "vi") {
+          viBtn.classList.add("active");
+          enBtn.classList.remove("active");
+        } else {
+          enBtn.classList.add("active");
+          viBtn.classList.remove("active");
+        }
+      }
+
+      const dict = PORTAL_I18N[activeLang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    // Auto-init saved language
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("haruki_lang") || "vi";
+      setPortalLanguage(saved);
+    });
   </script>
 
 </body>

@@ -526,3 +526,135 @@ footer {
     text-align: center;
   }
 }
+
+
+/* Language switcher button styles */
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 2px;
+}
+.lang-opt {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.lang-opt:hover {
+  color: var(--text-primary);
+}
+.lang-opt.active {
+  background: var(--accent-cyan);
+  color: #070913 !important;
+  font-weight: 800;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+}
+
+
+/* ==============================================================================
+   PRO MAX VISUAL EFFECTS & ANIMATIONS
+   ============================================================================== */
+
+@keyframes auroraBreath {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.22; }
+  50% { transform: scale(1.15) translate(25px, -20px); opacity: 0.38; }
+}
+.glow-top-left { animation: auroraBreath 11s ease-in-out infinite alternate; }
+.glow-mid-right { animation: auroraBreath 14s ease-in-out infinite alternate-reverse; }
+.glow-bottom-left { animation: auroraBreath 13s ease-in-out infinite alternate; }
+
+/* Floating Sparkle Pulse */
+@keyframes floatPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.hero-pill {
+  animation: floatPulse 4s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.hero-pill:nth-child(2) { animation-delay: 1.3s; }
+.hero-pill:nth-child(3) { animation-delay: 2.6s; }
+
+/* Enhanced Bot Cards & Glow */
+.bot-card {
+  position: relative;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.bot-card.harubot:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 24px 50px -12px rgba(56, 189, 248, 0.3), 0 0 25px rgba(56, 189, 248, 0.15);
+}
+
+.bot-card.harumod:hover {
+  transform: translateY(-6px);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 24px 50px -12px rgba(16, 185, 129, 0.3), 0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+.bot-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.bot-card:hover .bot-avatar {
+  transform: scale(1.08) rotate(-1deg);
+}
+
+.bot-card.harubot .bot-avatar {
+  border: 2px solid rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.bot-card.harumod .bot-avatar {
+  border: 2px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* Button Shimmer Effect */
+.btn-primary, .btn-emerald, .btn-purple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after, .btn-emerald::after, .btn-purple::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.btn-primary:hover::after, .btn-emerald:hover::after, .btn-purple:hover::after {
+  left: 100%;
+  opacity: 1;
+}
+
+/* Subtle Glow for Matrix Rows */
+.legal-table tr {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.legal-table tr:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
