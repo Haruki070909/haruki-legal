@@ -3,290 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Điều khoản sử dụng HaruMod (Terms of Service) — Haruki Legal</title>
-  <meta name="description" content="Điều khoản dịch vụ chính thức của Discord Bot HaruMod (App ID: 1573727590538289283). Quy định quyền hạn, trách nhiệm máy chủ và kỷ luật.">
-  <link rel="stylesheet" href="./shared.css">
-  <link rel="icon" type="image/webp" href="./haru-avatar.webp">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Điều Khoản Dịch Vụ HaruMod · HaruMod Terms of Service</title>
+  <link rel="stylesheet" href="./shared.css?v=3.8">
+  <link rel="icon" type="image/png" href="./harumod-avatar.png">
+  <style>
+    .lang-switch-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 999px !important;
+      padding: 3px !important;
+    }
+    .lang-btn {
+      background: transparent !important;
+      border: none !important;
+      color: #94a3b8 !important;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      padding: 5px 14px !important;
+      border-radius: 999px !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+    }
+    .lang-btn.active {
+      background: linear-gradient(135deg, #10b981, #06b6d4) !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4) !important;
+    }
+    .brand {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+    }
+    .brand-avatar {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 12px !important;
+      border: 1.5px solid rgba(16, 185, 129, 0.5) !important;
+      object-fit: cover !important;
+    }
+    .brand-title-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      line-height: 1 !important;
+    }
+    .brand-name {
+      font-size: 1.25rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      letter-spacing: -0.02em !important;
+      line-height: 1 !important;
+    }
+    .brand-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      padding: 4px 10px !important;
+      border-radius: 999px !important;
+      line-height: 1 !important;
+      vertical-align: middle !important;
+      letter-spacing: 0.05em !important;
+      background: rgba(16, 185, 129, 0.18) !important;
+      color: #34d399 !important;
+      border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    }
+    .server-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+      background: rgba(99, 102, 241, 0.16) !important;
+      border: 1px solid rgba(99, 102, 241, 0.35) !important;
+      color: #e0e7ff !important;
+      font-size: 0.83rem !important;
+      font-weight: 600 !important;
+      padding: 6px 14px !important;
+      border-radius: 999px !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+  </style>
 </head>
 <body>
   <div class="glow-blob glow-top-left"></div>
-  <div class="glow-blob glow-mid-right"></div>
+  <div class="glow-blob glow-bottom-left"></div>
 
   <div class="container">
     <nav class="navbar">
-      <a href="./index.html" class="brand" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;">
-        <img src="./harumod-avatar.png" alt="HARUMOD" class="brand-avatar" style="width:38px;height:38px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);">
-        <div style="display:inline-flex;align-items:center;gap:8px;">
-          <span style="font-size:1.15rem;font-weight:800;color:#ffffff;letter-spacing:-0.02em;">HARUMOD</span>
-          <span class="brand-badge emerald" style="font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid rgba(255,255,255,0.2);line-height:1;vertical-align:middle;">TERMS OF SERVICE</span>
+      <a href="./index.html" class="brand">
+        <img src="./harumod-avatar.png" alt="HaruMod" class="brand-avatar">
+        <div class="brand-title-wrap">
+          <span class="brand-name">HARUMOD</span>
+          <span class="brand-badge">TERMS OF SERVICE</span>
         </div>
       </a>
-      <ul class="nav-links">
-        <li><a href="./index.html" class="nav-link">← Trang Chủ</a></li>
-        <li><a href="./index.html" class="nav-link">Giới Thiệu HaruMod</a></li>
-        <li><a href="./privacy.html" class="nav-link">Chính Sách Bảo Mật</a></li>
-      </ul>
       <div style="display:flex;align-items:center;gap:14px;">
-        <div class="lang-switch-wrap" style="display:inline-flex;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:3px;">
-          <button id="lang-vi" class="lang-btn active" onclick="setPolicyLang('vi')" style="background:#6366f1;border:none;color:#ffffff;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all 0.2s;">VI</button>
-          <button id="lang-en" class="lang-btn" onclick="setPolicyLang('en')" style="background:transparent;border:none;color:#94a3b8;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:999px;cursor:pointer;transition:all 0.2s;">EN</button>
+        <div class="lang-switch-wrap">
+          <button id="lang-vi" class="lang-btn active" onclick="switchLegalLang('vi')">VI</button>
+          <button id="lang-en" class="lang-btn" onclick="switchLegalLang('en')">EN</button>
         </div>
-        <a href="https://discord.gg/gardenofdream" target="_blank" class="server-badge" style="display:inline-flex;align-items:center;gap:7px;background:rgba(99,102,241,0.18);border:1px solid rgba(99,102,241,0.4);color:#e0e7ff;font-size:0.83rem;font-weight:600;padding:6px 14px;border-radius:999px;text-decoration:none;transition:all 0.2s ease;">
+        <a href="https://discord.gg/gardenofdream" target="_blank" class="server-badge">
           <svg style="width:16px;height:16px;fill:#818cf8;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Garden of Dream
         </a>
       </div>
     </nav>
 
-    <div class="legal-wrapper">
-      <header class="legal-header">
-        <span class="section-tag" style="color:var(--accent-emerald);">VĂN BẢN QUY PHẠM PHÁP LÝ</span>
-        <h1 class="section-title">Điều Khoản Sử Dụng HaruMod (Terms of Service)</h1>
-        <div class="legal-meta">
-          <div class="meta-item"><span> Ngày hiệu lực:</span> <strong>22/11/2026</strong></div>
-          <div class="meta-item"><span> Ứng dụng:</span> <strong>HaruMod (ID: 1573727590538289283)</strong></div>
-          <div class="meta-item"><span> Đơn vị phát triển:</span> <strong>Haruki (haruki_kino)</strong></div>
-          <div class="meta-item"><span> Máy chủ hỗ trợ:</span> <strong>discord.gg/gardenofdream</strong></div>
-        </div>
-      </header>
-
-      <div class="legal-grid">
-        <!-- Table of Contents -->
-        <aside class="toc-card">
-          <h3>Mục Lục Văn Bản</h3>
-          <ul class="toc-list">
-            <li><a href="#sec-1">1. Chấp Thuận Điều Khoản</a></li>
-            <li><a href="#sec-2">2. Mô Tả Dịch Vụ & Quyền Hạn</a></li>
-            <li><a href="#sec-3">3. Trách Nhiệm Của Ban Quản Trị</a></li>
-            <li><a href="#sec-4">4. Biện Pháp Kỷ Luật Tự Động</a></li>
-            <li><a href="#sec-5">5. Quy Tắc Sử Dụng An Toàn</a></li>
-            <li><a href="#sec-6">6. Giới Hạn Trách Nhiệm</a></li>
-            <li><a href="#sec-7">7. Chấm Dứt & Gỡ Bỏ Dịch Vụ</a></li>
-            <li><a href="#sec-8">8. Thay Đổi Điều Khoản</a></li>
-            <li><a href="#sec-9">9. Liên Hệ & Khiếu Nại</a></li>
-          </ul>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="legal-content">
-          <div class="callout-box emerald">
-            <div class="callout-title"><span></span> Bản Tóm Tắt Nhanh Dành Cho Quản Trị Viên</div>
-            <p style="margin-bottom:0; font-size:0.92rem; color:#e2e8f0;">
-              Khi thêm HaruMod vào máy chủ Discord, bạn trao quyền cho bot quản lý kỷ luật, thanh lọc nội dung vi phạm, bảo vệ server trước các cuộc tấn công và ghi nhận nhật ký hành động (Action Logs). Chúng tôi cam kết bot vận hành minh bạch, không lạm quyền và luôn tôn trọng quyền riêng tư của thành viên.
-            </p>
+    <!-- ================= VIETNAMESE FULL TERMS ================= -->
+    <div id="policy-vi">
+      <div class="legal-wrapper">
+        <header class="legal-header">
+          <span class="section-tag" style="color:var(--accent-emerald);">ĐIỀU KHOẢN DỊCH VỤ TOÀN DIỆN</span>
+          <h1 class="section-title">Điều Khoản Sử Dụng HaruMod (Terms of Service)</h1>
+          <div class="legal-meta">
+            <div class="meta-item"><span>Ngày hiệu lực:</span> <strong>22/11/2026</strong></div>
+            <div class="meta-item"><span>Ứng dụng:</span> <strong>HaruMod (ID: 1573727590538289283)</strong></div>
+            <div class="meta-item"><span>Đơn vị quản lý:</span> <strong>Haruki (haruki_kino)</strong></div>
+            <div class="meta-item"><span>Quy chuẩn:</span> <strong>Discord Dev Terms</strong></div>
           </div>
+        </header>
 
-          <section id="sec-1" class="legal-section">
-            <h2>1. Chấp Thuận Điều Khoản</h2>
-            <p>
-              Bằng việc thêm HaruMod vào máy chủ Discord của bạn, truy cập vào các tính năng quản lý hoặc thực thi bất kỳ câu lệnh nào (thông qua Prefix mặc định <code>h?</code> hoặc Slash Command <code>/</code>), bạn xác nhận rằng bạn đã đủ độ tuổi quy định theo Điều khoản của Discord, có toàn quyền đại diện cho máy chủ Discord đó và đồng ý tuân thủ toàn bộ các điều khoản được quy định trong tài liệu này.
-            </p>
-            <p>
-              Nếu bạn không đồng ý với bất kỳ điều khoản nào, vui lòng không thêm bot hoặc trục xuất (kick) HaruMod ra khỏi máy chủ của bạn ngay lập tức.
-            </p>
-          </section>
-
-          <section id="sec-2" class="legal-section">
-            <h2>2. Mô Tả Dịch Vụ & Quyền Hạn Của Bot</h2>
-            <p>
-              HaruMod là một phần mềm tự động hóa (Discord Bot) được thiết kế chuyên biệt để hỗ trợ kiểm duyệt, bảo mật và quản lý máy chủ. Để thực hiện nhiệm vụ, HaruMod yêu cầu các quyền hạn cụ thể trên Discord bao gồm nhưng không giới hạn:
-            </p>
-            <ul>
-              <li><strong>Manage Roles (Quản lý vai trò):</strong> Để cấp phát vai trò tự động (Auto-roles), gắn vai trò kỷ luật (Muted), và thực thi tính năng Hardmute (lưu giữ tạm thời và hoàn trả vai trò khi hết hạn phạt).</li>
-              <li><strong>Manage Channels (Quản lý kênh):</strong> Để tạo kênh phòng thoại động (Join-to-Create), tạo kênh hỗ trợ (Tickets) và khóa máy chủ khi phát hiện tấn công (Anti-Nuke lockdown).</li>
-              <li><strong>Kick Members & Ban Members:</strong> Để đuổi hoặc cấm các tài khoản vi phạm quy tắc, tài khoản spam hoặc tài khoản kích hoạt kênh bẫy (Honeypot).</li>
-              <li><strong>Manage Messages (Quản lý tin nhắn):</strong> Để xóa các tin nhắn spam, tin nhắn chứa từ cấm, liên kết lừa đảo (phishing), file độc hại và hỗ trợ lệnh thanh lọc (Purge).</li>
-              <li><strong>View Audit Log:</strong> Để phát hiện hành vi xóa kênh hàng loạt, cấm thành viên bất thường của nhân sự nhằm bảo vệ máy chủ (Anti-Wizz).</li>
+        <div class="legal-grid">
+          <aside class="toc-card">
+            <h3>Mục Lục Điều Khoản</h3>
+            <ul class="toc-list">
+              <li><a href="#sec-vi-1">1. Chấp Thuận Điều Khoản</a></li>
+              <li><a href="#sec-vi-2">2. Mô Tả Dịch Vụ & Quyền Hạn</a></li>
+              <li><a href="#sec-vi-3">3. Trách Nhiệm Của Quản Trị Viên</a></li>
+              <li><a href="#sec-vi-4">4. Hành Vi Bị Nghiêm Cấm</a></li>
+              <li><a href="#sec-vi-5">5. Miễn Trừ Trách Nhiệm</a></li>
+              <li><a href="#sec-vi-6">6. Tính Khả Dụng & Bảo Trì</a></li>
+              <li><a href="#sec-vi-7">7. Chấm Dứt Sử Dụng</a></li>
+              <li><a href="#sec-vi-8">8. Điều Khoản Chung</a></li>
             </ul>
-          </section>
+          </aside>
 
-          <section id="sec-3" class="legal-section">
-            <h2>3. Trách Nhiệm Của Chủ Sở Hữu Máy Chủ & Ban Quản Trị</h2>
-            <p>
-              Quản trị viên máy chủ chịu trách nhiệm hoàn toàn đối với việc thiết lập và cấu hình HaruMod trong phạm vi máy chủ của mình:
-            </p>
-            <ul>
-              <li><strong>Cấu hình kênh bẫy (Honeypot):</strong> Đảm bảo kênh bẫy được ẩn hoặc có cảnh báo phù hợp với quy chế nội bộ server; tránh đặt bẫy nhằm mục đích bẫy oan người dùng vô tội.</li>
-              <li><strong>Phân quyền quản trị:</strong> Đảm bảo chỉ cấp quyền cấu hình bot cho các thành viên Staff đáng tin cậy. HaruMod không chịu trách nhiệm trong trường hợp nhân viên trong server của bạn lạm quyền gây thiệt hại cho server.</li>
-              <li><strong>Bảo mật danh sách Whitelist:</strong> Cập nhật đúng danh sách người dùng tin cậy (trusted_users) để tránh hệ thống Anti-Nuke nhận diện nhầm hành động hợp lệ của chủ sở hữu.</li>
-            </ul>
-          </section>
+          <main class="legal-content">
+            <div class="callout-box emerald">
+              <div class="callout-title">Bản Tóm Tắt Nhanh Dành Cho Quản Trị Viên</div>
+              <p style="margin-bottom:0; font-size:0.92rem; color:#e2e8f0;">
+                Khi thêm HaruMod vào máy chủ Discord, bạn trao quyền cho bot quản lý kỷ luật, thanh lọc nội dung vi phạm, bảo vệ server trước các cuộc tấn công và ghi nhận nhật ký hành động (Action Logs). Chúng tôi cam kết bot vận hành minh bạch, không lạm quyền và luôn tôn trọng quyền riêng tư của thành viên.
+              </p>
+            </div>
 
-          <section id="sec-4" class="legal-section">
-            <h2>4. Các Biện Pháp Kỷ Luật Tự Động</h2>
-            <p>
-              Khi người dùng vi phạm các bộ lọc được thiết lập, HaruMod có quyền tự động thực hiện các biện pháp răn đe theo cấu hình của Quản trị viên:
-            </p>
-            <ul>
-              <li><strong>Cảnh cáo (Warn) & Tích lũy ngưỡng:</strong> Tự động kích hoạt hình phạt nặng hơn khi vượt quá số lần cảnh cáo tối đa.</li>
-              <li><strong>Tước quyền & Khóa âm (Mute / Timeout / Hardmute):</strong> Ngăn chặn người dùng tương tác trong khoảng thời gian nhất định.</li>
-              <li><strong>Trục xuất & Cấm tham gia (Kick / Ban / Tempban):</strong> Buộc người dùng rời khỏi máy chủ tạm thời hoặc vĩnh viễn.</li>
-              <li><strong>Gửi thông báo DM:</strong> Tùy thuộc cấu hình server, bot sẽ gửi thông báo chi tiết hoặc ẩn danh đến người bị xử phạt.</li>
-            </ul>
-          </section>
+            <section id="sec-vi-1" class="legal-section">
+              <h2>1. Chấp Thuận Điều Khoản</h2>
+              <p>Bằng việc thêm HaruMod vào máy chủ Discord của bạn, truy cập vào các tính năng quản lý hoặc thực thi bất kỳ câu lệnh nào (thông qua Prefix mặc định <code>h?</code> hoặc Slash Command <code>/</code>), bạn xác nhận rằng bạn đã đủ độ tuổi quy định theo Điều khoản của Discord, có toàn quyền đại diện cho máy chủ Discord đó và đồng ý tuân thủ toàn bộ các điều khoản được quy định trong tài liệu này.</p>
+            </section>
 
-          <section id="sec-5" class="legal-section">
-            <h2>5. Quy Tắc Sử Dụng An Toàn & Chống Lạm Dụng</h2>
-            <p>
-              Nghiêm cấm mọi hành vi sử dụng HaruMod vào các mục đích sau:
-            </p>
-            <ul>
-              <li>Thực hiện các cuộc tấn công từ chối dịch vụ (DDoS), spam lệnh liên tục nhằm gây quá tải hoặc làm sập bot.</li>
-              <li>Khai thác lỗ hổng bảo mật của bot để phá hoại các máy chủ khác hoặc truy cập trái phép dữ liệu hệ thống.</li>
-              <li>Sử dụng bot để phát tán mã độc, virus, phần mềm độc hại, phần mềm tống tiền hoặc liên kết lừa đảo.</li>
-            </ul>
-            <p>
-              Các máy chủ hoặc tài khoản vi phạm sẽ bị đưa vào danh sách đen toàn cầu (Global Blacklist) và bị cấm sử dụng toàn bộ hệ sinh thái của Haruki vĩnh viễn mà không cần thông báo trước.
-            </p>
-          </section>
+            <section id="sec-vi-2" class="legal-section">
+              <h2>2. Mô Tả Dịch Vụ & Quyền Hạn Của Bot</h2>
+              <p>HaruMod là phần mềm tự động hóa (Discord Bot) được thiết kế chuyên biệt để hỗ trợ kiểm duyệt, bảo mật và quản lý máy chủ. Để thực hiện nhiệm vụ, HaruMod yêu cầu các quyền hạn cụ thể trên Discord bao gồm:</p>
+              <ul>
+                <li><strong>Manage Roles:</strong> Cấp phát vai trò tự động, gắn vai trò cách ly (Muted), và thực thi tính năng Hardmute.</li>
+                <li><strong>Manage Channels:</strong> Tạo kênh phòng thoại động (Join-to-Create), tạo kênh hỗ trợ (Tickets) và khóa máy chủ khi phát hiện tấn công (Anti-Nuke lockdown).</li>
+                <li><strong>Kick & Ban Members:</strong> Xử phạt các tài khoản vi phạm, tài khoản spam hoặc tài khoản kích hoạt kênh bẫy (Honeypot).</li>
+                <li><strong>Manage Messages:</strong> Quét và xóa tin nhắn spam, tin nhắn chứa từ cấm, liên kết lừa đảo và file nguy hiểm (.exe, .bat).</li>
+              </ul>
+            </section>
 
-          <section id="sec-6" class="legal-section">
-            <h2>6. Giới Hạn Trách Nhiệm</h2>
-            <p>
-              HaruMod được cung cấp theo nguyên tắc "nguyên trạng" (AS IS). Mặc dù chúng tôi nỗ lực tối đa để đảm bảo thời gian hoạt động 24/7 và độ chính xác của các thuật toán phòng vệ, nhà phát triển không bảo đảm rằng:
-            </p>
-            <ul>
-              <li>Dịch vụ sẽ hoàn toàn không bị gián đoạn, không có lỗi hoặc luôn ngăn chặn được 100% các cuộc tấn công tinh vi.</li>
-              <li>Nhà phát triển không chịu trách nhiệm pháp lý đối với bất kỳ thiệt hại trực tiếp hoặc gián tiếp nào phát sinh từ việc máy chủ bị tấn công, mất mát dữ liệu kênh hoặc quyết định xử phạt của Quản trị viên máy chủ.</li>
-            </ul>
-          </section>
+            <section id="sec-vi-3" class="legal-section">
+              <h2>3. Trách Nhiệm Của Quản Trị Viên</h2>
+              <p>Quản trị viên máy chủ hoàn toàn chịu trách nhiệm về cách cấu hình bot trong máy chủ của mình, bao gồm:</p>
+              <ul>
+                <li>Thiết lập danh sách kênh bẫy Honeypot cẩn thận, tránh đặt vào các kênh thảo luận thông thường.</li>
+                <li>Cấu hình các bộ lọc từ cấm và tên miền phù hợp với nội quy máy chủ.</li>
+                <li>Phân quyền cho các cấp Staff thực thi lệnh kiểm duyệt một cách công bằng và có trách nhiệm.</li>
+              </ul>
+            </section>
 
-          <section id="sec-7" class="legal-section">
-            <h2>7. Chấm Dứt & Gỡ Bỏ Dịch Vụ</h2>
-            <p>
-              Bạn có thể ngừng sử dụng dịch vụ bất kỳ lúc nào bằng cách xóa bỏ (Kick/Ban) HaruMod khỏi máy chủ Discord của bạn. Khi bot rời khỏi máy chủ, toàn bộ dữ liệu tạm thời trên RAM sẽ được giải phóng ngay lập tức.
-            </p>
-            <p>
-              Nhà phát triển có quyền đơn phương tạm ngừng hoặc chấm dứt cung cấp dịch vụ cho bất kỳ máy chủ nào vi phạm Điều khoản Dịch vụ của Discord hoặc pháp luật hiện hành.
-            </p>
-          </section>
+            <section id="sec-vi-4" class="legal-section">
+              <h2>4. Hành Vi Bị Nghiêm Cấm</h2>
+              <p>Người dùng không được phép:</p>
+              <ul>
+                <li>Tìm cách khai thác lỗi (exploits) hoặc spam lệnh liên tục nhằm gây quá tải (DDoS) hạ tầng máy chủ bot.</li>
+                <li>Sử dụng HaruMod để phục vụ các hành vi vi phạm pháp luật, lừa đảo, phát tán mã độc hoặc quấy rối người khác.</li>
+                <li>Đảo ngược mã nguồn, sao chép trái phép cấu trúc dữ liệu hoặc can thiệp vào tiến trình của bot.</li>
+              </ul>
+            </section>
 
-          <section id="sec-8" class="legal-section">
-            <h2>8. Thay Đổi Điều Khoản</h2>
-            <p>
-              Chúng tôi có thể cập nhật Điều khoản này theo thời gian để phản ánh các cải tiến tính năng hoặc yêu cầu pháp lý mới. Các thay đổi sẽ được công bố công khai trên trang web này kèm ngày hiệu lực mới.
-            </p>
-          </section>
+            <section id="sec-vi-5" class="legal-section">
+              <h2>5. Miễn Trừ Trách Nhiệm (Disclaimer of Warranties)</h2>
+              <p>Dịch vụ được cung cấp "nguyên trạng" (as-is). Nhà phát triển không chịu trách nhiệm đối với bất kỳ thiệt hại trực tiếp hoặc gián tiếp nào phát sinh từ việc máy chủ Discord gặp sự cố API từ phía Discord, mất điện mạng, hoặc do lỗi cấu hình sai sót từ phía Quản trị viên máy chủ.</p>
+            </section>
 
-          <section id="sec-9" class="legal-section">
-            <h2>9. Thông Tin Liên Hệ & Khiếu Nại</h2>
-            <p>
-              Mọi thắc mắc, phản hồi hoặc yêu cầu hỗ trợ liên quan đến Điều khoản Sử dụng HaruMod xin vui lòng liên hệ:
-            </p>
-            <ul>
-              <li><strong>Máy chủ hỗ trợ chính thức:</strong> <a href="https://discord.gg/gardenofdream" target="_blank" style="color:var(--accent-cyan);">discord.gg/gardenofdream</a></li>
-              <li><strong>Trưởng nhóm phát triển:</strong> Haruki (<code>haruki_kino</code>)</li>
-            </ul>
-          </section>
-        </main>
+            <section id="sec-vi-6" class="legal-section">
+              <h2>6. Tính Khả Dụng & Bảo Trì</h2>
+              <p>Chúng tôi luôn nỗ lực duy trì bot hoạt động 24/7/365 với độ sẵn sàng cao nhất. Tuy nhiên, các đợt bảo trì định kỳ hoặc cập nhật tính năng mới có thể diễn ra và sẽ được thông báo trước tại máy chủ <a href="https://discord.gg/gardenofdream" target="_blank" style="color:var(--accent-emerald);">Garden of Dream</a>.</p>
+            </section>
+
+            <section id="sec-vi-7" class="legal-section">
+              <h2>7. Chấm Dứt Sử Dụng</h2>
+              <p>Bạn có quyền ngừng sử dụng bot bất cứ lúc nào bằng cách trục xuất HaruMod khỏi máy chủ. Nhà phát triển có quyền đưa máy chủ hoặc cá nhân vào danh sách đen (Blacklist) nếu phát hiện hành vi cố tình phá hoại bot hoặc vi phạm nghiêm trọng Điều khoản của Discord.</p>
+            </section>
+
+            <section id="sec-vi-8" class="legal-section">
+              <h2>8. Điều Khoản Chung</h2>
+              <p>Điều khoản này có thể được cập nhật định kỳ để phù hợp với sự phát triển của hệ thống. Các thay đổi quan trọng sẽ được thông báo công khai.</p>
+            </section>
+          </main>
+        </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
+    <!-- ================= ENGLISH FULL TERMS ================= -->
+    <div id="policy-en" style="display:none;">
+      <div class="legal-wrapper">
+        <header class="legal-header">
+          <span class="section-tag" style="color:var(--accent-emerald);">COMPREHENSIVE TERMS OF SERVICE</span>
+          <h1 class="section-title">HaruMod Terms of Service (ToS)</h1>
+          <div class="legal-meta">
+            <div class="meta-item"><span>Effective Date:</span> <strong>November 22, 2026</strong></div>
+            <div class="meta-item"><span>Application:</span> <strong>HaruMod (ID: 1573727590538289283)</strong></div>
+            <div class="meta-item"><span>Management:</span> <strong>Haruki (haruki_kino)</strong></div>
+            <div class="meta-item"><span>Compliance:</span> <strong>Discord Dev Terms</strong></div>
+          </div>
+        </header>
+
+        <div class="legal-grid">
+          <aside class="toc-card">
+            <h3>Table of Contents</h3>
+            <ul class="toc-list">
+              <li><a href="#sec-en-1">1. Acceptance of Terms</a></li>
+              <li><a href="#sec-en-2">2. Service Description & Permissions</a></li>
+              <li><a href="#sec-en-3">3. Administrator Responsibilities</a></li>
+              <li><a href="#sec-en-4">4. Prohibited Conduct</a></li>
+              <li><a href="#sec-en-5">5. Disclaimer of Warranties</a></li>
+              <li><a href="#sec-en-6">6. Service Availability & Maintenance</a></li>
+              <li><a href="#sec-en-7">7. Termination of Service</a></li>
+              <li><a href="#sec-en-8">8. General Provisions</a></li>
+            </ul>
+          </aside>
+
+          <main class="legal-content">
+            <div class="callout-box emerald">
+              <div class="callout-title">Quick Executive Summary for Administrators</div>
+              <p style="margin-bottom:0; font-size:0.92rem; color:#e2e8f0;">
+                By adding HaruMod to your Discord guild, you grant permission to automate server discipline, sanitize harmful payloads, protect members from raids, and maintain action audit logs. We guarantee transparent, non-intrusive operations that honor member privacy.
+              </p>
+            </div>
+
+            <section id="sec-en-1" class="legal-section">
+              <h2>1. Acceptance of Terms</h2>
+              <p>By adding HaruMod to your Discord server, accessing its moderation tools, or executing any command (via default prefix <code>h?</code> or Slash Command <code>/</code>), you certify that you meet Discord's minimum age requirements, hold administrative authority for that guild, and agree to be bound by these Terms of Service.</p>
+            </section>
+
+            <section id="sec-en-2" class="legal-section">
+              <h2>2. Service Description & Permissions</h2>
+              <p>HaruMod is an automated server security bot designed specifically to empower Discord moderation teams. To execute its duties, HaruMod requires specific Discord permissions including:</p>
+              <ul>
+                <li><strong>Manage Roles:</strong> Dispatch automated join roles, assign disciplinary Muted roles, and enforce temporary Hardmute quarantine.</li>
+                <li><strong>Manage Channels:</strong> Provision dynamic temporary voice rooms (Join-to-Create), manage ticket channels, and enforce lockdown during active server raids.</li>
+                <li><strong>Kick & Ban Members:</strong> Expel violating accounts, raid bots, or bad actors triggering Honeypot trap channels.</li>
+                <li><strong>Manage Messages:</strong> Purge spam bursts, auto-filter prohibited keywords, malicious phishing links, and dangerous executable payloads (.exe, .bat).</li>
+              </ul>
+            </section>
+
+            <section id="sec-en-3" class="legal-section">
+              <h2>3. Administrator Responsibilities</h2>
+              <p>Guild administrators bear full responsibility for how the bot is configured within their server, including:</p>
+              <ul>
+                <li>Positioning Honeypot bait channels carefully to avoid trapping regular chatters.</li>
+                <li>Curating word blocklists and URL rules appropriate for their community standard.</li>
+                <li>Granting staff moderation permissions judiciously and fairly.</li>
+              </ul>
+            </section>
+
+            <section id="sec-en-4" class="legal-section">
+              <h2>4. Prohibited Conduct</h2>
+              <p>Users and administrators shall not:</p>
+              <ul>
+                <li>Exploit technical vulnerabilities, spam commands, or launch denial-of-service (DDoS) attempts against bot infrastructure.</li>
+                <li>Utilize HaruMod for illicit operations, malware distribution, phishing campaigns, or targeted member harassment.</li>
+                <li>Decompile, reverse-engineer, or duplicate internal bot code or architecture.</li>
+              </ul>
+            </section>
+
+            <section id="sec-en-5" class="legal-section">
+              <h2>5. Disclaimer of Warranties</h2>
+              <p>The service is provided on an "as-is" and "as-available" basis without warranties of any kind. The developer shall not be liable for incidental or consequential damages resulting from Discord API service outages, internet interruptions, or administrator configuration errors.</p>
+            </section>
+
+            <section id="sec-en-6" class="legal-section">
+              <h2>6. Service Availability & Maintenance</h2>
+              <p>We strive to maintain 99.9% round-the-clock uptime. Routine maintenance or feature deployments will be broadcast in advance in our support guild <a href="https://discord.gg/gardenofdream" target="_blank" style="color:var(--accent-emerald);">Garden of Dream</a>.</p>
+            </section>
+
+            <section id="sec-en-7" class="legal-section">
+              <h2>7. Termination of Service</h2>
+              <p>You may terminate your use of HaruMod at any time simply by kicking or banning the bot. The developer reserves the right to blacklist any server or individual engaged in malicious abuse or severe violation of Discord Developer Terms.</p>
+            </section>
+
+            <section id="sec-en-8" class="legal-section">
+              <h2>8. General Provisions</h2>
+              <p>These Terms may be revised periodically to accommodate platform updates. Substantive modifications will be announced openly across our official communication channels.</p>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
       <div class="footer-bottom">
-        <div>© 2026 Haruki (haruki_kino). HaruMod Terms of Service.</div>
-        <div><a href="./privacy.html" style="color:var(--accent-cyan); text-decoration:none;">Xem Chính Sách Quyền Riêng Tư →</a></div>
+        <p>© 2026 HaruMod · Developed by Haruki (haruki_kino). All rights reserved.</p>
       </div>
     </footer>
   </div>
 
-<script>
-function setDocLang(lang) {
-  const isEn = (lang === "en");
-  const viBtn = document.getElementById("lang-vi");
-  const enBtn = document.getElementById("lang-en");
-  if (viBtn && enBtn) {
-    if (isEn) {
-      enBtn.style.background = "#6366f1";
-      enBtn.style.color = "#ffffff";
-      viBtn.style.background = "transparent";
-      viBtn.style.color = "#94a3b8";
-    } else {
-      viBtn.style.background = "#6366f1";
-      viBtn.style.color = "#ffffff";
-      enBtn.style.background = "transparent";
-      enBtn.style.color = "#94a3b8";
+  <script>
+    function switchLegalLang(lang) {
+      const isEn = (lang === "en");
+      localStorage.setItem("haruki_lang", lang);
+      document.documentElement.lang = lang;
+
+      const viBlock = document.getElementById("policy-vi");
+      const enBlock = document.getElementById("policy-en");
+      if (viBlock && enBlock) {
+        viBlock.style.display = isEn ? "none" : "block";
+        enBlock.style.display = isEn ? "block" : "none";
+      }
+
+      const viBtn = document.getElementById("lang-vi");
+      const enBtn = document.getElementById("lang-en");
+      if (viBtn && enBtn) {
+        if (isEn) {
+          enBtn.classList.add("active");
+          viBtn.classList.remove("active");
+        } else {
+          viBtn.classList.add("active");
+          enBtn.classList.remove("active");
+        }
+      }
     }
-  }
 
-  // Translate document headings and summary
-  document.querySelectorAll("[data-en]").forEach(el => {
-    if (!el.getAttribute("data-vi")) {
-      el.setAttribute("data-vi", el.innerHTML);
-    }
-    el.innerHTML = isEn ? el.getAttribute("data-en") : el.getAttribute("data-vi");
-  });
-}
-document.addEventListener("DOMContentLoaded", () => {
-  const cur = localStorage.getItem("haruki_lang") || "vi";
-  setDocLang(cur);
-});
-</script>
-
-
-<script>
-const LEGAL_DATA = {"title_vi": "Điều Khoản Sử Dụng HaruMod (Terms of Service)", "title_en": "HaruMod Terms of Service (ToS)", "tag_vi": "ĐIỀU KHOẢN DỊCH VỤ TOÀN DIỆN", "tag_en": "COMPREHENSIVE TERMS OF SERVICE", "box_title_vi": "Nguyên Tắc Sử Dụng Công Bằng & Hợp Pháp", "box_title_en": "Fair & Lawful Use Principle", "box_desc_vi": "Bằng việc mời HaruMod vào máy chủ hoặc sử dụng các lệnh của HaruMod, bạn đồng ý tuân thủ toàn bộ các điều khoản được quy định dưới đây cùng Điều khoản Dịch vụ của Discord.", "box_desc_en": "By inviting HaruMod to your server or executing its commands, you agree to be bound by these Terms of Service as well as Discord's Official Developer Terms.", "toc_title_vi": "Mục Lục Điều Khoản", "toc_title_en": "Table of Contents", "sections": [["1. Chấp Thuận Điều Khoản", "1. Acceptance of Terms"], ["2. Mô Tả Dịch Vụ & Giới Hạn", "2. Service Description & Scope"], ["3. Quyền & Nghĩa Vụ Người Dùng", "3. User Rights & Responsibilities"], ["4. Bảo Mật & An Ninh Hệ Thống", "4. System Security & Safeguards"], ["5. Quyền Sở Hữu Trí Tuệ", "5. Intellectual Property Rights"], ["6. Miễn Trừ Trách Nhiệm", "6. Limitation of Liability"], ["7. Chấm Dứt Dịch Vụ", "7. Termination of Service"], ["8. Luật Áp Dụng & Giải Quyết Tranh Chấp", "8. Governing Law & Dispute Resolution"]]};
-
-function setPolicyLang(lang) {
-  const isEn = (lang === "en");
-  localStorage.setItem("haruki_lang", lang);
-
-  const viBtn = document.getElementById("lang-vi");
-  const enBtn = document.getElementById("lang-en");
-  if (viBtn && enBtn) {
-    if (isEn) {
-      enBtn.style.background = "#6366f1";
-      enBtn.style.color = "#ffffff";
-      viBtn.style.background = "transparent";
-      viBtn.style.color = "#94a3b8";
-    } else {
-      viBtn.style.background = "#6366f1";
-      viBtn.style.color = "#ffffff";
-      enBtn.style.background = "transparent";
-      enBtn.style.color = "#94a3b8";
-    }
-  }
-
-  // Update header titles
-  const tagEl = document.querySelector(".legal-header .section-tag");
-  if (tagEl) tagEl.innerText = isEn ? LEGAL_DATA.tag_en : LEGAL_DATA.tag_vi;
-
-  const titleEl = document.querySelector(".legal-header .section-title");
-  if (titleEl) titleEl.innerText = isEn ? LEGAL_DATA.title_en : LEGAL_DATA.title_vi;
-
-  // Update callout box
-  const boxTitle = document.querySelector(".legal-content .card h3, .callout-box h3");
-  if (boxTitle) boxTitle.innerText = isEn ? LEGAL_DATA.box_title_en : LEGAL_DATA.box_title_vi;
-
-  const boxDesc = document.querySelector(".legal-content .card p, .callout-box p");
-  if (boxDesc) boxDesc.innerText = isEn ? LEGAL_DATA.box_desc_en : LEGAL_DATA.box_desc_vi;
-
-  // Update TOC
-  const tocTitle = document.querySelector(".toc-card h3");
-  if (tocTitle) tocTitle.innerText = isEn ? LEGAL_DATA.toc_title_en : LEGAL_DATA.toc_title_vi;
-
-  const tocLinks = document.querySelectorAll(".toc-list a");
-  tocLinks.forEach((link, idx) => {
-    if (LEGAL_DATA.sections[idx]) {
-      link.innerText = isEn ? LEGAL_DATA.sections[idx][1] : LEGAL_DATA.sections[idx][0];
-    }
-  });
-
-  // Update Section Headers
-  const secHeaders = document.querySelectorAll(".legal-content section h2");
-  secHeaders.forEach((h2, idx) => {
-    if (LEGAL_DATA.sections[idx]) {
-      h2.innerText = isEn ? LEGAL_DATA.sections[idx][1] : LEGAL_DATA.sections[idx][0];
-    }
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const cur = localStorage.getItem("haruki_lang") || "vi";
-  setPolicyLang(cur);
-});
-</script>
-
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("haruki_lang") || "vi";
+      switchLegalLang(saved);
+    });
+  </script>
 </body>
 </html>
