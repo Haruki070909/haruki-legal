@@ -1039,3 +1039,102 @@ footer {
   filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
   stroke: #ffffff;
 }
+
+
+/* ========================================================
+   GLOBAL CYBER NAVBAR & COMPONENT STYLING
+   ======================================================== */
+.navbar-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-links a {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+  font-size: 0.94rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  padding: 6px 0 !important;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #38bdf8, #6366f1);
+  transition: width 0.25s ease;
+  border-radius: 2px;
+}
+
+.nav-links a:hover {
+  color: #ffffff !important;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.lang-switch-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.lang-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  padding: 5px 14px !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  letter-spacing: 0.04em !important;
+  outline: none !important;
+}
+
+.lang-btn:hover {
+  color: #ffffff !important;
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 12px rgba(14, 165, 233, 0.45) !important;
+}
+
+.about-content {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.spotify-info {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}

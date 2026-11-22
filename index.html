@@ -8,7 +8,152 @@
   <link rel="stylesheet" href="./shared.css">
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
-    /* Full Page Hero & Canvas Styling */
+    /* ========================================================
+       TOP NAVBAR - HIGH-END CYBERPUNK GLASSMORPHIC HEADER
+       ======================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(7, 9, 19, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      padding: 14px 0;
+    }
+    .navbar-content {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .brand {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+      height: 42px !important;
+    }
+    .brand-avatar-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+      flex-shrink: 0;
+    }
+    .brand-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .brand-name {
+      font-size: 1.25rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      color: #ffffff !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+    .brand-badge {
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.12) !important;
+      border: 1px solid rgba(56, 189, 248, 0.38) !important;
+      padding: 4px 10px !important;
+      border-radius: 999px !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.15) !important;
+    }
+    .nav-links {
+      display: flex !important;
+      align-items: center !important;
+      gap: 28px !important;
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .nav-links a {
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      font-size: 0.94rem !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.01em !important;
+      transition: all 0.25s ease !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      transition: width 0.25s ease;
+      border-radius: 2px;
+    }
+    .nav-links a:hover {
+      color: #ffffff !important;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    .lang-switch-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      border-radius: 999px !important;
+      padding: 3px !important;
+      backdrop-filter: blur(12px) !important;
+    }
+    .lang-btn {
+      background: transparent !important;
+      border: none !important;
+      color: #94a3b8 !important;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      padding: 5px 14px !important;
+      border-radius: 999px !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+      letter-spacing: 0.04em !important;
+      outline: none !important;
+    }
+    .lang-btn:hover {
+      color: #ffffff !important;
+    }
+    .lang-btn.active {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 12px rgba(14, 165, 233, 0.45) !important;
+    }
+
+    /* ========================================================
+       HERO & PORTAL PRESENTATION
+       ======================================================== */
     .hero-portal {
       padding: 90px 0 60px 0;
       text-align: center;
@@ -48,7 +193,8 @@
     .hero-pill .pill-svg {
       width: 14px;
       height: 14px;
-      color: #a855f7;
+      display: inline-flex;
+      align-items: center;
     }
     .hero-title {
       font-size: 3.4rem;
@@ -74,7 +220,9 @@
       flex-wrap: wrap;
     }
     
-    /* Bot Showcase Grid */
+    /* ========================================================
+       BOT SHOWCASE CARDS & BESPOKE WHITE ICONS
+       ======================================================== */
     .bot-cards-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -93,6 +241,8 @@
       backdrop-filter: blur(16px);
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
     .bot-card::before {
       content: "";
@@ -106,14 +256,14 @@
     }
     .bot-card.harubot:hover {
       border-color: var(--border-glow-cyan);
-      box-shadow: 0 20px 45px -12px rgba(56, 189, 248, 0.28);
+      box-shadow: 0 20px 45px -12px rgba(56, 189, 248, 0.32);
     }
     .bot-card.harubot::before {
       background: linear-gradient(90deg, #38bdf8, #6366f1);
     }
     .bot-card.harumod:hover {
       border-color: var(--border-glow-emerald);
-      box-shadow: 0 20px 45px -12px rgba(16, 185, 129, 0.28);
+      box-shadow: 0 20px 45px -12px rgba(16, 185, 129, 0.32);
     }
     .bot-card.harumod::before {
       background: linear-gradient(90deg, #10b981, #06b6d4);
@@ -135,11 +285,11 @@
       flex-shrink: 0;
     }
     .bot-avatar-box.cyan {
-      border: 2px solid rgba(56, 189, 248, 0.5);
+      border: 2px solid rgba(56, 189, 248, 0.55);
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
     }
     .bot-avatar-box.emerald {
-      border: 2px solid rgba(16, 185, 129, 0.5);
+      border: 2px solid rgba(16, 185, 129, 0.55);
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
     }
     .bot-avatar {
@@ -168,6 +318,59 @@
       margin-bottom: 24px;
       line-height: 1.6;
     }
+
+    /* Bespoke Glowing White Vector Feature Badges */
+    .bot-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding: 0;
+    }
+    .bot-features-list li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.45;
+    }
+    .feat-icon-badge {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 12px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .feat-icon-badge.cyan {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.28), rgba(99, 102, 241, 0.22)) !important;
+      border: 1.5px solid rgba(56, 189, 248, 0.65) !important;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.35), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
+    }
+    .feat-icon-badge.emerald {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(6, 182, 212, 0.22)) !important;
+      border: 1.5px solid rgba(16, 185, 129, 0.65) !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), inset 0 0 10px rgba(16, 185, 129, 0.15) !important;
+    }
+    .feat-icon-badge svg {
+      width: 22px !important;
+      height: 22px !important;
+      stroke: #ffffff !important;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.85)) !important;
+    }
+    .bot-features-list li:hover .feat-icon-badge {
+      transform: scale(1.15) translateY(-2px) !important;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6) !important;
+    }
+    .bot-features-list li:hover .feat-icon-badge.emerald {
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    /* Card Footer & Symmetrical Buttons */
     .bot-card-footer {
       border-top: 1px solid var(--border-subtle);
       padding-top: 24px;
@@ -175,24 +378,265 @@
       flex-direction: column;
       gap: 14px;
     }
+    .bot-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .bot-btn-row .btn {
+      height: 44px !important;
+      min-height: 44px !important;
+      max-height: 44px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0 16px !important;
+      font-size: 0.92rem !important;
+      font-weight: 600 !important;
+      border-radius: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      text-decoration: none !important;
+      line-height: 1 !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35) !important;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.01) !important;
+      box-shadow: 0 8px 25px rgba(14, 165, 233, 0.5) !important;
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35) !important;
+    }
+    .btn-emerald:hover {
+      transform: translateY(-2px) scale(1.01) !important;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #f1f5f9 !important;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      transform: translateY(-2px) scale(1.01) !important;
+    }
+    .bot-legal-links {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      font-size: 0.85rem !important;
+      padding-top: 10px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    .bot-legal-links a {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      color: #94a3b8 !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease !important;
+    }
+    .bot-legal-links a:hover {
+      color: var(--accent-cyan) !important;
+    }
+    .bot-legal-links a svg {
+      width: 15px;
+      height: 15px;
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+    }
 
-    /* Legal Table Styling */
+    /* ========================================================
+       WATCHER SECTION & RADAR PULSE
+       ======================================================== */
+    .watcher-icon-box {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1.5px solid rgba(168, 85, 247, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .watcher-icon-box svg {
+      width: 22px;
+      height: 22px;
+      stroke: #ffffff;
+      filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.8));
+    }
+    .radar-sweep-ring {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(168, 85, 247, 0.7);
+      animation: radarPing 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+      pointer-events: none;
+    }
+    @keyframes radarPing {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      75%, 100% { transform: scale(1.35); opacity: 0; }
+    }
+
+    /* ========================================================
+       ABOUT DEVELOPER & DISCORD PRESENCE
+       ======================================================== */
+    .about-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      backdrop-filter: blur(16px);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-avatar-wrap {
+      position: relative !important;
+      width: 130px !important;
+      height: 130px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+    }
+    .about-avatar {
+      width: 114px !important;
+      height: 114px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+      display: block !important;
+    }
+    .avatar-decoration {
+      position: absolute !important;
+      top: -10px !important;
+      left: -10px !important;
+      width: 150px !important;
+      height: 150px !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
+    }
+    .status-indicator {
+      position: absolute !important;
+      bottom: 8px !important;
+      right: 8px !important;
+      width: 22px !important;
+      height: 22px !important;
+      border-radius: 50% !important;
+      border: 3px solid #070913 !important;
+      z-index: 3 !important;
+      transition: all 0.3s ease;
+    }
+    .status-indicator.online { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
+    .status-indicator.idle { background-color: #eab308; box-shadow: 0 0 12px #eab308; }
+    .status-indicator.dnd { background-color: #ef4444; box-shadow: 0 0 12px #ef4444; }
+    .status-indicator.offline { background-color: #64748b; }
+
+    .status-pill-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+    .status-pill-live .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #64748b;
+    }
+    .status-pill-live .dot.online { background-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .status-pill-live .dot.idle { background-color: #eab308; box-shadow: 0 0 8px #eab308; }
+    .status-pill-live .dot.dnd { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
+    .status-pill-live .dot.offline { background-color: #64748b; }
+
+    .spotify-widget {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(30, 215, 96, 0.08);
+      border: 1px solid rgba(30, 215, 96, 0.3);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      margin: 16px 0;
+      max-width: 480px;
+    }
+    .spotify-art {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .spotify-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #1ed760;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .spotify-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 360px;
+    }
+    .spotify-artist {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 360px;
+    }
+
+    /* ========================================================
+       LEGAL TABLE MATRIX
+       ======================================================== */
     .legal-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 0.95rem;
     }
     .legal-table th {
       text-align: left;
-      padding: 14px 18px;
+      padding: 16px 20px;
       background: rgba(255, 255, 255, 0.04);
       color: var(--text-secondary);
       font-weight: 600;
       border-bottom: 1px solid var(--border-subtle);
     }
     .legal-table td {
-      padding: 16px 18px;
+      padding: 16px 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       color: var(--text-primary);
     }
@@ -210,20 +654,52 @@
       word-break: break-all;
     }
 
+    /* ========================================================
+       FOOTER
+       ======================================================== */
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Cyber Canvas */
+    #cyber-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
+      .navbar-content {
+        flex-direction: column;
+        gap: 16px;
+      }
       .bot-cards-grid {
         grid-template-columns: 1fr;
       }
       .hero-title {
         font-size: 2.5rem;
       }
-      .navbar-content {
-        flex-direction: column;
-        gap: 16px;
-      }
       .bot-btn-row {
         grid-template-columns: 1fr;
+      }
+      .about-box {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .about-avatar-wrap {
+        margin: 0 auto;
       }
     }
   </style>
@@ -235,7 +711,7 @@
 
   <!-- Navigation Bar -->
   <header class="navbar">
-    <div class="container navbar-content">
+    <div class="navbar-content">
       <a href="./index.html" class="brand">
         <div class="brand-avatar-box">
           <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar">
@@ -274,7 +750,7 @@
         <span data-i18n="heroPill2">HaruMod Pro Trực Tuyến</span>
       </span>
       <span class="hero-pill">
-        <span class="pill-svg"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <span class="pill-svg"><svg class="svg-icon" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
         <span data-i18n="heroPill3">Hạ Tầng Host 24/7</span>
       </span>
     </div>
@@ -289,15 +765,15 @@
 
     <div class="hero-actions">
       <a href="#harubot" class="btn btn-primary">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15.5" cy="10.5" r="1" fill="currentColor"/><circle cx="17.5" cy="13.5" r="1" fill="currentColor"/></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15.5" cy="10.5" r="1" fill="#ffffff"/><circle cx="17.5" cy="13.5" r="1" fill="#ffffff"/></svg>
         <span data-i18n="btnExploreBot">Khám Phá HaruBot</span>
       </a>
       <a href="#harumod" class="btn btn-emerald">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
         <span data-i18n="btnExploreMod">Khám Phá HaruMod</span>
       </a>
       <a href="#legal" class="btn btn-secondary">
-        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
         <span data-i18n="btnLegal">Văn Bản Pháp Lý</span>
       </a>
     </div>
@@ -332,23 +808,23 @@
             </p>
             <ul class="bot-features-list">
               <li>
-                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3.25a.75.75 0 0 0-.95-.72l-10 2.5A.75.75 0 0 0 8 5.75V15.2a3.5 3.5 0 1 0 1.5 2.92V8.4l8.5-2.12v6.92a3.5 3.5 0 1 0 1.5 2.92V3.25z"/></svg></span>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span>
                 <span data-i18n="feat1_1">Trình phát nhạc Hi-Fi, Lyrics đồng bộ thời gian thực</span>
               </li>
               <li>
-                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><circle cx="4" cy="12" r="2.5" fill="currentColor"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><circle cx="20" cy="14" r="2.5" fill="currentColor"/></svg></span>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><circle cx="4" cy="12" r="2.5" fill="#ffffff"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><circle cx="12" cy="10" r="2.5" fill="#ffffff"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><circle cx="20" cy="14" r="2.5" fill="#ffffff"/></svg></span>
                 <span data-i18n="feat1_2">Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)</span>
               </li>
               <li>
-                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7a4.5 4.5 0 0 1-9 0v-2"/><path d="m3 11 3 2.5"/><path d="M15 10c1.5-1 3.5-1 5 0M14 14c2-1 4.5-1 6.5 0"/></svg></span>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7a4.5 4.5 0 0 1-9 0v-2"/><path d="m3 11 3 2.5"/><path d="M15 11c1.5-1 3.5-1 5 0M14 15c2-1 4.5-1 6.5 0"/></svg></span>
                 <span data-i18n="feat1_3">Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động</span>
               </li>
               <li>
-                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="10" y2="9"/><line x1="17" y1="3" x2="14" y2="9"/></svg></span>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="10" y2="9"/><line x1="17" y1="3" x2="14" y2="9"/></svg></span>
                 <span data-i18n="feat1_4">Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân</span>
               </li>
               <li>
-                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="8" cy="11" r="3"/><path d="M14 9h4M14 13h4M4 18c0-2 2-3 4-3s4 1 4 3"/></svg></span>
+                <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="8" cy="11" r="3"/><path d="M14 9h4M14 13h4M4 18c0-2 2-3 4-3s4 1 4 3"/></svg></span>
                 <span data-i18n="feat1_5">Thẻ hồ sơ cá nhân tùy chỉnh & Bảng xếp hạng máy chủ</span>
               </li>
             </ul>
@@ -356,21 +832,21 @@
           <div class="bot-card-footer">
             <div class="bot-btn-row">
               <a href="./harubot/index.html" class="btn btn-primary">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 <span data-i18n="btnOpenBot">Mở Trang HaruBot</span>
               </a>
               <a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n="btnInviteBot">Mời HaruBot</span>
               </a>
             </div>
             <div class="bot-legal-links">
               <a href="./harubot/terms.html">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span data-i18n="linkTosBot">Điều khoản sử dụng (ToS)</span>
               </a>
               <a href="./harubot/privacy.html">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5" fill="#ffffff"/></svg>
                 <span data-i18n="linkPrivacyBot">Chính sách quyền riêng tư</span>
               </a>
             </div>
@@ -394,23 +870,23 @@
             </p>
             <ul class="bot-features-list">
               <li>
-                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
                 <span data-i18n="feat2_1">Honeypot Bait Channels & Anti-Nuke khóa máy chủ khi raid</span>
               </li>
               <li>
-                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="4"/><line x1="9" y1="14" x2="15" y2="8"/></svg></span>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="4"/><line x1="9" y1="14" x2="15" y2="8"/></svg></span>
                 <span data-i18n="feat2_2">Auto-Mod đa tầng: Chặn link lừa đảo, file độc hại, spam</span>
               </li>
               <li>
-                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
                 <span data-i18n="feat2_3">36 Action Logs tách riêng 6 kênh độc lập (Mod, Tin nhắn, Voice...)</span>
               </li>
               <li>
-                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2M22 12a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><line x1="12" y1="6" x2="12" y2="18" stroke-dasharray="2 2"/></svg></span>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2M22 12a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><line x1="12" y1="6" x2="12" y2="18" stroke-dasharray="2 2"/></svg></span>
                 <span data-i18n="feat2_4">Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal</span>
               </li>
               <li>
-                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+                <span class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
                 <span data-i18n="feat2_5">Kiến trúc Hybrid Commands song song Prefix h? và Slash /</span>
               </li>
             </ul>
@@ -418,21 +894,21 @@
           <div class="bot-card-footer">
             <div class="bot-btn-row">
               <a href="./harumod/index.html" class="btn btn-emerald">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
                 <span data-i18n="btnOpenMod">Mở Trang HaruMod</span>
               </a>
               <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n="btnInviteMod">Mời HaruMod</span>
               </a>
             </div>
             <div class="bot-legal-links">
               <a href="./harumod/terms.html">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span data-i18n="linkTosMod">Điều khoản sử dụng (ToS)</span>
               </a>
               <a href="./harumod/privacy.html">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5" fill="#ffffff"/></svg>
                 <span data-i18n="linkPrivacyMod">Chính sách quyền riêng tư</span>
               </a>
             </div>
@@ -446,9 +922,9 @@
       <div class="card" style="border-left:4px solid var(--accent-purple); position:relative; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
           <div>
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
               <div class="watcher-icon-box">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19a16 16 0 0 1 16 0"/><path d="M7 16a11 11 0 0 1 10 0"/><path d="M10 13a6 6 0 0 1 4 0"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19a16 16 0 0 1 16 0"/><path d="M7 16a11 11 0 0 1 10 0"/><path d="M10 13a6 6 0 0 1 4 0"/><circle cx="12" cy="19" r="2" fill="#ffffff"/></svg>
                 <span class="radar-sweep-ring"></span>
               </div>
               <h3 style="font-size:1.4rem; font-weight:800;" data-i18n="watcherTitle">Haru Bot Status Watcher</h3>
@@ -459,7 +935,7 @@
             </p>
           </div>
           <div>
-            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.3); padding:10px 18px; border-radius:10px; font-family:monospace; font-size:0.85rem; color:#c084fc; box-shadow:0 0 15px rgba(168,85,247,0.15);">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.35); padding:10px 18px; border-radius:10px; font-family:monospace; font-size:0.85rem; color:#c084fc; box-shadow:0 0 15px rgba(168,85,247,0.18);">
               Uptime: 99.99% · 0 Downtime
             </div>
           </div>
@@ -483,8 +959,8 @@
               <span id="discord-live-text">Discord: haruki_kino</span>
             </span>
             <span id="discord-activity-pill" class="status-pill-live" style="display:none; border-color:rgba(56,189,248,0.3); background:rgba(56,189,248,0.08);">
-              <span id="activity-icon" style="display:inline-flex; align-items:center;"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span>
-              <span id="activity-text" style="color:#e0f2fe;">Đang hoạt động</span>
+              <span id="activity-icon" style="display:inline-flex; align-items:center;"><svg class="svg-icon" viewBox="0 0 24 24" fill="#ffffff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span>
+              <span id="activity-text" style="color:#e0f2fe; margin-left:6px;">Đang hoạt động</span>
             </span>
           </div>
 
@@ -499,7 +975,6 @@
             <img id="spotify-art" src="" alt="Album Art" class="spotify-art">
             <div class="spotify-info">
               <span class="spotify-badge">
-                <span class="spotify-wave"></span><span class="spotify-wave"></span><span class="spotify-wave"></span>
                 ĐANG NGHE SPOTIFY
               </span>
               <div id="spotify-title" class="spotify-title">Tên bài hát</div>
@@ -546,7 +1021,7 @@
               <td><span class="url-chip" id="url-bot-tos">https://haruki070909.github.io/haruki-legal/harubot/terms.html</span></td>
               <td style="text-align:right;">
                 <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-tos')">
-                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
                 </button>
               </td>
             </tr>
@@ -556,7 +1031,7 @@
               <td><span class="url-chip" id="url-bot-privacy">https://haruki070909.github.io/haruki-legal/harubot/privacy.html</span></td>
               <td style="text-align:right;">
                 <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-privacy')">
-                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
                 </button>
               </td>
             </tr>
@@ -566,7 +1041,7 @@
               <td><span class="url-chip" id="url-mod-tos">https://haruki070909.github.io/haruki-legal/harumod/terms.html</span></td>
               <td style="text-align:right;">
                 <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-tos')">
-                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
                 </button>
               </td>
             </tr>
@@ -576,7 +1051,7 @@
               <td><span class="url-chip" id="url-mod-privacy">https://haruki070909.github.io/haruki-legal/harumod/privacy.html</span></td>
               <td style="text-align:right;">
                 <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-privacy')">
-                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span data-i18n="copyBtn">Sao chép</span>
                 </button>
               </td>
             </tr>
@@ -612,7 +1087,7 @@
 
   <!-- Toast Copy Notification -->
   <div id="copy-toast" style="display:none; position:fixed; bottom:24px; right:24px; background:#10b981; color:#fff; padding:12px 20px; border-radius:10px; font-weight:600; box-shadow:0 10px 25px rgba(0,0,0,0.5); z-index:9999; align-items:center; gap:8px;">
-    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> <span>Đã sao chép liên kết vào bộ nhớ tạm!</span>
+    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> <span>Đã sao chép liên kết vào bộ nhớ tạm!</span>
   </div>
 
   <!-- Interactive Scripts -->
@@ -768,7 +1243,7 @@
     connectLanyardWs();
   </script>
 
-  <!-- Internationalization (VI/EN) Engine - CLEAN TEXT LABELS WITHOUT RAW EMOJIS -->
+  <!-- Internationalization (VI/EN) Engine -->
   <script>
     const PORTAL_I18N = {
       vi: {
