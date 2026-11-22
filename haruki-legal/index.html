@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haruki Developer & Bots Ecosystem — HaruBot & HaruMod</title>
+  <meta name="description" content="Trang chủ chính thức của nhà phát triển Haruki (haruki_kino) và hệ sinh thái Discord Bots: HaruBot (Giải trí, Âm nhạc, Câu cá RPG) và HaruMod (Bảo mật, Anti-Nuke, Quản trị máy chủ).">
+  <link rel="stylesheet" href="./shared.css">
+  <link rel="icon" type="image/webp" href="./haru-avatar.webp">
+  <style>
+    .hero-portal {
+      padding: 100px 0 70px 0;
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .hero-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+    .hero-pill .dot.emerald {
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 auto 36px auto;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    /* Bot Showcase Grid */
+    .bot-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .bot-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .bot-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+    .bot-card.harubot:hover {
+      border-color: var(--border-glow-cyan);
+      box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
+      transform: translateY(-4px);
+    }
+    .bot-card.harubot::before {
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+    }
+    .bot-card.harumod:hover {
+      border-color: var(--border-glow-emerald);
+      box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.2);
+      transform: translateY(-4px);
+    }
+    .bot-card.harumod::before {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+    }
+    .bot-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .bot-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    .bot-header-info h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .bot-tagline {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .bot-desc {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .bot-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .bot-features-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+    }
+    .bot-features-list li .icon {
+      font-size: 1.1rem;
+    }
+    .bot-card-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .bot-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .bot-legal-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      padding-top: 8px;
+    }
+    .bot-legal-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .bot-legal-links a:hover {
+      color: var(--accent-cyan);
+      text-decoration: underline;
+    }
+
+    /* About Section */
+    .about-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      backdrop-filter: blur(16px);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-avatar-wrap {
+      position: relative;
+    }
+    .about-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 28px;
+      object-fit: cover;
+      border: 3px solid var(--accent-cyan);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    }
+    .about-content h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .about-content p {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .about-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .about-tag {
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* Legal Table Matrix */
+    .legal-matrix-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .legal-table th, .legal-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .legal-table th {
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+    .legal-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .url-chip {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+
+    @media (max-width: 850px) {
+      .bot-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-box {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .about-avatar-wrap {
+        margin: 0 auto;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+  
+    .avatar-decoration {
+      position: absolute;
+      top: -14px;
+      left: -14px;
+      width: 168px;
+      height: 168px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .status-indicator {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 4px solid #070913;
+      z-index: 3;
+      transition: all 0.3s ease;
+    }
+    .status-indicator.online { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
+    .status-indicator.idle { background-color: #eab308; box-shadow: 0 0 12px #eab308; }
+    .status-indicator.dnd { background-color: #ef4444; box-shadow: 0 0 12px #ef4444; }
+    .status-indicator.offline { background-color: #64748b; }
+
+    .status-pill-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .status-pill-live .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #64748b;
+    }
+    .status-pill-live .dot.online { background-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .status-pill-live .dot.idle { background-color: #eab308; box-shadow: 0 0 8px #eab308; }
+    .status-pill-live .dot.dnd { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
+    .status-pill-live .dot.offline { background-color: #64748b; }
+
+    .discord-activity-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(88, 101, 242, 0.12);
+      border: 1px solid rgba(88, 101, 242, 0.3);
+      font-size: 0.88rem;
+      color: #c7d2fe;
+      margin-bottom: 14px;
+    }
+
+    .spotify-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(30, 215, 96, 0.08);
+      border: 1px solid rgba(30, 215, 96, 0.3);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      margin: 16px 0;
+      max-width: 480px;
+    }
+    .spotify-art {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .spotify-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #1ed760;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .spotify-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 360px;
+    }
+    .spotify-artist {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 360px;
+    }
+
+    </style>
+</head>
+<body>
+  <div class="glow-blob glow-top-left"></div>
+  <div class="glow-blob glow-mid-right"></div>
+  <div class="glow-blob glow-bottom-left"></div>
+
+  <div class="container">
+    <nav class="navbar">
+      <a href="./index.html" class="brand">
+        <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar">
+        <span>HARUKI <span class="brand-badge">ECOSYSTEM</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">Về Tác Giả</a></li>
+        <li><a href="#harubot" class="nav-link">HaruBot</a></li>
+        <li><a href="#harumod" class="nav-link">HaruMod</a></li>
+        <li><a href="#watcher" class="nav-link">Watcher</a></li>
+        <li><a href="#legal" class="nav-link">Điều Khoản & Bảo Mật</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://discord.gg/gardenofdream" target="_blank" class="btn btn-secondary btn-sm">
+          <span>💬 Garden of Dream</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero-portal">
+      <div class="hero-badge-row">
+        <div class="hero-pill"><span class="dot"></span> HaruBot V2 Online</div>
+        <div class="hero-pill"><span class="dot emerald"></span> HaruMod Pro Online</div>
+        <div class="hero-pill">⚡ Powered by VibeHost 24/7</div>
+      </div>
+      <h1 class="hero-title">
+        Nâng tầm máy chủ Discord cùng <span class="gradient-text-cyan">HaruBot</span> & <span class="gradient-text-emerald">HaruMod</span>
+      </h1>
+      <p class="hero-subtitle">
+        Cổng thông tin chính thức của nhà phát triển <strong>Haruki (haruki_kino)</strong>. Giải pháp toàn diện từ giải trí, âm nhạc Hi-Fi, câu cá RPG Pro đến hệ thống quản trị, chống phá hoại (Anti-Nuke) và bảo mật máy chủ tối tân.
+      </p>
+      <div class="hero-actions">
+        <a href="#harubot" class="btn btn-primary">
+          <span>🎮 Khám phá HaruBot</span>
+        </a>
+        <a href="#harumod" class="btn btn-emerald">
+          <span>🛡️ Khám phá HaruMod</span>
+        </a>
+        <a href="#legal" class="btn btn-secondary">
+          <span>📋 Điều Khoản & Pháp Lý</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Bot Showcase Dual Grid -->
+    <section id="bots">
+      <div class="section-head">
+        <span class="section-tag">HAI DÒNG SẢN PHẨM RIÊNG BIỆT</span>
+        <h2 class="section-title">Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn</h2>
+        <p class="section-desc">Mỗi bot được xây dựng và tối ưu chuyên sâu cho từng mục đích riêng biệt.</p>
+      </div>
+
+      <div class="bot-cards-grid">
+        <!-- HaruBot Card -->
+        <article class="bot-card harubot" id="harubot">
+          <div>
+            <div class="bot-header">
+              <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="bot-avatar">
+              <div class="bot-header-info">
+                <h3>HaruBot <span style="font-size:0.8rem; font-weight:600; color:#38bdf8; background:rgba(56,189,248,0.12); padding:3px 8px; border-radius:12px;">Entertainment</span></h3>
+                <p class="bot-tagline">Nhạc hay · Game vui · RPG Câu cá Pro · Kinh tế RuCoin</p>
+              </div>
+            </div>
+            <p class="bot-desc">
+              HaruBot (Lil' Harus) là con bot giải trí thế hệ mới mang đến không gian âm nhạc sống động, bảng điều khiển Web Dashboard trực quan, hệ thống câu cá thời gian thực độc quyền với hơn 40 loài cá và cơ chế thăng hoa cấp độ (Ascension).
+            </p>
+            <ul class="bot-features-list">
+              <li><span class="icon">🎵</span> Trình phát nhạc Hi-Fi, Lyrics đồng bộ thời gian thực</li>
+              <li><span class="icon">🎛️</span> Web Dashboard điều khiển nhạc & bộ lọc âm thanh FX (8D, Bassboost)</li>
+              <li><span class="icon">🎣</span> Hệ sinh thái câu cá RPG Pro, cần câu, mồi câu, hồ câu động</li>
+              <li><span class="icon">💎</span> Kinh tế RuCoin, chợ đen, thăng hoa danh hiệu & hồ sơ cá nhân</li>
+            </ul>
+          </div>
+          <div class="bot-card-footer">
+            <div class="bot-btn-row">
+              <a href="./harubot/index.html" class="btn btn-primary" style="justify-content:center;">
+                <span>🌐 Mở Trang HaruBot</span>
+              </a>
+              <a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
+                <span>➕ Mời HaruBot</span>
+              </a>
+            </div>
+            <div class="bot-legal-links">
+              <a href="./harubot/terms.html">📄 Điều khoản sử dụng (ToS)</a>
+              <a href="./harubot/privacy.html">🔒 Chính sách quyền riêng tư</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- HaruMod Card -->
+        <article class="bot-card harumod" id="harumod">
+          <div>
+            <div class="bot-header">
+              <div style="width:68px; height:68px; border-radius:18px; background:linear-gradient(135deg, #10b981, #0f766e); display:flex; align-items:center; justify-content:center; font-size:2rem; border:2px solid rgba(16,185,129,0.3);">
+                🛡️
+              </div>
+              <div class="bot-header-info">
+                <h3>HaruMod <span style="font-size:0.8rem; font-weight:600; color:#10b981; background:rgba(16,185,129,0.12); padding:3px 8px; border-radius:12px;">Security & Mod</span></h3>
+                <p class="bot-tagline">Bảo mật tối đa · Anti-Nuke · 36 Action Logs · Vé hỗ trợ</p>
+              </div>
+            </div>
+            <p class="bot-desc">
+              HaruMod là lá chắn an ninh toàn diện bảo vệ máy chủ Discord. Hỗ trợ hệ thống bẫy Honeypot, giám sát Anti-Wizz Staff, bộ lọc Auto-Mod đa tầng, ghi nhận 36 sự kiện log tách biệt 6 kênh và hệ thống Ticket/Forms chuyên nghiệp.
+            </p>
+            <ul class="bot-features-list">
+              <li><span class="icon">🚨</span> Honeypot Channels & Anti-Nuke khóa máy chủ khi phát hiện phá hoại</li>
+              <li><span class="icon">🛑</span> Auto-Mod đa tầng: Chặn link lừa đảo, file nguy hiểm (.exe, .bat), spam</li>
+              <li><span class="icon">📜</span> 36 Action Logs tách riêng 6 kênh (Mod, Tin nhắn, Thành viên, Voice...)</li>
+              <li><span class="icon">🎫</span> Ticket Panel 1-1 xuất transcript HTML & Biểu mẫu ứng tuyển Modal</li>
+              <li><span class="icon">⚡</span> Hybrid Commands song song Prefix <code>h?</code> và Slash <code>/</code></li>
+            </ul>
+          </div>
+          <div class="bot-card-footer">
+            <div class="bot-btn-row">
+              <a href="./harumod/index.html" class="btn btn-emerald" style="justify-content:center;">
+                <span>🛡️ Mở Trang HaruMod</span>
+              </a>
+              <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-secondary" style="justify-content:center;">
+                <span>➕ Mời HaruMod</span>
+              </a>
+            </div>
+            <div class="bot-legal-links">
+              <a href="./harumod/terms.html">📄 Điều khoản sử dụng (ToS)</a>
+              <a href="./harumod/privacy.html">🔒 Chính sách quyền riêng tư</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Watcher Section -->
+    <section id="watcher">
+      <div class="card" style="border-left:4px solid var(--accent-purple);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <span style="font-size:1.5rem;">📡</span>
+              <h3 style="font-size:1.4rem; font-weight:800;">Haru Bot Status Watcher</h3>
+              <span style="font-size:0.75rem; background:rgba(168,85,247,0.15); color:var(--accent-purple); padding:3px 8px; border-radius:12px; font-weight:700;">Service Daemon</span>
+            </div>
+            <p style="color:var(--text-secondary); max-width:700px; font-size:0.95rem;">
+              Bot giám sát độc lập hoạt động 24/7 trên VibeHost, liên tục kiểm tra nhịp tim (heartbeat) của HaruBot và HaruMod, tự động gửi cảnh báo và phục hồi dịch vụ ngay lập tức khi phát hiện sự cố gián đoạn.
+            </p>
+          </div>
+          <div>
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); padding:10px 18px; border-radius:10px; font-family:monospace; font-size:0.85rem; color:#a855f7;">
+              Uptime: 99.99% · 0 Downtime
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Developer -->
+    <section id="about">
+            <div class="about-box">
+        <div class="about-avatar-wrap">
+          <img id="discord-avatar" src="./haru-avatar.webp" alt="Haruki" class="about-avatar">
+          <img id="discord-decoration" class="avatar-decoration" src="" style="display:none;" alt="">
+          <span id="discord-status-dot" class="status-indicator offline" title="Discord: Ngoại tuyến"></span>
+        </div>
+        <div class="about-content">
+          <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <span class="section-tag" style="margin-bottom:0;">NHÀ PHÁT TRIỂN</span>
+            <span id="discord-live-pill" class="status-pill-live">
+              <span id="discord-live-dot" class="dot offline"></span>
+              <span id="discord-live-text">Discord: haruki_kino</span>
+            </span>
+          </div>
+
+          <h3 id="discord-name-heading">Haruki (<span style="color:var(--accent-cyan);">@haruki_kino</span>)</h3>
+          
+          <!-- Live Activity / Custom Status -->
+          <div id="discord-activity-pill" class="discord-activity-pill" style="display:none;">
+            <span id="activity-icon">💬</span>
+            <span id="activity-text"></span>
+          </div>
+
+          <!-- Live Spotify -->
+          <div id="spotify-card" class="spotify-card" style="display:none;">
+            <img id="spotify-art" class="spotify-art" src="" alt="Album Art">
+            <div style="overflow:hidden;">
+              <div class="spotify-badge">🎧 ĐANG NGHE SPOTIFY TRÊN DISCORD</div>
+              <div id="spotify-title" class="spotify-title">Tên bài hát</div>
+              <div id="spotify-artist" class="spotify-artist">Nghệ sĩ</div>
+            </div>
+          </div>
+
+          <p>
+            Xin chào! Tôi là Haruki, một nhà phát triển độc lập đam mê xây dựng các sản phẩm tự động hóa và bot Discord chất lượng cao. Với mong muốn mang lại sự trải nghiệm mượt mà, ổn định và an toàn cho cộng đồng, tôi sáng lập và vận hành hệ sinh thái <strong>HaruBot</strong> & <strong>HaruMod</strong> cùng máy chủ <strong>Garden of Dream</strong>.
+          </p>
+          <div class="about-tags">
+            <span class="about-tag">👨‍💻 Discord Bot Developer</span>
+            <span class="about-tag">Node.js / TypeScript</span>
+            <span class="about-tag">Python & Automation</span>
+            <span class="about-tag">Founder: Garden of Dream</span>
+            <span class="about-tag">Server Infrastructure & Security</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Legal & Verification Directory -->
+    <section id="legal">
+      <div class="section-head">
+        <span class="section-tag">TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD</span>
+        <h2 class="section-title">Điều Khoản Dịch Vụ & Quyền Riêng Tư</h2>
+        <p class="section-desc">
+          Các liên kết chính thức dùng cho việc công khai minh bạch và khai báo trên Discord Developer Portal.
+        </p>
+      </div>
+
+      <div class="legal-matrix-card">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th>Dịch Vụ / Bot</th>
+              <th>Văn Bản</th>
+              <th>Đường Dẫn Chính Thức (Public URL)</th>
+              <th>Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HaruMod</strong> (ID: <code>1573727590538289283</code>)</td>
+              <td><span style="color:#10b981; font-weight:700;">Terms of Service</span></td>
+              <td><span class="url-chip" id="url-mod-tos">https://haruki070909.github.io/haruki-legal/harumod/terms.html</span></td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-tos')">📋 Copy</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HaruMod</strong> (ID: <code>1573727590538289283</code>)</td>
+              <td><span style="color:#10b981; font-weight:700;">Privacy Policy</span></td>
+              <td><span class="url-chip" id="url-mod-privacy">https://haruki070909.github.io/haruki-legal/harumod/privacy.html</span></td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-mod-privacy')">📋 Copy</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HaruBot</strong> (ID: <code>1559612562008572084</code>)</td>
+              <td><span style="color:#38bdf8; font-weight:700;">Terms of Service</span></td>
+              <td><span class="url-chip" id="url-bot-tos">https://haruki070909.github.io/haruki-legal/harubot/terms.html</span></td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-tos')">📋 Copy</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HaruBot</strong> (ID: <code>1559612562008572084</code>)</td>
+              <td><span style="color:#38bdf8; font-weight:700;">Privacy Policy</span></td>
+              <td><span class="url-chip" id="url-bot-privacy">https://haruki070909.github.io/haruki-legal/harubot/privacy.html</span></td>
+              <td>
+                <button class="btn btn-secondary btn-sm" onclick="copyLink('url-bot-privacy')">📋 Copy</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom:12px;">
+            <img src="./haru-avatar.webp" alt="Haruki Avatar" class="brand-avatar" style="width:32px; height:32px;">
+            <span>HARUKI ECOSYSTEM</span>
+          </div>
+          <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; max-width:320px;">
+            Hệ sinh thái bot Discord hiện đại, bảo mật và thân thiện. Xây dựng và duy trì bởi Haruki (haruki_kino).
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>HaruBot</h4>
+          <ul class="footer-links">
+            <li><a href="./harubot/index.html">Trang Giới Thiệu</a></li>
+            <li><a href="./harubot/terms.html">Điều khoản sử dụng</a></li>
+            <li><a href="./harubot/privacy.html">Chính sách bảo mật</a></li>
+            <li><a href="https://discord.com/oauth2/authorize?client_id=1559612562008572084&permissions=8&scope=bot%20applications.commands" target="_blank">Mời HaruBot</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>HaruMod</h4>
+          <ul class="footer-links">
+            <li><a href="./harumod/index.html">Trang Giới Thiệu</a></li>
+            <li><a href="./harumod/terms.html">Điều khoản sử dụng</a></li>
+            <li><a href="./harumod/privacy.html">Chính sách bảo mật</a></li>
+            <li><a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank">Mời HaruMod</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Cộng Đồng</h4>
+          <ul class="footer-links">
+            <li><a href="https://discord.gg/gardenofdream" target="_blank">Discord Garden of Dream</a></li>
+            <li><a href="https://github.com/Haruki070909" target="_blank">GitHub Profile</a></li>
+            <li><a href="https://client.vibehost.cloud/" target="_blank">VibeHost Cloud</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Haruki (haruki_kino). Bản quyền được bảo lưu.</div>
+        <div>Hosted on GitHub Pages · Running 24/7 on VibeHost</div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="copy-toast" class="copy-toast">
+    <span>✅</span> <span id="toast-text">Đã sao chép liên kết vào bộ nhớ tạm!</span>
+  </div>
+
+  <script>
+    function copyLink(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.style.display = 'flex';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2500);
+      });
+    }
+  </script>
+
+  <!-- Discord Real-time Presence Script (Lanyard Engine) -->
+  <script>
+    const DISCORD_USER_ID = "1028500296059596961";
+
+    function updatePresenceUI(d) {
+      if (!d || !d.discord_user) return;
+      const user = d.discord_user;
+
+      // 1. Avatar (supports Animated GIF if Nitro)
+      if (user.avatar) {
+        const ext = user.avatar.startsWith("a_") ? "gif" : "webp";
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=256`;
+        const avatarEl = document.getElementById("discord-avatar");
+        if (avatarEl && avatarEl.src !== avatarUrl) {
+          avatarEl.src = avatarUrl;
+        }
+      }
+
+      // 2. Avatar Decoration (Nitro decorations)
+      const decoEl = document.getElementById("discord-decoration");
+      if (user.avatar_decoration_data && user.avatar_decoration_data.asset) {
+        decoEl.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png`;
+        decoEl.style.display = "block";
+      } else if (decoEl) {
+        decoEl.style.display = "none";
+      }
+
+      // 3. Name & Username
+      const displayName = user.global_name || user.username;
+      const nameHeading = document.getElementById("discord-name-heading");
+      if (nameHeading) {
+        nameHeading.innerHTML = `${displayName} (<span style="color:var(--accent-cyan);">@${user.username}</span>)`;
+      }
+
+      // 4. Status Dot & Text
+      const status = d.discord_status || "offline";
+      const statusLabels = {
+        online: "Discord: Trực tuyến (Online)",
+        idle: "Discord: Đang treo máy (Idle)",
+        dnd: "Discord: Không làm phiền (DND)",
+        offline: "Discord: Ngoại tuyến"
+      };
+
+      const statusDot = document.getElementById("discord-status-dot");
+      if (statusDot) {
+        statusDot.className = `status-indicator ${status}`;
+        statusDot.title = statusLabels[status] || "Offline";
+      }
+
+      const liveDot = document.getElementById("discord-live-dot");
+      if (liveDot) {
+        liveDot.className = `dot ${status}`;
+      }
+
+      const liveText = document.getElementById("discord-live-text");
+      if (liveText) {
+        liveText.innerText = statusLabels[status] || "Ngoại tuyến";
+      }
+
+      // 5. Spotify Card
+      const spotifyCard = document.getElementById("spotify-card");
+      if (d.listening_to_spotify && d.spotify) {
+        spotifyCard.style.display = "flex";
+        document.getElementById("spotify-title").innerText = d.spotify.song;
+        document.getElementById("spotify-artist").innerText = d.spotify.artist;
+        document.getElementById("spotify-art").src = d.spotify.album_art_url;
+      } else if (spotifyCard) {
+        spotifyCard.style.display = "none";
+      }
+
+      // 6. Custom Status & Activities
+      const activityPill = document.getElementById("discord-activity-pill");
+      const activities = d.activities || [];
+      const customStatus = activities.find(a => a.type === 4);
+      const otherActivity = activities.find(a => a.type !== 4 && a.name !== "Spotify");
+
+      if (customStatus && customStatus.state) {
+        activityPill.style.display = "inline-flex";
+        let emojiText = "";
+        if (customStatus.emoji) {
+          if (customStatus.emoji.id) {
+            emojiText = `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.webp?size=44" style="width:18px;height:18px;vertical-align:middle;margin-right:4px;">`;
+          } else {
+            emojiText = `${customStatus.emoji.name} `;
+          }
+        }
+        document.getElementById("activity-icon").innerHTML = "💬";
+        document.getElementById("activity-text").innerHTML = `${emojiText}${customStatus.state}`;
+      } else if (otherActivity) {
+        activityPill.style.display = "inline-flex";
+        document.getElementById("activity-icon").innerHTML = "🎮";
+        document.getElementById("activity-text").innerText = `Đang chơi: ${otherActivity.name}`;
+      } else if (activityPill) {
+        activityPill.style.display = "none";
+      }
+    }
+
+    // Initial REST fetch
+    fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.success && res.data) {
+          updatePresenceUI(res.data);
+        }
+      })
+      .catch(() => {});
+
+    // Real-time WebSocket connection
+    function initLanyardSocket() {
+      try {
+        const ws = new WebSocket("wss://api.lanyard.rest/socket");
+        let heartbeatTimer = null;
+
+        ws.onmessage = (event) => {
+          const msg = JSON.parse(event.data);
+          if (msg.op === 1) { // Hello
+            heartbeatTimer = setInterval(() => {
+              ws.send(JSON.stringify({ op: 3 }));
+            }, msg.d.heartbeat_interval);
+
+            ws.send(JSON.stringify({
+              op: 2,
+              d: { subscribe_to_id: DISCORD_USER_ID }
+            }));
+          } else if (msg.t === "INIT_STATE" || msg.t === "PRESENCE_UPDATE") {
+            updatePresenceUI(msg.d);
+          }
+        };
+
+        ws.onclose = () => {
+          if (heartbeatTimer) clearInterval(heartbeatTimer);
+          setTimeout(initLanyardSocket, 6000);
+        };
+      } catch(e) {}
+    }
+
+    initLanyardSocket();
+  </script>
+
+</body>
+</html>

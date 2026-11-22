@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HaruMod — Discord Security, Anti-Nuke & Server Management Bot</title>
+  <meta name="description" content="HaruMod là bot Discord bảo mật và quản lý máy chủ toàn diện: Anti-Nuke, Honeypot channels, Auto-Mod đa tầng, 36 Action Logs, Ticket panels, Dynamic Voice và Smart Roles.">
+  <link rel="stylesheet" href="../shared.css">
+  <link rel="icon" type="image/webp" href="../haru-avatar.webp">
+  <style>
+    .mod-hero {
+      padding: 80px 0 50px 0;
+      text-align: center;
+    }
+    .mod-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--accent-emerald);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .mod-hero-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: all 0.25s ease;
+    }
+    .feature-card:hover {
+      border-color: var(--border-glow-emerald);
+      transform: translateY(-3px);
+    }
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .cmd-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 30px;
+    }
+    .cmd-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .cmd-table th, .cmd-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .cmd-table th {
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .code-badge {
+      font-family: monospace;
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-blob glow-top-left"></div>
+  <div class="glow-blob glow-mid-right"></div>
+
+  <div class="container">
+    <nav class="navbar">
+      <a href="../index.html" class="brand">
+        <span style="font-size:1.8rem;">🛡️</span>
+        <span>HARUMOD <span class="brand-badge" style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border-color:rgba(16,185,129,0.3);">SECURITY</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link">← Về Portal Chính</a></li>
+        <li><a href="#features" class="nav-link">Tính Năng</a></li>
+        <li><a href="#commands" class="nav-link">Lệnh (h? / /)</a></li>
+        <li><a href="./terms.html" class="nav-link">Điều Khoản (ToS)</a></li>
+        <li><a href="./privacy.html" class="nav-link">Bảo Mật (Privacy)</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald btn-sm">
+          <span>➕ Mời HaruMod</span>
+        </a>
+      </div>
+    </nav>
+
+    <header class="mod-hero">
+      <div class="mod-hero-tag">🛡️ DISCORD SERVER SECURITY & MODERATION SUITE</div>
+      <h1 class="mod-hero-title">
+        Lá Chắn An Ninh Toàn Diện Cho <br><span class="gradient-text-emerald">Máy Chủ Discord Của Bạn</span>
+      </h1>
+      <p class="hero-subtitle">
+        HaruMod cung cấp cơ chế phòng vệ chủ động với Honeypot bẫy kẻ phá hoại, giám sát Anti-Wizz Staff, tự động hóa kỷ luật đa tầng, ghi nhận 36 sự kiện log độc lập và hệ thống Ticket/Forms chuyên nghiệp.
+      </p>
+      <div class="hero-actions">
+        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald">
+          <span>➕ Mời HaruMod Vào Server</span>
+        </a>
+        <a href="./terms.html" class="btn btn-secondary">
+          <span>📄 Điều Khoản Dịch Vụ</span>
+        </a>
+        <a href="./privacy.html" class="btn btn-secondary">
+          <span>🔒 Chính Sách Quyền Riêng Tư</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Key Modules Grid -->
+    <section id="features">
+      <div class="section-head">
+        <span class="section-tag" style="color:var(--accent-emerald);">KIẾN TRÚC MODULAR</span>
+        <h2 class="section-title">6 Tầng Bảo Mật & Quản Trị Vững Chắc</h2>
+        <p class="section-desc">Mọi tính năng được vận hành với In-Memory RAM Cache đảm bảo độ trễ bằng 0.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🍯</span>
+          <h3>Honeypot & Anti-Nuke</h3>
+          <p>Thiết lập các kênh bẫy tự động kích hoạt hình phạt (Ban/Kick/Mute) và quét xóa tin nhắn ngay lập tức. Giám sát hành vi Admin/Staff để tự động khóa máy chủ nếu phát hiện bất thường.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🛑</span>
+          <h3>Auto-Mod Filters Đa Tầng</h3>
+          <p>Chặn từ cấm (bỏ qua dấu câu chèn giữa), chặn link mời Discord khác (Norole Mode), chống link lừa đảo phishing (Blacklist/Whitelist), giới hạn Caps và tự động xóa các file độc hại (.exe, .bat, .scr).</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📜</span>
+          <h3>Granular Action Logs (36 Sự kiện)</h3>
+          <p>Tách luồng thông minh ra 6 kênh chuyên biệt: mod_log, message_log, member_log, join_leave_log, voice_log, server_log kèm file .txt đính kèm khi purge.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">⚖️</span>
+          <h3>Case Manager & Kỷ Luật</h3>
+          <p>Quản lý Case #ID tăng dần tự động, hỗ trợ warn, timeout, mute vĩnh viễn, hardmute (tước toàn bộ role và trả lại sau), kick, ban, tempban, softban và tùy biến DM thông báo.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🎫</span>
+          <h3>Ticket & Forms Modal</h3>
+          <p>Tạo panel nút bấm mở kênh hỗ trợ 1-1 riêng tư, tự động xuất file HTML/TXT transcript khi đóng ticket. Hỗ trợ biểu mẫu tuyển dụng và khảo sát qua Discord Modal.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🏷️</span>
+          <h3>Smart Roles & Temp-Voice</h3>
+          <p>Bảng role tương tác qua Buttons/Dropdown, RolePersist (nhớ role cũ khi rejoin), Joinable ranks và hệ sinh thái phòng thoại Join-to-Create tự tạo và tự xóa khi trống.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Commands Cheat-sheet -->
+    <section id="commands">
+      <div class="section-head">
+        <span class="section-tag" style="color:var(--accent-emerald);">HỆ THỐNG LỆNH HYBRID</span>
+        <h2 class="section-title">Hỗ Trợ Song Song Prefix <code>h?</code> & Slash <code>/</code></h2>
+        <p class="section-desc">Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.</p>
+      </div>
+
+      <div class="cmd-table-wrap">
+        <table class="cmd-table">
+          <thead>
+            <tr>
+              <th>Lệnh Prefix / Slash</th>
+              <th>Tham Số</th>
+              <th>Mô Tả Chức Năng</th>
+              <th>Quyền Yêu Cầu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="code-badge">h?ban / /ban</span></td>
+              <td><code>@user [thời gian] [lý do]</code></td>
+              <td>Cấm thành viên khỏi máy chủ, hỗ trợ cấm tạm thời (tempban)</td>
+              <td>Ban Members</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?kick / /kick</span></td>
+              <td><code>@user [lý do]</code></td>
+              <td>Đuổi thành viên ra khỏi máy chủ</td>
+              <td>Kick Members</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?hardmute / /hardmute</span></td>
+              <td><code>@user [thời gian] [lý do]</code></td>
+              <td>Tước toàn bộ role hiện tại, gắn role Muted và hoàn trả khi hết hạn</td>
+              <td>Manage Roles</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?warn / /warn</span></td>
+              <td><code>@user [lý do]</code></td>
+              <td>Cảnh cáo thành viên và ghi nhận vào hệ thống Case ID</td>
+              <td>Moderate Members</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?purge / /purge</span></td>
+              <td><code>[số lượng] [@user|bots|links]</code></td>
+              <td>Dọn dẹp tin nhắn hàng loạt theo bộ lọc và xuất log file</td>
+              <td>Manage Messages</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?honeypot / /honeypot</span></td>
+              <td><code>#channel [ban|kick|mute]</code></td>
+              <td>Cấu hình kênh bẫy tiêu diệt tài khoản phá hoại tức thì</td>
+              <td>Administrator</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?ticket / /ticket</span></td>
+              <td><code>setup / panel / close</code></td>
+              <td>Cấu hình hệ thống vé hỗ trợ 1-1 chuyên nghiệp</td>
+              <td>Manage Channels</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?case / /case</span></td>
+              <td><code>&lt;id&gt; / reason &lt;id&gt; &lt;lý do&gt;</code></td>
+              <td>Tra cứu hoặc cập nhật lý do cho Case kỷ luật</td>
+              <td>Moderate Members</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand" style="margin-bottom:12px;">
+            <span style="font-size:1.4rem;">🛡️</span>
+            <span>HARUMOD</span>
+          </div>
+          <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">
+            Giải pháp an ninh và quản trị máy chủ Discord cao cấp. Phát triển bởi Haruki (haruki_kino).
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Văn Bản Pháp Lý</h4>
+          <ul class="footer-links">
+            <li><a href="./terms.html">Điều khoản sử dụng (ToS)</a></li>
+            <li><a href="./privacy.html">Chính sách quyền riêng tư</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hệ Sinh Thái</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Cổng Thông Tin Haruki</a></li>
+            <li><a href="../harubot/index.html">HaruBot Showcase</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ Trợ</h4>
+          <ul class="footer-links">
+            <li><a href="https://discord.gg/gardenofdream" target="_blank">Discord Garden of Dream</a></li>
+            <li><a href="https://github.com/Haruki070909" target="_blank">GitHub Profile</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Haruki (haruki_kino). HaruMod Discord Bot.</div>
+        <div><a href="../index.html" style="color:var(--text-muted); text-decoration:none;">Trở về Trang Chủ</a></div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
