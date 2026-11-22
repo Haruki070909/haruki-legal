@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>HaruMod Web Dashboard · Server Moderation & Security Suite</title>
+  <link rel="stylesheet" href="./shared.css?v=5.1">
+  <link rel="icon" type="image/png" href="./harumod-avatar.png">
+  <style>
+    :root {
+      --dash-bg: #070a14;
+      --dash-card: rgba(13, 19, 36, 0.82);
+      --dash-border: rgba(255, 255, 255, 0.08);
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      --emerald-accent: #10b981;
+      --emerald-light: #34d399;
+      --cyan-accent: #38bdf8;
+      --text-dim: #94a3b8;
+    }
+
+    body {
+      background-color: var(--dash-bg);
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* Top Dashboard Bar */
+    .dash-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 20, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--dash-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .dash-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .dash-brand-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1.5px solid var(--emerald-accent);
+      box-shadow: 0 0 14px var(--emerald-glow);
+    }
+
+    .dash-brand-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .dash-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.16);
+      color: var(--emerald-light);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* Server Switcher Dropdown */
+    .server-selector-wrap {
+      position: relative;
+    }
+
+    .server-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 7px 14px;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .server-select-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--emerald-accent);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+    }
+
+    .server-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .server-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 310px;
+      background: #0d1326;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      padding: 8px;
+      display: none;
+      z-index: 200;
+      backdrop-filter: blur(20px);
+    }
+
+    .server-dropdown-menu.show {
+      display: block;
+      animation: dropDownAnim 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes dropDownAnim {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .server-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .server-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .server-item.active {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .server-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .server-meta-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .server-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .server-members {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .server-role-tag {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+
+    .server-item.active .server-role-tag {
+      background: rgba(16, 185, 129, 0.25);
+      color: var(--emerald-light);
+    }
+
+    /* Main Dashboard Layout */
+    .dash-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+    }
+
+    /* Sidebar Navigation */
+    .dash-sidebar {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 16px;
+      padding: 16px;
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 12px 4px;
+    }
+
+    .dash-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dash-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(4px);
+    }
+
+    .dash-tab-btn.active {
+      color: #ffffff;
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border-left: 3px solid var(--emerald-accent);
+      font-weight: 700;
+    }
+
+    .tab-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.2;
+      flex-shrink: 0;
+    }
+
+    .dash-tab-btn.active .tab-icon {
+      stroke: var(--emerald-accent);
+      filter: drop-shadow(0 0 6px var(--emerald-glow));
+    }
+
+    /* Content Area */
+    .dash-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .dash-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .dash-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* Dashboard Cards & Modules */
+    .module-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: border-color 0.25s ease;
+    }
+
+    .module-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .module-title-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .module-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--emerald-accent);
+      flex-shrink: 0;
+    }
+
+    .module-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .module-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* Cyber Toggle Switch */
+    .switch-wrap {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+
+    .switch-wrap input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.12);
+      transition: .3s;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--emerald-accent);
+      box-shadow: 0 0 16px var(--emerald-glow);
+      border-color: var(--emerald-light);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+
+    /* Form Inputs & Selects */
+    .dash-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dash-select, .dash-input {
+      background: #090e1f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .dash-select:focus, .dash-input:focus {
+      border-color: var(--emerald-accent);
+      box-shadow: 0 0 12px var(--emerald-glow);
+    }
+
+    /* Tag Input (Banned Words) */
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px;
+      background: #090e1f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      min-height: 48px;
+    }
+
+    .tag-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .tag-remove {
+      cursor: pointer;
+      font-weight: 800;
+      color: #6ee7b7;
+      transition: color 0.15s ease;
+    }
+
+    .tag-remove:hover {
+      color: #f43f5e;
+    }
+
+    .tag-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      outline: none;
+      font-size: 0.85rem;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    /* Stats Grid for Overview */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-badge-good {
+      color: var(--emerald-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Cases Table */
+    .dash-table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--dash-border);
+    }
+
+    .dash-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+
+    .dash-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+    }
+
+    .dash-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .punish-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .punish-ban { background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4); }
+    .punish-mute { background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .punish-warn { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+    /* Interactive Live Simulator Box */
+    .sim-box {
+      background: #060914;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.08);
+    }
+
+    .sim-chat-area {
+      height: 220px;
+      overflow-y: auto;
+      background: #090e1f;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sim-msg {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .sim-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .sim-avatar.bot {
+      background: var(--emerald-accent);
+      box-shadow: 0 0 10px var(--emerald-glow);
+    }
+
+    .sim-content-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sim-sender {
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .sim-sender.bot { color: var(--emerald-light); }
+
+    .sim-text { color: #f1f5f9; line-height: 1.4; }
+
+    .sim-punish-alert {
+      background: rgba(244, 63, 94, 0.15);
+      border-left: 3px solid #f43f5e;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: #fca5a5;
+      margin-top: 4px;
+    }
+
+    /* Floating Save Bar */
+    .save-bar {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d1326;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--emerald-glow);
+      padding: 12px 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 1000;
+      transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .save-bar.show {
+      bottom: 24px;
+    }
+
+    .save-text {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Toast Notification */
+    .toast-popup {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: rgba(13, 19, 36, 0.95);
+      border: 1px solid var(--emerald-accent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px var(--emerald-glow);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 2000;
+      transform: translateY(-50px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-popup.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 960px) {
+      .dash-container {
+        grid-template-columns: 1fr;
+      }
+      .dash-sidebar {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cyber Animated Constellation Canvas Background -->
+  <canvas id="cyber-canvas"></canvas>
+  <div id="cyber-spotlight"></div>
+
+  <!-- Toast Notification -->
+  <div id="dash-toast" class="toast-popup">
+    <svg style="width:18px;height:18px;stroke:#10b981;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+    <span id="toast-msg">Đã lưu cài đặt máy chủ thành công!</span>
+  </div>
+
+  <!-- Top Dashboard Bar -->
+  <header class="dash-topbar">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <a href="./index.html" class="dash-brand">
+        <img src="./harumod-avatar.png" alt="HaruMod" class="dash-brand-avatar">
+        <span class="dash-brand-title">HARUMOD</span>
+        <span class="dash-badge">MODERATION DASHBOARD</span>
+      </a>
+
+      <!-- Server Switcher Dropdown (Like Dyno/Carl-bot) -->
+      <div class="server-selector-wrap">
+        <button class="server-select-btn" id="current-server-btn" onclick="toggleServerDropdown()" type="button">
+          <div class="server-icon" id="cur-server-icon">🌱</div>
+          <span id="cur-server-name">Garden of Dream</span>
+          <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <div class="server-dropdown-menu" id="server-dropdown">
+          <div style="font-size:0.7rem;font-weight:800;color:var(--text-dim);padding:6px 12px;text-transform:uppercase;" data-i18n="selectServerTitle">MÁY CHỦ BẠN QUẢN LÝ</div>
+          
+          <div class="server-item active" onclick="selectServer('🌱', 'Garden of Dream', '2,450 Thành viên', 'Owner')">
+            <div class="server-info">
+              <div class="server-icon">🌱</div>
+              <div class="server-meta-text">
+                <span class="server-name">Garden of Dream</span>
+                <span class="server-members">2,450 thành viên</span>
+              </div>
+            </div>
+            <span class="server-role-tag">Owner</span>
+          </div>
+
+          <div class="server-item" onclick="selectServer('🎮', 'Haruki Gaming Hub', '1,120 Thành viên', 'Admin')">
+            <div class="server-info">
+              <div class="server-icon" style="background:linear-gradient(135deg,#38bdf8,#6366f1)">🎮</div>
+              <div class="server-meta-text">
+                <span class="server-name">Haruki Gaming Hub</span>
+                <span class="server-members">1,120 thành viên</span>
+              </div>
+            </div>
+            <span class="server-role-tag">Admin</span>
+          </div>
+
+          <div class="server-item" onclick="selectServer('🌸', 'Anime Lounge VN', '3,800 Thành viên', 'Manager')">
+            <div class="server-info">
+              <div class="server-icon" style="background:linear-gradient(135deg,#ec4899,#a855f7)">🌸</div>
+              <div class="server-meta-text">
+                <span class="server-name">Anime Lounge VN</span>
+                <span class="server-members">3,800 thành viên</span>
+              </div>
+            </div>
+            <span class="server-role-tag">Manager</span>
+          </div>
+
+          <div class="server-item" onclick="selectServer('⚡', 'Dev & Code Lab', '640 Thành viên', 'Admin')">
+            <div class="server-info">
+              <div class="server-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">⚡</div>
+              <div class="server-meta-text">
+                <span class="server-name">Dev & Code Lab</span>
+                <span class="server-members">640 thành viên</span>
+              </div>
+            </div>
+            <span class="server-role-tag">Admin</span>
+          </div>
+
+          <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" style="text-decoration:none;display:flex;align-items:center;gap:8px;padding:10px 12px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.08);color:var(--emerald-light);font-size:0.83rem;font-weight:700;">
+            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="addServerBtn">+ Thêm HaruMod Vào Server Mới</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions & User Info -->
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="display:flex;align-items:center;gap:6px;background:rgba(16,185,129,0.1);padding:4px 10px;border-radius:999px;border:1px solid rgba(16,185,129,0.3);">
+        <span style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;"></span>
+        <span style="font-size:0.75rem;font-weight:700;color:#34d399;">ONLINE · 12ms</span>
+      </div>
+
+      <div class="lang-switch-wrap">
+        <button id="lang-vi" class="lang-btn active" onclick="switchDashLang('vi')">VI</button>
+        <button id="lang-en" class="lang-btn" onclick="switchDashLang('en')">EN</button>
+      </div>
+
+      <a href="./harumod.html" class="btn btn-secondary" style="padding:6px 14px;font-size:0.82rem;height:36px;" data-i18n="btnExit">
+        Thoát Dashboard
+      </a>
+    </div>
+  </header>
+
+  <!-- Dashboard Grid -->
+  <main class="dash-container">
+    
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <span class="sidebar-section-title" data-i18n="navSecCore">HỆ THỐNG AN NINH</span>
+
+      <button class="dash-tab-btn active" onclick="openDashTab('overview', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span data-i18n="tabOverview">Tổng Quan Server</span>
+      </button>
+
+      <button class="dash-tab-btn" onclick="openDashTab('automod', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="4"/><line x1="9" y1="14" x2="15" y2="8"/></svg>
+        <span data-i18n="tabAutomod">Bộ Lọc Auto-Mod</span>
+      </button>
+
+      <button class="dash-tab-btn" onclick="openDashTab('antinuke', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span data-i18n="tabAntinuke">Honeypot & Anti-Nuke</span>
+      </button>
+
+      <button class="dash-tab-btn" onclick="openDashTab('logs', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span data-i18n="tabLogs">Nhật Ký Action Logs</span>
+      </button>
+
+      <span class="sidebar-section-title" style="margin-top:12px;" data-i18n="navSecManage">QUẢN TRỊ & THỬ NGHIỆM</span>
+
+      <button class="dash-tab-btn" onclick="openDashTab('cases', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>
+        <span data-i18n="tabCases">Hồ Sơ Kỷ Luật (Cases)</span>
+      </button>
+
+      <button class="dash-tab-btn" onclick="openDashTab('roles', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span data-i18n="tabRoles">Vai Trò & Quarantine</span>
+      </button>
+
+      <button class="dash-tab-btn" onclick="openDashTab('simulator', this)">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span data-i18n="tabSimulator">Live Filter Tester</span>
+      </button>
+    </aside>
+
+    <!-- Content Panels -->
+    <section class="dash-content">
+
+      <!-- ================= TAB 1: OVERVIEW ================= -->
+      <div id="tab-overview" class="dash-panel active">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="ovTitle">Tổng Quan An Ninh Máy Chủ</h1>
+          <p class="panel-subtitle" data-i18n="ovSubtitle">Theo dõi chỉ số an toàn thời gian thực, số lượng lệnh đã xử lý và tình trạng phòng hộ của HaruMod.</p>
+        </header>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-head"><span data-i18n="statScore">ĐIỂM AN TOÀN</span><span class="stat-badge-good">TỐI ƯU</span></div>
+            <div class="stat-value" style="color:var(--emerald-light);">98 / 100</div>
+            <span style="font-size:0.75rem;color:var(--text-dim);" data-i18n="statScoreSub">Đã bật Honeypot + Auto-Mod</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-head"><span data-i18n="statBlocked">TIN NHẮN ĐÃ CHẶN</span><span style="color:#38bdf8;">24h QUA</span></div>
+            <div class="stat-value" id="stat-blocked-count">142</div>
+            <span style="font-size:0.75rem;color:var(--text-dim);" data-i18n="statBlockedSub">Phishing & Link mời</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-head"><span data-i18n="statCases">ÁP DỤNG HÌNH PHẠT</span><span style="color:#f59e0b;">TUẦN NÀY</span></div>
+            <div class="stat-value">28</div>
+            <span style="font-size:0.75rem;color:var(--text-dim);" data-i18n="statCasesSub">12 Mute · 14 Warn · 2 Ban</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-head"><span data-i18n="statHoneypot">BẪY HONEYPOT</span><span class="stat-badge-good">HOẠT ĐỘNG</span></div>
+            <div class="stat-value" style="color:#a7f3d0;">#trap-bot</div>
+            <span style="font-size:0.75rem;color:var(--text-dim);" data-i18n="statHoneypotSub">Đã tóm 4 self-bot raid</span>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="recentLogTitle">Nhật Ký Hoạt Động Gần Đây</div>
+                <div class="module-desc" data-i18n="recentLogDesc">Các sự kiện vi phạm vừa được HaruMod phát hiện và triệt phá tức thời.</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="clearLiveStats()" data-i18n="btnRefresh">Làm mới</button>
+          </div>
+
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th data-i18n="thTime">Thời Gian</th>
+                  <th data-i18n="thTarget">Thành Viên</th>
+                  <th data-i18n="thTrigger">Bộ Lọc Kích Hoạt</th>
+                  <th data-i18n="thActionTaken">Hành Động Đã Thi Hành</th>
+                  <th data-i18n="thStatus">Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody id="recent-logs-tbody">
+                <tr>
+                  <td>2 phút trước</td>
+                  <td><strong>user#8921</strong> (ID: 9812...)</td>
+                  <td>Gửi link Discord Invite trái phép</td>
+                  <td><span class="punish-badge punish-warn">Xóa tin + Cảnh cáo (Warn #1)</span></td>
+                  <td><span style="color:#10b981;font-weight:700;">ĐÃ XỬ LÝ</span></td>
+                </tr>
+                <tr>
+                  <td>14 phút trước</td>
+                  <td><strong>free_nitro#0012</strong> (Self-Bot)</td>
+                  <td>Phát hiện Phishing Scam URL</td>
+                  <td><span class="punish-badge punish-ban">Ban Vĩnh Viễn + Purge 100 tin</span></td>
+                  <td><span style="color:#10b981;font-weight:700;">ĐÃ TRIỆT PHÁ</span></td>
+                </tr>
+                <tr>
+                  <td>45 phút trước</td>
+                  <td><strong>troll_guy#4123</strong></td>
+                  <td>Spam ký tự in hoa liên tục (85% Caps)</td>
+                  <td><span class="punish-badge punish-mute">Timeout 15 Phút</span></td>
+                  <td><span style="color:#10b981;font-weight:700;">ĐÃ THI HÀNH</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: AUTO-MOD ================= -->
+      <div id="tab-automod" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="amTitle">Cấu Hình Bộ Lọc Auto-Mod Đa Tầng</h1>
+          <p class="panel-subtitle" data-i18n="amSubtitle">Tự động chặn từ cấm, link mời server khác, đường dẫn lừa đảo phishing và file độc hại theo thời gian thực.</p>
+        </header>
+
+        <!-- Module: Banned Words -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="bwTitle">Bộ Lọc Từ Khóa Bị Cấm (Banned Words)</div>
+                <div class="module-desc" data-i18n="bwDesc">Nhận diện các từ xúc phạm, thô tục kể cả khi cố tình chèn khoảng trắng hoặc ký tự đặc biệt.</div>
+              </div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-banned-words" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px;">
+            <label class="form-label" data-i18n="bwListLabel">Danh Sách Từ Khóa Cấm (Nhập từ rồi nhấn Enter):</label>
+            <div class="tag-container" id="banned-words-tags">
+              <span class="tag-item">dm<span class="tag-remove" onclick="removeTag(this)">×</span></span>
+              <span class="tag-item">vcl<span class="tag-remove" onclick="removeTag(this)">×</span></span>
+              <span class="tag-item">ditme<span class="tag-remove" onclick="removeTag(this)">×</span></span>
+              <span class="tag-item">scam<span class="tag-remove" onclick="removeTag(this)">×</span></span>
+              <span class="tag-item">free-nitro<span class="tag-remove" onclick="removeTag(this)">×</span></span>
+              <input type="text" class="tag-input" id="new-tag-input" placeholder="Gõ từ mới rồi bấm Enter..." onkeydown="handleTagInput(event)">
+            </div>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="bwActionLabel">Hình Thức Xử Lý Khi Vi Phạm:</label>
+              <select class="dash-select" id="bw-action" onchange="triggerUnsavedChanges()">
+                <option value="delete">Chỉ xóa tin nhắn</option>
+                <option value="warn" selected>Xóa tin + Cảnh cáo (Warn)</option>
+                <option value="mute">Xóa tin + Timeout 10 phút</option>
+                <option value="hardmute">Tước role + Hardmute</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="bwIgnoreLabel">Bỏ Qua Vai Trò (Whitelist Roles):</label>
+              <select class="dash-select" id="bw-whitelist" onchange="triggerUnsavedChanges()">
+                <option value="admin_mod" selected>@Administrator, @Moderator</option>
+                <option value="admin_only">Chỉ @Administrator</option>
+                <option value="vip">@VIP Members</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module: Anti-Invite & Phishing -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="linkTitle">Chặn Link Mời Discord & Link Lừa Đảo Phishing</div>
+                <div class="module-desc" data-i18n="linkDesc">Chặn link discord.gg trái phép và cơ sở dữ liệu hơn 45,000 tên miền lừa đảo Nitro giả mạo.</div>
+              </div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-anti-links" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="linkModeLabel">Chế Độ Chặn Link Mời (Norole Mode):</label>
+              <select class="dash-select" id="link-mode" onchange="triggerUnsavedChanges()">
+                <option value="block_all" selected>Chặn mọi link Discord ngoài máy chủ</option>
+                <option value="partner_only">Cho phép đối tác được duyệt</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="phishActionLabel">Xử Lý Khi Phát Hiện Link Phishing Độc Hại:</label>
+              <select class="dash-select" id="phish-action" onchange="triggerUnsavedChanges()">
+                <option value="ban" selected>Ban ngay lập tức + Quét sạch tin nhắn</option>
+                <option value="kick">Trục xuất (Kick) khỏi server</option>
+                <option value="timeout">Timeout 24 giờ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module: Malicious File & Caps Spammer -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="fileTitle">Chặn Tệp Tin Nguy Hiểm & Giới Hạn Spam Ký Tự In Hoa</div>
+                <div class="module-desc" data-i18n="fileDesc">Tự động xóa file thực thi (.exe, .bat, .scr, .vbs) và phạt thành viên viết hoa quá đà.</div>
+              </div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-anti-file" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="fileTypesLabel">Đuôi Tệp Bị Cấm Tuyệt Đối:</label>
+              <input type="text" class="dash-input" value=".exe, .bat, .scr, .vbs, .cmd, .jar, .apk" id="banned-file-extensions" onchange="triggerUnsavedChanges()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="capsLimitLabel">Ngưỡng Giới Hạn Ký Tự In Hoa (Caps Lock):</label>
+              <select class="dash-select" id="caps-threshold" onchange="triggerUnsavedChanges()">
+                <option value="70">70% Ký tự in hoa (Khuyên dùng)</option>
+                <option value="80">80% Ký tự in hoa (Thoải mái)</option>
+                <option value="60">60% Ký tự in hoa (Nghiêm ngặt)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= TAB 3: ANTI-NUKE ================= -->
+      <div id="tab-antinuke" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="anTitle">Honeypot Trap & Hệ Thống Phòng Vệ Anti-Nuke</h1>
+          <p class="panel-subtitle" data-i18n="anSubtitle">Cơ chế bẫy kẻ phá hoại chủ động và giám sát hành vi của Staff để ngăn chặn nuke server.</p>
+        </header>
+
+        <!-- Honeypot Bait Channel -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="hpTitle">Kênh Bẫy Kẻ Phá Hoại (Honeypot Trap Channel)</div>
+                <div class="module-desc" data-i18n="hpDesc">Kênh ẩn mà người dùng thật không bao giờ chat vào. Bất kỳ bot hoặc kẻ spam nào gửi tin vào đây sẽ bị BAN VĨNH VIỄN ngay lập tức.</div>
+              </div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-honeypot" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="hpChannelLabel">Chọn Kênh Làm Bẫy Honeypot:</label>
+              <select class="dash-select" id="honeypot-channel" onchange="triggerUnsavedChanges()">
+                <option value="trap_bot" selected>#trap-bot-channel (ID: 10429...)</option>
+                <option value="dont_chat">#do-not-type-here (ID: 10430...)</option>
+                <option value="create_new">+ Khởi tạo kênh bẫy tự động</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="hpActionLabel">Hình Phạt Khi Dính Bẫy:</label>
+              <select class="dash-select" id="honeypot-action" onchange="triggerUnsavedChanges()">
+                <option value="instant_ban" selected>Ban Vĩnh Viễn + Xóa sạch tin nhắn 7 ngày</option>
+                <option value="quarantine">Gán role Quarantined cô lập</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anti-Wizz Staff Monitor -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-title-box">
+              <div class="module-icon"><svg style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+              <div>
+                <div class="module-name" data-i18n="wizzTitle">Giám Sát Hành Vi Quản Trị Viên (Staff Anti-Wizz)</div>
+                <div class="module-desc" data-i18n="wizzDesc">Nếu một tài khoản Admin/Mod bị hack và thực hiện ban/kick/xóa kênh hàng loạt, HaruMod sẽ tước role và khóa server.</div>
+              </div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-antiwizz" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="wizzLimitLabel">Giới Hạn Ban/Kick Liên Tục Của Staff:</label>
+              <select class="dash-select" id="wizz-threshold" onchange="triggerUnsavedChanges()">
+                <option value="3_10s" selected>Tối đa 3 lượt / 10 giây (An toàn cao)</option>
+                <option value="5_10s">Tối đa 5 lượt / 10 giây (Trung bình)</option>
+                <option value="2_5s">Tối đa 2 lượt / 5 giây (Cực kỳ nghiêm ngặt)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="wizzReactionLabel">Phản Ứng Khi Vượt Ngưỡng Nuke:</label>
+              <select class="dash-select" id="wizz-reaction" onchange="triggerUnsavedChanges()">
+                <option value="strip_lockdown" selected>Tước quyền Admin thủ phạm + Bật Server Lockdown</option>
+                <option value="strip_only">Chỉ tước quyền của tài khoản vi phạm</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= TAB 4: ACTION LOGS ================= -->
+      <div id="tab-logs" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="logTitle">Định Tuyến 36 Kênh Nhật Ký (Action Logs)</h1>
+          <p class="panel-subtitle" data-i18n="logSubtitle">Tách luồng ghi log thông minh vào 5 kênh riêng biệt để không bao giờ bị rối loạn thông tin.</p>
+        </header>
+
+        <div class="module-card">
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label">
+                <svg style="width:16px;height:16px;stroke:#10b981;" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span data-i18n="logModChannel">Kênh Log Kiểm Duyệt (Mod Logs):</span>
+              </label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="mod_log" selected>#mod-logs (Ban, Kick, Timeout, Warn)</option>
+                <option value="general_log">#general-logs</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <svg style="width:16px;height:16px;stroke:#38bdf8;" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span data-i18n="logMsgChannel">Kênh Log Tin Nhắn (Message Logs):</span>
+              </label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="msg_log" selected>#message-logs (Xóa, Sửa tin, Kèm Transcript TXT)</option>
+                <option value="none">Tắt log tin nhắn</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label">
+                <svg style="width:16px;height:16px;stroke:#a855f7;" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                <span data-i18n="logMemberChannel">Kênh Log Thành Viên (Member Logs):</span>
+              </label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="member_log" selected>#member-logs (Join, Leave, Đổi Tên, Cấp Role)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <svg style="width:16px;height:16px;stroke:#f59e0b;" viewBox="0 0 24 24" fill="none"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <span data-i18n="logVoiceChannel">Kênh Log Phòng Thoại (Voice Logs):</span>
+              </label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="voice_log" selected>#voice-logs (Vào mic, Chuyển phòng, Rời mic)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 5: CASES ================= -->
+      <div id="tab-cases" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="caseTitle">Bậc Thang Kỷ Luật & Quản Lý Hồ Sơ #Case</h1>
+          <p class="panel-subtitle" data-i18n="caseSubtitle">Tự động tăng mức phạt theo số lần vi phạm và xem lại lịch sử các án kỷ luật trong máy chủ.</p>
+        </header>
+
+        <div class="module-card">
+          <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:14px;" data-i18n="ladderTitle">Bậc Thang Phạt Tự Động (Ladder Punishment)</h3>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;">
+            <div style="background:#090e1f;padding:12px;border-radius:10px;border-top:3px solid #38bdf8;">
+              <span style="font-size:0.75rem;color:var(--text-dim);">1 WARN</span>
+              <div style="font-weight:700;font-size:0.85rem;color:#ffffff;margin-top:4px;">Cảnh cáo qua DM</div>
+            </div>
+            <div style="background:#090e1f;padding:12px;border-radius:10px;border-top:3px solid #f59e0b;">
+              <span style="font-size:0.75rem;color:var(--text-dim);">2 WARNS</span>
+              <div style="font-weight:700;font-size:0.85rem;color:#ffffff;margin-top:4px;">Timeout 1 Giờ</div>
+            </div>
+            <div style="background:#090e1f;padding:12px;border-radius:10px;border-top:3px solid #f97316;">
+              <span style="font-size:0.75rem;color:var(--text-dim);">3 WARNS</span>
+              <div style="font-weight:700;font-size:0.85rem;color:#ffffff;margin-top:4px;">Timeout 24 Giờ</div>
+            </div>
+            <div style="background:#090e1f;padding:12px;border-radius:10px;border-top:3px solid #ef4444;">
+              <span style="font-size:0.75rem;color:var(--text-dim);">4 WARNS</span>
+              <div style="font-weight:700;font-size:0.85rem;color:#ffffff;margin-top:4px;">Trục Xuất (Kick)</div>
+            </div>
+            <div style="background:#090e1f;padding:12px;border-radius:10px;border-top:3px solid #dc2626;">
+              <span style="font-size:0.75rem;color:var(--text-dim);">5 WARNS</span>
+              <div style="font-weight:700;font-size:0.85rem;color:#ffffff;margin-top:4px;">Cấm (Ban) Vĩnh Viễn</div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:14px;" data-i18n="recentCasesTitle">Danh Sách Case Kỷ Luật Vừa Lập</h3>
+          <div class="dash-table-wrap">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Case #ID</th>
+                  <th data-i18n="thTarget">Thành Viên</th>
+                  <th data-i18n="thMod">Người Phạt</th>
+                  <th data-i18n="thReason">Lý Do</th>
+                  <th data-i18n="thActionTaken">Hình Phạt</th>
+                  <th data-i18n="thAction">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="cases-tbody">
+                <tr>
+                  <td><strong>#1042</strong></td>
+                  <td>scammer_bot#901</td>
+                  <td>HaruMod (Auto-Mod)</td>
+                  <td>Phishing scam link</td>
+                  <td><span class="punish-badge punish-ban">Ban Vĩnh Viễn</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="revokeCase(1042, this)">Xóa Án</button></td>
+                </tr>
+                <tr>
+                  <td><strong>#1041</strong></td>
+                  <td>angry_member#12</td>
+                  <td>haruki_kino</td>
+                  <td>Gây rối trật tự voice</td>
+                  <td><span class="punish-badge punish-mute">Timeout 2 Giờ</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="revokeCase(1041, this)">Xóa Án</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 6: ROLES ================= -->
+      <div id="tab-roles" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="roleTitle">Quản Trị Vai Trò & Cách Ly (Quarantine)</h1>
+          <p class="panel-subtitle" data-i18n="roleSubtitle">Cài đặt vai trò Muted cách ly, khôi phục vai trò khi rejoin (RolePersist) và tự cấp role khi vào server.</p>
+        </header>
+
+        <div class="module-card">
+          <div class="dash-form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="roleMutedLabel">Vai Trò Bị Cách Ly / Muted:</label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="muted" selected>@Muted (HaruMod Managed)</option>
+                <option value="quarantined">@Quarantined (Hardmute)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="roleAutoLabel">Tự Động Cấp Role Khi Thành Viên Mới Vào:</label>
+              <select class="dash-select" onchange="triggerUnsavedChanges()">
+                <option value="member" selected>@Member (Thành viên chính thức)</option>
+                <option value="unverified">@Unverified (Chờ qua cổng Captcha)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+            <div>
+              <div style="font-size:0.95rem;font-weight:700;color:#ffffff;" data-i18n="persistTitle">RolePersist (Nhớ Role Cũ Khi Rejoin)</div>
+              <div style="font-size:0.8rem;color:var(--text-dim);" data-i18n="persistDesc">Nếu kẻ vi phạm cố tình rời máy chủ và vào lại để xóa role Muted, HaruMod sẽ lập tức gắn lại role Muted đó!</div>
+            </div>
+            <label class="switch-wrap">
+              <input type="checkbox" id="toggle-rolepersist" checked onchange="triggerUnsavedChanges()">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 7: SIMULATOR ================= -->
+      <div id="tab-simulator" class="dash-panel">
+        <header class="panel-header">
+          <h1 class="panel-title" data-i18n="simPanelTitle">Live Filter Tester · Thử Nghiệm Bộ Lọc Ngay</h1>
+          <p class="panel-subtitle" data-i18n="simPanelSubtitle">Gõ tin nhắn giả lập để kiểm tra xem HaruMod sẽ phản ứng và xử lý như thế nào theo cài đặt hiện tại.</p>
+        </header>
+
+        <div class="sim-box">
+          <div class="sim-chat-area" id="sim-chat-window">
+            <div class="sim-msg">
+              <div class="sim-avatar bot">H</div>
+              <div class="sim-content-wrap">
+                <span class="sim-sender bot">HaruMod [BOT]</span>
+                <span class="sim-text" data-i18n="simWelcome">Hệ thống mô phỏng an ninh đã sẵn sàng! Bạn hãy thử gõ từ cấm (vd: dm, scam), link mời discord.gg hoặc viết HOA để xem bot xử lý.</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <input type="text" class="dash-input" id="sim-user-input" placeholder="Gõ tin nhắn thử nghiệm (ví dụ: 'join discord.gg/abc' hoặc 'nhận free-nitro')..." style="flex:1;" onkeydown="if(event.key==='Enter') runSimTest()">
+            <button class="btn btn-emerald" onclick="runSimTest()" style="height:42px;padding:0 20px;" data-i18n="btnSendTest">Gửi Thử</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Floating Save Bar -->
+  <div class="save-bar" id="floating-save-bar">
+    <div class="save-text">
+      <svg style="width:18px;height:18px;stroke:#f59e0b;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span data-i18n="unsavedText">Bạn có thay đổi chưa lưu trên máy chủ này!</span>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-secondary btn-sm" onclick="resetUnsavedChanges()" data-i18n="btnCancel">Hủy bỏ</button>
+      <button class="btn btn-emerald btn-sm" onclick="saveServerSettings()" data-i18n="btnSave">Lưu Thay Đổi</button>
+    </div>
+  </div>
+
+  <!-- Dashboard JavaScript Engine -->
+  <script>
+    // Tab switching
+    function openDashTab(tabId, btn) {
+      document.querySelectorAll(".dash-panel").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".dash-tab-btn").forEach(b => b.classList.remove("active"));
+      
+      const target = document.getElementById("tab-" + tabId);
+      if (target) {
+        target.classList.add("active");
+        if (btn) btn.classList.add("active");
+      }
+    }
+
+    // Server Switcher Dropdown
+    function toggleServerDropdown() {
+      const drop = document.getElementById("server-dropdown");
+      drop.classList.toggle("show");
+    }
+
+    document.addEventListener("click", (e) => {
+      const wrap = document.querySelector(".server-selector-wrap");
+      if (wrap && !wrap.contains(e.target)) {
+        document.getElementById("server-dropdown").classList.remove("show");
+      }
+    });
+
+    function selectServer(icon, name, members, role) {
+      document.getElementById("cur-server-icon").innerText = icon;
+      document.getElementById("cur-server-name").innerText = name;
+      document.getElementById("server-dropdown").classList.remove("show");
+
+      // Update active state in menu
+      document.querySelectorAll(".server-item").forEach(item => {
+        if (item.innerText.includes(name)) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      showToast(`Đã chuyển sang cấu hình máy chủ: ${name}`);
+    }
+
+    // Tag Input (Banned Words)
+    function handleTagInput(e) {
+      if (e.key === "Enter" || e.key === ",") {
+        e.preventDefault();
+        const val = e.target.value.trim().toLowerCase().replace(",", "");
+        if (val) {
+          const container = document.getElementById("banned-words-tags");
+          const span = document.createElement("span");
+          span.className = "tag-item";
+          span.innerHTML = `${val}<span class="tag-remove" onclick="removeTag(this)">×</span>`;
+          container.insertBefore(span, e.target);
+          e.target.value = "";
+          triggerUnsavedChanges();
+        }
+      }
+    }
+
+    function removeTag(el) {
+      el.parentElement.remove();
+      triggerUnsavedChanges();
+    }
+
+    // Save Bar & Toasts
+    let hasUnsaved = false;
+    function triggerUnsavedChanges() {
+      hasUnsaved = true;
+      document.getElementById("floating-save-bar").classList.add("show");
+    }
+
+    function resetUnsavedChanges() {
+      hasUnsaved = false;
+      document.getElementById("floating-save-bar").classList.remove("show");
+      showToast("Đã hủy các thay đổi.");
+    }
+
+    function saveServerSettings() {
+      hasUnsaved = false;
+      document.getElementById("floating-save-bar").classList.remove("show");
+      const serverName = document.getElementById("cur-server-name").innerText;
+      showToast(`✓ Đã lưu cài đặt cho ${serverName}!`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("dash-toast");
+      document.getElementById("toast-msg").innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.remove && toast.classList.remove("show"), 3200);
+    }
+
+    function revokeCase(caseId, btn) {
+      btn.disabled = true;
+      btn.innerText = "Đã Xóa";
+      btn.style.opacity = "0.5";
+      showToast(`Đã xóa án kỷ luật Case #${caseId}!`);
+    }
+
+    function clearLiveStats() {
+      showToast("Đã làm mới dữ liệu thời gian thực.");
+    }
+
+    // Simulator Interactive Tester
+    function runSimTest() {
+      const input = document.getElementById("sim-user-input");
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chat = document.getElementById("sim-chat-window");
+
+      // Append user msg
+      const userMsg = document.createElement("div");
+      userMsg.className = "sim-msg";
+      userMsg.innerHTML = `
+        <div class="sim-avatar">U</div>
+        <div class="sim-content-wrap">
+          <span class="sim-sender">Tester (Member)</span>
+          <span class="sim-text">${escapeHtml(text)}</span>
+        </div>
+      `;
+      chat.appendChild(userMsg);
+      input.value = "";
+
+      // Evaluate Bot Punishment
+      setTimeout(() => {
+        let violation = null;
+        let action = null;
+        const lower = text.toLowerCase();
+
+        if (lower.includes("discord.gg/") || lower.includes("discord.com/invite")) {
+          violation = "Phát hiện Link mời Discord trái phép (Anti-Invite Norole)";
+          action = "Xóa tin nhắn + Cảnh cáo thành viên (Warn #1)";
+        } else if (lower.includes("free-nitro") || lower.includes("steam-gift") || lower.includes("phish")) {
+          violation = "Phát hiện Phishing Scam URL";
+          action = "Ban vĩnh viễn + Quét sạch 100 tin nhắn gần nhất";
+        } else if (lower.includes("dm") || lower.includes("vcl") || lower.includes("ditme") || lower.includes("scam")) {
+          violation = "Chứa từ khóa bị cấm trong Banned Words";
+          action = "Xóa tin nhắn + Gửi cảnh cáo DM";
+        } else if (text.length > 8 && (text.replace(/[^A-Z]/g, "").length / text.length) >= 0.7) {
+          violation = "Viết in hoa vượt quá ngưỡng 70% Caps Lock";
+          action = "Timeout 15 phút (Spam Caps)";
+        }
+
+        const botReply = document.createElement("div");
+        botReply.className = "sim-msg";
+
+        if (violation) {
+          botReply.innerHTML = `
+            <div class="sim-avatar bot">H</div>
+            <div class="sim-content-wrap">
+              <span class="sim-sender bot">HaruMod [SHIELD ACTIVE]</span>
+              <div class="sim-punish-alert">
+                <strong>[VI PHẠM]:</strong> ${violation}<br>
+                <strong>[HÀNH ĐỘNG]:</strong> ${action} (Case #1043)
+              </div>
+            </div>
+          `;
+          // Increment blocked count
+          const c = document.getElementById("stat-blocked-count");
+          if (c) c.innerText = parseInt(c.innerText) + 1;
+        } else {
+          botReply.innerHTML = `
+            <div class="sim-avatar bot">H</div>
+            <div class="sim-content-wrap">
+              <span class="sim-sender bot">HaruMod [SHIELD ACTIVE]</span>
+              <span class="sim-text" style="color:#34d399;">✓ Tin nhắn hợp lệ, an toàn. Không có vi phạm nào được kích hoạt.</span>
+            </div>
+          `;
+        }
+        chat.appendChild(botReply);
+        chat.scrollTop = chat.scrollHeight;
+      }, 350);
+    }
+
+    function escapeHtml(string) {
+      return String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+
+  <!-- Bilingual Engine (VI / EN) -->
+  <script>
+    const DASH_I18N = {
+      vi: {
+        selectServerTitle: "MÁY CHỦ BẠN QUẢN LÝ",
+        addServerBtn: "+ Thêm HaruMod Vào Server Mới",
+        btnExit: "Thoát Dashboard",
+        navSecCore: "HỆ THỐNG AN NINH",
+        tabOverview: "Tổng Quan Server",
+        tabAutomod: "Bộ Lọc Auto-Mod",
+        tabAntinuke: "Honeypot & Anti-Nuke",
+        tabLogs: "Nhật Ký Action Logs",
+        navSecManage: "QUẢN TRỊ & THỬ NGHIỆM",
+        tabCases: "Hồ Sơ Kỷ Luật (Cases)",
+        tabRoles: "Vai Trò & Quarantine",
+        tabSimulator: "Live Filter Tester",
+        ovTitle: "Tổng Quan An Ninh Máy Chủ",
+        ovSubtitle: "Theo dõi chỉ số an toàn thời gian thực, số lượng lệnh đã xử lý và tình trạng phòng hộ của HaruMod.",
+        statScore: "ĐIỂM AN TOÀN",
+        statScoreSub: "Đã bật Honeypot + Auto-Mod",
+        statBlocked: "TIN NHẮN ĐÃ CHẶN",
+        statBlockedSub: "Phishing & Link mời",
+        statCases: "ÁP DỤNG HÌNH PHẠT",
+        statCasesSub: "12 Mute · 14 Warn · 2 Ban",
+        statHoneypot: "BẪY HONEYPOT",
+        statHoneypotSub: "Đã tóm 4 self-bot raid",
+        recentLogTitle: "Nhật Ký Hoạt Động Gần Đây",
+        recentLogDesc: "Các sự kiện vi phạm vừa được HaruMod phát hiện và triệt phá tức thời.",
+        btnRefresh: "Làm mới",
+        thTime: "Thời Gian",
+        thTarget: "Thành Viên",
+        thTrigger: "Bộ Lọc Kích Hoạt",
+        thActionTaken: "Hành Động Đã Thi Hành",
+        thStatus: "Trạng Thái",
+        amTitle: "Cấu Hình Bộ Lọc Auto-Mod Đa Tầng",
+        amSubtitle: "Tự động chặn từ cấm, link mời server khác, đường dẫn lừa đảo phishing và file độc hại theo thời gian thực.",
+        bwTitle: "Bộ Lọc Từ Khóa Bị Cấm (Banned Words)",
+        bwDesc: "Nhận diện các từ xúc phạm, thô tục kể cả khi cố tình chèn khoảng trắng hoặc ký tự đặc biệt.",
+        bwListLabel: "Danh Sách Từ Khóa Cấm (Nhập từ rồi nhấn Enter):",
+        bwActionLabel: "Hình Thức Xử Lý Khi Vi Phạm:",
+        bwIgnoreLabel: "Bỏ Qua Vai Trò (Whitelist Roles):",
+        linkTitle: "Chặn Link Mời Discord & Link Lừa Đảo Phishing",
+        linkDesc: "Chặn link discord.gg trái phép và cơ sở dữ liệu hơn 45,000 tên miền lừa đảo Nitro giả mạo.",
+        linkModeLabel: "Chế Độ Chặn Link Mời (Norole Mode):",
+        phishActionLabel: "Xử Lý Khi Phát Hiện Link Phishing Độc Hại:",
+        fileTitle: "Chặn Tệp Tin Nguy Hiểm & Giới Hạn Spam Ký Tự In Hoa",
+        fileDesc: "Tự động xóa file thực thi (.exe, .bat, .scr, .vbs) và phạt thành viên viết hoa quá đà.",
+        fileTypesLabel: "Đuôi Tệp Bị Cấm Tuyệt Đối:",
+        capsLimitLabel: "Ngưỡng Giới Hạn Ký Tự In Hoa (Caps Lock):",
+        anTitle: "Honeypot Trap & Hệ Thống Phòng Vệ Anti-Nuke",
+        anSubtitle: "Cơ chế bẫy kẻ phá hoại chủ động và giám sát hành vi của Staff để ngăn chặn nuke server.",
+        hpTitle: "Kênh Bẫy Kẻ Phá Hoại (Honeypot Trap Channel)",
+        hpDesc: "Kênh ẩn mà người dùng thật không bao giờ chat vào. Bất kỳ bot hoặc kẻ spam nào gửi tin vào đây sẽ bị BAN VĨNH VIỄN ngay lập tức.",
+        hpChannelLabel: "Chọn Kênh Làm Bẫy Honeypot:",
+        hpActionLabel: "Hình Phạt Khi Dính Bẫy:",
+        wizzTitle: "Giám Sát Hành Vi Quản Trị Viên (Staff Anti-Wizz)",
+        wizzDesc: "Nếu một tài khoản Admin/Mod bị hack và thực hiện ban/kick/xóa kênh hàng loạt, HaruMod sẽ tước role và khóa server.",
+        wizzLimitLabel: "Giới Hạn Ban/Kick Liên Tục Của Staff:",
+        wizzReactionLabel: "Phản Ứng Khi Vượt Ngưỡng Nuke:",
+        logTitle: "Định Tuyến 36 Kênh Nhật Ký (Action Logs)",
+        logSubtitle: "Tách luồng ghi log thông minh vào 5 kênh riêng biệt để không bao giờ bị rối loạn thông tin.",
+        logModChannel: "Kênh Log Kiểm Duyệt (Mod Logs):",
+        logMsgChannel: "Kênh Log Tin Nhắn (Message Logs):",
+        logMemberChannel: "Kênh Log Thành Viên (Member Logs):",
+        logVoiceChannel: "Kênh Log Phòng Thoại (Voice Logs):",
+        caseTitle: "Bậc Thang Kỷ Luật & Quản Lý Hồ Sơ #Case",
+        caseSubtitle: "Tự động tăng mức phạt theo số lần vi phạm và xem lại lịch sử các án kỷ luật trong máy chủ.",
+        ladderTitle: "Bậc Thang Phạt Tự Động (Ladder Punishment)",
+        recentCasesTitle: "Danh Sách Case Kỷ Luật Vừa Lập",
+        thMod: "Người Phạt",
+        thReason: "Lý Do",
+        thAction: "Thao Tác",
+        roleTitle: "Quản Trị Vai Trò & Cách Ly (Quarantine)",
+        roleSubtitle: "Cài đặt vai trò Muted cách ly, khôi phục vai trò khi rejoin (RolePersist) và tự cấp role khi vào server.",
+        roleMutedLabel: "Vai Trò Bị Cách Ly / Muted:",
+        roleAutoLabel: "Tự Động Cấp Role Khi Thành Viên Mới Vào:",
+        persistTitle: "RolePersist (Nhớ Role Cũ Khi Rejoin)",
+        persistDesc: "Nếu kẻ vi phạm cố tình rời máy chủ và vào lại để xóa role Muted, HaruMod sẽ lập tức gắn lại role Muted đó!",
+        simPanelTitle: "Live Filter Tester · Thử Nghiệm Bộ Lọc Ngay",
+        simPanelSubtitle: "Gõ tin nhắn giả lập để kiểm tra xem HaruMod sẽ phản ứng và xử lý như thế nào theo cài đặt hiện tại.",
+        simWelcome: "Hệ thống mô phỏng an ninh đã sẵn sàng! Bạn hãy thử gõ từ cấm (vd: dm, scam), link mời discord.gg hoặc viết HOA để xem bot xử lý.",
+        btnSendTest: "Gửi Thử",
+        unsavedText: "Bạn có thay đổi chưa lưu trên máy chủ này!",
+        btnCancel: "Hủy bỏ",
+        btnSave: "Lưu Thay Đổi"
+      },
+      en: {
+        selectServerTitle: "SERVERS YOU MANAGE",
+        addServerBtn: "+ Add HaruMod to New Server",
+        btnExit: "Exit Dashboard",
+        navSecCore: "SECURITY SYSTEM",
+        tabOverview: "Server Overview",
+        tabAutomod: "Auto-Mod Filters",
+        tabAntinuke: "Honeypot & Anti-Nuke",
+        tabLogs: "Action Audit Logs",
+        navSecManage: "MANAGEMENT & TESTING",
+        tabCases: "Sanction Cases (#ID)",
+        tabRoles: "Roles & Quarantine",
+        tabSimulator: "Live Filter Tester",
+        ovTitle: "Server Security Overview",
+        ovSubtitle: "Monitor real-time security score, processed moderation events, and active HaruMod defense systems.",
+        statScore: "SECURITY SCORE",
+        statScoreSub: "Honeypot + Auto-Mod Active",
+        statBlocked: "BLOCKED MESSAGES",
+        statBlockedSub: "Phishing & Invites",
+        statCases: "SANCTIONS APPLIED",
+        statCasesSub: "12 Mutes · 14 Warns · 2 Bans",
+        statHoneypot: "HONEYPOT TRAP",
+        statHoneypotSub: "Caught 4 self-bot raids",
+        recentLogTitle: "Recent Security Activity",
+        recentLogDesc: "Latest policy violations detected and proactively neutralized by HaruMod.",
+        btnRefresh: "Refresh",
+        thTime: "Time",
+        thTarget: "Target User",
+        thTrigger: "Triggered Filter",
+        thActionTaken: "Action Enforced",
+        thStatus: "Status",
+        amTitle: "Multi-Tiered Auto-Mod Filters",
+        amSubtitle: "Automatically block prohibited words, unauthorized invites, phishing links, and malicious attachments in real-time.",
+        bwTitle: "Prohibited Keywords (Banned Words)",
+        bwDesc: "Detects vulgar words and slurs, even with obfuscated characters or inserted spaces.",
+        bwListLabel: "Banned Keywords List (Type word & press Enter):",
+        bwActionLabel: "Punishment on Violation:",
+        bwIgnoreLabel: "Bypass Whitelist Roles:",
+        linkTitle: "Anti-Invite & Anti-Phishing Link Shield",
+        linkDesc: "Blocks unauthorized discord.gg invites and checks against 45,000+ verified malicious Nitro scam domains.",
+        linkModeLabel: "Discord Invite Blocker Mode (Norole Mode):",
+        phishActionLabel: "Action on Malicious Phishing URL:",
+        fileTitle: "Dangerous File Attachments & Caps Lock Limiter",
+        fileDesc: "Auto-purges executable files (.exe, .bat, .scr, .vbs) and sanctions members with excessive uppercase spam.",
+        fileTypesLabel: "Prohibited File Extensions:",
+        capsLimitLabel: "Caps Lock Upper Threshold:",
+        anTitle: "Honeypot Trap & Anti-Nuke Defense",
+        anSubtitle: "Proactive bait channels and staff anti-wizz monitoring to prevent unauthorized server destruction.",
+        hpTitle: "Honeypot Trap Channel",
+        hpDesc: "A hidden bait channel legitimate users never type in. Any bot or raid account messaging here gets INSTANTLY PERM-BANNED.",
+        hpChannelLabel: "Select Honeypot Bait Channel:",
+        hpActionLabel: "Sanction on Trap Trigger:",
+        wizzTitle: "Staff Anti-Wizz & Account Takeover Monitor",
+        wizzDesc: "If a staff account is compromised and performs bulk bans, kicks, or channel deletions, HaruMod revokes staff roles and locks the server.",
+        wizzLimitLabel: "Staff Bulk Action Limit:",
+        wizzReactionLabel: "Reaction on Nuke Threshold:",
+        logTitle: "36 Granular Action Audit Logs",
+        logSubtitle: "Smart multi-stream routing across 5 distinct channels to eliminate log clutter.",
+        logModChannel: "Moderation Logs Channel:",
+        logMsgChannel: "Message Logs Channel:",
+        logMemberChannel: "Member Audit Logs Channel:",
+        logVoiceChannel: "Voice Events Logs Channel:",
+        caseTitle: "Ladder Punishments & Case History",
+        caseSubtitle: "Auto-escalating punishment ladder based on prior warnings and chronological sanction history.",
+        ladderTitle: "Auto Punishment Escalation Ladder",
+        recentCasesTitle: "Recent Sanction Cases",
+        thMod: "Moderator",
+        thReason: "Reason",
+        thAction: "Action",
+        roleTitle: "Role Management & Quarantine",
+        roleSubtitle: "Configure Muted quarantine roles, RolePersist (remember roles on rejoin), and new member auto-roles.",
+        roleMutedLabel: "Quarantined / Muted Role:",
+        roleAutoLabel: "Auto-Role Assigned on Join:",
+        persistTitle: "RolePersist (Restore Roles on Rejoin)",
+        persistDesc: "If a penalized user leaves and rejoins to bypass a Muted role, HaruMod instantly reassigns the Muted role!",
+        simPanelTitle: "Live Filter Tester · Interactive Simulation",
+        simPanelSubtitle: "Type simulated chat messages to see how HaruMod analyzes and enforces security policies in real-time.",
+        simWelcome: "Security simulator active! Try typing banned words (e.g. dm, scam), discord.gg links, or EXCESSIVE CAPS to test bot defense.",
+        btnSendTest: "Test Message",
+        unsavedText: "You have unsaved changes on this server!",
+        btnCancel: "Discard",
+        btnSave: "Save Changes"
+      }
+    };
+
+    function switchDashLang(lang) {
+      const activeLang = (lang === "en") ? "en" : "vi";
+      localStorage.setItem("haruki_dash_lang", activeLang);
+      document.documentElement.lang = activeLang;
+
+      const viBtn = document.getElementById("lang-vi");
+      const enBtn = document.getElementById("lang-en");
+      if (activeLang === "vi") {
+        viBtn.classList.add("active");
+        enBtn.classList.remove("active");
+      } else {
+        enBtn.classList.add("active");
+        viBtn.classList.remove("active");
+      }
+
+      const dict = DASH_I18N[activeLang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("haruki_dash_lang") || "vi";
+      switchDashLang(saved);
+    });
+  </script>
+
+  <!-- Constellation Canvas 60fps -->
+  <script>
+    const canvas = document.getElementById("cyber-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    function initParticles() {
+      particles = [];
+      const count = Math.min(Math.floor((width * height) / 14000), 70);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 2 + 1,
+          color: "rgba(16, 185, 129, ",
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    initParticles();
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx = -p.vx;
+        if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ")";
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 100)})`;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Spotlight follow
+    window.addEventListener("mousemove", (e) => {
+      document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
+      document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
+    });
+  </script>
+</body>
+</html>
