@@ -474,28 +474,32 @@
       border-radius: 14px;
     }
 
-    /* Upgraded High-Tech Laptop Mockup Preview */
+    
+    /* ========================================================= */
+    /* UPGRADED INTERACTIVE LAPTOP COMMAND CENTER                */
+    /* ========================================================= */
     .laptop-mockup-wrapper {
-      max-width: 1040px;
+      max-width: 1060px;
       margin: 0 auto 90px;
       position: relative;
     }
 
     .laptop-glow {
       position: absolute;
-      inset: 8% 12%;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(56, 189, 248, 0.1) 40%, transparent 70%);
-      filter: blur(60px);
+      inset: 6% 10%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(56, 189, 248, 0.15) 45%, transparent 75%);
+      filter: blur(65px);
       z-index: 1;
+      pointer-events: none;
     }
 
     .laptop-frame {
       position: relative;
       z-index: 2;
       background: #080d19;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 20px;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 50px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.88), 0 0 50px rgba(16, 185, 129, 0.22);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -508,9 +512,10 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--dash-border);
+      position: relative;
     }
     .dots-group { display: flex; align-items: center; gap: 8px; }
-    .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; cursor: pointer; }
     .dot-red { background: #ef4444; }
     .dot-yellow { background: #f59e0b; }
     .dot-green { background: #10b981; }
@@ -519,54 +524,129 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 8px;
-      padding: 3px 10px;
-      font-size: 0.75rem;
+      padding: 4px 12px;
+      font-size: 0.78rem;
       font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .mockup-server-tag:hover {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .mockup-server-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #090e1a;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 120;
+      min-width: 250px;
+    }
+    .mockup-server-dropdown.show { display: flex; }
+    .mockup-server-opt {
+      padding: 8px 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .mockup-server-opt:hover, .mockup-server-opt.active {
+      background: rgba(16, 185, 129, 0.16);
       color: #fff;
     }
 
     .mockup-inner {
-      padding: 24px;
+      padding: 22px;
       display: grid;
       grid-template-columns: 210px 1fr;
       gap: 20px;
       background: #080d19;
       text-align: left;
+      min-height: 480px;
+    }
+
+    @media (max-width: 860px) {
+      .mockup-inner {
+        grid-template-columns: 1fr;
+      }
     }
 
     .mockup-sidebar {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
     .mockup-item {
-      height: 32px;
+      height: 36px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.03);
       display: flex;
       align-items: center;
+      gap: 8px;
       padding: 0 12px;
       font-size: 0.78rem;
       font-weight: 700;
       color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border-left: 3px solid transparent;
+    }
+    .mockup-item:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      transform: translateX(2px);
     }
     .mockup-item.active {
       background: rgba(16, 185, 129, 0.16);
       color: var(--emerald-light);
       border-left: 3px solid var(--emerald-accent);
+      font-weight: 800;
     }
 
     .mockup-main {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: relative;
+    }
+
+    /* Mockup Panes */
+    .mockup-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: mockupFadeIn 0.25s ease forwards;
+    }
+    .mockup-pane.active {
+      display: flex;
+    }
+    @keyframes mockupFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .mockup-stat-row {
@@ -578,17 +658,32 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--dash-border);
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
     }
-    .mockup-stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
-    .mockup-stat-val { font-size: 1.35rem; font-weight: 900; color: #fff; margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .mockup-stat-box:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .mockup-stat-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+    .mockup-stat-val { font-size: 1.35rem; font-weight: 900; color: #fff; margin-top: 4px; font-variant-numeric: tabular-nums; transition: all 0.2s; }
+    
+    @keyframes countPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); color: #34d399; text-shadow: 0 0 12px rgba(16, 185, 129, 0.8); }
+      100% { transform: scale(1); }
+    }
+    .val-pulse {
+      animation: countPulse 0.45s ease-out;
+    }
 
-    /* Threat Interception Live Feed inside Mockup */
+    /* Threat Interception Live Feed */
     .mockup-feed-box {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--dash-border);
       border-radius: 12px;
       padding: 16px;
+      display: flex;
+      flex-direction: column;
     }
     .mockup-feed-title {
       font-size: 0.82rem;
@@ -599,6 +694,12 @@
       justify-content: space-between;
       margin-bottom: 12px;
     }
+    .feed-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 140px;
+    }
     .feed-item {
       display: flex;
       align-items: center;
@@ -607,8 +708,17 @@
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.04);
-      margin-bottom: 6px;
       font-size: 0.76rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes feedSlideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .feed-item.new-threat {
+      animation: feedSlideIn 0.35s ease forwards;
+      background: rgba(16, 185, 129, 0.07);
+      border-color: rgba(16, 185, 129, 0.28);
     }
     .feed-tag {
       font-size: 0.65rem;
@@ -616,12 +726,364 @@
       padding: 2px 6px;
       border-radius: 4px;
       text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
     .tag-blocked { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
     .tag-trap { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     .tag-shield { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .tag-automod { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
 
-    /* ========================================================= */
+    /* Animated Waveform Bars */
+    .waveform-container {
+      height: 55px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 12px 0 2px;
+    }
+    @keyframes wavePulse {
+      0%, 100% { transform: scaleY(0.35); }
+      50% { transform: scaleY(1); }
+    }
+    .wave-bar {
+      flex: 1;
+      height: 100%;
+      background: rgba(16, 185, 129, 0.38);
+      border-radius: 4px;
+      transform-origin: bottom;
+      animation: wavePulse 1.4s ease-in-out infinite alternate;
+    }
+    .wave-bar:nth-child(1) { animation-delay: 0.1s; animation-duration: 1.2s; }
+    .wave-bar:nth-child(2) { animation-delay: 0.3s; animation-duration: 1.5s; background: rgba(16, 185, 129, 0.55); }
+    .wave-bar:nth-child(3) { animation-delay: 0.2s; animation-duration: 1.1s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.6s; animation-duration: 1.6s; background: rgba(16, 185, 129, 0.7); }
+    .wave-bar:nth-child(5) { animation-delay: 0.4s; animation-duration: 1.3s; }
+    .wave-bar:nth-child(6) { animation-delay: 0.15s; animation-duration: 1.7s; background: rgba(16, 185, 129, 0.9); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+    .wave-bar:nth-child(7) { animation-delay: 0.5s; animation-duration: 1.4s; background: rgba(16, 185, 129, 0.6); }
+    .wave-bar:nth-child(8) { animation-delay: 0.25s; animation-duration: 1.2s; }
+    .wave-bar:nth-child(9) { animation-delay: 0.7s; animation-duration: 1.5s; background: rgba(16, 185, 129, 0.75); }
+    .wave-bar:nth-child(10) { animation-delay: 0.35s; animation-duration: 1.3s; }
+
+    /* Interactive Pane 2: Auto-Mod Shield Controls */
+    .mockup-rule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .mockup-rule-grid { grid-template-columns: 1fr; }
+    }
+    .mockup-rule-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--dash-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .mockup-rule-card:hover {
+      border-color: rgba(16, 185, 129, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .mockup-rule-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mockup-rule-name { font-size: 0.78rem; font-weight: 800; color: #fff; }
+    .mockup-rule-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.4; }
+    .mockup-rule-meta { font-size: 0.68rem; color: var(--emerald-light); font-weight: 700; }
+
+    /* Mini Toggle Switch */
+    .mockup-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .mockup-switch.active {
+      background: #10b981;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    .mockup-switch-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mockup-switch.active .mockup-switch-knob {
+      transform: translateX(16px);
+    }
+
+    /* Interactive Pane 3: Honeypot Trap Simulation */
+    .honeypot-diagram-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dash-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .honeypot-step-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .honeypot-step-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .honeypot-step-num { font-size: 0.65rem; font-weight: 800; color: var(--emerald-light); text-transform: uppercase; }
+    .honeypot-step-title { font-size: 0.76rem; font-weight: 700; color: #fff; margin: 4px 0 2px; }
+    .honeypot-step-desc { font-size: 0.68rem; color: var(--text-dim); }
+
+    .honeypot-terminal {
+      background: #04060d;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      height: 110px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .term-line { display: flex; gap: 8px; line-height: 1.4; }
+    .term-ok { color: #34d399; }
+    .term-alert { color: #f87171; font-weight: 700; }
+    .term-dim { color: #475569; }
+
+    /* Interactive Pane 4: 36 Logs Console */
+    .mockup-log-console {
+      background: #04060d;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mockup-log-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mockup-filter-chip {
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .mockup-filter-chip:hover, .mockup-filter-chip.active {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #fff;
+    }
+    .mockup-log-stream {
+      height: 190px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    /* Interactive Pane 5: Sanction Ladder */
+    .mockup-ladder-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 720px) {
+      .mockup-ladder-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .ladder-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--dash-border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .ladder-card:hover, .ladder-card.active {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.06);
+      transform: translateY(-2px);
+    }
+    .ladder-card-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .ladder-card-title { font-size: 0.78rem; font-weight: 800; color: #fff; }
+    .ladder-card-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; line-height: 1.3; }
+
+    /* Interactive Pane 6: Role Management */
+    .mockup-role-hierarchy {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dash-border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .role-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      font-size: 0.75rem;
+    }
+
+    /* Interactive Pane 7: Mini Filter Simulator */
+    .mockup-sim-container {
+      background: #040711;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mockup-sim-chat {
+      height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+    }
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.74rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid rgba(255, 255, 255, 0.1);
+    }
+    .chat-msg.user {
+      border-left-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.05);
+    }
+    .chat-msg.bot {
+      border-left-color: #10b981;
+      background: rgba(16, 185, 129, 0.06);
+    }
+    .chat-author {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chat-tag-bot {
+      background: #5865F2;
+      color: #fff;
+      font-size: 0.6rem;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .mockup-sim-chips {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sim-test-chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .sim-test-chip:hover {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #fff;
+    }
+    .mockup-sim-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .mockup-sim-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 0.74rem;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .mockup-sim-input:focus {
+      border-color: #10b981;
+    }
+
+    /* Live Toast Notification inside mockup */
+    .mockup-toast {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(16, 185, 129, 0.95);
+      color: #04130c;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 100;
+    }
+    .mockup-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+/* ========================================================= */
     /* 2. SERVER SELECTION HUB                                   */
     /* ========================================================= */
     .server-hub-section {
@@ -1449,103 +1911,417 @@
         </button>
       </div>
 
-      <!-- Upgraded High-Tech Laptop Command Center Mockup -->
+            <!-- Upgraded High-Tech Laptop Command Center Mockup (FULLY INTERACTIVE & LIVE) -->
       <div class="laptop-mockup-wrapper">
         <div class="laptop-glow"></div>
         <div class="laptop-frame">
+          
+          <!-- Mockup Top Window Chrome with Live Server Switcher -->
           <div class="laptop-mockup-top">
             <div class="dots-group">
-              <span class="dot dot-red"></span>
-              <span class="dot dot-yellow"></span>
-              <span class="dot dot-green"></span>
+              <span class="dot dot-red" title="Close Mockup" onclick="showMockupToast('HaruMod Core Guard Active')"></span>
+              <span class="dot dot-yellow" title="Minimize" onclick="showMockupToast('Shield Running in Background')"></span>
+              <span class="dot dot-green" title="Maximize" onclick="showMockupToast('60 FPS Hardware Acceleration')"></span>
             </div>
-            <div class="mockup-server-tag">
+            
+            <div class="mockup-server-tag" id="mockup-server-btn" onclick="toggleMockupServerDropdown(event)" title="Click to switch live simulated server">
               <span style="color:var(--emerald-light);">●</span>
-              <span>Garden Of Dream · Security Suite V5.3</span>
+              <span id="mockup-current-server-name">Garden Of Dream · Security Suite V5.3</span>
+              <svg style="width:12px;height:12px;fill:currentColor;margin-left:4px;" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+              
+              <!-- Dropdown -->
+              <div id="mockup-server-dropdown" class="mockup-server-dropdown">
+                <div class="mockup-server-opt active" onclick="selectMockupServer('Garden Of Dream', '4,921', event)">
+                  <div><strong>Garden Of Dream</strong><br><span style="font-size:0.65rem;color:var(--text-muted);">4,820 members · Honeypot Active</span></div>
+                  <span style="color:var(--emerald-light);font-size:0.65rem;font-weight:800;">ACTIVE</span>
+                </div>
+                <div class="mockup-server-opt" onclick="selectMockupServer('LG Official Community', '12,480', event)">
+                  <div><strong>LG Official Community</strong><br><span style="font-size:0.65rem;color:var(--text-muted);">12,450 members · Anti-Nuke Max</span></div>
+                  <span style="color:var(--emerald-light);font-size:0.65rem;font-weight:800;">ACTIVE</span>
+                </div>
+                <div class="mockup-server-opt" onclick="selectMockupServer('Haruki Shop', '1,240', event)">
+                  <div><strong>Haruki Shop</strong><br><span style="font-size:0.65rem;color:var(--text-muted);">1,200 members · Store Guard</span></div>
+                  <span style="color:var(--emerald-light);font-size:0.65rem;font-weight:800;">ACTIVE</span>
+                </div>
+              </div>
             </div>
-            <span style="font-size:0.75rem;color:var(--text-muted);font-weight:700;">60 FPS Active Shield</span>
+
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span id="mockup-fps-badge" style="font-size:0.75rem;color:var(--text-muted);font-weight:700;">60 FPS Active Shield</span>
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;"></span>
+            </div>
           </div>
 
           <div class="mockup-inner">
+            
+            <!-- Mockup Interactive Sidebar -->
             <div class="mockup-sidebar">
-              <div class="mockup-item active">● Security Overview</div>
-              <div class="mockup-item">🛡️ Auto-Mod Shield</div>
-              <div class="mockup-item">⚡ Honeypot Trap</div>
-              <div class="mockup-item">📜 36 Action Logs</div>
-              <div class="mockup-item">⚖️ Sanction Ladder</div>
-              <div class="mockup-item">👥 Role Management</div>
-              <div class="mockup-item">💬 Filter Simulator</div>
+              <div class="mockup-item active" id="tab-overview" onclick="switchMockupTab('overview')">
+                <span style="color:var(--emerald-light);">●</span>
+                <span data-i18n="mockTabOverview">Security Overview</span>
+              </div>
+              <div class="mockup-item" id="tab-automod" onclick="switchMockupTab('automod')">
+                <span>🛡️</span>
+                <span data-i18n="mockTabAutoMod">Auto-Mod Shield</span>
+              </div>
+              <div class="mockup-item" id="tab-honeypot" onclick="switchMockupTab('honeypot')">
+                <span>⚡</span>
+                <span data-i18n="mockTabHoneypot">Honeypot Trap</span>
+              </div>
+              <div class="mockup-item" id="tab-logs" onclick="switchMockupTab('logs')">
+                <span>📜</span>
+                <span data-i18n="mockTabLogs">36 Action Logs</span>
+              </div>
+              <div class="mockup-item" id="tab-ladder" onclick="switchMockupTab('ladder')">
+                <span>⚖️</span>
+                <span data-i18n="mockTabLadder">Sanction Ladder</span>
+              </div>
+              <div class="mockup-item" id="tab-roles" onclick="switchMockupTab('roles')">
+                <span>👥</span>
+                <span data-i18n="mockTabRoles">Role Management</span>
+              </div>
+              <div class="mockup-item" id="tab-sim" onclick="switchMockupTab('sim')">
+                <span>💬</span>
+                <span data-i18n="mockTabSim">Filter Simulator</span>
+              </div>
             </div>
 
+            <!-- Mockup Main Stage -->
             <div class="mockup-main">
-              <!-- Metric Stat Cards -->
-              <div class="mockup-stat-row">
-                <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Core Defense Shield</div>
-                  <div class="mockup-stat-val" style="color:var(--emerald-light);">100% SECURE</div>
+              
+              <!-- PANE 1: LIVE SECURITY OVERVIEW -->
+              <div class="mockup-pane active" id="pane-overview">
+                <!-- Stat Cards -->
+                <div class="mockup-stat-row">
+                  <div class="mockup-stat-box">
+                    <div class="mockup-stat-label" data-i18n="mockStatShield">Core Defense Shield</div>
+                    <div class="mockup-stat-val" style="color:var(--emerald-light);">100% SECURE</div>
+                  </div>
+                  <div class="mockup-stat-box">
+                    <div class="mockup-stat-label" data-i18n="mockStatThreats">Threats Neutralized</div>
+                    <div class="mockup-stat-val" id="mockup-threats-count">4,921</div>
+                  </div>
+                  <div class="mockup-stat-box">
+                    <div class="mockup-stat-label" data-i18n="mockStatLatency">Latency / Response</div>
+                    <div class="mockup-stat-val" id="mockup-latency-val" style="color:var(--cyan-accent);">&lt; 11ms</div>
+                  </div>
                 </div>
-                <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Threats Neutralized</div>
-                  <div class="mockup-stat-val">4,921</div>
-                </div>
-                <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Latency / Response</div>
-                  <div class="mockup-stat-val" style="color:var(--cyan-accent);">&lt; 12ms</div>
+
+                <!-- Live Stream Box -->
+                <div class="mockup-feed-box">
+                  <div class="mockup-feed-title">
+                    <span data-i18n="mockFeedTitle">Live Threat Interception Feed</span>
+                    <span style="font-size:0.72rem;color:var(--emerald-light);display:flex;align-items:center;gap:6px;">
+                      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;"></span>
+                      <span data-i18n="mockLiveStream">Real-Time Autonomous Stream</span>
+                    </span>
+                  </div>
+
+                  <div class="feed-container" id="mockup-feed-list">
+                    <div class="feed-item">
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <span class="feed-tag tag-blocked">BLOCKED</span>
+                        <span style="color:#f1f5f9;font-weight:600;">nitro-discord-gift.ru</span>
+                        <span style="color:var(--text-muted);">Phishing link auto-purged from #general</span>
+                      </div>
+                      <span style="color:var(--text-dim);font-size:0.7rem;">Just now</span>
+                    </div>
+
+                    <div class="feed-item">
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <span class="feed-tag tag-trap">TRAPPED</span>
+                        <span style="color:#f1f5f9;font-weight:600;">RaidBot_092</span>
+                        <span style="color:var(--text-muted);">Triggered #honeypot-trap bait channel</span>
+                      </div>
+                      <span style="color:var(--danger);font-weight:700;">PERM-BANNED (8ms)</span>
+                    </div>
+
+                    <div class="feed-item">
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <span class="feed-tag tag-shield">SHIELD</span>
+                        <span style="color:#f1f5f9;font-weight:600;">Staff Anti-Wizz</span>
+                        <span style="color:var(--text-muted);">Mass channel deletion attempt halted</span>
+                      </div>
+                      <span style="color:var(--emerald-light);font-weight:700;">ROLES REVOKED</span>
+                    </div>
+                  </div>
+
+                  <!-- Waveform Dynamic Equalizer -->
+                  <div class="waveform-container" title="Live Network Packet Activity Visualizer">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Live Threat Feed & Waveform Box -->
-              <div class="mockup-feed-box">
-                <div class="mockup-feed-title">
-                  <span>Live Threat Interception Feed</span>
-                  <span style="font-size:0.72rem;color:var(--emerald-light);">● Real-Time Stream</span>
-                </div>
-
-                <div class="feed-item">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span class="feed-tag tag-blocked">BLOCKED</span>
-                    <span style="color:#f1f5f9;font-weight:600;">nitro-discord-gift.ru</span>
-                    <span style="color:var(--text-muted);">Phishing link auto-purged from #general</span>
+              <!-- PANE 2: INTERACTIVE AUTO-MOD SHIELD -->
+              <div class="mockup-pane" id="pane-automod">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockAutomodHeading">Autonomous Auto-Mod Shield Core</h4>
+                    <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockAutomodSub">Toggles apply in real-time across all channels in &lt; 5ms</span>
                   </div>
-                  <span style="color:var(--text-dim);font-size:0.7rem;">Just now</span>
+                  <span class="feed-tag tag-shield">ACTIVE 100%</span>
                 </div>
 
-                <div class="feed-item">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span class="feed-tag tag-trap">TRAPPED</span>
-                    <span style="color:#f1f5f9;font-weight:600;">RaidBot_092</span>
-                    <span style="color:var(--text-muted);">Triggered #honeypot-trap bait channel</span>
+                <div class="mockup-rule-grid">
+                  <!-- Rule 1 -->
+                  <div class="mockup-rule-card">
+                    <div class="mockup-rule-top">
+                      <span class="mockup-rule-name" data-i18n="rulePhishTitle">Phishing & Malware Protection</span>
+                      <div class="mockup-switch active" onclick="toggleMockupSwitch(this, 'Phishing Link Protection')">
+                        <div class="mockup-switch-knob"></div>
+                      </div>
+                    </div>
+                    <div class="mockup-rule-desc" data-i18n="rulePhishDesc">Deep domain reputation scanning for fake Steam, Nitro, token stealer links and obfuscated URLs.</div>
+                    <div class="mockup-rule-meta">✓ 4,180 links purged this month</div>
                   </div>
-                  <span style="color:var(--danger);font-weight:700;">PERM-BANNED (8ms)</span>
-                </div>
 
-                <div class="feed-item">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span class="feed-tag tag-shield">SHIELD</span>
-                    <span style="color:#f1f5f9;font-weight:600;">Staff Anti-Wizz</span>
-                    <span style="color:var(--text-muted);">Mass channel deletion attempt halted</span>
+                  <!-- Rule 2 -->
+                  <div class="mockup-rule-card">
+                    <div class="mockup-rule-top">
+                      <span class="mockup-rule-name" data-i18n="ruleExeTitle">Executable File Shield (.exe, .scr)</span>
+                      <div class="mockup-switch active" onclick="toggleMockupSwitch(this, 'Executable File Blocker')">
+                        <div class="mockup-switch-knob"></div>
+                      </div>
+                    </div>
+                    <div class="mockup-rule-desc" data-i18n="ruleExeDesc">Blocks dangerous binary payloads, macro spreadsheets, and zero-day trojan dropper extensions.</div>
+                    <div class="mockup-rule-meta">✓ 94 malicious binaries neutralized</div>
                   </div>
-                  <span style="color:var(--emerald-light);font-weight:700;">ROLES REVOKED</span>
-                </div>
 
-                <!-- Animated Waveform Graphic -->
-                <div style="height:65px;display:flex;align-items:flex-end;gap:10px;padding:10px 0 2px;">
-                  <div style="flex:1;background:rgba(16,185,129,0.25);height:30%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.45);height:55%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.35);height:40%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.7);height:80%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.5);height:60%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.9);height:95%;border-radius:4px;box-shadow:0 0 10px var(--emerald-glow);"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.6);height:65%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.4);height:45%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.75);height:85%;border-radius:4px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.5);height:50%;border-radius:4px;"></div>
+                  <!-- Rule 3 -->
+                  <div class="mockup-rule-card">
+                    <div class="mockup-rule-top">
+                      <span class="mockup-rule-name" data-i18n="ruleMentionTitle">Anti-Mass Mention & Ghost Ping</span>
+                      <div class="mockup-switch active" onclick="toggleMockupSwitch(this, 'Anti-Mass Mention Guard')">
+                        <div class="mockup-switch-knob"></div>
+                      </div>
+                    </div>
+                    <div class="mockup-rule-desc" data-i18n="ruleMentionDesc">Detects rapid mentions of @everyone, @here, and ghost ping deletions with instant auto-timeout.</div>
+                    <div style="display:flex;align-items:center;gap:6px;font-size:0.68rem;color:var(--text-dim);margin-top:2px;">
+                      <span>Threshold:</span>
+                      <button onclick="changeMentionThreshold(-1)" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:3px;padding:1px 6px;cursor:pointer;">-</button>
+                      <strong id="mockup-mention-limit" style="color:var(--emerald-light);">3</strong>
+                      <button onclick="changeMentionThreshold(1)" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:3px;padding:1px 6px;cursor:pointer;">+</button>
+                      <span>mentions</span>
+                    </div>
+                  </div>
+
+                  <!-- Rule 4 -->
+                  <div class="mockup-rule-card">
+                    <div class="mockup-rule-top">
+                      <span class="mockup-rule-name" data-i18n="ruleSpamTitle">Smart Flood & CAPS Limiter</span>
+                      <div class="mockup-switch active" onclick="toggleMockupSwitch(this, 'Flood & Caps Filter')">
+                        <div class="mockup-switch-knob"></div>
+                      </div>
+                    </div>
+                    <div class="mockup-rule-desc" data-i18n="ruleSpamDesc">Limits repeated messages (&gt; 5 msgs/3s) and suppresses all-caps shouting above 70% threshold.</div>
+                    <div class="mockup-rule-meta">✓ Active with 5m auto-mute penalty</div>
+                  </div>
                 </div>
               </div>
+
+              <!-- PANE 3: HONEYPOT TRAP SIMULATION -->
+              <div class="mockup-pane" id="pane-honeypot">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockHoneypotHeading">Decoy Honeypot Trap Architecture</h4>
+                    <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockHoneypotSub">Bait channel invisible to real members; instant perm-ban for automated raid userbots.</span>
+                  </div>
+                  <button class="btn btn-danger btn-sm" id="btn-sim-raid" onclick="simulateHoneypotRaid()" style="font-size:0.72rem;padding:4px 10px;">
+                    <span data-i18n="btnSimRaid">⚡ Simulate Bot Raid Attack</span>
+                  </button>
+                </div>
+
+                <div class="honeypot-diagram-box">
+                  <div class="honeypot-step-row">
+                    <div class="honeypot-step-card">
+                      <div class="honeypot-step-num">Step 1 · Baiting</div>
+                      <div class="honeypot-step-title">#honeypot-trap</div>
+                      <div class="honeypot-step-desc">Hidden channel with @everyone view permissions stripped. Only raw API scrapers see it.</div>
+                    </div>
+                    <div class="honeypot-step-card">
+                      <div class="honeypot-step-num">Step 2 · Trigger</div>
+                      <div class="honeypot-step-title">Infiltration</div>
+                      <div class="honeypot-step-desc">Bot or raid script joins and sends mass invites or malicious tokens into the bait channel.</div>
+                    </div>
+                    <div class="honeypot-step-card">
+                      <div class="honeypot-step-num">Step 3 · Neutralize</div>
+                      <div class="honeypot-step-title">Sub-10ms Purge</div>
+                      <div class="honeypot-step-desc">HaruMod wipes all messages, executes PERM-BAN, and broadcasts IP hash to Global Defense Network.</div>
+                    </div>
+                  </div>
+
+                  <!-- Live Honeypot Terminal Execution -->
+                  <div class="honeypot-terminal" id="honeypot-term">
+                    <div class="term-line term-dim">> SYSTEM: Honeypot trap active in #honeypot-trap. Latency: 7ms.</div>
+                    <div class="term-line term-ok">> DEFENSE: 0 unauthorized messages in past 24 hours. Waiting for triggers...</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANE 4: 36 ACTION LOGS CONSOLE -->
+              <div class="mockup-pane" id="pane-logs">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockLogsHeading">36 Event Logging Channels</h4>
+                    <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockLogsSub">Granular dispatch across #security-alerts, #mod-logs, #message-logs, #member-logs</span>
+                  </div>
+                  <button class="btn btn-secondary btn-sm" onclick="emitRandomMockLog()" style="font-size:0.7rem;padding:3px 8px;">
+                    <span>+ Emit Test Event</span>
+                  </button>
+                </div>
+
+                <div class="mockup-log-console">
+                  <div class="mockup-log-filter-bar">
+                    <span class="mockup-filter-chip active" onclick="filterMockLogs('all', this)">All (36 Streams)</span>
+                    <span class="mockup-filter-chip" onclick="filterMockLogs('security', this)">#security-alerts</span>
+                    <span class="mockup-filter-chip" onclick="filterMockLogs('mod', this)">#mod-logs</span>
+                    <span class="mockup-filter-chip" onclick="filterMockLogs('msg', this)">#message-logs</span>
+                  </div>
+
+                  <div class="mockup-log-stream" id="mockup-log-stream">
+                    <div class="term-line" data-cat="security"><span class="term-dim">[01:54:32]</span> <span class="feed-tag tag-trap">SECURITY</span> <span>Honeypot tripwire triggered in #hidden-trap by Userbot_892</span></div>
+                    <div class="term-line" data-cat="mod"><span class="term-dim">[01:54:20]</span> <span class="feed-tag tag-automod">MOD</span> <span>User @spammer_v4 timed out for 1 hour (Mention limit exceeded)</span></div>
+                    <div class="term-line" data-cat="msg"><span class="term-dim">[01:53:58]</span> <span class="feed-tag tag-blocked">MSG</span> <span>Deleted message from @crypto_drop matching scam regex [Rule #12]</span></div>
+                    <div class="term-line" data-cat="security"><span class="term-dim">[01:53:40]</span> <span class="feed-tag tag-shield">SHIELD</span> <span>RolePersist: Automatically restored 3 roles to @ReturningVIP</span></div>
+                    <div class="term-line" data-cat="mod"><span class="term-dim">[01:53:11]</span> <span class="feed-tag tag-automod">MOD</span> <span>Anti-Wizz lock engaged: Prevented unauthorized deletion of @Staff</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANE 5: SANCTION LADDER -->
+              <div class="mockup-pane" id="pane-ladder">
+                <div>
+                  <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockLadderHeading">4-Stage Autonomous Sanction Ladder</h4>
+                  <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockLadderSub">Graduated punishments with automatic decay and cooldown windows</span>
+                </div>
+
+                <div class="mockup-ladder-grid">
+                  <div class="ladder-card active" onclick="inspectLadderStage(1, this)">
+                    <span class="ladder-card-badge tag-automod">STRIKE 1</span>
+                    <div class="ladder-card-title">Formal Warning</div>
+                    <div class="ladder-card-sub">Ephemeral DM notice with rule citation. Zero channel restrictions.</div>
+                  </div>
+                  <div class="ladder-card" onclick="inspectLadderStage(2, this)">
+                    <span class="ladder-card-badge tag-trap">STRIKE 2</span>
+                    <div class="ladder-card-title">1-Hour Mute</div>
+                    <div class="ladder-card-sub">Automatic timeout. User restricted to read-only in verification channels.</div>
+                  </div>
+                  <div class="ladder-card" onclick="inspectLadderStage(3, this)">
+                    <span class="ladder-card-badge tag-blocked">STRIKE 3</span>
+                    <div class="ladder-card-title">24h Quarantine</div>
+                    <div class="ladder-card-sub">Quarantine role applied. Requires moderator review to release.</div>
+                  </div>
+                  <div class="ladder-card" onclick="inspectLadderStage(4, this)">
+                    <span class="ladder-card-badge tag-blocked">STRIKE 4</span>
+                    <div class="ladder-card-title">Permanent Ban</div>
+                    <div class="ladder-card-sub">Full banishment. Account hash logged to global defense network.</div>
+                  </div>
+                </div>
+
+                <div id="ladder-detail-box" style="background:rgba(255,255,255,0.025);border:1px solid var(--dash-border);border-radius:10px;padding:12px;font-size:0.74rem;">
+                  <strong style="color:var(--emerald-light);">Stage 1 Selected:</strong> Warning expires automatically after <strong>30 days</strong> of clean behavior. No public announcements in chat.
+                </div>
+              </div>
+
+              <!-- PANE 6: ROLE PERSIST & ANTI-WIZZ -->
+              <div class="mockup-pane" id="pane-roles">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockRolesHeading">Role Hierarchy & RolePersist Engine</h4>
+                    <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockRolesSub">Guards against rogue administrators and restores roles upon member rejoin</span>
+                  </div>
+                  <button class="btn btn-secondary btn-sm" onclick="simulateRoleRestore()" style="font-size:0.7rem;padding:3px 8px;">
+                    <span>⚡ Test Role Restore</span>
+                  </button>
+                </div>
+
+                <div class="mockup-role-hierarchy">
+                  <div class="role-row" style="border-left:3px solid #10b981;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="color:#10b981;font-weight:900;">👑</span>
+                      <strong style="color:#fff;">HaruMod Master Guardian</strong>
+                    </div>
+                    <span class="feed-tag tag-shield">HIGHEST PRIVILEGE</span>
+                  </div>
+                  <div class="role-row" style="border-left:3px solid #f59e0b;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="color:#f59e0b;">🛡️</span>
+                      <span>Admin & Moderator Staff</span>
+                    </div>
+                    <span class="feed-tag tag-trap">ANTI-WIZZ LOCKED</span>
+                  </div>
+                  <div class="role-row" style="border-left:3px solid #38bdf8;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="color:#38bdf8;">⚡</span>
+                      <span>RolePersist Engine</span>
+                    </div>
+                    <span style="color:var(--emerald-light);font-weight:700;font-size:0.7rem;">Tracking 4,820 member role states</span>
+                  </div>
+                </div>
+
+                <div id="role-sim-feedback" style="background:#040711;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px;font-size:0.72rem;color:#94a3b8;font-family:'JetBrains Mono', monospace;">
+                  > RolePersist Status: Monitoring member joins & leaves. Click 'Test Role Restore' above to simulate!
+                </div>
+              </div>
+
+              <!-- PANE 7: WORKING MINI FILTER SIMULATOR -->
+              <div class="mockup-pane" id="pane-sim">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <h4 style="margin:0;font-size:0.88rem;color:#fff;" data-i18n="mockSimHeading">Live Interactive Filter Simulator</h4>
+                    <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="mockSimSub">Test malicious payloads or type custom messages to see HaruMod react in real-time</span>
+                  </div>
+                  <span class="feed-tag tag-shield">LIVE AI REGEX</span>
+                </div>
+
+                <div class="mockup-sim-container">
+                  <!-- Quick Test Pills -->
+                  <div class="mockup-sim-chips">
+                    <span style="font-size:0.68rem;color:var(--text-muted);font-weight:700;">Quick Test:</span>
+                    <span class="sim-test-chip" onclick="runSimTest('nitro')">⚡ Test Nitro Scam</span>
+                    <span class="sim-test-chip" onclick="runSimTest('mention')">⚡ Test @everyone Spam</span>
+                    <span class="sim-test-chip" onclick="runSimTest('caps')">⚡ Test CAPS FLOOD</span>
+                    <span class="sim-test-chip" onclick="runSimTest('clean')">⚡ Test Clean Message</span>
+                  </div>
+
+                  <!-- Chat Feed -->
+                  <div class="mockup-sim-chat" id="mockup-chat-feed">
+                    <div class="chat-msg bot">
+                      <div class="chat-author">
+                        <span>HaruMod</span>
+                        <span class="chat-tag-bot">BOT</span>
+                        <span style="font-size:0.65rem;color:var(--text-dim);">Live Filter Ready</span>
+                      </div>
+                      <div style="color:#e2e8f0;">Security Engine initialized for #general. Send a message or click a test button above!</div>
+                    </div>
+                  </div>
+
+                  <!-- Input Row -->
+                  <div class="mockup-sim-input-row">
+                    <input type="text" id="mockup-user-input" class="mockup-sim-input" placeholder="Type a message or paste a link to test filter..." onkeydown="if(event.key==='Enter') sendMockupSimMsg()">
+                    <button class="btn btn-primary btn-sm" onclick="sendMockupSimMsg()" style="padding:6px 14px;font-size:0.74rem;">Send</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
+        
+        <!-- Live Toast Notification Container inside Mockup -->
+        <div id="mockup-live-toast" class="mockup-toast">HaruMod Action Executed</div>
       </div>
+
     </section>
 
     <!-- ========================================================= -->
@@ -2578,6 +3354,40 @@
     // =========================================================
     const DASH_I18N = {
       vi: {
+        mockTabOverview: "Tổng Quan An Ninh",
+        mockTabAutoMod: "Bộ Lọc Auto-Mod",
+        mockTabHoneypot: "Bẫy Honeypot Trap",
+        mockTabLogs: "36 Luồng Nhật Ký",
+        mockTabLadder: "Thang Xử Phạt",
+        mockTabRoles: "Quản Lý Vai Trò",
+        mockTabSim: "Filter Simulator",
+        mockStatShield: "KHIÊN BẢO VỆ CHÍNH",
+        mockStatThreats: "MỐI ĐE DỌA ĐÃ CHẶN",
+        mockStatLatency: "ĐỘ TRỄ / PHẢN HỒI",
+        mockFeedTitle: "Luồng Đánh Chặn Mối Đe Dọa Thời Gian Thực",
+        mockLiveStream: "Hệ Thống Tự Động 24/7",
+        mockAutomodHeading: "Lõi Lọc Auto-Mod Tự Động",
+        mockAutomodSub: "Cấu hình áp dụng tức thì trên mọi kênh trong < 5ms",
+        rulePhishTitle: "Chặn Link Lừa Đảo & Malware",
+        rulePhishDesc: "Quét tên miền theo thời gian thực đối với link Nitro giả mạo, Steam và đánh cắp token.",
+        ruleExeTitle: "Khiên Chặn Tệp Thực Thi (.exe, .scr)",
+        ruleExeDesc: "Ngăn chặn các tệp nhị phân độc hại, macro virus và trojan dropper.",
+        ruleMentionTitle: "Chống Spam Mention & Ghost Ping",
+        ruleMentionDesc: "Phát hiện spam tag @everyone, @here và xóa tin nhắn ẩn với timeout tức thì.",
+        ruleSpamTitle: "Giới Hạn Flood & Chữ In Hoa CAPS",
+        ruleSpamDesc: "Giới hạn tin nhắn lặp lại (> 5 tin/3s) và dập tắt spam in hoa trên 70%.",
+        mockHoneypotHeading: "Kiến Trúc Bẫy Honeypot Ảo",
+        mockHoneypotSub: "Kênh mồi bí mật vô hình với thành viên; perm-ban ngay lập tức đối với bot raid tự động.",
+        btnSimRaid: "⚡ Giả Lập Đợt Tấn Công Bot Raid",
+        mockLogsHeading: "36 Luồng Nhật Ký Sự Kiện",
+        mockLogsSub: "Phân loại chi tiết #security-alerts, #mod-logs, #message-logs, #member-logs",
+        mockLadderHeading: "Thang Xử Phạt Tự Động 4 Cấp Độ",
+        mockLadderSub: "Hình phạt tăng tiến với cơ chế tự giảm án theo thời gian",
+        mockRolesHeading: "Cấu Trúc Vai Trò & Cơ Chế RolePersist",
+        mockRolesSub: "Chống nuke quyền quản trị và tự động hoàn trả vai trò khi thành viên vào lại server",
+        mockSimHeading: "Trình Giả Lập Bộ Lọc Thời Gian Thực",
+        mockSimSub: "Thử nghiệm link độc hại hoặc gõ tin nhắn để xem HaruMod phản hồi tức thì",
+
         dropdownTitle: "Máy Chủ Đang Quản Lý",
         dropdownAddBot: "+ Thêm HaruMod Vào Server Khác",
         navHaruMod: "Giới Thiệu",
@@ -2658,6 +3468,40 @@
         btnSave: "Lưu Cấu Hình"
       },
       en: {
+        mockTabOverview: "Security Overview",
+        mockTabAutoMod: "Auto-Mod Shield",
+        mockTabHoneypot: "Honeypot Trap",
+        mockTabLogs: "36 Action Logs",
+        mockTabLadder: "Sanction Ladder",
+        mockTabRoles: "Role Management",
+        mockTabSim: "Filter Simulator",
+        mockStatShield: "CORE DEFENSE SHIELD",
+        mockStatThreats: "THREATS NEUTRALIZED",
+        mockStatLatency: "LATENCY / RESPONSE",
+        mockFeedTitle: "Live Threat Interception Feed",
+        mockLiveStream: "Real-Time Autonomous Stream",
+        mockAutomodHeading: "Autonomous Auto-Mod Shield Core",
+        mockAutomodSub: "Toggles apply in real-time across all channels in < 5ms",
+        rulePhishTitle: "Phishing & Malware Protection",
+        rulePhishDesc: "Deep domain reputation scanning for fake Steam, Nitro, token stealer links and obfuscated URLs.",
+        ruleExeTitle: "Executable File Shield (.exe, .scr)",
+        ruleExeDesc: "Blocks dangerous binary payloads, macro spreadsheets, and zero-day trojan dropper extensions.",
+        ruleMentionTitle: "Anti-Mass Mention & Ghost Ping",
+        ruleMentionDesc: "Detects rapid mentions of @everyone, @here, and ghost ping deletions with instant auto-timeout.",
+        ruleSpamTitle: "Smart Flood & CAPS Limiter",
+        ruleSpamDesc: "Limits repeated messages (> 5 msgs/3s) and suppresses all-caps shouting above 70% threshold.",
+        mockHoneypotHeading: "Decoy Honeypot Trap Architecture",
+        mockHoneypotSub: "Bait channel invisible to real members; instant perm-ban for automated raid userbots.",
+        btnSimRaid: "⚡ Simulate Bot Raid Attack",
+        mockLogsHeading: "36 Event Logging Channels",
+        mockLogsSub: "Granular dispatch across #security-alerts, #mod-logs, #message-logs, #member-logs",
+        mockLadderHeading: "4-Stage Autonomous Sanction Ladder",
+        mockLadderSub: "Graduated punishments with automatic decay and cooldown windows",
+        mockRolesHeading: "Role Hierarchy & RolePersist Engine",
+        mockRolesSub: "Guards against rogue administrators and restores roles upon member rejoin",
+        mockSimHeading: "Live Interactive Filter Simulator",
+        mockSimSub: "Test malicious payloads or type custom messages to see HaruMod react in real-time",
+
         dropdownTitle: "Active Managed Servers",
         dropdownAddBot: "+ Add HaruMod to Other Server",
         navHaruMod: "HaruMod",
@@ -2825,6 +3669,326 @@
       requestAnimationFrame(animate);
     }
     animate();
+
+    
+    /* ========================================================= */
+    /* INTERACTIVE HERO LAPTOP COMMAND CENTER LOGIC              */
+    /* ========================================================= */
+    let currentMockupTab = "overview";
+    let mockupThreatCount = 4921;
+    let mockupMentionThreshold = 3;
+
+    // Tab Switching inside Mockup
+    function switchMockupTab(tabId) {
+      currentMockupTab = tabId;
+      document.querySelectorAll(".mockup-sidebar .mockup-item").forEach(item => {
+        item.classList.remove("active");
+      });
+      const activeTabBtn = document.getElementById("tab-" + tabId);
+      if (activeTabBtn) activeTabBtn.classList.add("active");
+
+      document.querySelectorAll(".mockup-pane").forEach(pane => {
+        pane.classList.remove("active");
+      });
+      const targetPane = document.getElementById("pane-" + tabId);
+      if (targetPane) targetPane.classList.add("active");
+
+      showMockupToast("Switched to " + tabId.toUpperCase());
+    }
+
+    // Toast inside Mockup
+    function showMockupToast(msg) {
+      const toast = document.getElementById("mockup-live-toast");
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2200);
+    }
+
+    // Mockup Server Selector Dropdown
+    function toggleMockupServerDropdown(e) {
+      e.stopPropagation();
+      const dd = document.getElementById("mockup-server-dropdown");
+      if (dd) dd.classList.toggle("show");
+    }
+
+    document.addEventListener("click", () => {
+      const dd = document.getElementById("mockup-server-dropdown");
+      if (dd) dd.classList.remove("show");
+    });
+
+    function selectMockupServer(serverName, threats, e) {
+      if (e) e.stopPropagation();
+      document.getElementById("mockup-current-server-name").innerText = serverName + " · Security Suite V5.3";
+      mockupThreatCount = parseInt(threats.replace(",", "")) || 4921;
+      const countEl = document.getElementById("mockup-threats-count");
+      if (countEl) countEl.innerText = mockupThreatCount.toLocaleString();
+
+      document.querySelectorAll(".mockup-server-opt").forEach(opt => opt.classList.remove("active"));
+      if (e && e.currentTarget) e.currentTarget.classList.add("active");
+
+      const dd = document.getElementById("mockup-server-dropdown");
+      if (dd) dd.classList.remove("show");
+
+      showMockupToast("Connected to " + serverName);
+    }
+
+    // Toggle switch in Auto-Mod
+    function toggleMockupSwitch(el, ruleName) {
+      el.classList.toggle("active");
+      const isAct = el.classList.contains("active");
+      showMockupToast(ruleName + " is now " + (isAct ? "ACTIVE" : "DISABLED"));
+    }
+
+    function changeMentionThreshold(delta) {
+      mockupMentionThreshold = Math.max(1, Math.min(10, mockupMentionThreshold + delta));
+      const el = document.getElementById("mockup-mention-limit");
+      if (el) el.innerText = mockupMentionThreshold;
+      showMockupToast("Mention threshold set to " + mockupMentionThreshold);
+    }
+
+    // Honeypot Simulation
+    function simulateHoneypotRaid() {
+      const btn = document.getElementById("btn-sim-raid");
+      const term = document.getElementById("honeypot-term");
+      if (!term || !btn) return;
+
+      btn.disabled = true;
+      btn.innerHTML = "<span>Intercepting...</span>";
+
+      term.innerHTML = `<div class="term-line term-alert">🚨 INTRUSION DETECTED: Unauthorized userbot 'RaidNuker_X9' connected!</div>`;
+
+      setTimeout(() => {
+        term.innerHTML += `<div class="term-line term-alert">> 0.003s: Bot sent mass discord invite payload into #honeypot-trap</div>`;
+        term.scrollTop = term.scrollHeight;
+      }, 350);
+
+      setTimeout(() => {
+        term.innerHTML += `<div class="term-line term-ok">> 0.006s: Honeypot tripwire activated. Countermeasures engaged.</div>`;
+        term.scrollTop = term.scrollHeight;
+      }, 700);
+
+      setTimeout(() => {
+        term.innerHTML += `<div class="term-line term-ok">> 0.009s: 14 messages purged server-wide across all channels.</div>`;
+        term.scrollTop = term.scrollHeight;
+      }, 1100);
+
+      setTimeout(() => {
+        term.innerHTML += `<div class="term-line term-alert">> 0.012s: User 'RaidNuker_X9' PERM-BANNED & added to Global Blacklist!</div>`;
+        term.innerHTML += `<div class="term-line term-ok">✓ RESULT: Raid neutralized in 12ms. Server 100% Secure.</div>`;
+        term.scrollTop = term.scrollHeight;
+        btn.disabled = false;
+        btn.innerHTML = `<span>⚡ Simulate Bot Raid Attack</span>`;
+        showMockupToast("⚡ Raid Neutralized in 12ms!");
+      }, 1500);
+    }
+
+    // Sanction Ladder Inspection
+    function inspectLadderStage(stage, el) {
+      document.querySelectorAll(".ladder-card").forEach(c => c.classList.remove("active"));
+      el.classList.add("active");
+      const detail = document.getElementById("ladder-detail-box");
+      if (!detail) return;
+
+      const descMap = {
+        1: '<strong style="color:var(--emerald-light);">Stage 1 Selected:</strong> Warning expires automatically after <strong>30 days</strong> of clean behavior. No public chat announcements.',
+        2: '<strong style="color:var(--cyan-accent);">Stage 2 Selected:</strong> 1-hour timeout. Member cannot send messages or join voice channels. Decay window: <strong>45 days</strong>.',
+        3: '<strong style="color:#f59e0b;">Stage 3 Selected:</strong> 24-hour quarantine role applied. Only visible in #quarantine-support channel for moderator review.',
+        4: '<strong style="color:#ef4444;">Stage 4 Selected:</strong> Immediate permanent server ban. User IP hash broadcast to HaruMod Global Defense Network.'
+      };
+      detail.innerHTML = descMap[stage] || "";
+    }
+
+    // Role Restore Simulation
+    function simulateRoleRestore() {
+      const fb = document.getElementById("role-sim-feedback");
+      if (!fb) return;
+      fb.innerHTML = `> [SIMULATION] Member @CyberGamer left the server (Lost VIP Patron & Staff roles)...`;
+      setTimeout(() => {
+        fb.innerHTML += `<br>> [0.12s] Member @CyberGamer re-joined the server.`;
+      }, 500);
+      setTimeout(() => {
+        fb.innerHTML += `<br><span style="color:#34d399;">> [0.18s] RolePersist matched UID: Automatically restored [VIP Patron], [Staff], [Verified]!</span>`;
+        showMockupToast("RolePersist restored 3 roles in 0.18s");
+      }, 1000);
+    }
+
+    // Filter Logs Console
+    function filterMockLogs(cat, el) {
+      document.querySelectorAll(".mockup-filter-chip").forEach(c => c.classList.remove("active"));
+      el.classList.add("active");
+      document.querySelectorAll("#mockup-log-stream .term-line").forEach(line => {
+        if (cat === "all" || line.getAttribute("data-cat") === cat) {
+          line.style.display = "flex";
+        } else {
+          line.style.display = "none";
+        }
+      });
+    }
+
+    function emitRandomMockLog() {
+      const stream = document.getElementById("mockup-log-stream");
+      if (!stream) return;
+      const sampleLogs = [
+        { cat: "security", tag: "SECURITY", cls: "tag-trap", text: "Honeypot trap hit by userbot from IP hash 192.88.x.x" },
+        { cat: "mod", tag: "MOD", cls: "tag-automod", text: "Muted @SpamBot_72 for 15m (Fast message flood)" },
+        { cat: "msg", tag: "MSG", cls: "tag-blocked", text: "Purged deceptive invite link discord.gg/fake-nitro" },
+        { cat: "security", tag: "SHIELD", cls: "tag-shield", text: "Anti-Wizz prevented unauthorized mass role revocation" }
+      ];
+      const rand = sampleLogs[Math.floor(Math.random() * sampleLogs.length)];
+      const d = new Date();
+      const timeStr = d.toTimeString().split(" ")[0];
+      const div = document.createElement("div");
+      div.className = "term-line";
+      div.setAttribute("data-cat", rand.cat);
+      div.innerHTML = `<span class="term-dim">[${timeStr}]</span> <span class="feed-tag ${rand.cls}">${rand.tag}</span> <span>${rand.text}</span>`;
+      stream.prepend(div);
+      showMockupToast("New Log Event Dispatched");
+    }
+
+    // Filter Simulator (Mini-Chat Tester)
+    function runSimTest(type) {
+      const chat = document.getElementById("mockup-chat-feed");
+      if (!chat) return;
+
+      let userMsg = "";
+      let botVerdict = "";
+      let isDanger = false;
+
+      if (type === "nitro") {
+        userMsg = "Claim free Discord Nitro here: https://nitro-gift-drop-steam.ru/claim";
+        botVerdict = "🚨 [BLOCKED] Phishing Link detected. Message auto-purged from #general. Sender issued Strike 1.";
+        isDanger = true;
+      } else if (type === "mention") {
+        userMsg = "@everyone @here ALL JOIN MY SERVER NOW FOR FREE GIFTS";
+        botVerdict = "⚠️ [AUTO-MOD] Mass Mention trigger (Breached threshold 3). Message purged. User timed out 10m.";
+        isDanger = true;
+      } else if (type === "caps") {
+        userMsg = "PLEASE EVERYONE LOOK AT THIS RIGHT NOW CLICK THIS LINK";
+        botVerdict = "🔇 [TIMEOUT] Excessive Caps Lock (88%). Message suppressed. User Warned.";
+        isDanger = true;
+      } else {
+        userMsg = "Hello everyone! Loving the HaruMod security update so far.";
+        botVerdict = "✅ [PASSED] Clean message verified. Semantic safety score: 100%. Latency: 6ms.";
+        isDanger = false;
+      }
+
+      // Append user msg
+      const uDiv = document.createElement("div");
+      uDiv.className = "chat-msg user";
+      uDiv.innerHTML = `<div class="chat-author"><span>You (Tester)</span> <span style="font-size:0.65rem;color:var(--text-dim);">Just now</span></div><div style="color:#f1f5f9;">${userMsg}</div>`;
+      chat.appendChild(uDiv);
+      chat.scrollTop = chat.scrollHeight;
+
+      // Bot responds after 220ms
+      setTimeout(() => {
+        const bDiv = document.createElement("div");
+        bDiv.className = "chat-msg bot";
+        bDiv.innerHTML = `<div class="chat-author"><span>HaruMod</span> <span class="chat-tag-bot">BOT</span> <span style="font-size:0.65rem;color:${isDanger ? '#ef4444' : '#10b981'};font-weight:700;">${isDanger ? 'Countermeasure Executed' : 'Allowed'}</span></div><div style="color:${isDanger ? '#fca5a5' : '#86efac'};font-weight:600;">${botVerdict}</div>`;
+        chat.appendChild(bDiv);
+        chat.scrollTop = chat.scrollHeight;
+        showMockupToast(isDanger ? "Threat Blocked by HaruMod" : "Message Passed Clean");
+      }, 220);
+    }
+
+    function sendMockupSimMsg() {
+      const input = document.getElementById("mockup-user-input");
+      if (!input || !input.value.trim()) return;
+      const text = input.value.trim();
+      input.value = "";
+
+      const chat = document.getElementById("mockup-chat-feed");
+      const uDiv = document.createElement("div");
+      uDiv.className = "chat-msg user";
+      uDiv.innerHTML = `<div class="chat-author"><span>You (Tester)</span> <span style="font-size:0.65rem;color:var(--text-dim);">Just now</span></div><div style="color:#f1f5f9;">${text}</div>`;
+      chat.appendChild(uDiv);
+      chat.scrollTop = chat.scrollHeight;
+
+      // Analyze input
+      setTimeout(() => {
+        let isThreat = false;
+        let response = "";
+        const lower = text.toLowerCase();
+        if (lower.includes("nitro") || lower.includes("gift") || lower.includes("free") || lower.includes(".ru") || lower.includes("http")) {
+          isThreat = true;
+          response = "🚨 [BLOCKED] Suspicious link/gift payload detected. Message deleted in 4ms.";
+        } else if (lower.includes("@everyone") || lower.includes("@here")) {
+          isThreat = true;
+          response = "⚠️ [AUTO-MOD] Mass mention prohibited. Message suppressed.";
+        } else if (text === text.toUpperCase() && text.length > 8) {
+          isThreat = true;
+          response = "🔇 [TIMEOUT] Excessive uppercase detected. User warned.";
+        } else {
+          response = "✅ [PASSED] Clean message verified by HaruMod AI Guard. Latency: 8ms.";
+        }
+
+        const bDiv = document.createElement("div");
+        bDiv.className = "chat-msg bot";
+        bDiv.innerHTML = `<div class="chat-author"><span>HaruMod</span> <span class="chat-tag-bot">BOT</span> <span style="font-size:0.65rem;color:${isThreat ? '#ef4444' : '#10b981'};font-weight:700;">Verdict</span></div><div style="color:${isThreat ? '#fca5a5' : '#86efac'};font-weight:600;">${response}</div>`;
+        chat.appendChild(bDiv);
+        chat.scrollTop = chat.scrollHeight;
+        showMockupToast(isThreat ? "Threat Intercepted" : "Message Verified");
+      }, 240);
+    }
+
+    // Autonomous Threat Stream Generation (Runs every 3.5s)
+    const autonomousThreats = [
+      { tag: "BLOCKED", cls: "tag-blocked", name: "steam-gift-drop.com", desc: "Phishing payload auto-purged from #trading", status: "PURGED (4ms)" },
+      { tag: "TRAPPED", cls: "tag-trap", name: "RaidBot_891", desc: "Spammed decoy channel #honeypot-trap", status: "PERM-BANNED (6ms)" },
+      { tag: "SHIELD", cls: "tag-shield", name: "Staff Anti-Wizz", desc: "Unauthorized admin privilege escalation denied", status: "RESTRICTED" },
+      { tag: "BLOCKED", cls: "tag-blocked", name: "free_nitro_gen.exe", desc: "Trojan executable quarantined from #downloads", status: "PURGED (3ms)" },
+      { tag: "AUTO-MOD", cls: "tag-automod", name: "SpamMaster_3", desc: "Sent 6 repeated messages in 2 seconds", status: "MUTED 10m" },
+      { tag: "TRAPPED", cls: "tag-trap", name: "TokenStealer_V2", desc: "Attempted webhook hijack in private channel", status: "PERM-BANNED" }
+    ];
+    let threatIdx = 0;
+
+    setInterval(() => {
+      // Only generate if Overview tab is active
+      if (currentMockupTab !== "overview") return;
+
+      const feed = document.getElementById("mockup-feed-list");
+      if (!feed) return;
+
+      const threat = autonomousThreats[threatIdx % autonomousThreats.length];
+      threatIdx++;
+
+      // Increment threat counter
+      mockupThreatCount++;
+      const countEl = document.getElementById("mockup-threats-count");
+      if (countEl) {
+        countEl.innerText = mockupThreatCount.toLocaleString();
+        countEl.classList.remove("val-pulse");
+        void countEl.offsetWidth; // trigger reflow
+        countEl.classList.add("val-pulse");
+      }
+
+      // Jitter latency slightly
+      const latEl = document.getElementById("mockup-latency-val");
+      if (latEl) {
+        const ms = Math.floor(Math.random() * 6) + 8;
+        latEl.innerText = "< " + ms + "ms";
+      }
+
+      // Prepend threat item
+      const item = document.createElement("div");
+      item.className = "feed-item new-threat";
+      item.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="feed-tag ${threat.cls}">${threat.tag}</span>
+          <span style="color:#f1f5f9;font-weight:600;">${threat.name}</span>
+          <span style="color:var(--text-muted);">${threat.desc}</span>
+        </div>
+        <span style="color:${threat.cls === 'tag-blocked' || threat.cls === 'tag-trap' ? 'var(--danger)' : 'var(--emerald-light)'};font-weight:700;">${threat.status}</span>
+      `;
+      feed.prepend(item);
+
+      // Keep max 4 items
+      if (feed.children.length > 4) {
+        feed.removeChild(feed.lastChild);
+      }
+    }, 3400);
 
     window.addEventListener("DOMContentLoaded", () => {
       const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
