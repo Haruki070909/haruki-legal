@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>HaruMod Web Dashboard · Next-Gen Security Suite</title>
-  <link rel="stylesheet" href="./shared.css?v=5.2">
+  <link rel="stylesheet" href="./shared.css?v=5.3">
   <link rel="icon" type="image/png" href="./harumod-avatar.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,8 @@
     :root {
       --dash-bg: #05070e;
       --dash-surface: #0a0f1d;
-      --dash-card: rgba(13, 20, 38, 0.72);
-      --dash-card-hover: rgba(18, 27, 51, 0.88);
+      --dash-card: rgba(13, 20, 38, 0.75);
+      --dash-card-hover: rgba(18, 27, 51, 0.9);
       --dash-border: rgba(255, 255, 255, 0.08);
       --dash-border-hover: rgba(16, 185, 129, 0.45);
       --emerald-accent: #10b981;
@@ -33,7 +33,6 @@
       --text-dim: #94a3b8;
       --text-muted: #64748b;
       --gold-accent: #fbbf24;
-      --gold-glow: rgba(245, 158, 11, 0.35);
       --danger: #ef4444;
     }
 
@@ -53,13 +52,13 @@
       flex-direction: column;
     }
 
-    /* Background Cyber Canvas & Deep Atmosphere */
+    /* Ambient Background Atmosphere */
     #cyber-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.6;
+      opacity: 0.55;
     }
 
     .bg-grid {
@@ -87,7 +86,6 @@
     }
     .glow-1 { top: -140px; left: 15%; background: #10b981; }
     .glow-2 { bottom: 5%; right: 10%; background: #5865f2; }
-    .glow-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0284c7; width: 800px; height: 800px; opacity: 0.08; }
 
     /* ========================================================= */
     /* TOP NAVIGATION BAR                                        */
@@ -96,7 +94,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(5, 7, 14, 0.85);
+      background: rgba(5, 7, 14, 0.88);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border-bottom: 1px solid var(--dash-border);
@@ -221,7 +219,6 @@
       padding: 10px 18px;
       white-space: nowrap;
       position: relative;
-      overflow: hidden;
     }
     .btn:active {
       transform: scale(0.98);
@@ -394,12 +391,12 @@
     }
 
     /* ========================================================= */
-    /* 1. DYNO-STYLE ULTRA-HIGH-END HERO SECTION                 */
+    /* 1. DYNO-STYLE HERO & NEXT-GEN MOCKUP                      */
     /* ========================================================= */
     .hero-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 80px 24px 60px;
+      padding: 80px 24px 50px;
       text-align: center;
     }
 
@@ -477,7 +474,7 @@
       border-radius: 14px;
     }
 
-    /* Laptop Mockup Preview (Dyno Style upgraded) */
+    /* Upgraded High-Tech Laptop Mockup Preview */
     .laptop-mockup-wrapper {
       max-width: 1040px;
       margin: 0 auto 90px;
@@ -500,7 +497,6 @@
       border-radius: 20px;
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 50px rgba(16, 185, 129, 0.2);
       overflow: hidden;
-      aspect-ratio: 16 / 9.4;
       display: flex;
       flex-direction: column;
     }
@@ -510,20 +506,33 @@
       padding: 12px 20px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       border-bottom: 1px solid var(--dash-border);
     }
+    .dots-group { display: flex; align-items: center; gap: 8px; }
     .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
     .dot-red { background: #ef4444; }
     .dot-yellow { background: #f59e0b; }
     .dot-green { background: #10b981; }
 
+    .mockup-server-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
     .mockup-inner {
       padding: 24px;
-      flex: 1;
       display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 24px;
+      grid-template-columns: 210px 1fr;
+      gap: 20px;
       background: #080d19;
       text-align: left;
     }
@@ -535,7 +544,7 @@
       padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 8px;
     }
     .mockup-item {
       height: 32px;
@@ -557,13 +566,13 @@
     .mockup-main {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     .mockup-stat-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
     .mockup-stat-box {
       background: rgba(255, 255, 255, 0.03);
@@ -571,27 +580,136 @@
       border-radius: 12px;
       padding: 14px;
     }
-    .mockup-stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+    .mockup-stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
     .mockup-stat-val { font-size: 1.35rem; font-weight: 900; color: #fff; margin-top: 4px; font-variant-numeric: tabular-nums; }
 
-    .mockup-chart-box {
-      flex: 1;
+    /* Threat Interception Live Feed inside Mockup */
+    .mockup-feed-box {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--dash-border);
       border-radius: 12px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 16px;
     }
+    .mockup-feed-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .feed-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      margin-bottom: 6px;
+      font-size: 0.76rem;
+    }
+    .feed-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .tag-blocked { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .tag-trap { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .tag-shield { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
 
     /* ========================================================= */
-    /* 2. SERVER SELECTION HUB (NEXT-GEN LUXURY BENTO)           */
+    /* 2. SERVER SELECTION HUB                                   */
     /* ========================================================= */
     .server-hub-section {
       max-width: 1200px;
       margin: 0 auto 110px;
       padding: 0 24px;
+    }
+
+    /* Auth Card (When user is NOT logged in: ZERO fake servers!) */
+    .hub-auth-card {
+      background: linear-gradient(135deg, rgba(13, 20, 42, 0.9) 0%, rgba(8, 12, 26, 0.95) 100%);
+      border: 1px solid rgba(88, 101, 242, 0.35);
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      padding: 56px 36px;
+      text-align: center;
+      max-width: 760px;
+      margin: 30px auto;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 35px rgba(88, 101, 242, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hub-auth-card::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(88, 101, 242, 0.3) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+
+    .auth-card-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(88, 101, 242, 0.15);
+      border: 1.5px solid rgba(88, 101, 242, 0.4);
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
+    }
+
+    .auth-card-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .auth-card-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 580px;
+      margin: 0 auto 30px;
+    }
+
+    .auth-features-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .auth-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--emerald-light);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    /* Logged-In Hub Layout */
+    #logged-in-hub {
+      display: none;
     }
 
     .hub-header {
@@ -603,12 +721,6 @@
       padding-bottom: 20px;
       flex-wrap: wrap;
       gap: 20px;
-    }
-
-    .hub-title-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
     }
 
     .hub-title {
@@ -624,9 +736,9 @@
     .hub-subtitle {
       font-size: 0.95rem;
       color: var(--text-dim);
+      margin-top: 4px;
     }
 
-    /* Search & Filter Bar */
     .hub-controls {
       display: flex;
       align-items: center;
@@ -693,9 +805,7 @@
       gap: 22px;
     }
 
-    /* ========================================================= */
-    /* GORGEOUS PRODUCTION SERVER CARD                           */
-    /* ========================================================= */
+    /* Production Server Card */
     .server-card {
       background: var(--dash-card);
       backdrop-filter: blur(20px);
@@ -713,26 +823,11 @@
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
 
-    .server-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
     .server-card:hover {
       background: var(--dash-card-hover);
       border-color: var(--dash-border-hover);
       transform: translateY(-4px);
       box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.16);
-    }
-    .server-card:hover::before {
-      opacity: 1;
     }
 
     .server-card-top {
@@ -787,7 +882,6 @@
       flex-wrap: wrap;
     }
 
-    /* Badges */
     .badge-role {
       font-size: 0.68rem;
       font-weight: 800;
@@ -824,9 +918,7 @@
       align-items: center;
       gap: 6px;
     }
-    .badge-status.active {
-      color: #34d399;
-    }
+    .badge-status.active { color: #34d399; }
     .badge-status.active .beacon-dot {
       width: 7px;
       height: 7px;
@@ -835,9 +927,7 @@
       box-shadow: 0 0 10px #10b981;
       animation: pulseBeacon 1.8s infinite;
     }
-    .badge-status.inactive {
-      color: var(--text-muted);
-    }
+    .badge-status.inactive { color: var(--text-muted); }
 
     @keyframes pulseBeacon {
       0% { transform: scale(0.95); opacity: 0.7; }
@@ -845,7 +935,6 @@
       100% { transform: scale(0.95); opacity: 0.7; }
     }
 
-    /* Card Metadata */
     .server-card-meta {
       display: flex;
       align-items: center;
@@ -889,24 +978,6 @@
       background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
       transform: translateY(-2px);
       box-shadow: 0 8px 25px var(--emerald-glow-strong);
-    }
-    .btn-configure:hover svg {
-      transform: rotate(90deg);
-    }
-    .btn-configure svg {
-      transition: transform 0.3s ease;
-    }
-
-    /* Auth prompt card */
-    .hub-auth-card {
-      background: rgba(88, 101, 242, 0.08);
-      border: 1px solid rgba(88, 101, 242, 0.3);
-      border-radius: 18px;
-      padding: 40px 24px;
-      text-align: center;
-      max-width: 650px;
-      margin: 20px auto;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
     /* ========================================================= */
@@ -996,7 +1067,6 @@
       display: block;
     }
 
-    /* Panels & Cards inside Config */
     .panel-card {
       background: var(--dash-card);
       backdrop-filter: blur(20px);
@@ -1037,7 +1107,6 @@
       gap: 20px;
     }
 
-    /* Toggle Switches */
     .switch-label {
       display: flex;
       align-items: center;
@@ -1099,7 +1168,6 @@
       transform: translateX(22px);
     }
 
-    /* Select Inputs & Text Inputs */
     .input-group {
       margin-bottom: 18px;
     }
@@ -1157,9 +1225,7 @@
       flex-shrink: 0;
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .sim-content {
-      flex: 1;
-    }
+    .sim-content { flex: 1; }
     .sim-author {
       font-weight: 800;
       font-size: 0.88rem;
@@ -1282,7 +1348,6 @@
   <div class="bg-grid"></div>
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
-  <div class="ambient-glow glow-3"></div>
 
   <!-- ========================================================= -->
   <!-- TOP NAVIGATION BAR                                        -->
@@ -1298,33 +1363,33 @@
       <!-- Server Switcher (Only visible in Config Stage) -->
       <div id="topbar-server-switcher" style="position:relative; display:none;">
         <button class="server-dropdown-btn" onclick="toggleServerDropdown()">
-          <span id="topbar-active-server-name">LG</span>
+          <span id="topbar-active-server-name">Server</span>
           <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
         </button>
         <div id="topbar-server-dropdown" class="server-dropdown-content">
-          <div class="server-dropdown-title" data-i18n="dropdownTitle">Máy Chủ Đang Quản Lý</div>
+          <div class="server-dropdown-title" data-i18n="dropdownTitle">Active Managed Servers</div>
           <div id="topbar-active-servers-list">
             <!-- STRICTLY ONLY active servers with bot -->
           </div>
           <a id="dropdown-add-server-btn" href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" style="text-decoration:none;display:flex;align-items:center;gap:8px;padding:12px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.08);color:var(--emerald-light);font-size:0.82rem;font-weight:700;">
             <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            <span data-i18n="dropdownAddBot">+ Thêm HaruMod Vào Server Khác</span>
+            <span data-i18n="dropdownAddBot">+ Add HaruMod to Other Server</span>
           </a>
         </div>
       </div>
 
       <nav class="nav-links">
-        <a href="harumod.html" data-i18n="navHaruMod">Giới Thiệu</a>
-        <a href="#features" onclick="scrollToHub()" data-i18n="navFeatures">Tính Năng</a>
-        <a href="harumod.html#commands" data-i18n="navCommands">Lệnh Bot</a>
-        <a href="harumod-terms.html" data-i18n="navTerms">Điều Khoản</a>
-        <a href="harumod-privacy.html" data-i18n="navPrivacy">Bảo Mật</a>
-        <a href="https://discord.gg" target="_blank" data-i18n="navSupport">Hỗ Trợ</a>
+        <a href="harumod.html" data-i18n="navHaruMod">HaruMod</a>
+        <a href="#server-hub" onclick="handleManageServersClick()" data-i18n="navFeatures">Features</a>
+        <a href="harumod.html#commands" data-i18n="navCommands">Commands</a>
+        <a href="harumod-terms.html" data-i18n="navTerms">Terms</a>
+        <a href="harumod-privacy.html" data-i18n="navPrivacy">Privacy</a>
+        <a href="https://discord.gg" target="_blank" data-i18n="navSupport">Support</a>
       </nav>
     </div>
 
     <div class="topbar-right">
-      <!-- Language Pill -->
+      <!-- Language Pill (Default EN) -->
       <div class="lang-switcher">
         <button id="lang-vi" class="lang-btn" onclick="switchDashLang('vi')">VI</button>
         <button id="lang-en" class="lang-btn active" onclick="switchDashLang('en')">EN</button>
@@ -1340,7 +1405,7 @@
       <div id="discord-auth-container">
         <button class="btn btn-discord btn-sm" onclick="startDiscordLogin()">
           <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
-          <span data-i18n="loginBtn">Đăng Nhập Discord</span>
+          <span data-i18n="loginBtn">Login with Discord</span>
         </button>
       </div>
     </div>
@@ -1355,7 +1420,7 @@
     <section class="hero-container">
       <div class="hero-pill-badge" data-i18n="heroBadge">
         <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-        <span>HaruMod Security Core V5.2</span>
+        <span>HaruMod Security Core V5.3</span>
       </div>
 
       <h1 class="hero-headline" data-i18n="heroHeadline">
@@ -1363,14 +1428,14 @@
       </h1>
       
       <p class="hero-subtitle" data-i18n="heroSubtitle">
-        Hệ thống bảo vệ máy chủ Discord tự động, toàn diện với Dashboard trực quan. Cấu hình Honeypot bẫy nuke, lọc Auto-Mod đa tầng và 36 luồng nhật ký sự kiện chuyên sâu.
+        A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.
       </p>
       
       <div class="hero-trust-bar" data-i18n="heroTrust">
-        <span>Được tin cậy bảo vệ cộng đồng Discord với</span>
-        <strong>Bẫy Honeypot Bí Mật</strong> · 
-        <strong>36 Luồng Nhật Ký</strong> · 
-        <strong>Auto-Mod Triệt Tiêu Lừa Đảo</strong>
+        <span>Trusted to protect communities with</span> 
+        <strong>Secret Honeypot Traps</strong> · 
+        <strong>36 Action Logs</strong> · 
+        <strong>Multi-Tier Anti-Phishing</strong>
       </div>
 
       <div class="hero-cta-group">
@@ -1378,61 +1443,103 @@
           <svg style="width:18px;height:18px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
           <span data-i18n="heroAddBtn">Add to Discord</span>
         </a>
-        <button class="btn btn-secondary" onclick="scrollToHub()">
+        <button class="btn btn-secondary" onclick="handleManageServersClick()">
           <svg style="width:18px;height:18px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
           <span data-i18n="heroManageBtn">Manage Servers</span>
         </button>
       </div>
 
-      <!-- Laptop Dashboard Mockup -->
+      <!-- Upgraded High-Tech Laptop Command Center Mockup -->
       <div class="laptop-mockup-wrapper">
         <div class="laptop-glow"></div>
         <div class="laptop-frame">
           <div class="laptop-mockup-top">
-            <span class="dot dot-red"></span>
-            <span class="dot dot-yellow"></span>
-            <span class="dot dot-green"></span>
-            <span style="font-size:0.75rem;color:var(--text-muted);margin-left:8px;font-weight:600;">HaruMod Web Dashboard · Server Moderation & Security Suite</span>
+            <div class="dots-group">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="mockup-server-tag">
+              <span style="color:var(--emerald-light);">●</span>
+              <span>Garden Of Dream · Security Suite V5.3</span>
+            </div>
+            <span style="font-size:0.75rem;color:var(--text-muted);font-weight:700;">60 FPS Active Shield</span>
           </div>
+
           <div class="mockup-inner">
             <div class="mockup-sidebar">
-              <div class="mockup-item active">● Tổng Quan An Ninh</div>
-              <div class="mockup-item">🛡️ Bộ Lọc Auto-Mod</div>
-              <div class="mockup-item">⚡ Bẫy Honeypot</div>
-              <div class="mockup-item">📜 36 Luồng Nhật Ký</div>
-              <div class="mockup-item">⚖️ Thang Xử Phạt</div>
-              <div class="mockup-item">👥 Quản Lý Vai Trò</div>
+              <div class="mockup-item active">● Security Overview</div>
+              <div class="mockup-item">🛡️ Auto-Mod Shield</div>
+              <div class="mockup-item">⚡ Honeypot Trap</div>
+              <div class="mockup-item">📜 36 Action Logs</div>
+              <div class="mockup-item">⚖️ Sanction Ladder</div>
+              <div class="mockup-item">👥 Role Management</div>
               <div class="mockup-item">💬 Filter Simulator</div>
             </div>
+
             <div class="mockup-main">
+              <!-- Metric Stat Cards -->
               <div class="mockup-stat-row">
                 <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Trạng Thái Khiên Bảo Vệ</div>
-                  <div class="mockup-stat-val" style="color:var(--emerald-light);">Hoạt Động 100%</div>
+                  <div class="mockup-stat-label">Core Defense Shield</div>
+                  <div class="mockup-stat-val" style="color:var(--emerald-light);">100% SECURE</div>
                 </div>
                 <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Đe Dọa Bị Triệt Tiêu</div>
+                  <div class="mockup-stat-label">Threats Neutralized</div>
                   <div class="mockup-stat-val">4,921</div>
                 </div>
                 <div class="mockup-stat-box">
-                  <div class="mockup-stat-label">Thời Gian Phản Hồi</div>
+                  <div class="mockup-stat-label">Latency / Response</div>
                   <div class="mockup-stat-val" style="color:var(--cyan-accent);">&lt; 12ms</div>
                 </div>
               </div>
-              <div class="mockup-chart-box">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <span style="font-size:0.82rem;font-weight:800;color:#fff;">Giám Sát Lưu Lượng Thời Gian Thực</span>
-                  <span style="font-size:0.72rem;color:var(--emerald-light);font-weight:700;">● 60 FPS Engine</span>
+
+              <!-- Live Threat Feed & Waveform Box -->
+              <div class="mockup-feed-box">
+                <div class="mockup-feed-title">
+                  <span>Live Threat Interception Feed</span>
+                  <span style="font-size:0.72rem;color:var(--emerald-light);">● Real-Time Stream</span>
                 </div>
-                <div style="height:110px;display:flex;align-items:flex-end;gap:12px;padding:12px 0 4px;">
-                  <div style="flex:1;background:rgba(16,185,129,0.25);height:35%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.45);height:60%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.35);height:48%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.7);height:88%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.5);height:62%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.9);height:100%;border-radius:6px;box-shadow:0 0 12px var(--emerald-glow);"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.65);height:75%;border-radius:6px;"></div>
-                  <div style="flex:1;background:rgba(16,185,129,0.4);height:50%;border-radius:6px;"></div>
+
+                <div class="feed-item">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="feed-tag tag-blocked">BLOCKED</span>
+                    <span style="color:#f1f5f9;font-weight:600;">nitro-discord-gift.ru</span>
+                    <span style="color:var(--text-muted);">Phishing link auto-purged from #general</span>
+                  </div>
+                  <span style="color:var(--text-dim);font-size:0.7rem;">Just now</span>
+                </div>
+
+                <div class="feed-item">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="feed-tag tag-trap">TRAPPED</span>
+                    <span style="color:#f1f5f9;font-weight:600;">RaidBot_092</span>
+                    <span style="color:var(--text-muted);">Triggered #honeypot-trap bait channel</span>
+                  </div>
+                  <span style="color:var(--danger);font-weight:700;">PERM-BANNED (8ms)</span>
+                </div>
+
+                <div class="feed-item">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="feed-tag tag-shield">SHIELD</span>
+                    <span style="color:#f1f5f9;font-weight:600;">Staff Anti-Wizz</span>
+                    <span style="color:var(--text-muted);">Mass channel deletion attempt halted</span>
+                  </div>
+                  <span style="color:var(--emerald-light);font-weight:700;">ROLES REVOKED</span>
+                </div>
+
+                <!-- Animated Waveform Graphic -->
+                <div style="height:65px;display:flex;align-items:flex-end;gap:10px;padding:10px 0 2px;">
+                  <div style="flex:1;background:rgba(16,185,129,0.25);height:30%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.45);height:55%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.35);height:40%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.7);height:80%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.5);height:60%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.9);height:95%;border-radius:4px;box-shadow:0 0 10px var(--emerald-glow);"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.6);height:65%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.4);height:45%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.75);height:85%;border-radius:4px;"></div>
+                  <div style="flex:1;background:rgba(16,185,129,0.5);height:50%;border-radius:4px;"></div>
                 </div>
               </div>
             </div>
@@ -1445,59 +1552,73 @@
     <!-- SERVER SELECTION HUB                                      -->
     <!-- ========================================================= -->
     <section id="server-hub" class="server-hub-section">
-      <div class="hub-header">
-        <div class="hub-title-group">
-          <h2 class="hub-title" data-i18n="hubTitle">
-            <svg style="width:28px;height:28px;fill:var(--emerald-accent);" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            <span>Máy Chủ Quản Lý</span>
-          </h2>
-          <p class="hub-subtitle" data-i18n="hubSubtitle">Chọn máy chủ bạn muốn tùy chỉnh cấu hình bảo mật hoặc mời HaruMod vào server mới.</p>
+      
+      <!-- 1. LOGGED-OUT STATE: CLEAN AUTH CARD (ZERO FAKE SERVERS!) -->
+      <div id="hub-auth-prompt" class="hub-auth-card">
+        <div class="auth-card-icon">
+          <svg style="width:34px;height:34px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
         </div>
+        <h2 class="auth-card-title" data-i18n="hubAuthTitle">Manage Your Discord Servers</h2>
+        <p class="auth-card-desc" data-i18n="hubAuthDesc">
+          Log in with Discord to automatically scan and configure the servers you manage. Real avatars and permissions are fetched directly from Discord API.
+        </p>
+        
+        <button class="btn btn-discord btn-lg" style="padding:14px 36px;font-size:1.05rem;" onclick="startDiscordLogin()">
+          <svg style="width:20px;height:20px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
+          <span data-i18n="loginWithDiscord">Login with Discord</span>
+        </button>
 
-        <div class="hub-controls">
-          <!-- Search box -->
-          <div class="hub-search-box">
-            <svg class="hub-search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" id="server-search-input" class="hub-search-input" placeholder="Tìm kiếm server..." oninput="handleServerSearch(this.value)">
+        <div class="auth-features-row">
+          <span class="auth-pill" data-i18n="pill1">✓ Direct Discord CDN Avatars</span>
+          <span class="auth-pill" data-i18n="pill2">✓ Real-Time Security Sync</span>
+          <span class="auth-pill" data-i18n="pill3">✓ Zero Permission Abuse</span>
+        </div>
+      </div>
+
+      <!-- 2. LOGGED-IN STATE: REAL SERVER HUB -->
+      <div id="logged-in-hub">
+        <div class="hub-header">
+          <div>
+            <h2 class="hub-title" data-i18n="hubTitle">
+              <svg style="width:28px;height:28px;fill:var(--emerald-accent);" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+              <span>Manage Servers</span>
+            </h2>
+            <p class="hub-subtitle" data-i18n="hubSubtitle">Select an active server to configure security policies or invite HaruMod to a new server.</p>
           </div>
 
-          <button class="btn btn-secondary btn-sm" onclick="refreshServersList()">
-            <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-            <span data-i18n="btnRefresh">Làm mới</span>
-          </button>
+          <div class="hub-controls">
+            <!-- Search box -->
+            <div class="hub-search-box">
+              <svg class="hub-search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <input type="text" id="server-search-input" class="hub-search-input" placeholder="Search servers..." oninput="handleServerSearch(this.value)">
+            </div>
+
+            <button class="btn btn-secondary btn-sm" onclick="refreshServersList()">
+              <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+              <span data-i18n="btnRefresh">Refresh</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <!-- Auth Prompt when user is NOT logged in -->
-      <div id="hub-auth-prompt" class="hub-auth-card">
-        <h3 style="font-size:1.4rem;font-weight:800;margin-bottom:10px;color:#fff;" data-i18n="hubAuthTitle">Đăng Nhập Discord Để Quét Máy Chủ Thật Của Bạn</h3>
-        <p style="font-size:0.92rem;color:var(--text-dim);margin-bottom:24px;line-height:1.6;" data-i18n="hubAuthDesc">
-          Hệ thống sẽ tự động quét danh sách máy chủ bạn có quyền Quản Lý (Manage Server / Admin) và phân loại những server HaruMod đã có mặt.
-        </p>
-        <button class="btn btn-discord" onclick="startDiscordLogin()">
-          <svg style="width:18px;height:18px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
-          <span data-i18n="loginWithDiscord">Đăng Nhập Discord Ngay</span>
-        </button>
-      </div>
+        <!-- Category 1: Active Managed Servers with HaruMod -->
+        <div class="hub-category-title">
+          <svg style="width:22px;height:22px;fill:var(--emerald-accent);" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          <span data-i18n="catActiveServers">Active Servers (with HaruMod)</span>
+          <span id="active-servers-count" class="hub-category-count">0</span>
+        </div>
+        <div id="active-servers-grid" class="server-cards-grid">
+          <!-- Rendered via JS directly from Discord API -->
+        </div>
 
-      <!-- Category 1: Active Managed Servers with HaruMod -->
-      <div class="hub-category-title">
-        <svg style="width:22px;height:22px;fill:var(--emerald-accent);" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-        <span data-i18n="catActiveServers">Máy Chủ Đang Hoạt Động (Có HaruMod)</span>
-        <span id="active-servers-count" class="hub-category-count">1</span>
-      </div>
-      <div id="active-servers-grid" class="server-cards-grid">
-        <!-- Rendered by JS -->
-      </div>
-
-      <!-- Category 2: Managed Servers without HaruMod (Invite section) -->
-      <div class="hub-category-title" style="margin-top:54px;">
-        <svg style="width:22px;height:22px;fill:var(--discord-blurple);" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        <span data-i18n="catInviteServers">Thêm HaruMod Vào Máy Chủ Bạn Quản Lý</span>
-        <span id="invite-servers-count" class="hub-category-count">0</span>
-      </div>
-      <div id="invite-servers-grid" class="server-cards-grid">
-        <!-- Rendered by JS -->
+        <!-- Category 2: Managed Servers without HaruMod (Invite section) -->
+        <div class="hub-category-title" style="margin-top:54px;">
+          <svg style="width:22px;height:22px;fill:var(--discord-blurple);" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          <span data-i18n="catInviteServers">Add HaruMod to Your Managed Servers</span>
+          <span id="invite-servers-count" class="hub-category-count">0</span>
+        </div>
+        <div id="invite-servers-grid" class="server-cards-grid">
+          <!-- Rendered via JS directly from Discord API -->
+        </div>
       </div>
     </section>
   </main>
@@ -1511,11 +1632,11 @@
       <div style="display:flex;align-items:center;gap:18px;">
         <button class="config-back-btn" onclick="returnToHub()">
           <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-          <span data-i18n="btnBackToServers">← Danh Sách Server</span>
+          <span data-i18n="btnBackToServers">← Back to Servers</span>
         </button>
         <div>
-          <h2 id="config-server-title" style="font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:-0.02em;">Cấu Hình Máy Chủ · LG</h2>
-          <p style="font-size:0.86rem;color:var(--text-dim);" data-i18n="configSubtitle">Thay đổi cấu hình bảo mật được đồng bộ tức thì trên bot HaruMod.</p>
+          <h2 id="config-server-title" style="font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:-0.02em;">Server Configuration</h2>
+          <p style="font-size:0.86rem;color:var(--text-dim);" data-i18n="configSubtitle">Security configuration updates are synced instantly across HaruMod.</p>
         </div>
       </div>
 
@@ -1530,31 +1651,31 @@
     <div class="config-tabs">
       <button class="tab-btn active" onclick="switchTab('tab-overview')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-        <span data-i18n="tabOverview">Tổng Quan An Ninh</span>
+        <span data-i18n="tabOverview">Security Overview</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-automod')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-        <span data-i18n="tabAutoMod">Bộ Lọc Auto-Mod</span>
+        <span data-i18n="tabAutoMod">Auto-Mod Filters</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-honeypot')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-        <span data-i18n="tabHoneypot">Bẫy Honeypot & Nuke</span>
+        <span data-i18n="tabHoneypot">Honeypot & Anti-Nuke</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-logs')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-        <span data-i18n="tabLogs">36 Luồng Nhật Ký</span>
+        <span data-i18n="tabLogs">36 Action Logs</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-cases')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        <span data-i18n="tabCases">Thang Xử Phạt</span>
+        <span data-i18n="tabCases">Sanction Ladder</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-roles')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        <span data-i18n="tabRoles">Quản Lý Vai Trò</span>
+        <span data-i18n="tabRoles">Role Management</span>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-sim')">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-        <span data-i18n="tabSim">Trình Giả Lập Lọc</span>
+        <span data-i18n="tabSim">Live Filter Tester</span>
       </button>
     </div>
 
@@ -1562,34 +1683,34 @@
     <div id="tab-overview" class="tab-pane active">
       <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:18px;margin-bottom:26px;">
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statShield">KHIÊN BẢO VỆ CHÍNH</div>
-          <div style="font-size:2rem;font-weight:900;color:var(--emerald-light);margin-top:6px;">100% HOẠT ĐỘNG</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statShield">PRIMARY SECURITY SHIELD</div>
+          <div style="font-size:2rem;font-weight:900;color:var(--emerald-light);margin-top:6px;">100% ACTIVE</div>
           <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Auto-Mod, Honeypot & Anti-Wizz</div>
         </div>
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statThreats">MỐI ĐE DỌA ĐÃ CHẶN</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statThreats">THREATS NEUTRALIZED</div>
           <div style="font-size:2rem;font-weight:900;color:#ffffff;margin-top:6px;font-variant-numeric:tabular-nums;">4,921</div>
-          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">12 link phishing trong 24h qua</div>
+          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">12 phishing links blocked past 24h</div>
         </div>
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statLogs">NHẬT KÝ ĐÃ GHI NHẬN</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statLogs">AUDIT LOGS RECORDED</div>
           <div style="font-size:2rem;font-weight:900;color:var(--cyan-accent);margin-top:6px;font-variant-numeric:tabular-nums;">38,104</div>
-          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Định tuyến 6 kênh độc lập</div>
+          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Multi-stream routed across 6 channels</div>
         </div>
       </div>
 
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="quickShieldsTitle">Thiết Lập Khiên Bảo Vệ Nhanh</h3>
-            <p class="panel-subtitle" data-i18n="quickShieldsSub">Bật tắt nhanh các cơ chế bảo mật cốt lõi trên server này.</p>
+            <h3 class="panel-title" data-i18n="quickShieldsTitle">Quick Security Shields</h3>
+            <p class="panel-subtitle" data-i18n="quickShieldsSub">Toggle core defense mechanisms for this server.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <label class="switch-label">
             <div class="switch-info">
               <div class="switch-title" data-i18n="swAutoModTitle">Auto-Mod Phishing & Scam</div>
-              <div class="switch-desc" data-i18n="swAutoModDesc">Tự động xóa link Nitro giả mạo và ban tài khoản phát tán</div>
+              <div class="switch-desc" data-i18n="swAutoModDesc">Auto-deletes fake Nitro links and bans compromised raid accounts</div>
             </div>
             <input type="checkbox" id="cfg-automod-active" checked onchange="triggerUnsaved()" style="display:none;">
             <div class="switch-toggle"></div>
@@ -1597,8 +1718,8 @@
 
           <label class="switch-label">
             <div class="switch-info">
-              <div class="switch-title" data-i18n="swHoneypotTitle">Kênh Bẫy Raid Honeypot</div>
-              <div class="switch-desc" data-i18n="swHoneypotDesc">Kênh mồi bí mật: tài khoản bot nhắn vào sẽ bị perm-ban ngay</div>
+              <div class="switch-title" data-i18n="swHoneypotTitle">Honeypot Bait Channel</div>
+              <div class="switch-desc" data-i18n="swHoneypotDesc">Hidden channel trap: raid bots typing here get instantly perm-banned</div>
             </div>
             <input type="checkbox" id="cfg-honeypot-active" checked onchange="triggerUnsaved()" style="display:none;">
             <div class="switch-toggle"></div>
@@ -1606,8 +1727,8 @@
 
           <label class="switch-label">
             <div class="switch-info">
-              <div class="switch-title" data-i18n="swAntiWizzTitle">Giám Sát Staff Anti-Wizz</div>
-              <div class="switch-desc" data-i18n="swAntiWizzDesc">Phát hiện tài khoản admin bị hack xóa kênh hoặc ban hàng loạt</div>
+              <div class="switch-title" data-i18n="swAntiWizzTitle">Staff Anti-Wizz Monitor</div>
+              <div class="switch-desc" data-i18n="swAntiWizzDesc">Detects hacked staff deleting channels or performing mass bans</div>
             </div>
             <input type="checkbox" id="cfg-antiwizz-active" checked onchange="triggerUnsaved()" style="display:none;">
             <div class="switch-toggle"></div>
@@ -1615,8 +1736,8 @@
 
           <label class="switch-label">
             <div class="switch-info">
-              <div class="switch-title" data-i18n="swFileBlockTitle">Chặn Tệp Độc Hại (.exe, .bat)</div>
-              <div class="switch-desc" data-i18n="swFileBlockDesc">Ngăn chặn đính kèm file chứa mã độc đánh cắp Discord token</div>
+              <div class="switch-title" data-i18n="swFileBlockTitle">Dangerous File Blocker (.exe, .bat)</div>
+              <div class="switch-desc" data-i18n="swFileBlockDesc">Prevents attachments containing token grabbers and malicious malware</div>
             </div>
             <input type="checkbox" id="cfg-fileblock-active" checked onchange="triggerUnsaved()" style="display:none;">
             <div class="switch-toggle"></div>
@@ -1630,21 +1751,21 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="badwordsTitle">Bộ Lọc Từ Ngữ Cấm & Xúc Phạm</h3>
-            <p class="panel-subtitle" data-i18n="badwordsSub">Tự động xóa tin nhắn chứa từ ngữ bậy bạ, quảng cáo trái phép hoặc phân biệt chủng tộc.</p>
+            <h3 class="panel-title" data-i18n="badwordsTitle">Banned Words & Slurs Filter</h3>
+            <p class="panel-subtitle" data-i18n="badwordsSub">Auto-deletes messages containing unauthorized promotions, toxicity, or slurs.</p>
           </div>
         </div>
         <div class="input-group">
-          <label class="input-label" data-i18n="lblBadwordsList">Danh sách từ cấm (phân cách bằng dấu phẩy):</label>
-          <textarea class="input-field" rows="3" id="cfg-badwords" oninput="triggerUnsaved()">dm, dkm, lừa đảo, scam, discord.gg/, telegram, hack, leak token</textarea>
+          <label class="input-label" data-i18n="lblBadwordsList">Banned word list (comma separated):</label>
+          <textarea class="input-field" rows="3" id="cfg-badwords" oninput="triggerUnsaved()">dm, dkm, scam, discord.gg/, telegram, hack, leak token</textarea>
         </div>
         <div class="input-group">
-          <label class="input-label" data-i18n="lblBadwordsAction">Hình thức phạt khi vi phạm:</label>
+          <label class="input-label" data-i18n="lblBadwordsAction">Action on violation:</label>
           <select class="select-field" id="cfg-badwords-action" onchange="triggerUnsaved()">
-            <option value="delete">Chỉ xóa tin nhắn</option>
-            <option value="warn">Xóa tin nhắn + Cảnh cáo (Warn)</option>
-            <option value="timeout" selected>Xóa tin nhắn + Mute Timeout 10 phút</option>
-            <option value="kick">Kick khỏi Server</option>
+            <option value="delete">Delete Message Only</option>
+            <option value="warn">Delete Message + Warn Member</option>
+            <option value="timeout" selected>Delete Message + 10-Minute Timeout</option>
+            <option value="kick">Kick from Server</option>
           </select>
         </div>
       </div>
@@ -1652,25 +1773,25 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="linksTitle">Chống Link Mời & Link Phishing</h3>
-            <p class="panel-subtitle" data-i18n="linksSub">Ngăn chặn thành viên gửi link discord.gg trái phép và link lừa đảo Nitro 45,000+ domain.</p>
+            <h3 class="panel-title" data-i18n="linksTitle">Anti-Invite & Anti-Phishing Link Shield</h3>
+            <p class="panel-subtitle" data-i18n="linksSub">Blocks unauthorized discord.gg invites and checks against 45,000+ verified malicious Nitro scam domains.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <div class="input-group">
-            <label class="input-label" data-i18n="lblInviteMode">Chế độ chặn Discord Invite:</label>
+            <label class="input-label" data-i18n="lblInviteMode">Discord Invite Blocker Mode:</label>
             <select class="select-field" id="cfg-invite-mode" onchange="triggerUnsaved()">
-              <option value="all">Chặn tất cả link invite ngoài</option>
-              <option value="norole" selected>Chỉ chặn thành viên mới (chưa có role)</option>
-              <option value="disabled">Tắt kiểm tra</option>
+              <option value="all">Block all external server invites</option>
+              <option value="norole" selected>Only block new members without roles</option>
+              <option value="disabled">Disabled</option>
             </select>
           </div>
           <div class="input-group">
-            <label class="input-label" data-i18n="lblPhishingAction">Hành động khi gửi link Phishing độc hại:</label>
+            <label class="input-label" data-i18n="lblPhishingAction">Action on Phishing Links:</label>
             <select class="select-field" id="cfg-phishing-action" onchange="triggerUnsaved()">
-              <option value="ban" selected>Ban vĩnh viễn + Xóa tin nhắn 7 ngày</option>
-              <option value="kick">Kick khỏi Server</option>
-              <option value="timeout">Timeout 24 giờ</option>
+              <option value="ban" selected>Permanent Ban + Purge 7 days</option>
+              <option value="kick">Kick from Server</option>
+              <option value="timeout">24-Hour Timeout</option>
             </select>
           </div>
         </div>
@@ -1682,24 +1803,24 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="honeypotTitle">Bẫy Honeypot Bí Mật</h3>
-            <p class="panel-subtitle" data-i18n="honeypotSub">Kênh bẫy ẩn người dùng thường không thể thấy. Bất kỳ tài khoản bot raid nào gửi tin nhắn vào đây sẽ bị cấm ngay lập tức.</p>
+            <h3 class="panel-title" data-i18n="honeypotTitle">Honeypot Trap Channel</h3>
+            <p class="panel-subtitle" data-i18n="honeypotSub">A hidden bait channel legitimate users never type in. Any bot or raid account messaging here gets INSTANTLY PERM-BANNED.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <div class="input-group">
-            <label class="input-label" data-i18n="lblHoneypotChannel">Chọn Kênh Bẫy Mồi (Honeypot):</label>
+            <label class="input-label" data-i18n="lblHoneypotChannel">Select Honeypot Bait Channel:</label>
             <select class="select-field" id="cfg-honeypot-channel" onchange="triggerUnsaved()">
-              <option value="honeypot-trap"># honeypot-trap (Khuyến nghị)</option>
+              <option value="honeypot-trap"># honeypot-trap (Recommended)</option>
               <option value="bait-chat"># bait-chat</option>
               <option value="welcome-bot"># verify-trap</option>
             </select>
           </div>
           <div class="input-group">
-            <label class="input-label" data-i18n="lblHoneypotAction">Xử lý khi bẫy kích hoạt:</label>
+            <label class="input-label" data-i18n="lblHoneypotAction">Sanction on Trap Trigger:</label>
             <select class="select-field" id="cfg-honeypot-action" onchange="triggerUnsaved()">
               <option value="permban" selected>Permanent Ban + Auto-Purge</option>
-              <option value="quarantine">Gán Role Cách Ly (Quarantine)</option>
+              <option value="quarantine">Assign Quarantine Role</option>
             </select>
           </div>
         </div>
@@ -1708,24 +1829,24 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="antiwizzTitle">Giám Sát Tài Khoản Staff Bị Chiếm Quyền (Anti-Wizz)</h3>
-            <p class="panel-subtitle" data-i18n="antiwizzSub">Nếu tài khoản quản trị viên bị hack và thực hiện ban/kick/xóa kênh liên tục, HaruMod lập tức thu hồi quyền staff và khóa server.</p>
+            <h3 class="panel-title" data-i18n="antiwizzTitle">Staff Anti-Wizz & Account Takeover Monitor</h3>
+            <p class="panel-subtitle" data-i18n="antiwizzSub">If a staff account is compromised and performs bulk bans, kicks, or channel deletions, HaruMod revokes staff roles and locks the server.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <div class="input-group">
-            <label class="input-label" data-i18n="lblWizzThreshold">Ngưỡng thao tác tối đa:</label>
+            <label class="input-label" data-i18n="lblWizzThreshold">Staff Bulk Action Limit:</label>
             <select class="select-field" id="cfg-wizz-threshold" onchange="triggerUnsaved()">
-              <option value="3">3 thao tác / 10 giây (Nghiêm ngặt)</option>
-              <option value="5" selected>5 thao tác / 10 giây (Chuẩn)</option>
-              <option value="10">10 thao tác / 10 giây</option>
+              <option value="3">3 actions / 10s (Strict)</option>
+              <option value="5" selected>5 actions / 10s (Standard)</option>
+              <option value="10">10 actions / 10s</option>
             </select>
           </div>
           <div class="input-group">
-            <label class="input-label" data-i18n="lblWizzReaction">Phản ứng khi vượt ngưỡng:</label>
+            <label class="input-label" data-i18n="lblWizzReaction">Reaction on Nuke Threshold:</label>
             <select class="select-field" id="cfg-wizz-reaction" onchange="triggerUnsaved()">
-              <option value="strip-roles" selected>Tước quyền Staff + Cách ly + Báo động</option>
-              <option value="ban">Ban ngay lập tức</option>
+              <option value="strip-roles" selected>Revoke Staff Roles + Quarantine + Alarm</option>
+              <option value="ban">Immediate Ban</option>
             </select>
           </div>
         </div>
@@ -1737,33 +1858,33 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="logsTitle">36 Luồng Nhật Ký Sự Kiện Chuyên Sâu</h3>
-            <p class="panel-subtitle" data-i18n="logsSub">Phân luồng độc lập qua 6 kênh riêng biệt để tránh nghẽn tin nhắn và quản lý minh bạch.</p>
+            <h3 class="panel-title" data-i18n="logsTitle">36 Granular Action Audit Logs</h3>
+            <p class="panel-subtitle" data-i18n="logsSub">Smart multi-stream routing across 6 distinct channels to eliminate log clutter.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <div class="input-group">
-            <label class="input-label">1. Moderation Logs (Xử phạt, warn, ban):</label>
+            <label class="input-label">1. Moderation Logs (Sanctions, warns, bans):</label>
             <select class="select-field"><option># mod-logs</option><option># admin-logs</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">2. Message Audit Logs (Sửa / Xóa tin nhắn):</label>
+            <label class="input-label">2. Message Audit Logs (Edit / Delete messages):</label>
             <select class="select-field"><option># message-logs</option><option># chat-logs</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">3. Member Logs (Tham gia, Rời đi, Đổi tên):</label>
+            <label class="input-label">3. Member Logs (Join, Leave, Nickname):</label>
             <select class="select-field"><option># member-logs</option><option># join-leave</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">4. Server & Channel Changes (Tạo xóa kênh, role):</label>
+            <label class="input-label">4. Server & Channel Changes (Create/delete channel, role):</label>
             <select class="select-field"><option># server-audit</option><option># audit-logs</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">5. Voice Events (Tham gia / Chuyển phòng voice):</label>
+            <label class="input-label">5. Voice Events (Join / Move voice channels):</label>
             <select class="select-field"><option># voice-logs</option><option># voice-audit</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">6. Security & Honeypot Alarms (Báo động nuke):</label>
+            <label class="input-label">6. Security & Honeypot Alarms (Anti-nuke alerts):</label>
             <select class="select-field"><option># security-alerts</option><option># honeypot-logs</option></select>
           </div>
         </div>
@@ -1775,26 +1896,26 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="casesTitle">Thang Xử Phạt Leo Thang Tự Động (Ladder System)</h3>
-            <p class="panel-subtitle" data-i18n="casesSub">Tự động tăng mức độ kỷ luật dựa trên số lần cảnh cáo trong quá khứ của thành viên.</p>
+            <h3 class="panel-title" data-i18n="casesTitle">Auto Punishment Escalation Ladder</h3>
+            <p class="panel-subtitle" data-i18n="casesSub">Auto-escalating punishment ladder based on prior warnings and chronological sanction history.</p>
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:14px;">
           <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Vi phạm 1:</span>
-            <span style="color:#fbbf24;font-weight:700;">Gửi Cảnh Cáo DM (Warn)</span>
+            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 1:</span>
+            <span style="color:#fbbf24;font-weight:700;">Direct Message Warning (Warn)</span>
           </div>
           <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Vi phạm 2:</span>
-            <span style="color:#f59e0b;font-weight:700;">Mute Timeout 1 Giờ</span>
+            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 2:</span>
+            <span style="color:#f59e0b;font-weight:700;">1-Hour Mute Timeout</span>
           </div>
           <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Vi phạm 3:</span>
-            <span style="color:#ef4444;font-weight:700;">Kick khỏi Server</span>
+            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 3:</span>
+            <span style="color:#ef4444;font-weight:700;">Kick from Server</span>
           </div>
           <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Vi phạm 4+:</span>
-            <span style="color:#dc2626;font-weight:900;">Cấm Vĩnh Viễn (Perm Ban)</span>
+            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 4+:</span>
+            <span style="color:#dc2626;font-weight:900;">Permanent Ban</span>
           </div>
         </div>
       </div>
@@ -1805,24 +1926,24 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="rolesTitle">Cấu Hình Vai Trò & RolePersist</h3>
-            <p class="panel-subtitle" data-i18n="rolesSub">Khôi phục vai trò khi thành viên cố tình out/rejoin server để xóa án phạt Muted.</p>
+            <h3 class="panel-title" data-i18n="rolesTitle">Role Management & RolePersist</h3>
+            <p class="panel-subtitle" data-i18n="rolesSub">Configure Muted quarantine roles, RolePersist (remember roles on rejoin), and new member auto-roles.</p>
           </div>
         </div>
         <div class="config-grid-2">
           <div class="input-group">
-            <label class="input-label">Vai trò Muted / Cách Ly:</label>
-            <select class="select-field"><option>@Muted (Khuyến nghị)</option><option>@Quarantined</option></select>
+            <label class="input-label">Muted / Quarantine Role:</label>
+            <select class="select-field"><option>@Muted (Recommended)</option><option>@Quarantined</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">Vai trò tự động gán khi vào server (Auto-Role):</label>
-            <select class="select-field"><option>@Member</option><option>@Thành Viên</option><option>Không dùng</option></select>
+            <label class="input-label">Auto-Role Assigned on Join:</label>
+            <select class="select-field"><option>@Member</option><option>None</option></select>
           </div>
         </div>
         <label class="switch-label" style="margin-top:10px;">
           <div class="switch-info">
-            <div class="switch-title">Kích hoạt RolePersist</div>
-            <div class="switch-desc">Nếu người dùng bị phạt out rồi vào lại, HaruMod tự động gán lại vai trò phạt đó ngay!</div>
+            <div class="switch-title">Enable RolePersist</div>
+            <div class="switch-desc">If a penalized user leaves and rejoins to bypass a Muted role, HaruMod instantly reassigns the Muted role!</div>
           </div>
           <input type="checkbox" checked onchange="triggerUnsaved()" style="display:none;">
           <div class="switch-toggle"></div>
@@ -1835,8 +1956,8 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="simTitle">Trình Giả Lập Lọc Trực Tiếp (Live Filter Tester)</h3>
-            <p class="panel-subtitle" data-i18n="simSub">Thử gõ tin nhắn chứa từ cấm, link discord.gg, link phishing hoặc caps lock để xem bot phản ứng trong thời gian thực.</p>
+            <h3 class="panel-title" data-i18n="simTitle">Live Filter Tester · Interactive Simulation</h3>
+            <p class="panel-subtitle" data-i18n="simSub">Type simulated chat messages to see how HaruMod analyzes and enforces security policies in real-time.</p>
           </div>
         </div>
 
@@ -1848,18 +1969,18 @@
                 <div class="sim-author">
                   <span>HaruMod</span>
                   <span class="sim-bot-badge">BOT</span>
-                  <span class="sim-time">Vừa xong</span>
+                  <span class="sim-time">Just now</span>
                 </div>
                 <div class="sim-text" data-i18n="simIntro">
-                  Bộ lọc an ninh HaruMod đã sẵn sàng! Hãy thử nhập các từ cấm (vd: dm, lừa đảo, scam), link discord.gg hoặc viết HOA TOÀN BỘ để kiểm tra.
+                  Security simulator active! Try typing banned words (e.g. dm, scam), discord.gg links, or EXCESSIVE CAPS to test bot defense.
                 </div>
               </div>
             </div>
           </div>
 
           <div class="simulator-input-bar">
-            <input type="text" id="sim-input" class="input-field" placeholder="Gõ tin nhắn thử nghiệm (ví dụ: free nitro at scam-site.com)..." onkeydown="handleSimKey(event)">
-            <button class="btn btn-emerald btn-sm" onclick="sendSimMessage()" data-i18n="btnSendTest">Gửi Thử</button>
+            <input type="text" id="sim-input" class="input-field" placeholder="Type test message (e.g. free nitro at nitro-drop.ru)..." onkeydown="handleSimKey(event)">
+            <button class="btn btn-emerald btn-sm" onclick="sendSimMessage()" data-i18n="btnSendTest">Send Test</button>
           </div>
         </div>
       </div>
@@ -1868,15 +1989,15 @@
 
   <!-- Sticky Save Bar -->
   <div id="sticky-save-bar" class="save-bar">
-    <span class="save-bar-text" data-i18n="unsavedText">Bạn có thay đổi chưa lưu trên server này!</span>
-    <button class="btn btn-secondary btn-sm" onclick="discardChanges()" data-i18n="btnDiscard">Hủy Bỏ</button>
-    <button class="btn btn-emerald btn-sm" onclick="saveChanges()" data-i18n="btnSave">Lưu Cấu Hình</button>
+    <span class="save-bar-text" data-i18n="unsavedText">You have unsaved changes on this server!</span>
+    <button class="btn btn-secondary btn-sm" onclick="discardChanges()" data-i18n="btnDiscard">Discard</button>
+    <button class="btn btn-emerald btn-sm" onclick="saveChanges()" data-i18n="btnSave">Save Changes</button>
   </div>
 
   <!-- Toast Notification -->
   <div id="toast-notification" class="toast-box">
     <svg style="width:18px;height:18px;fill:var(--emerald-light);" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-    <span id="toast-message">Đã lưu thành công!</span>
+    <span id="toast-message">Configuration saved successfully!</span>
   </div>
 
   <!-- ========================================================= -->
@@ -1887,35 +2008,14 @@
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
 
     // Known default servers where HaruMod is present
-    const DEFAULT_BOT_SERVERS = ["1426554369393954969"]; // Garden Of Dream (verified bot is in this server)
-
-    // Demo/Fallback servers with beautiful custom avatars
-    const DEMO_SERVERS = [
-      { 
-        id: "1426554369393954969", 
-        name: "Garden Of Dream", 
-        icon: "https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=128", 
-        role: "Admin", 
-        isManaged: true, 
-        hasBot: true 
-      },
-      { 
-        id: "1358894789575049468", 
-        name: "Haru Storage", 
-        icon: "https://cdn.discordapp.com/icons/1358894789575049468/b26f07b31e1f63d322a2afd6f7d70db0.png?size=128", 
-        role: "Owner", 
-        isManaged: true, 
-        hasBot: false 
-      }
-    ];
+    const DEFAULT_BOT_SERVERS = ["1426554369393954969"];
 
     let userGuilds = [];
     let currentUser = null;
-    let currentGuildId = "1426554369393954969";
-    let activeStage = "entrance"; // "entrance" or "config"
+    let currentGuildId = "";
+    let activeStage = "entrance";
     let currentSearchQuery = "";
 
-    // Helper: Escape HTML
     function escapeHtml(str) {
       if (!str) return "";
       return str.replace(/[&<>"']/g, m => ({
@@ -1923,7 +2023,6 @@
       }[m]));
     }
 
-    // Helper: Toast
     function showToast(msg) {
       const toast = document.getElementById("toast-notification");
       document.getElementById("toast-message").innerText = msg;
@@ -1931,7 +2030,6 @@
       setTimeout(() => toast.classList.remove("show"), 3500);
     }
 
-    // Load active bot server IDs from localStorage
     function getActiveBotGuildIds() {
       try {
         const saved = JSON.parse(localStorage.getItem("harumod_bot_guilds") || "[]");
@@ -1951,7 +2049,6 @@
       } catch (e) {}
     }
 
-    // Procedural Fallback Avatar Generator (NEVER returns empty square)
     function renderGuildAvatarHtml(g, size = 60) {
       const radius = Math.round(size * 0.3);
       if (g.icon) {
@@ -1966,7 +2063,6 @@
       const radius = Math.round(size * 0.3);
       const fontSize = Math.round(size * 0.4);
 
-      // Procedural color based on name hash
       let hash = 0;
       for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
       const hues = [160, 200, 240, 280, 320, 30];
@@ -1986,6 +2082,15 @@
       const scope = encodeURIComponent("identify guilds");
       const authUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&scope=${scope}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
       window.location.href = authUrl;
+    }
+
+    function handleManageServersClick() {
+      if (currentUser) {
+        const hub = document.getElementById("server-hub");
+        if (hub) hub.scrollIntoView({ behavior: "smooth" });
+      } else {
+        startDiscordLogin();
+      }
     }
 
     function checkOAuthCallback() {
@@ -2011,7 +2116,6 @@
 
     async function fetchDiscordData(token) {
       try {
-        // 1. Fetch User Profile
         const userRes = await fetch("https://discord.com/api/v10/users/@me", {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -2025,7 +2129,6 @@
         currentUser = await userRes.json();
         renderLoggedInUser(currentUser);
 
-        // 2. Fetch User Guilds
         const guildsRes = await fetch("https://discord.com/api/v10/users/@me/guilds", {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -2034,11 +2137,11 @@
           const rawGuilds = await guildsRes.json();
           processRealGuilds(rawGuilds);
         } else {
-          renderFallbackGuilds();
+          renderLoggedOut();
         }
       } catch (err) {
         console.error("Discord API fetch error:", err);
-        renderFallbackGuilds();
+        renderLoggedOut();
       }
     }
 
@@ -2054,29 +2157,32 @@
         <div class="user-capsule">
           <img src="${avatarUrl}" alt="${escapeHtml(displayName)}" class="user-avatar-img">
           <span class="user-display-name">@${escapeHtml(displayName)}</span>
-          <button class="user-logout-btn" onclick="logoutDiscord()" title="Đăng xuất">
+          <button class="user-logout-btn" onclick="logoutDiscord()" title="Logout">
             <svg style="width:12px;height:12px;fill:currentColor;" viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
           </button>
         </div>
       `;
 
-      const authPrompt = document.getElementById("hub-auth-prompt");
-      if (authPrompt) authPrompt.style.display = "none";
+      // Switch Hub views: Hide auth prompt, show real server hub
+      document.getElementById("hub-auth-prompt").style.display = "none";
+      document.getElementById("logged-in-hub").style.display = "block";
     }
 
     function renderLoggedOut() {
+      currentUser = null;
+      userGuilds = [];
+
       const container = document.getElementById("discord-auth-container");
       container.innerHTML = `
         <button class="btn btn-discord btn-sm" onclick="startDiscordLogin()">
           <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
-          <span data-i18n="loginBtn">Đăng Nhập Discord</span>
+          <span data-i18n="loginBtn">Login with Discord</span>
         </button>
       `;
 
-      const authPrompt = document.getElementById("hub-auth-prompt");
-      if (authPrompt) authPrompt.style.display = "block";
-
-      renderFallbackGuilds();
+      // Logged out: Show Auth Card, Hide server list completely (ZERO fake servers!)
+      document.getElementById("hub-auth-prompt").style.display = "block";
+      document.getElementById("logged-in-hub").style.display = "none";
     }
 
     function logoutDiscord() {
@@ -2086,7 +2192,7 @@
     }
 
     // =========================================================
-    // GUILDS PROCESSING & STRICT FILTERING
+    // REAL GUILDS PROCESSING & STRICT FILTERING
     // =========================================================
     function processRealGuilds(rawGuilds) {
       userGuilds = [];
@@ -2104,14 +2210,13 @@
         else if (isAdmin) roleTag = "Admin";
         else if (canManage) roleTag = "Manager";
 
-        // Generate real Discord icon URL with GIF/PNG support
+        // Generate official Discord CDN URL directly
         let iconUrl = null;
         if (g.icon) {
           const isAnimated = g.icon.startsWith("a_");
           iconUrl = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${isAnimated ? "gif" : "png"}?size=128`;
         }
 
-        // Auto-mark LG or Garden Of Dream if present in testing
         const nameLower = g.name.toLowerCase();
         let hasBot = botActiveGuilds.has(g.id);
         if (nameLower.includes("lg") || nameLower.includes("garden")) {
@@ -2132,11 +2237,6 @@
       renderGuilds();
     }
 
-    function renderFallbackGuilds() {
-      userGuilds = DEMO_SERVERS;
-      renderGuilds();
-    }
-
     function handleServerSearch(query) {
       currentSearchQuery = query.toLowerCase().trim();
       renderGuilds();
@@ -2151,24 +2251,23 @@
       inviteContainer.innerHTML = "";
       topbarList.innerHTML = "";
 
-      // Filter by Search Query
       const filtered = userGuilds.filter(g => {
         if (!currentSearchQuery) return true;
         return g.name.toLowerCase().includes(currentSearchQuery) || g.id.includes(currentSearchQuery);
       });
 
-      // 1. STRICT FILTER FOR ACTIVE SERVERS: isManaged && hasBot
+      // 1. STRICT FILTER: isManaged && hasBot
       const activeServers = filtered.filter(g => g.isManaged && g.hasBot);
       
-      // 2. SERVERS FOR INVITATION: isManaged && !hasBot
+      // 2. INVITATION: isManaged && !hasBot
       const inviteServers = filtered.filter(g => g.isManaged && !g.hasBot);
 
       document.getElementById("active-servers-count").innerText = activeServers.length;
       document.getElementById("invite-servers-count").innerText = inviteServers.length;
 
-      // Populate Topbar Dropdown with STRICT Active Servers ONLY
+      // Topbar Dropdown
       if (activeServers.length === 0) {
-        topbarList.innerHTML = `<div style="padding:12px;font-size:0.8rem;color:var(--text-muted);text-align:center;">Chưa có server nào có bot</div>`;
+        topbarList.innerHTML = `<div style="padding:12px;font-size:0.8rem;color:var(--text-muted);text-align:center;">No active bot servers</div>`;
       } else {
         activeServers.forEach(g => {
           const item = document.createElement("div");
@@ -2191,12 +2290,12 @@
         });
       }
 
-      // Render Active Servers Grid Cards
+      // Render Active Servers
       if (activeServers.length === 0) {
         activeContainer.innerHTML = `
           <div style="grid-column:1/-1;background:rgba(255,255,255,0.02);border:1px dashed var(--dash-border);border-radius:18px;padding:42px 24px;text-align:center;">
-            <p style="color:var(--text-dim);font-size:1rem;margin-bottom:8px;font-weight:700;">Không tìm thấy máy chủ nào đang chạy HaruMod!</p>
-            <p style="color:var(--text-muted);font-size:0.86rem;">Hãy chọn một server bạn quản lý ở danh sách bên dưới và nhấn "+ Thêm HaruMod".</p>
+            <p style="color:var(--text-dim);font-size:1rem;margin-bottom:8px;font-weight:700;">No active servers with HaruMod found</p>
+            <p style="color:var(--text-muted);font-size:0.86rem;">Select one of your managed servers below and click "+ Add HaruMod" to invite the bot.</p>
           </div>
         `;
       } else {
@@ -2229,14 +2328,14 @@
                   <svg style="width:12px;height:12px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                   <span>ID: ${g.id}</span>
                 </span>
-                <span style="font-size:0.75rem;color:var(--emerald-light);font-weight:700;">Bảo vệ 24/7</span>
+                <span style="font-size:0.75rem;color:var(--emerald-light);font-weight:700;">24/7 Protected</span>
               </div>
             </div>
 
             <div class="server-card-footer">
               <button class="btn btn-configure" onclick="selectServerForConfig('${g.id}')">
                 <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-                <span>Tùy Chỉnh Server</span>
+                <span>Configure Server</span>
               </button>
             </div>
           `;
@@ -2244,11 +2343,11 @@
         });
       }
 
-      // Render Invite Servers Grid Cards
+      // Render Invite Servers
       if (inviteServers.length === 0) {
         inviteContainer.innerHTML = `
           <div style="grid-column:1/-1;padding:26px;text-align:center;color:var(--text-muted);font-size:0.9rem;">
-            Tất cả máy chủ bạn quản trị đều đã được cài đặt HaruMod.
+            All your managed servers currently have HaruMod installed.
           </div>
         `;
       } else {
@@ -2270,7 +2369,7 @@
                       ${g.role === "Owner" ? "👑 OWNER" : "🛡️ ADMIN"}
                     </span>
                     <span class="badge-status inactive">
-                      <span>○ Chưa có HaruMod</span>
+                      <span>○ HaruMod Not In Server</span>
                     </span>
                   </div>
                 </div>
@@ -2281,17 +2380,17 @@
                   <svg style="width:12px;height:12px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                   <span>ID: ${g.id}</span>
                 </span>
-                <span style="font-size:0.75rem;color:var(--text-muted);">Sẵn sàng kết nối</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);">Ready to connect</span>
               </div>
             </div>
 
             <div class="server-card-footer">
               <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;" onclick="handleInviteClick('${g.id}')">
                 <svg style="width:15px;height:15px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>+ Thêm HaruMod</span>
+                <span>+ Add HaruMod</span>
               </a>
-              <button class="btn btn-secondary btn-sm" onclick="activateGuildBot('${g.id}')" title="Kích hoạt thủ công nếu bạn đã mời bot">
-                <span>✓ Đã có bot</span>
+              <button class="btn btn-secondary btn-sm" onclick="activateGuildBot('${g.id}')" title="Mark as active if you already invited the bot">
+                <span>✓ Bot Joined</span>
               </button>
             </div>
           `;
@@ -2311,39 +2410,29 @@
       const g = userGuilds.find(item => item.id === guildId);
       if (g) g.hasBot = true;
       renderGuilds();
-      showToast("Đã kích hoạt máy chủ vào danh sách quản lý!");
+      showToast("Server activated into active moderation list!");
     }
 
     function refreshServersList() {
       const token = localStorage.getItem("discord_access_token");
       if (token) {
-        showToast("Đang đồng bộ danh sách máy chủ từ Discord...");
+        showToast("Syncing servers from Discord API...");
         fetchDiscordData(token);
       } else {
-        renderFallbackGuilds();
-        showToast("Đã làm mới dữ liệu máy chủ!");
+        renderLoggedOut();
       }
     }
 
     // =========================================================
-    // STAGE NAVIGATION (ENTRANCE vs CONFIG SUITE)
+    // STAGE NAVIGATION
     // =========================================================
-    function scrollToHub() {
-      const hub = document.getElementById("server-hub");
-      if (hub) {
-        hub.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-
     function selectServerForConfig(guildId) {
       currentGuildId = guildId;
-      const g = userGuilds.find(item => item.id === guildId) || DEMO_SERVERS[0];
+      const g = userGuilds.find(item => item.id === guildId) || { name: "Server", id: guildId };
 
-      // Update Title & Topbar
-      document.getElementById("config-server-title").innerText = `Cấu Hình Máy Chủ · ${g.name}`;
+      document.getElementById("config-server-title").innerText = `Server Configuration · ${g.name}`;
       document.getElementById("topbar-active-server-name").innerText = g.name;
 
-      // Switch to Config Stage
       document.getElementById("entrance-view").style.display = "none";
       document.getElementById("config-suite").style.display = "block";
       document.getElementById("topbar-server-switcher").style.display = "block";
@@ -2362,7 +2451,8 @@
       const dropdown = document.getElementById("topbar-server-dropdown");
       if (dropdown) dropdown.classList.remove("show");
 
-      scrollToHub();
+      const hub = document.getElementById("server-hub");
+      if (hub) hub.scrollIntoView({ behavior: "smooth" });
       activeStage = "entrance";
     }
 
@@ -2400,16 +2490,15 @@
     function discardChanges() {
       const bar = document.getElementById("sticky-save-bar");
       bar.classList.remove("visible");
-      showToast("Đã hủy các thay đổi chưa lưu!");
+      showToast("Unsaved changes discarded!");
     }
 
     function saveChanges() {
       const bar = document.getElementById("sticky-save-bar");
       bar.classList.remove("visible");
-      showToast("Đã lưu và đồng bộ cấu hình an ninh với HaruMod!");
+      showToast("Security configuration saved & synced with HaruMod!");
     }
 
-    // Simulator Chat Logic
     function handleSimKey(e) {
       if (e.key === "Enter") sendSimMessage();
     }
@@ -2425,7 +2514,6 @@
         ? `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png` 
         : "./haru-avatar.webp";
 
-      // 1. Add User Message
       const userMsgEl = document.createElement("div");
       userMsgEl.className = "sim-msg";
       userMsgEl.innerHTML = `
@@ -2433,7 +2521,7 @@
         <div class="sim-content">
           <div class="sim-author">
             <span>${escapeHtml(userName)}</span>
-            <span class="sim-time">Bây giờ</span>
+            <span class="sim-time">Now</span>
           </div>
           <div class="sim-text">${escapeHtml(text)}</div>
         </div>
@@ -2441,7 +2529,6 @@
       list.appendChild(userMsgEl);
       input.value = "";
 
-      // 2. Bot Security Analysis
       setTimeout(() => {
         analyzeSimThreat(text, list);
         list.scrollTop = list.scrollHeight;
@@ -2454,17 +2541,17 @@
       let action = null;
 
       if (lower.includes("discord.gg/")) {
-        threat = "Phát hiện link mời server Discord trái phép!";
-        action = "[Auto-Mod] Tin nhắn đã bị xóa tự động. Cảnh cáo thành viên.";
+        threat = "Unauthorized Discord invite link detected!";
+        action = "[Auto-Mod] Message purged automatically. Member warned.";
       } else if (lower.includes("scam") || lower.includes("nitro") || lower.includes("free-gift")) {
-        threat = "Cảnh báo link lừa đảo độc hại (Phishing Domain Blacklist)!";
-        action = "[Security Shield] Xóa tin nhắn, cấp độ xử phạt: Cấm vĩnh viễn (Perm Ban).";
-      } else if (lower.includes("dm") || lower.includes("lừa đảo") || lower.includes("hack")) {
-        threat = "Chứa từ ngữ nằm trong danh sách cấm!";
-        action = "[Auto-Mod] Đã xóa tin nhắn vi phạm và ghi vào mod-logs.";
+        threat = "Malicious phishing domain detected (Blacklist filter)!";
+        action = "[Security Shield] Message purged. Escalation: Permanent Ban.";
+      } else if (lower.includes("dm") || lower.includes("hack") || lower.includes("dkm")) {
+        threat = "Banned profanity / toxicity filter triggered!";
+        action = "[Auto-Mod] Message deleted and logged to mod-logs.";
       } else if (text.length > 8 && text === text.toUpperCase() && /[A-Z]/.test(text)) {
-        threat = "Spam Caps Lock quá mức cho phép!";
-        action = "[Auto-Mod] Nhắc nhở hạn chế viết hoa toàn bộ.";
+        threat = "Excessive Caps Lock violation!";
+        action = "[Auto-Mod] Friendly reminder issued.";
       }
 
       if (threat) {
@@ -2476,7 +2563,7 @@
             <div class="sim-author">
               <span style="color:var(--emerald-light);">HaruMod Security</span>
               <span class="sim-bot-badge">BOT</span>
-              <span class="sim-time">Bảo vệ</span>
+              <span class="sim-time">Protected</span>
             </div>
             <div class="sim-blocked">⚠️ ${threat}</div>
             <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">${action}</div>
@@ -2501,18 +2588,21 @@
         navSupport: "Hỗ Trợ",
         topbarAddDiscord: "Add to Discord",
         loginBtn: "Đăng Nhập Discord",
-        heroBadge: "HaruMod Security Core V5.2",
+        heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
         heroSubtitle: "Hệ thống bảo vệ máy chủ Discord tự động, toàn diện với Dashboard trực quan. Cấu hình Honeypot bẫy nuke, lọc Auto-Mod đa tầng và 36 luồng nhật ký sự kiện chuyên sâu.",
         heroTrust: "<span>Được tin cậy bảo vệ cộng đồng Discord với</span> <strong>Bẫy Honeypot Bí Mật</strong> · <strong>36 Luồng Nhật Ký</strong> · <strong>Auto-Mod Triệt Tiêu Lừa Đảo</strong>",
         heroAddBtn: "Add to Discord",
-        heroManageBtn: "Manage Servers",
+        heroManageBtn: "Quản Lý Server",
+        hubAuthTitle: "Quản Lý Máy Chủ Discord Của Bạn",
+        hubAuthDesc: "Đăng nhập bằng Discord để hệ thống tự động quét và tải máy chủ bạn có quyền Quản trị (Admin / Manage Server). Ảnh đại diện và quyền hạn được lấy trực tiếp từ Discord API.",
+        loginWithDiscord: "Đăng Nhập Bằng Discord",
+        pill1: "✓ Avatar gốc trực tiếp Discord CDN",
+        pill2: "✓ Đồng bộ an ninh thời gian thực",
+        pill3: "✓ Tuyệt đối an toàn & chuẩn OAuth2",
         hubTitle: "Máy Chủ Quản Lý",
         hubSubtitle: "Chọn máy chủ bạn muốn tùy chỉnh cấu hình bảo mật hoặc mời HaruMod vào server mới.",
         btnRefresh: "Làm mới",
-        hubAuthTitle: "Đăng Nhập Discord Để Quét Máy Chủ Thật Của Bạn",
-        hubAuthDesc: "Hệ thống sẽ tự động quét danh sách máy chủ bạn có quyền Quản Lý (Manage Server / Admin) và phân loại những server HaruMod đã có mặt.",
-        loginWithDiscord: "Đăng Nhập Discord Ngay",
         catActiveServers: "Máy Chủ Đang Hoạt Động (Có HaruMod)",
         catInviteServers: "Thêm HaruMod Vào Máy Chủ Bạn Quản Lý",
         btnBackToServers: "← Danh Sách Server",
@@ -2578,18 +2668,21 @@
         navSupport: "Support",
         topbarAddDiscord: "Add to Discord",
         loginBtn: "Login with Discord",
-        heroBadge: "HaruMod Security Core V5.2",
+        heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
         heroSubtitle: "A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.",
         heroTrust: "<span>Trusted to protect communities with</span> <strong>Secret Honeypot Traps</strong> · <strong>36 Action Logs</strong> · <strong>Multi-Tier Anti-Phishing</strong>",
         heroAddBtn: "Add to Discord",
         heroManageBtn: "Manage Servers",
-        hubTitle: "Manage Servers",
-        hubSubtitle: "Select a server you want to customize or invite HaruMod to a new community.",
-        btnRefresh: "Refresh",
-        hubAuthTitle: "Login with Discord to Scan Your Real Servers",
-        hubAuthDesc: "We will automatically scan servers where you have Manage Server / Admin permissions and identify active HaruMod servers.",
+        hubAuthTitle: "Manage Your Discord Servers",
+        hubAuthDesc: "Log in with Discord to automatically scan and configure the servers you manage. Real avatars and permissions are fetched directly from Discord API.",
         loginWithDiscord: "Login with Discord",
+        pill1: "✓ Direct Discord CDN Avatars",
+        pill2: "✓ Real-Time Security Sync",
+        pill3: "✓ Zero Permission Abuse",
+        hubTitle: "Manage Servers",
+        hubSubtitle: "Select an active server to configure security policies or invite HaruMod to a new server.",
+        btnRefresh: "Refresh",
         catActiveServers: "Active Servers (with HaruMod)",
         catInviteServers: "Add HaruMod to Your Managed Servers",
         btnBackToServers: "← Back to Servers",
@@ -2647,7 +2740,7 @@
     };
 
     function switchDashLang(lang) {
-      const activeLang = (lang === "en") ? "en" : "vi";
+      const activeLang = (lang === "vi") ? "vi" : "en";
       localStorage.setItem("haruki_dash_lang", activeLang);
       document.documentElement.lang = activeLang;
 
@@ -2670,7 +2763,7 @@
       });
     }
 
-    // Initialize Canvas & High-Tech Particles
+    // High-Tech Canvas Particles
     const canvas = document.getElementById("cyber-canvas");
     const ctx = canvas.getContext("2d");
     let particles = [];
@@ -2685,7 +2778,7 @@
 
     function initParticles() {
       particles = [];
-      const count = Math.min(Math.floor((width * height) / 13000), 70);
+      const count = Math.min(Math.floor((width * height) / 13000), 65);
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * width,
@@ -2733,7 +2826,6 @@
     }
     animate();
 
-    // Start App on Load - Default to EN as requested by user
     window.addEventListener("DOMContentLoaded", () => {
       const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
       switchDashLang(savedLang);
