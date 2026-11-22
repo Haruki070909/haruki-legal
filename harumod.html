@@ -6,65 +6,125 @@
   <title>HaruMod — Discord Security, Anti-Nuke & Server Management Bot</title>
   <meta name="description" content="HaruMod là bot Discord bảo mật và quản lý máy chủ toàn diện: Anti-Nuke, Honeypot channels, Auto-Mod đa tầng, 36 Action Logs, Ticket panels, Dynamic Voice và Smart Roles.">
   <link rel="stylesheet" href="./shared.css">
-  <link rel="icon" type="image/webp" href="./haru-avatar.webp">
+  <link rel="icon" type="image/png" href="./harumod-avatar.png">
   <style>
+    html {
+      scroll-behavior: smooth !important;
+    }
+    #features, #commands, section[id] {
+      scroll-margin-top: 100px !important;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(7, 9, 19, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      padding: 14px 0;
+    }
+    .navbar-content {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
     .mod-hero {
-      padding: 80px 0 50px 0;
+      padding: 90px 0 60px 0;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
     .mod-hero-tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
+      gap: 10px;
+      padding: 6px 18px;
       border-radius: 999px;
       background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       color: var(--accent-emerald);
       font-size: 0.85rem;
       font-weight: 700;
-      margin-bottom: 20px;
-      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
     }
     .mod-hero-title {
-      font-size: 3.2rem;
+      font-size: 3.4rem;
       font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 20px;
+      letter-spacing: -0.04em;
+      line-height: 1.18;
+      margin-bottom: 22px;
     }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 28px;
       margin-top: 40px;
     }
     .feature-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 28px;
-      transition: all 0.25s ease;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
     }
     .feature-card:hover {
       border-color: var(--border-glow-emerald);
-      transform: translateY(-3px);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.25);
     }
-    .feature-icon {
-      font-size: 2.2rem;
-      margin-bottom: 16px;
-      display: inline-block;
+    .feature-card:hover::before {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+    }
+    .feat-icon-badge.emerald {
+      width: 48px !important;
+      height: 48px !important;
+      border-radius: 14px !important;
+      margin-bottom: 20px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(6, 182, 212, 0.22)) !important;
+      border: 1.5px solid rgba(16, 185, 129, 0.65) !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), inset 0 0 10px rgba(16, 185, 129, 0.15) !important;
+    }
+    .feat-icon-badge.emerald svg {
+      width: 24px !important;
+      height: 24px !important;
+      stroke: #ffffff !important;
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85)) !important;
     }
     .feature-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 12px;
       color: var(--text-primary);
     }
     .feature-card p {
-      color: var(--text-secondary);
+      color: #94a3b8;
       font-size: 0.95rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .cmd-table-wrap {
       background: var(--bg-card);
@@ -72,6 +132,7 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       margin-top: 30px;
+      backdrop-filter: blur(16px);
     }
     .cmd-table {
       width: 100%;
@@ -79,64 +140,88 @@
       text-align: left;
     }
     .cmd-table th, .cmd-table td {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
     .cmd-table th {
       background: rgba(255, 255, 255, 0.03);
       font-size: 0.82rem;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
     }
     .code-badge {
       font-family: monospace;
-      color: var(--accent-emerald);
-      background: rgba(16, 185, 129, 0.1);
-      padding: 4px 8px;
-      border-radius: 4px;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 5px 10px;
+      border-radius: 6px;
       font-size: 0.9rem;
       font-weight: 600;
+    }
+    #cyber-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
     }
     @media (max-width: 900px) {
       .features-grid {
         grid-template-columns: 1fr;
       }
+      .navbar-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .mod-hero-title {
+        font-size: 2.4rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="glow-blob glow-top-left"></div>
-  <div class="glow-blob glow-mid-right"></div>
 
-  <div class="container">
-    <nav class="navbar">
+  <!-- Cyber Animated Constellation Canvas Background -->
+  <canvas id="cyber-canvas"></canvas>
+
+  <header class="navbar">
+    <div class="navbar-content">
       <a href="./index.html" class="brand">
-        <div class="brand-avatar-box" style="border-color:rgba(16,185,129,0.4); box-shadow:0 0 12px rgba(16,185,129,0.25);">
-          <img src="./harumod-avatar.png" alt="HaruMod" class="brand-avatar">
+        <div class="brand-avatar-box" style="border-color:rgba(16,185,129,0.5); box-shadow:0 0 14px rgba(16,185,129,0.35);">
+          <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="brand-avatar">
         </div>
         <span class="brand-name">HARUMOD</span>
-        <span class="brand-badge" style="background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.35);">SECURITY</span>
+        <span class="brand-badge" style="background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.38);">SECURITY</span>
       </a>
       <ul class="nav-links">
-        <li><a href="./index.html" class="nav-link" data-i18n="navBack">← Về Portal Chính</a></li>
+        <li><a href="./index.html" class="nav-link"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span data-i18n="navBack">Về Portal Chính</span></a></li>
         <li><a href="#features" class="nav-link" data-i18n="navFeatures">Tính Năng</a></li>
         <li><a href="#commands" class="nav-link" data-i18n="navCommands">Lệnh (h? / /)</a></li>
-        <li><a href="./terms.html" class="nav-link" data-i18n="navTos">Điều Khoản (ToS)</a></li>
-        <li><a href="./privacy.html" class="nav-link" data-i18n="navPrivacy">Bảo Mật (Privacy)</a></li>
+        <li><a href="./harumod-terms.html" class="nav-link" data-i18n="navTos">Điều Khoản (ToS)</a></li>
+        <li><a href="./harumod-privacy.html" class="nav-link" data-i18n="navPrivacy">Bảo Mật (Privacy)</a></li>
       </ul>
-      <div class="nav-cta">
-        <div class="language-switch" role="group" aria-label="Choose language">
-          <button class="lang-opt active" id="mod-lang-vi" onclick="setHaruModLanguage('vi')" type="button">VI</button>
-          <button class="lang-opt" id="mod-lang-en" onclick="setHaruModLanguage('en')" type="button">EN</button>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="lang-switch-wrap">
+          <button class="lang-btn active" id="mod-lang-vi" onclick="setHaruModLanguage('vi')" type="button">VI</button>
+          <button class="lang-btn" id="mod-lang-en" onclick="setHaruModLanguage('en')" type="button">EN</button>
         </div>
-        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald btn-sm">
-          <span>➕ Mời HaruMod</span>
+        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald btn-sm" style="height:38px;">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span data-i18n="btnInvite">Mời HaruMod</span>
         </a>
       </div>
-    </nav>
+    </div>
+  </header>
 
+  <main class="container">
     <header class="mod-hero">
-      <div class="mod-hero-tag" data-i18n="heroTag">🛡️ DISCORD SERVER SECURITY & MODERATION SUITE</div>
+      <div class="mod-hero-tag">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> <span data-i18n="heroTag">DISCORD SERVER SECURITY & MODERATION SUITE</span>
+      </div>
       <h1 class="mod-hero-title" data-i18n="heroTitle">
         Lá Chắn An Ninh Toàn Diện Cho <br><span class="gradient-text-emerald">Máy Chủ Discord Của Bạn</span>
       </h1>
@@ -144,14 +229,14 @@
         HaruMod cung cấp cơ chế phòng vệ chủ động với Honeypot bẫy kẻ phá hoại, giám sát Anti-Wizz Staff, tự động hóa kỷ luật đa tầng, ghi nhận 36 sự kiện log độc lập và hệ thống Ticket/Forms chuyên nghiệp.
       </p>
       <div class="hero-actions">
-        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald">
-          <span>➕ Mời HaruMod Vào Server</span>
+        <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald" style="height:46px; font-size:0.95rem;">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span data-i18n="btnHeroInvite">Mời HaruMod Vào Server</span>
         </a>
-        <a href="./terms.html" class="btn btn-secondary">
-          <span data-i18n="btnTos">📄 Điều Khoản Dịch Vụ</span>
+        <a href="./harumod-terms.html" class="btn btn-secondary" style="height:46px; font-size:0.95rem;">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> <span data-i18n="btnTos">Điều Khoản Dịch Vụ</span>
         </a>
-        <a href="./privacy.html" class="btn btn-secondary">
-          <span data-i18n="btnPrivacy">🔒 Chính Sách Quyền Riêng Tư</span>
+        <a href="./harumod-privacy.html" class="btn btn-secondary" style="height:46px; font-size:0.95rem;">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5" fill="#ffffff"/></svg> <span data-i18n="btnPrivacy">Chính Sách Quyền Riêng Tư</span>
         </a>
       </div>
     </header>
@@ -166,39 +251,39 @@
 
       <div class="features-grid">
         <div class="feature-card">
-          <span class="feature-icon">🍯</span>
-          <h3>Honeypot & Anti-Nuke</h3>
-          <p>Thiết lập các kênh bẫy tự động kích hoạt hình phạt (Ban/Kick/Mute) và quét xóa tin nhắn ngay lập tức. Giám sát hành vi Admin/Staff để tự động khóa máy chủ nếu phát hiện bất thường.</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <h3 data-i18n="f1_title">Honeypot & Anti-Nuke</h3>
+          <p data-i18n="f1_desc">Thiết lập các kênh bẫy tự động kích hoạt hình phạt (Ban/Kick/Mute) và quét xóa tin nhắn ngay lập tức. Giám sát hành vi Admin/Staff để tự động khóa máy chủ nếu phát hiện bất thường.</p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-icon">🛑</span>
-          <h3>Auto-Mod Filters Đa Tầng</h3>
-          <p>Chặn từ cấm (bỏ qua dấu câu chèn giữa), chặn link mời Discord khác (Norole Mode), chống link lừa đảo phishing (Blacklist/Whitelist), giới hạn Caps và tự động xóa các file độc hại (.exe, .bat, .scr).</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="4"/><line x1="9" y1="14" x2="15" y2="8"/></svg></div>
+          <h3 data-i18n="f2_title">Auto-Mod Filters Đa Tầng</h3>
+          <p data-i18n="f2_desc">Chặn từ cấm (bỏ qua dấu câu chèn giữa), chặn link mời Discord khác (Norole Mode), chống link lừa đảo phishing (Blacklist/Whitelist), giới hạn Caps và tự động xóa các file độc hại (.exe, .bat, .scr).</p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-icon">📜</span>
-          <h3>Granular Action Logs (36 Sự kiện)</h3>
-          <p>Tách luồng thông minh ra 6 kênh chuyên biệt: mod_log, message_log, member_log, join_leave_log, voice_log, server_log kèm file .txt đính kèm khi purge.</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
+          <h3 data-i18n="f3_title">Granular Action Logs (36 Sự kiện)</h3>
+          <p data-i18n="f3_desc">Tách luồng thông minh ra 6 kênh chuyên biệt: mod_log, message_log, member_log, join_leave_log, voice_log, server_log kèm file .txt đính kèm khi purge.</p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-icon">⚖️</span>
-          <h3>Case Manager & Kỷ Luật</h3>
-          <p>Quản lý Case #ID tăng dần tự động, hỗ trợ warn, timeout, mute vĩnh viễn, hardmute (tước toàn bộ role và trả lại sau), kick, ban, tempban, softban và tùy biến DM thông báo.</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg></div>
+          <h3 data-i18n="f4_title">Case Manager & Kỷ Luật</h3>
+          <p data-i18n="f4_desc">Quản lý Case #ID tăng dần tự động, hỗ trợ warn, timeout, mute vĩnh viễn, hardmute (tước toàn bộ role và trả lại sau), kick, ban, tempban, softban và tùy biến DM thông báo.</p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-icon">🎫</span>
-          <h3>Ticket & Forms Modal</h3>
-          <p>Tạo panel nút bấm mở kênh hỗ trợ 1-1 riêng tư, tự động xuất file HTML/TXT transcript khi đóng ticket. Hỗ trợ biểu mẫu tuyển dụng và khảo sát qua Discord Modal.</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 12a2 2 0 0 1 2-2 2 2 0 0 1 2 2M22 12a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><line x1="12" y1="6" x2="12" y2="18" stroke-dasharray="2 2"/></svg></div>
+          <h3 data-i18n="f5_title">Ticket & Forms Modal</h3>
+          <p data-i18n="f5_desc">Tạo panel nút bấm mở kênh hỗ trợ 1-1 riêng tư, tự động xuất file HTML/TXT transcript khi đóng ticket. Hỗ trợ biểu mẫu tuyển dụng và khảo sát qua Discord Modal.</p>
         </div>
 
         <div class="feature-card">
-          <span class="feature-icon">🏷️</span>
-          <h3>Smart Roles & Temp-Voice</h3>
-          <p>Bảng role tương tác qua Buttons/Dropdown, RolePersist (nhớ role cũ khi rejoin), Joinable ranks và hệ sinh thái phòng thoại Join-to-Create tự tạo và tự xóa khi trống.</p>
+          <div class="feat-icon-badge emerald"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div>
+          <h3 data-i18n="f6_title">Smart Roles & Temp-Voice</h3>
+          <p data-i18n="f6_desc">Bảng role tương tác qua Buttons/Dropdown, RolePersist (nhớ role cũ khi rejoin), Joinable ranks và hệ sinh thái phòng thoại Join-to-Create tự tạo và tự xóa khi trống.</p>
         </div>
       </div>
     </section>
@@ -215,149 +300,181 @@
         <table class="cmd-table">
           <thead>
             <tr>
-              <th>Lệnh Prefix / Slash</th>
-              <th>Tham Số</th>
-              <th>Mô Tả Chức Năng</th>
-              <th>Quyền Yêu Cầu</th>
+              <th data-i18n="thCmd">Lệnh Prefix / Slash</th>
+              <th data-i18n="thArgs">Tham Số</th>
+              <th data-i18n="thDesc">Mô Tả Chức Năng</th>
+              <th data-i18n="thPerms">Quyền Yêu Cầu</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><span class="code-badge">h?ban / /ban</span></td>
               <td><code>@user [thời gian] [lý do]</code></td>
-              <td>Cấm thành viên khỏi máy chủ, hỗ trợ cấm tạm thời (tempban)</td>
+              <td data-i18n="c1">Cấm thành viên khỏi máy chủ, hỗ trợ cấm tạm thời (tempban)</td>
               <td>Ban Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?kick / /kick</span></td>
               <td><code>@user [lý do]</code></td>
-              <td>Đuổi thành viên ra khỏi máy chủ</td>
+              <td data-i18n="c2">Trục xuất thành viên ngay lập tức</td>
               <td>Kick Members</td>
             </tr>
             <tr>
-              <td><span class="code-badge">h?hardmute / /hardmute</span></td>
+              <td><span class="code-badge">h?mute / /mute</span></td>
               <td><code>@user [thời gian] [lý do]</code></td>
-              <td>Tước toàn bộ role hiện tại, gắn role Muted và hoàn trả khi hết hạn</td>
+              <td data-i18n="c3">Hạn chế chat/voice thành viên qua Timeout Discord API</td>
+              <td>Moderate Members</td>
+            </tr>
+            <tr>
+              <td><span class="code-badge">h?hardmute / /hardmute</span></td>
+              <td><code>@user [lý do]</code></td>
+              <td data-i18n="c4">Tước toàn bộ quyền và vai trò, chỉ để lại vai trò Muted cách ly</td>
               <td>Manage Roles</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?warn / /warn</span></td>
               <td><code>@user [lý do]</code></td>
-              <td>Cảnh cáo thành viên và ghi nhận vào hệ thống Case ID</td>
+              <td data-i18n="c5">Cảnh cáo vi phạm và tự động kích hoạt phạt bậc thang (3 warn = Mute)</td>
               <td>Moderate Members</td>
             </tr>
             <tr>
               <td><span class="code-badge">h?purge / /purge</span></td>
-              <td><code>[số lượng] [@user|bots|links]</code></td>
-              <td>Dọn dẹp tin nhắn hàng loạt theo bộ lọc và xuất log file</td>
+              <td><code>[số lượng: 1-100] [@user]</code></td>
+              <td data-i18n="c6">Xóa tin nhắn hàng loạt siêu tốc, tự động xuất file log nội dung vừa xóa</td>
               <td>Manage Messages</td>
             </tr>
             <tr>
-              <td><span class="code-badge">h?honeypot / /honeypot</span></td>
-              <td><code>#channel [ban|kick|mute]</code></td>
-              <td>Cấu hình kênh bẫy tiêu diệt tài khoản phá hoại tức thì</td>
-              <td>Administrator</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?ticket / /ticket</span></td>
-              <td><code>setup / panel / close</code></td>
-              <td>Cấu hình hệ thống vé hỗ trợ 1-1 chuyên nghiệp</td>
+              <td><span class="code-badge">h?lock / /lock</span></td>
+              <td><code>[#channel]</code></td>
+              <td data-i18n="c7">Khóa kênh chat ngăn chặn spam hoặc raid trong trường hợp khẩn cấp</td>
               <td>Manage Channels</td>
             </tr>
             <tr>
-              <td><span class="code-badge">h?case / /case</span></td>
-              <td><code>&lt;id&gt; / reason &lt;id&gt; &lt;lý do&gt;</code></td>
-              <td>Tra cứu hoặc cập nhật lý do cho Case kỷ luật</td>
-              <td>Moderate Members</td>
+              <td><span class="code-badge">h?ticket / /ticket</span></td>
+              <td><code>setup</code></td>
+              <td data-i18n="c8">Khởi tạo giao diện Ticket Panel tương tác với Embed và Buttons</td>
+              <td>Administrator</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
+  </main>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="brand" style="margin-bottom:12px;">
-            <span style="font-size:1.4rem;">🛡️</span>
-            <span>HARUMOD</span>
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <a href="./index.html" class="brand" style="margin-bottom:8px;">
+          <div class="brand-avatar-box" style="border-color:rgba(16,185,129,0.5);">
+            <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="brand-avatar">
           </div>
-          <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">
-            Giải pháp an ninh và quản trị máy chủ Discord cao cấp. Phát triển bởi Haruki (haruki_kino).
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Văn Bản Pháp Lý</h4>
-          <ul class="footer-links">
-            <li><a href="./terms.html">Điều khoản sử dụng (ToS)</a></li>
-            <li><a href="./privacy.html">Chính sách quyền riêng tư</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Hệ Sinh Thái</h4>
-          <ul class="footer-links">
-            <li><a href="./index.html">Cổng Thông Tin Haruki</a></li>
-            <li><a href="../harubot/index.html">HaruBot Showcase</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Hỗ Trợ</h4>
-          <ul class="footer-links">
-            <li><a href="https://discord.gg/gardenofdream" target="_blank">Discord Garden of Dream</a></li>
-            <li><a href="https://github.com/Haruki070909" target="_blank">GitHub Profile</a></li>
-          </ul>
-        </div>
+          <span class="brand-name">HARUMOD</span>
+          <span class="brand-badge" style="background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.35);">SECURITY</span>
+        </a>
+        <p style="color:var(--text-secondary); font-size:0.9rem; max-width:400px; margin-top:8px;" data-i18n="footerDesc">
+          Lá chắn an ninh & công cụ quản trị Discord tối tân. Phát triển bởi Haruki (haruki_kino).
+        </p>
       </div>
-      <div class="footer-bottom">
-        <div>© 2026 Haruki (haruki_kino). HaruMod Discord Bot.</div>
-        <div><a href="./index.html" style="color:var(--text-muted); text-decoration:none;">Trở về Trang Chủ</a></div>
+      <div style="text-align:right;">
+        <p style="color:var(--text-muted); font-size:0.85rem;">
+          &copy; 2026 HaruMod. All rights reserved.
+        </p>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
-  <!-- HaruMod Bilingual Engine -->
+  <!-- Translation Engine (VI/EN) -->
   <script>
     const HARUMOD_I18N = {
       vi: {
-        navBack: "← Về Portal Chính",
+        navBack: "Về Portal Chính",
         navFeatures: "Tính Năng",
         navCommands: "Lệnh (h? / /)",
         navTos: "Điều Khoản (ToS)",
         navPrivacy: "Bảo Mật (Privacy)",
-        btnInviteMod: "➕ Mời HaruMod",
-        heroTag: "🛡️ BẢO MẬT & QUẢN TRỊ MÁY CHỦ DISCORD PRO",
+        btnInvite: "Mời HaruMod",
+        heroTag: "DISCORD SERVER SECURITY & MODERATION SUITE",
         heroTitle: "Lá Chắn An Ninh Toàn Diện Cho <br><span class=\"gradient-text-emerald\">Máy Chủ Discord Của Bạn</span>",
         heroSubtitle: "HaruMod cung cấp cơ chế phòng vệ chủ động với Honeypot bẫy kẻ phá hoại, giám sát Anti-Wizz Staff, tự động hóa kỷ luật đa tầng, ghi nhận 36 sự kiện log độc lập và hệ thống Ticket/Forms chuyên nghiệp.",
-        btnTos: "📄 Điều Khoản Dịch Vụ",
-        btnPrivacy: "🔒 Chính Sách Quyền Riêng Tư",
+        btnHeroInvite: "Mời HaruMod Vào Server",
+        btnTos: "Điều Khoản Dịch Vụ",
+        btnPrivacy: "Chính Sách Quyền Riêng Tư",
         secTagFeat: "KIẾN TRÚC MODULAR",
         secTitleFeat: "6 Tầng Bảo Mật & Quản Trị Vững Chắc",
         secDescFeat: "Mọi tính năng được vận hành với In-Memory RAM Cache đảm bảo độ trễ bằng 0.",
+        f1_title: "Honeypot & Anti-Nuke",
+        f1_desc: "Thiết lập các kênh bẫy tự động kích hoạt hình phạt (Ban/Kick/Mute) và quét xóa tin nhắn ngay lập tức. Giám sát hành vi Admin/Staff để tự động khóa máy chủ nếu phát hiện bất thường.",
+        f2_title: "Auto-Mod Filters Đa Tầng",
+        f2_desc: "Chặn từ cấm (bỏ qua dấu câu chèn giữa), chặn link mời Discord khác (Norole Mode), chống link lừa đảo phishing (Blacklist/Whitelist), giới hạn Caps và tự động xóa các file độc hại (.exe, .bat, .scr).",
+        f3_title: "Granular Action Logs (36 Sự kiện)",
+        f3_desc: "Tách luồng thông minh ra 6 kênh chuyên biệt: mod_log, message_log, member_log, join_leave_log, voice_log, server_log kèm file .txt đính kèm khi purge.",
+        f4_title: "Case Manager & Kỷ Luật",
+        f4_desc: "Quản lý Case #ID tăng dần tự động, hỗ trợ warn, timeout, mute vĩnh viễn, hardmute (tước toàn bộ role và trả lại sau), kick, ban, tempban, softban và tùy biến DM thông báo.",
+        f5_title: "Ticket & Forms Modal",
+        f5_desc: "Tạo panel nút bấm mở kênh hỗ trợ 1-1 riêng tư, tự động xuất file HTML/TXT transcript khi đóng ticket. Hỗ trợ biểu mẫu tuyển dụng và khảo sát qua Discord Modal.",
+        f6_title: "Smart Roles & Temp-Voice",
+        f6_desc: "Bảng role tương tác qua Buttons/Dropdown, RolePersist (nhớ role cũ khi rejoin), Joinable ranks và hệ sinh thái phòng thoại Join-to-Create tự tạo và tự xóa khi trống.",
         secTagCmds: "HỆ THỐNG LỆNH HYBRID",
         secTitleCmds: "Hỗ Trợ Song Song Prefix h? & Slash /",
         secDescCmds: "Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.",
-        footerCopy: "© 2026 Haruki (haruki_kino). HaruMod Discord Bot."
+        thCmd: "Lệnh Prefix / Slash",
+        thArgs: "Tham Số",
+        thDesc: "Mô Tả Chức Năng",
+        thPerms: "Quyền Yêu Cầu",
+        c1: "Cấm thành viên khỏi máy chủ, hỗ trợ cấm tạm thời (tempban)",
+        c2: "Trục xuất thành viên ngay lập tức",
+        c3: "Hạn chế chat/voice thành viên qua Timeout Discord API",
+        c4: "Tước toàn bộ quyền và vai trò, chỉ để lại vai trò Muted cách ly",
+        c5: "Cảnh cáo vi phạm và tự động kích hoạt phạt bậc thang (3 warn = Mute)",
+        c6: "Xóa tin nhắn hàng loạt siêu tốc, tự động xuất file log nội dung vừa xóa",
+        c7: "Khóa kênh chat ngăn chặn spam hoặc raid trong trường hợp khẩn cấp",
+        c8: "Khởi tạo giao diện Ticket Panel tương tác với Embed và Buttons",
+        footerDesc: "Lá chắn an ninh & công cụ quản trị Discord tối tân. Phát triển bởi Haruki (haruki_kino)."
       },
       en: {
-        navBack: "← Back to Portal",
+        navBack: "Back to Portal",
         navFeatures: "Features",
         navCommands: "Commands (h? / /)",
         navTos: "Terms (ToS)",
         navPrivacy: "Privacy Policy",
-        btnInviteMod: "➕ Invite HaruMod",
-        heroTag: "🛡️ DISCORD SERVER SECURITY & MODERATION SUITE",
+        btnInvite: "Invite HaruMod",
+        heroTag: "DISCORD SERVER SECURITY & MODERATION SUITE",
         heroTitle: "Complete Security Shield For <br><span class=\"gradient-text-emerald\">Your Discord Server</span>",
         heroSubtitle: "HaruMod provides proactive defense with honeypot trap channels, staff anti-wizz monitor, multi-tiered auto-mod, 36 granular action log streams, and modal ticket forms.",
-        btnTos: "📄 Terms of Service",
-        btnPrivacy: "🔒 Privacy Policy",
+        btnHeroInvite: "Add HaruMod to Server",
+        btnTos: "Terms of Service",
+        btnPrivacy: "Privacy Policy",
         secTagFeat: "MODULAR ARCHITECTURE",
         secTitleFeat: "6 Tiers of Security & Management",
         secDescFeat: "All filters run in zero-latency In-Memory RAM Cache.",
-        secTagCmds: "HYBRID COMMAND SYSTEM",
-        secTitleCmds: "Prefix h? & Slash / Supported in Parallel",
-        secDescCmds: "Runs seamlessly on PC and Mobile via a single unified core pipeline.",
-        footerCopy: "© 2026 Haruki (haruki_kino). HaruMod Discord Bot."
+        f1_title: "Honeypot & Anti-Nuke",
+        f1_desc: "Set up bait channels that auto-punish (Ban/Kick/Mute) and purge messages instantly. Monitor staff actions to lock down the server if abnormal bulk actions occur.",
+        f2_title: "Multi-tier Auto-Mod",
+        f2_desc: "Block bad words (bypassing obfuscation), Discord invite links, malicious phishing links, excessive caps, and dangerous executable file attachments (.exe, .bat).",
+        f3_title: "36 Granular Action Logs",
+        f3_desc: "Smart multi-stream routing across 6 distinct channels: mod_log, message_log, member_log, join_leave_log, voice_log, server_log with text transcripts on purge.",
+        f4_title: "Case Management & Sanctions",
+        f4_desc: "Auto-increment Case IDs, warn, timeout, permanent mute, hardmute (strips all roles and restores them), kick, ban, tempban, softban, and customizable user DMs.",
+        f5_title: "Ticket Panels & Modal Forms",
+        f5_desc: "Create interactive 1-on-1 private ticket panels with HTML/TXT transcripts on close. Support staff application forms and surveys via Discord Modals.",
+        f6_title: "Smart Roles & Temp Voice",
+        f6_desc: "Interactive button/dropdown role panels, RolePersist (restores roles on rejoin), Joinable ranks, and dynamic Join-to-Create voice channels that auto-delete when empty.",
+        secTagCmds: "HYBRID COMMAND ARCHITECTURE",
+        secTitleCmds: "Parallel Support for Prefix h? & Slash /",
+        secDescCmds: "Unified execution logic across PC and Mobile Discord clients.",
+        thCmd: "Prefix / Slash Command",
+        thArgs: "Parameters",
+        thDesc: "Description",
+        thPerms: "Required Permissions",
+        c1: "Ban user from server, supports tempban duration",
+        c2: "Kick user immediately from the server",
+        c3: "Mute/Timeout member via Discord native Timeout API",
+        c4: "Strip all roles and assign Muted quarantine role",
+        c5: "Warn member with ladder punishment (3 warns = auto mute)",
+        c6: "Bulk delete messages with attached text transcript",
+        c7: "Lockdown channel to prevent raids or spam",
+        c8: "Initialize interactive ticket panel with embed and buttons",
+        footerDesc: "Modern, secure, and user-first Discord security bot. Developed by Haruki (haruki_kino)."
       }
     };
 
@@ -390,6 +507,122 @@
     document.addEventListener("DOMContentLoaded", () => {
       const saved = localStorage.getItem("haruki_lang") || "vi";
       setHaruModLanguage(saved);
+    });
+  </script>
+
+  <!-- Interactive 60fps Starfield Constellation Canvas -->
+  <script>
+    const canvas = document.getElementById("cyber-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    window.addEventListener("mouseout", () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(Math.floor((width * height) / 12000), 100);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 2 + 1,
+          color: "rgba(16, 185, 129, ",
+          alpha: Math.random() * 0.6 + 0.2
+        });
+      }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx = -p.vx;
+        if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+        if (mouse.x !== null) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            p.x -= (dx / dist) * force * 1.5;
+            p.y -= (dy / dist) * force * 1.5;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ")";
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+
+  <!-- Smooth Anchor Scrolling with Navbar Offset -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || targetId === '#' || targetId === '#home') return;
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          const nav = document.querySelector('.navbar');
+          const navHeight = nav ? nav.offsetHeight : 72;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - (navHeight + 25);
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   </script>
 
