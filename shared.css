@@ -1138,3 +1138,29 @@ footer {
   flex-direction: column !important;
   overflow: hidden !important;
 }
+
+
+/* ========================================================
+   SMOOTH SCROLL & NAVBAR OFFSET
+   ======================================================== */
+html {
+  scroll-behavior: smooth !important;
+}
+
+#harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
+  scroll-margin-top: 100px !important;
+}
+
+/* Fix SVG fill overriding line icons */
+svg[fill="none"] {
+  fill: none !important;
+}
+
+.btn svg, .btn-primary svg, .btn-emerald svg, .btn-secondary svg {
+  fill: none !important;
+  stroke: #ffffff !important;
+}
+
+.btn svg.fill-white {
+  fill: #ffffff !important;
+}

@@ -8,6 +8,21 @@
   <link rel="stylesheet" href="./shared.css">
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
+
+    html {
+      scroll-behavior: smooth !important;
+    }
+    #harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
+      scroll-margin-top: 100px !important;
+    }
+    svg[fill="none"] {
+      fill: none !important;
+    }
+    .btn svg {
+      fill: none !important;
+      stroke: #ffffff !important;
+    }
+
     /* ========================================================
        TOP NAVBAR - HIGH-END CYBERPUNK GLASSMORPHIC HEADER
        ======================================================== */
@@ -1502,6 +1517,40 @@
 
       card.addEventListener("mouseleave", () => {
         card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
+    });
+  </script>
+
+
+  <!-- Smooth Scrolling with Navbar Offset Calculation -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || targetId === '#' || targetId === '#home') return;
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          const nav = document.querySelector('.navbar');
+          const navHeight = nav ? nav.offsetHeight : 72;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - (navHeight + 25);
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          // Optional: highlight the card temporarily
+          targetEl.style.transition = 'box-shadow 0.4s ease';
+          if (targetId === '#harubot') {
+            targetEl.style.boxShadow = '0 0 35px rgba(56, 189, 248, 0.55)';
+            setTimeout(() => targetEl.style.boxShadow = '', 1200);
+          } else if (targetId === '#harumod') {
+            targetEl.style.boxShadow = '0 0 35px rgba(16, 185, 129, 0.55)';
+            setTimeout(() => targetEl.style.boxShadow = '', 1200);
+          }
+        }
       });
     });
   </script>
