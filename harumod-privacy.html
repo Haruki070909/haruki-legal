@@ -14,9 +14,12 @@
 
   <div class="container">
     <nav class="navbar">
-      <a href="./index.html" class="brand">
-        <span style="font-size:1.6rem;">🔒</span>
-        <span>HARUMOD <span class="brand-badge" style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); border-color:rgba(16,185,129,0.3);">PRIVACY POLICY</span></span>
+      <a href="./index.html" class="brand" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;">
+        <img src="./harumod-avatar.png" alt="HARUMOD" class="brand-avatar" style="width:38px;height:38px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);">
+        <div style="display:inline-flex;align-items:center;gap:8px;">
+          <span style="font-size:1.15rem;font-weight:800;color:#ffffff;letter-spacing:-0.02em;">HARUMOD</span>
+          <span class="brand-badge emerald" style="font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid rgba(255,255,255,0.2);line-height:1;vertical-align:middle;">PRIVACY POLICY</span>
+        </div>
       </a>
       <ul class="nav-links">
         <li><a href="./index.html" class="nav-link">← Trang Chủ</a></li>
@@ -25,7 +28,7 @@
       </ul>
       <div class="nav-cta">
         <a href="https://discord.gg/gardenofdream" target="_blank" class="btn btn-secondary btn-sm">
-          <span>💬 Garden of Dream</span>
+          <span> Garden of Dream</span>
         </a>
       </div>
     </nav>
@@ -35,10 +38,10 @@
         <span class="section-tag" style="color:var(--accent-emerald);">CHÍNH SÁCH BẢO VỆ DỮ LIỆU CÁ NHÂN</span>
         <h1 class="section-title">Chính Sách Quyền Riêng Tư HaruMod (Privacy Policy)</h1>
         <div class="legal-meta">
-          <div class="meta-item"><span>📅 Ngày hiệu lực:</span> <strong>22/11/2026</strong></div>
-          <div class="meta-item"><span>🤖 Ứng dụng:</span> <strong>HaruMod (ID: 1573727590538289283)</strong></div>
-          <div class="meta-item"><span>👤 Đơn vị quản lý:</span> <strong>Haruki (haruki_kino)</strong></div>
-          <div class="meta-item"><span>⚖️ Quy chuẩn:</span> <strong>Discord Dev Terms & Nghị định 13/2023/NĐ-CP</strong></div>
+          <div class="meta-item"><span> Ngày hiệu lực:</span> <strong>22/11/2026</strong></div>
+          <div class="meta-item"><span> Ứng dụng:</span> <strong>HaruMod (ID: 1573727590538289283)</strong></div>
+          <div class="meta-item"><span> Đơn vị quản lý:</span> <strong>Haruki (haruki_kino)</strong></div>
+          <div class="meta-item"><span> Quy chuẩn:</span> <strong>Discord Dev Terms & Nghị định 13/2023/NĐ-CP</strong></div>
         </div>
       </header>
 
@@ -62,7 +65,7 @@
         <!-- Main Content -->
         <main class="legal-content">
           <div class="callout-box emerald">
-            <div class="callout-title"><span>🛡️</span> Cam Kết Bảo Vệ Quyền Riêng Tư Tuyệt Đối</div>
+            <div class="callout-title"><span></span> Cam Kết Bảo Vệ Quyền Riêng Tư Tuyệt Đối</div>
             <p style="margin-bottom:0; font-size:0.92rem; color:#e2e8f0;">
               HaruMod là bot chuyên về <strong>Bảo Mật & Kiểm Duyệt</strong>. Chúng tôi <strong>KHÔNG</strong> ghi âm voice, <strong>KHÔNG</strong> đọc lén tin nhắn riêng tư (DM), và <strong>KHÔNG</strong> lưu trữ nội dung tin nhắn chat của các bạn vào cơ sở dữ liệu dài hạn.
             </p>
@@ -117,7 +120,7 @@
           <section id="sec-5" class="legal-section">
             <h2>5. Cam Kết Tuyệt Đối Không Bán Dữ Liệu</h2>
             <div class="callout-box emerald">
-              <div class="callout-title"><span>🔒</span> Nguyên Tắc Bất Di Bất Dịch</div>
+              <div class="callout-title"><span></span> Nguyên Tắc Bất Di Bất Dịch</div>
               <p style="margin-bottom:0; font-size:0.95rem; color:#f8fafc;">
                 Chúng tôi <strong>KHÔNG BAO GIỜ</strong> bán, cho thuê, trao đổi hoặc thương mại hóa bất kỳ dữ liệu cá nhân nào của bạn hoặc máy chủ của bạn cho bất kỳ bên thứ ba, mạng lưới quảng cáo hoặc đơn vị phân tích thương mại nào.
               </p>
@@ -174,5 +177,39 @@
       </div>
     </footer>
   </div>
+
+<script>
+function setDocLang(lang) {
+  const isEn = (lang === "en");
+  const viBtn = document.getElementById("lang-vi");
+  const enBtn = document.getElementById("lang-en");
+  if (viBtn && enBtn) {
+    if (isEn) {
+      enBtn.style.background = "#6366f1";
+      enBtn.style.color = "#ffffff";
+      viBtn.style.background = "transparent";
+      viBtn.style.color = "#94a3b8";
+    } else {
+      viBtn.style.background = "#6366f1";
+      viBtn.style.color = "#ffffff";
+      enBtn.style.background = "transparent";
+      enBtn.style.color = "#94a3b8";
+    }
+  }
+
+  // Translate document headings and summary
+  document.querySelectorAll("[data-en]").forEach(el => {
+    if (!el.getAttribute("data-vi")) {
+      el.setAttribute("data-vi", el.innerHTML);
+    }
+    el.innerHTML = isEn ? el.getAttribute("data-en") : el.getAttribute("data-vi");
+  });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const cur = localStorage.getItem("haruki_lang") || "vi";
+  setDocLang(cur);
+});
+</script>
+
 </body>
 </html>

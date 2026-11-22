@@ -14,9 +14,12 @@
 
   <div class="container">
     <nav class="navbar">
-      <a href="./index.html" class="brand">
-        <img src="./haru-avatar.webp" alt="HaruBot" class="brand-avatar">
-        <span>HARUBOT <span class="brand-badge">TERMS OF SERVICE</span></span>
+      <a href="./index.html" class="brand" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;">
+        <img src="./haru-avatar.webp" alt="HARUBOT" class="brand-avatar" style="width:38px;height:38px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);">
+        <div style="display:inline-flex;align-items:center;gap:8px;">
+          <span style="font-size:1.15rem;font-weight:800;color:#ffffff;letter-spacing:-0.02em;">HARUBOT</span>
+          <span class="brand-badge cyan" style="font-size:0.65rem;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid rgba(255,255,255,0.2);line-height:1;vertical-align:middle;">TERMS OF SERVICE</span>
+        </div>
       </a>
       <ul class="nav-links">
         <li><a href="./index.html" class="nav-link">← Trang Chủ</a></li>
@@ -25,7 +28,7 @@
       </ul>
       <div class="nav-cta">
         <a href="https://discord.gg/gardenofdream" target="_blank" class="btn btn-secondary btn-sm">
-          <span>💬 Garden of Dream</span>
+          <span> Garden of Dream</span>
         </a>
       </div>
     </nav>
@@ -35,10 +38,10 @@
         <span class="section-tag">ĐIỀU KHOẢN VẬN HÀNH & GIẢI TRÍ</span>
         <h1 class="section-title">Điều Khoản Sử Dụng HaruBot (Lil' Harus)</h1>
         <div class="legal-meta">
-          <div class="meta-item"><span>📅 Ngày hiệu lực:</span> <strong>08/11/2026</strong></div>
-          <div class="meta-item"><span>🤖 Ứng dụng:</span> <strong>HaruBot (ID: 1559612562008572084)</strong></div>
-          <div class="meta-item"><span>👤 Đơn vị phát triển:</span> <strong>Haruki (haruki_kino)</strong></div>
-          <div class="meta-item"><span>🌐 Máy chủ cộng đồng:</span> <strong>discord.gg/gardenofdream</strong></div>
+          <div class="meta-item"><span> Ngày hiệu lực:</span> <strong>08/11/2026</strong></div>
+          <div class="meta-item"><span> Ứng dụng:</span> <strong>HaruBot (ID: 1559612562008572084)</strong></div>
+          <div class="meta-item"><span> Đơn vị phát triển:</span> <strong>Haruki (haruki_kino)</strong></div>
+          <div class="meta-item"><span> Máy chủ cộng đồng:</span> <strong>discord.gg/gardenofdream</strong></div>
         </div>
       </header>
 
@@ -59,7 +62,7 @@
 
         <main class="legal-content">
           <div class="callout-box">
-            <div class="callout-title"><span>🎵</span> Chơi Vui Cùng HaruBot!</div>
+            <div class="callout-title"><span></span> Chơi Vui Cùng HaruBot!</div>
             <p style="margin-bottom:0; font-size:0.92rem; color:#e2e8f0;">
               HaruBot mang lại không gian thư giãn với âm nhạc đỉnh cao và mini-game câu cá RPG. Hãy tham gia với tinh thần văn minh, công bằng và tôn trọng người khác.
             </p>
@@ -142,5 +145,39 @@
       </div>
     </footer>
   </div>
+
+<script>
+function setDocLang(lang) {
+  const isEn = (lang === "en");
+  const viBtn = document.getElementById("lang-vi");
+  const enBtn = document.getElementById("lang-en");
+  if (viBtn && enBtn) {
+    if (isEn) {
+      enBtn.style.background = "#6366f1";
+      enBtn.style.color = "#ffffff";
+      viBtn.style.background = "transparent";
+      viBtn.style.color = "#94a3b8";
+    } else {
+      viBtn.style.background = "#6366f1";
+      viBtn.style.color = "#ffffff";
+      enBtn.style.background = "transparent";
+      enBtn.style.color = "#94a3b8";
+    }
+  }
+
+  // Translate document headings and summary
+  document.querySelectorAll("[data-en]").forEach(el => {
+    if (!el.getAttribute("data-vi")) {
+      el.setAttribute("data-vi", el.innerHTML);
+    }
+    el.innerHTML = isEn ? el.getAttribute("data-en") : el.getAttribute("data-vi");
+  });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const cur = localStorage.getItem("haruki_lang") || "vi";
+  setDocLang(cur);
+});
+</script>
+
 </body>
 </html>

@@ -184,6 +184,39 @@
  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
 }
 
+
+/* Custom Cyber Dark Dropdowns (Replace Chrome native OS UI) */
+select.game-select, select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #0b1329 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 10px 40px 10px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+select:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+select option {
+  background-color: #0b1329 !important;
+  color: #f8fafc !important;
+  padding: 12px !important;
+}
+
 </style>
 
 <style>
@@ -212,6 +245,39 @@
   transform: none !important;
   filter: brightness(1.12) !important;
 }
+
+/* Custom Cyber Dark Dropdowns (Replace Chrome native OS UI) */
+select.game-select, select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #0b1329 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 10px 40px 10px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+select:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+select option {
+  background-color: #0b1329 !important;
+  color: #f8fafc !important;
+  padding: 12px !important;
+}
+
 </style>
 
 </head>
@@ -300,11 +366,13 @@
 <!-- Dashboard Header -->
 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
 <div style="display: flex; align-items: center; gap: 14px;">
-<div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #38bdf8); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 16px rgba(56,189,248,0.4);">
- 
+<div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #38bdf8); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 16px rgba(56,189,248,0.5);">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </svg>
 </div>
 <div>
-<h3 style="margin: 0; font-size: 17px; color: #fff; font-weight: 700;" data-i18n="musicPanelTitle">Bảng Điều Khiển Âm Nhạc · Haruki Starlight</h3>
+<h3 style="margin: 0; font-size: 17px; color: #fff; font-weight: 700;" data-i18n="musicPanelTitle">Bảng Điều Khiển Âm Nhạc · Haruki Starlight <span style="font-size:11px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 8px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:6px;">DEMO</span></h3>
 <span style="font-size: 13px; color: #94a3b8;"><span style="display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #22c55e;"></span><span data-i18n="musicOnline">Chế độ Thử nghiệm (Demo)</span>· Channel:<strong style="color: #38bdf8;"><svg class="player-btn-svg" viewBox="0 0 24 24" style="stroke:#38bdf8;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Demo Lounge</strong></span>
 </div>
 </div>
@@ -467,7 +535,7 @@
 <section class="guide-section" id="fishing-demo" style="margin-top: 40px;">
 <div class="section-heading guide-heading">
 <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="simBadge">CHUẨN CƠ CHẾ BOT 100% · 13 ADVANCED MODULES</span></p>
-<h2 data-i18n="simTitle">Haruki Fishing RPG Ultimate Simulator</h2>
+<h2 data-i18n="simTitle">Haruki Fishing RPG Ultimate Simulator <span style="font-size:12px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:3px 10px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:8px;">DEMO SIMULATOR</span></h2>
 <p data-i18n="simSubtitle">Trải nghiệm toàn diện: 4 Nhóm Loot (Cá, Rương Báu, Nguyên Liệu, Trang Bị), Xưởng Rèn Cường Hóa, Thủy Cung Nuôi Cá Nhận RuCoin Thụ Động, Săn Trùm Boss Duel, Thời Tiết Trăng Máu & Bảng Kỹ Năng Ngư Dân!</p>
 </div>
 
@@ -1076,11 +1144,11 @@
 
 <section class="section-heading"><p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="explore">KHÁM PHÁ HARUBOT</span></p><h2 data-i18n="sectionTitle">Mỗi server, thêm một cuộc vui.</h2><p data-i18n="sectionIntro">Giải trí cùng bạn bè với những tính năng quen thuộc và các trò chơi cộng đồng.</p></section>
 <section class="features" aria-label="HaruBot features">
-<article class="feature-card"><span class="feature-icon icon-music"></span><div><h3 data-i18n="featureMusic">Âm nhạc</h3><p data-i18n="featureMusicText">Phát bài yêu thích, quản lý hàng chờ bằng nút bấm.</p></div><span class="card-arrow">↗</span></article>
-<article class="feature-card"><span class="feature-icon icon-lyrics">≋</span><div><h3 data-i18n="featureLyrics">Lyrics đồng bộ</h3><p data-i18n="featureLyricsText">Hát theo từng dòng lyrics ngay trong khung chat.</p></div><span class="card-arrow">↗</span></article>
-<article class="feature-card"><span class="feature-icon icon-play"></span><div><h3 data-i18n="featureFishing">Câu cá</h3><p data-i18n="featureFishingText">Thả cần và khám phá những loài cá trong trò chơi.</p></div><span class="card-arrow">↗</span></article>
-<article class="feature-card"><span class="feature-icon icon-coin">◈</span><div><h3>RuCoin</h3><p data-i18n="featureCoinText">Chơi game và tích lũy RuCoin cùng cộng đồng.</p></div><span class="card-arrow">↗</span></article>
-<article class="feature-card"><span class="feature-icon icon-community"></span><div><h3 data-i18n="featureGames">Trò chơi cộng đồng</h3><p data-i18n="featureGamesText">Thêm hoạt động vui vẻ để mọi người cùng tham gia.</p></div><span class="card-arrow">↗</span></article>
+<article class="feature-card"><span class="feature-icon icon-music"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span><div><h3 data-i18n="featureMusic">Âm nhạc</h3><p data-i18n="featureMusicText">Phát bài yêu thích, quản lý hàng chờ bằng nút bấm.</p></div><span class="card-arrow">↗</span></article>
+<article class="feature-card"><span class="feature-icon icon-lyrics"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><path d="M2 10s3-3 5-3 5 6 7 6 5-3 8-3"/><path d="M2 14s3-3 5-3 5 6 7 6 5-3 8-3"/></svg></span><div><h3 data-i18n="featureLyrics">Lyrics đồng bộ</h3><p data-i18n="featureLyricsText">Hát theo từng dòng lyrics ngay trong khung chat.</p></div><span class="card-arrow">↗</span></article>
+<article class="feature-card"><span class="feature-icon icon-play"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><circle cx="12" cy="4" r="2"/><path d="M12 6v7a4.5 4.5 0 0 1-9 0v-2"/><path d="m3 11 3 2.5"/><path d="M15 11c1.5-1 3.5-1 5 0M14 15c2-1 4.5-1 6.5 0"/></svg></span><div><h3 data-i18n="featureFishing">Câu cá</h3><p data-i18n="featureFishingText">Thả cần và khám phá những loài cá trong trò chơi.</p></div><span class="card-arrow">↗</span></article>
+<article class="feature-card"><span class="feature-icon icon-coin"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M10 3v6l-4 3"/><path d="M14 3v6l4 3"/><path d="M2 9h20"/></svg></span><div><h3>RuCoin</h3><p data-i18n="featureCoinText">Chơi game và tích lũy RuCoin cùng cộng đồng.</p></div><span class="card-arrow">↗</span></article>
+<article class="feature-card"><span class="feature-icon icon-community"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4m-2-2v4"/><circle cx="15" cy="11" r="1" fill="#ffffff"/><circle cx="17" cy="13" r="1" fill="#ffffff"/></svg></span><div><h3 data-i18n="featureGames">Trò chơi cộng đồng</h3><p data-i18n="featureGamesText">Thêm hoạt động vui vẻ để mọi người cùng tham gia.</p></div><span class="card-arrow">↗</span></article>
 </section>
 <footer class="footer"><span data-i18n="footerMade">Made for good moments<span class="heart"></span></span><span>HaruBot · by haruki_kino</span></footer>
 </main>
@@ -1618,6 +1686,39 @@
  height: 15px;
  stroke: #ffffff;
  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+
+/* Custom Cyber Dark Dropdowns (Replace Chrome native OS UI) */
+select.game-select, select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #0b1329 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 10px 40px 10px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+select:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+select option {
+  background-color: #0b1329 !important;
+  color: #f8fafc !important;
+  padding: 12px !important;
 }
 
 </style>
@@ -2162,49 +2263,104 @@
  }
 
  function setAppLanguage(lang) {
- translateFullDOM(lang);
- return;
+  const isEn = (lang === "en");
+  window.currentLang = isEn ? "en" : "vi";
+  localStorage.setItem("haruki_lang", window.currentLang);
+  document.documentElement.lang = window.currentLang;
 
- currentLang = (lang === "en") ? "en" : "vi";
- localStorage.setItem("haruki_lang", currentLang);
+  const viBtn = document.getElementById("lang-vi");
+  const enBtn = document.getElementById("lang-en");
+  if (viBtn && enBtn) {
+    if (isEn) {
+      enBtn.classList.add("active");
+      enBtn.setAttribute("aria-pressed", "true");
+      viBtn.classList.remove("active");
+      viBtn.setAttribute("aria-pressed", "false");
+    } else {
+      viBtn.classList.add("active");
+      viBtn.setAttribute("aria-pressed", "true");
+      enBtn.classList.remove("active");
+      enBtn.setAttribute("aria-pressed", "false");
+    }
+  }
 
- // Update language switch buttons
- const viBtn = document.getElementById("lang-vi");
- const enBtn = document.getElementById("lang-en");
- if (viBtn && enBtn) {
- if (currentLang === "vi") {
- viBtn.classList.add("active");
- viBtn.setAttribute("aria-pressed", "true");
- enBtn.classList.remove("active");
- enBtn.setAttribute("aria-pressed", "false");
- } else {
- enBtn.classList.add("active");
- enBtn.setAttribute("aria-pressed", "true");
- viBtn.classList.remove("active");
- viBtn.setAttribute("aria-pressed", "false");
- }
- }
+  // Update navbar items
+  const navMap = isEn ? {
+    navHome: "Home",
+    navHaruMod: "HaruMod",
+    navTerms: "Terms",
+    navPrivacy: "Privacy",
+    navCommands: "Commands & Guide",
+    navPreview: "HARUBOT DEMO PREVIEW",
+    backpackBtnLabel: "Backpack",
+    labelIsland: "SELECT REGION / WATERS",
+    labelRod: "EQUIPPED ROD",
+    labelBait: "SPECIAL BAIT",
+    tabLake: "Lake & Hunt",
+    tabForge: "Blacksmith Forge",
+    tabAquarium: "RuCoin Aquarium",
+    tabBoss: "Leviathan Boss",
+    tabSkills: "Skill Tree"
+  } : {
+    navHome: "Trang Chủ",
+    navHaruMod: "HaruMod",
+    navTerms: "Điều Khoản",
+    navPrivacy: "Bảo Mật",
+    navCommands: "Commands & guide",
+    navPreview: "BẢN XEM TRƯỚC HARUBOT",
+    backpackBtnLabel: "Túi đồ",
+    labelIsland: "CHỌN QUẦN ĐẢO / VỰC NƯỚC",
+    labelRod: "CẦN CÂU TRANG BỊ",
+    labelBait: "MỒI CÂU ĐẶC BIỆT",
+    tabLake: "Hồ câu",
+    tabForge: "Xưởng rèn",
+    tabAquarium: "Thủy cung",
+    tabBoss: "Đấu trùm",
+    tabSkills: "Kỹ năng"
+  };
 
- // Update all data-i18n elements
- const dict = I18N_DICTIONARY[currentLang];
- document.querySelectorAll("[data-i18n]").forEach(el =>{
- const key = el.getAttribute("data-i18n");
- if (dict[key]) {
- if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
- el.placeholder = dict[key];
- } else {
- el.innerHTML = dict[key];
- }
- }
- });
+  for (const [k, v] of Object.entries(navMap)) {
+    document.querySelectorAll(`[data-i18n="${k}"]`).forEach(el => el.innerHTML = v);
+  }
 
- // Re-render select dropdowns
- renderSelectOptions();
+  // Update I18N dictionary elements
+  if (typeof I18N_DICTIONARY !== "undefined" && I18N_DICTIONARY[window.currentLang]) {
+    const dict = I18N_DICTIONARY[window.currentLang];
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (dict[k]) {
+        if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+          el.placeholder = dict[k];
+        } else {
+          el.innerHTML = dict[k];
+        }
+      }
+    });
+  }
 
- // Update player stats UI
- if (typeof updateStatsUI === "function") {
- updateStatsUI();
- }
+  // Update Fishing simulator texts
+  const fishingHeader = document.querySelector(".game-container .section-head h2");
+  if (fishingHeader) {
+    fishingHeader.innerHTML = isEn 
+      ? 'Haruki Fishing RPG Ultimate Simulator <span style="font-size:12px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:3px 10px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:8px;">DEMO SIMULATOR</span>'
+      : 'Haruki Fishing RPG Ultimate Simulator <span style="font-size:12px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:3px 10px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:8px;">DEMO SIMULATOR</span>';
+  }
+
+  const fishingSub = document.querySelector(".game-container .section-head p");
+  if (fishingSub) {
+    fishingSub.innerText = isEn
+      ? "Interactive Web Demo Simulator · Experience all 13 Discord bot game modules directly in your browser!"
+      : "Trải nghiệm toàn diện: 4 Nhóm Loot (Cá, Rương Báu, Nguyên Liệu, Trang Bị), Xưởng Rèn Cường Hóa, Thủy Cung Nuôi Cá Nhận RuCoin Thụ Động, Săn Trùm Boss Duel!";
+  }
+
+  const castBtn = document.getElementById("cast-btn");
+  if (castBtn && (typeof fishingState === "undefined" || fishingState === "idle")) {
+    castBtn.innerText = isEn ? "CAST FISHING ROD NOW" : "THẢ CẦN CÂU NGAY";
+  }
+
+  if (typeof updateStatsUI === "function") updateStatsUI();
+  if (typeof renderSelectOptions === "function") renderSelectOptions();
+}
 
  // Update weather badge
  const weatherBadge = document.getElementById("weather-badge");
