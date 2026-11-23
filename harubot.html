@@ -5211,6 +5211,8 @@ select option {
 
   window.currentLang = isEn ? "en" : "vi";
 
+  let dict = (typeof I18N_DICTIONARY !== "undefined" && I18N_DICTIONARY[window.currentLang]) ? I18N_DICTIONARY[window.currentLang] : {};
+
   localStorage.setItem("haruki_lang", window.currentLang);
 
   document.documentElement.lang = window.currentLang;
@@ -5331,7 +5333,7 @@ select option {
 
   if (typeof I18N_DICTIONARY !== "undefined" && I18N_DICTIONARY[window.currentLang]) {
 
-    const dict = I18N_DICTIONARY[window.currentLang];
+    dict = I18N_DICTIONARY[window.currentLang] || dict;
 
     document.querySelectorAll("[data-i18n]").forEach(el => {
 
@@ -5345,7 +5347,12 @@ select option {
 
         } else {
 
-          el.innerHTML = dict[k];
+          const svg = el.querySelector("svg");
+          if (svg) {
+            el.innerHTML = svg.outerHTML + " " + dict[k];
+          } else {
+            el.innerHTML = dict[k];
+          }
 
         }
 
