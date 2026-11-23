@@ -2990,6 +2990,13 @@
   }
 }
 
+
+    /* Lazy Render Off-screen Server Cards */
+    .server-card {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 190px;
+    }
+
 </style>
 <style>
 /* Dashboard PC Navbar No-Wrap */
@@ -4395,7 +4402,7 @@
     function renderGuildAvatarHtml(g, size = 60) {
       const radius = Math.round(size * 0.3);
       if (g.icon) {
-        return `<img src="${g.icon}" class="server-card-icon" style="width:${size}px;height:${size}px;border-radius:${radius}px;" alt="${escapeHtml(g.name)}" onerror="this.onerror=null; this.outerHTML=renderInitialsSvg('${escapeHtml(g.name)}', ${size})">`;
+        return `<img src="${g.icon}" class="server-card-icon" loading="lazy" decoding="async" style="width:${size}px;height:${size}px;border-radius:${radius}px;" alt="${escapeHtml(g.name)}" onerror="this.onerror=null; this.outerHTML=renderInitialsSvg('${escapeHtml(g.name)}', ${size})">`;
       }
       return renderInitialsSvg(g.name, size);
     }
