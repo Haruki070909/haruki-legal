@@ -476,10 +476,201 @@ select option {
   }
 }
 </style>
+<style>
+/* ========================================================
+   CUSTOM CYBER GLASSMORPHIC DROPDOWNS (REPLACE NATIVE OS SELECT)
+   ======================================================== */
+.select-wrap, .form-group {
+  position: relative;
+}
+.cyber-dropdown-wrap {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  user-select: none !important;
+}
+.cyber-dropdown-trigger {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #0b1329 !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 11px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+}
+.cyber-dropdown-trigger:hover, .cyber-dropdown-wrap.open .cyber-dropdown-trigger {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+  background: #0f1738 !important;
+}
+.cyber-dropdown-text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  padding-right: 10px !important;
+}
+.cyber-dropdown-arrow {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: #38bdf8 !important;
+  stroke-width: 2.5 !important;
+  fill: none !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.25s ease !important;
+}
+.cyber-dropdown-wrap.open .cyber-dropdown-arrow {
+  transform: rotate(180deg) !important;
+}
+.cyber-dropdown-menu {
+  display: none !important;
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: rgba(11, 19, 41, 0.98) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.5) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(56, 189, 248, 0.25) !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+  padding: 6px !important;
+  animation: cyberMenuOpen 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+.cyber-dropdown-wrap.open .cyber-dropdown-menu {
+  display: block !important;
+}
+@keyframes cyberMenuOpen {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cyber-dropdown-item {
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #cbd5e1 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 2px !important;
+}
+.cyber-dropdown-item:hover {
+  background: rgba(56, 189, 248, 0.18) !important;
+  color: #38bdf8 !important;
+  transform: none !important;
+}
+.cyber-dropdown-item.active {
+  background: rgba(56, 189, 248, 0.28) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+.cyber-dropdown-item.active::after {
+  content: "✓" !important;
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+  margin-left: 8px !important;
+}
+.cyber-dropdown-menu::-webkit-scrollbar {
+  width: 6px !important;
+}
+.cyber-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4) !important;
+  border-radius: 3px !important;
+}
+
+/* ========================================================
+   FULL-WIDTH PC NAVBAR & GLUED MOBILE DRAWER
+   ======================================================== */
+.navbar {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  background: rgba(7, 9, 19, 0.92) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6) !important;
+  padding: 14px 0 !important;
+}
+.navbar-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 0 40px !important;
+  box-sizing: border-box !important;
+}
+.mod-mobile-drawer {
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: rgba(6, 9, 18, 0.98) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8) !important;
+  padding: 16px 20px 24px 20px !important;
+  z-index: 999 !important;
+  flex-direction: column !important;
+}
+.mod-mobile-drawer.open {
+  display: flex !important;
+}
+body.drawer-open {
+  overflow: hidden !important;
+}
+
+@media (min-width: 901px) {
+  .mod-mobile-drawer, #bot-mobile-drawer, .mobile-menu-btn, #bot-mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+/* Perfect 3x2 Grid for Features Section */
+.features {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="glow glow-one"></div><div class="glow glow-two"></div>
-<main class="shell">
 <header class="navbar">
   <div class="navbar-content">
     <a href="./index.html" class="brand">
@@ -523,9 +714,8 @@ select option {
     </div>
   </div>
 <span id="connection-label" style="display:none;"></span>
-</header>
 
-<!-- Mobile Navigation Drawer -->
+  <!-- Anchored Mobile Drawer (Zero gap on scroll) -->
 <div id="bot-mobile-drawer" class="mod-mobile-drawer">
   <div class="mod-drawer-inner">
     <a href="./index.html" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link">
@@ -553,6 +743,12 @@ select option {
     </a>
   </div>
 </div>
+
+</header>
+<main class="shell">
+
+
+<!-- Mobile Navigation Drawer -->
 
 <section class="hero" id="home">
 <div class="hero-copy">
@@ -595,6 +791,973 @@ select option {
 </div>
 <div class="floating-note note-one"><svg style='width:20px;height:20px;stroke:#fff;fill:none;' viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#fff"/><circle cx="18" cy="16" r="3" fill="#fff"/></svg></div><div class="floating-note note-two"><svg style='width:16px;height:16px;stroke:#fff;fill:#fff;' viewBox="0 0 24 24"><polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"/></svg></div><div class="floating-note note-three">◈</div>
 </div>
+<article class="feature-card"><span class="feature-icon icon-fx" style="background:linear-gradient(135deg,rgba(56,189,248,0.25),rgba(99,102,241,0.2));border:1.5px solid rgba(56,189,248,0.55);"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#38bdf8"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#38bdf8"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#38bdf8"/></svg></span><div><h3 data-i18n="featureFx">10+ Bộ Lọc MusicFX</h3><p data-i18n="featureFxText">Soft Bass, Super Bass, 8D Audio, Lofi Chill và bộ hiệu ứng âm thanh thời gian thực.</p></div><span class="card-arrow">↗</span></article>
+</section>
+
+ 
+<!-- ==================== HARUBOT WEB DASHBOARD ==================== -->
+<section class="guide-section" id="dashboard" style='margin-top: 48px;'>
+<div class="section-heading guide-heading">
+<p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="dashEyebrow">BẢN DEMO TƯƠNG TÁC</span></p>
+<h2><span data-i18n="dashTitle">HaruBot Web Demo Showcase</span></h2>
+<p><span data-i18n="dashDesc">Bản mô phỏng tương tác hệ thống nghe nhạc, bộ lọc MusicFX và RPG Game độc quyền của HaruBot trực tiếp trên trình duyệt.</span></p>
+</div>
+
+<div style='background: rgba(14, 18, 34, 0.85); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); backdrop-filter: blur(12px);'>
+<!-- Dashboard Header -->
+<div style='display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;'>
+<div style='display: flex; align-items: center; gap: 14px;'>
+<div style='width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #38bdf8); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 16px rgba(56,189,248,0.5);'>
+  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style='width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));'>
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </svg>
+</div>
+<div>
+<h3 style='margin: 0; font-size: 17px; color: #fff; font-weight: 700;' data-i18n="musicPanelTitle">Bảng Điều Khiển Âm Nhạc · Haruki Starlight <span style='font-size:11px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 8px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:6px;'>DEMO</span></h3>
+<span style='font-size: 13px; color: #94a3b8;'><span style='display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #22c55e;'></span><span data-i18n="musicOnline">Chế độ Thử nghiệm (Demo)</span>· Channel:<strong style='color: #38bdf8;'><svg class='player-btn-svg' viewBox="0 0 24 24" style='stroke:#38bdf8;'><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Demo Lounge</strong></span>
+</div>
+</div>
+<div style='display: flex; gap: 10px; align-items: center;'>
+<span style='font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-weight: 600;'>HaruBot Demo v2.4</span>
+</div>
+</div>
+
+<!-- Main Controller Grid -->
+<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;'>
+ 
+<!-- Left: Current Player Card -->
+<div style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;'>
+<div>
+<div style='display: flex; gap: 16px; align-items: center; margin-bottom: 16px;'>
+<div id="dash-cover-art" style='width: 78px; height: 78px; border-radius: 14px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(56,189,248,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: hidden;'>
+<span id="dash-cover-icon" style='transition: transform 0.3s;display:inline-flex;align-items:center;justify-content:center;'><svg style='width:36px;height:36px;stroke:#ffffff;fill:none;' viewBox="0 0 24 24" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span>
+<div style='position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #38bdf8;'></div>
+</div>
+<div style='flex: 1; overflow: hidden;'>
+<div style='display: flex; align-items: center; gap: 6px; margin-bottom: 4px;'>
+<span id="dash-status-badge" data-i18n="musicNowPlaying" style='font-size: 10px; font-weight: 800; background: #38bdf8; color: #090b16; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;'>ĐANG PHÁT</span>
+<span id="dash-source-badge" style='font-size: 11px; color: #94a3b8;'>YouTube / Spotify</span>
+</div>
+<h4 id="dash-track-title" style='margin: 0 0 4px 0; font-size: 16px; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>Vùng An Toàn - B Ray</h4>
+<p id="dash-track-artist" style='margin: 0; font-size: 13px; color: #94a3b8;'><span data-i18n="musicChannelPrefix">Kênh:</span>B Ray Official ·<span data-i18n="musicRequestedBy">Yêu cầu bởi:</span>It's Haru</p>
+</div>
+</div>
+
+<!-- Progress Bar & Time -->
+<div style='margin-bottom: 16px;'>
+<div style='display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-family: monospace;'>
+<span id="dash-time-curr">01:28</span>
+<div style='display: flex; align-items: center; gap: 4px; color: #38bdf8;'>
+<span style='display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; animation: pulseDot 1s infinite alternate;'></span>
+<span id="dash-fx-indicator">Bass Thường (Trầm nhẹ)</span>
+</div>
+<span id="dash-time-total">04:26</span>
+</div>
+<div id="dash-progress-track" style='height: 7px; background: rgba(255,255,255,0.1); border-radius: 4px; cursor: pointer; position: relative; overflow: hidden;' onclick="seekAudio(event)">
+<div id="dash-progress-bar" style='width: 33%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 4px; transition: width 0.3s ease;'></div>
+</div>
+</div>
+
+<!-- Discord Row 1 Buttons -->
+<div style='display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px;'>
+<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;' onclick="sendBotCommand('pause')" title="Tạm dừng / Tiếp tục">
+<span id="dash-play-icon"><svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span>
+</button>
+<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;' onclick="sendBotCommand('skip')" title="Bỏ qua bài (Skip)">
+<svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+</button>
+<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center; background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #f87171;' onclick="sendBotCommand('stop')" title="Dừng phát">
+<svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14"/></svg>
+</button>
+<button id="dash-loop-btn" class="button button-secondary" style='padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;' onclick="toggleLoop()" title="Chế độ lặp">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span id="dash-loop-text" data-i18n="musicLoopOff" style='font-size: 11px; margin-left: 3px;'>Tắt</span>
+</button>
+<button id="dash-shuffle-btn" class="button button-secondary" style='padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;' onclick="toggleShuffle()" title="Xáo trộn hàng chờ">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+</button>
+</div>
+
+<!-- Discord Row 2 Buttons -->
+<div style='display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;'>
+<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="seekRelative(-15)" title="Tua lại 15 giây">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="11 19 2 12 11 5 11 19"/><polygon points="22 19 13 12 22 5 22 19"/></svg>-15s
+</button>
+<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="seekRelative(15)" title="Tua tới 15 giây">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>+15s
+</button>
+<button class="button button-secondary" style='padding: 8px 12px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; gap: 6px;' onclick="openLyricsModal()" title="Xem lời bài hát (Lyrics)">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg><span data-i18n="musicBtnLyrics">Lời</span>
+</button>
+<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="document.getElementById('fx-section').scrollIntoView({behavior:'smooth'})" title="Bộ lọc MusicFX">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#ffffff"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#ffffff"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#ffffff"/></svg>FX
+</button>
+<button class="button button-secondary" style='padding: 8px 12px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; gap: 6px;' onclick="toggleQueueModal()" title="Xem danh sách hàng chờ">
+<svg class='player-btn-svg' viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span data-i18n="musicBtnQueue">Hàng chờ</span>
+</button>
+</div>
+</div>
+
+<!-- Volume Control -->
+<div style='display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);'>
+<span id="dash-vol-icon" style='display:inline-flex;align-items:center;'><svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
+<input id="dash-vol-slider" type="range" min="0" max="150" value="100" style='flex: 1; accent-color: #38bdf8; cursor: pointer;' oninput="updateVolume(this.value)">
+<span id="dash-vol-value" style='font-size: 13px; font-weight: 700; color: #e2e8f0; min-width: 46px; text-align: right;'>100%</span>
+</div>
+</div>
+
+<!-- Right: Add Song & MusicFX Panel -->
+<div style='display: flex; flex-direction: column; gap: 16px;'>
+<!-- Quick Add Song -->
+<div style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px;'>
+<label style='display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;' data-i18n="musicAddQueueTitle">
+<svg class='player-btn-svg' viewBox="0 0 24 24" style='margin-right:4px;'><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Thêm bài hát vào hàng chờ (Queue)
+</label>
+<div style='display: flex; gap: 8px;'>
+<input id="web-song-input" type="text" data-i18n-placeholder="musicInputPlaceholder" placeholder="Dán link YouTube / Spotify hoặc tên bài hát..." style='flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none;' onkeydown="if(event.key==='Enter')addSongToQueue()">
+<button class="button button-primary" style='padding: 10px 18px; font-size: 13px; white-space: nowrap;' onclick="addSongToQueue()">
+<span data-i18n="musicPlayNow">Phát ngay<svg class='player-btn-svg' viewBox="0 0 24 24" style='width:13px;height:13px;margin-left:4px;'><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span>
+</button>
+</div>
+<div style='display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;'>
+<button class="pill-btn" onclick="quickAddSuggest('Đường Tôi Chở Em Về - buitruonglinh')">Đường Tôi Chở Em Về</button>
+<button class="pill-btn" onclick="quickAddSuggest('Chẳng Còn Thời Gian Ấy - Bem')">Chẳng Còn Thời Gian Ấy</button>
+<button class="pill-btn" onclick="quickAddSuggest('Nắng Lung Linh - Nguyễn Thương')">Nắng Lung Linh</button>
+</div>
+</div>
+
+<!-- MusicFX 10 Filters -->
+<div id="fx-section" style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px; flex: 1;'>
+<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;'>
+<label style='font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 0;' data-i18n="musicFxSectionTitle">
+<svg class='player-btn-svg' viewBox="0 0 24 24" style='margin-right:6px;stroke:#38bdf8;'><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#38bdf8"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#38bdf8"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#38bdf8"/></svg>10 Bộ Lọc Âm Thanh MusicFX
+</label>
+<span id="current-fx-name" style='font-size: 11px; padding: 3px 8px; border-radius: 12px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 600;'>Bass Thường</span>
+</div>
+<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;'>
+<button class="fx-btn active" onclick="setMusicFX('bass_soft', 'Bass Thường (Trầm nhẹ)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><path d="M2 12h20M6 8v8M10 5v14M14 8v8M18 10v4"/></svg><span data-i18n="fxBassSoft">Bass Thường</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('bass_boost', 'Siêu Bass (Bassboost Căng)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg><span data-i18n="fxBassBoost">Siêu Bass</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('nightcore', 'Nightcore (Tốc độ & Tone cao)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span data-i18n="fxNightcore">Nightcore</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('8d', '8D Audio (Âm vòm đảo chiều)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg><span data-i18n="fx8d">8D Audio</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('lofi', 'Lofi Chill (Ấm áp, thư thái)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span data-i18n="fxLofi">Lofi Chill</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('radio', 'Loa Phát Thanh (1980s Retro)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><circle cx="8" cy="14" r="3"/><line x1="4.5" y1="3" x2="19.5" y2="7"/></svg><span data-i18n="fxRadio">Loa Cổ Điển</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('vaporwave', 'Anime Cute (Âm hưởng trong trẻo)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg><span data-i18n="fxVaporwave">Anime Cute</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('vocal', 'Phòng Thu VIP (Tôn giọng ca sĩ)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg><span data-i18n="fxVocal">Phòng Thu VIP</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('surround', 'Âm Vòm 3D (Không gian rộng)', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg><span data-i18n="fxSurround">Âm Vòm 3D</span>
+</button>
+<button class="fx-btn" onclick="setMusicFX('none', 'Tắt hiệu ứng FX', this)">
+<svg class="player-btn-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span data-i18n="fxNone">Tắt Toàn Bộ</span>
+</button>
+</div>type html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#090b16" />
+<meta name="description" content="Khám phá HaruBot — nghe nhạc, xem lyrics, câu cá và chơi game cùng bạn bè trên Discord." />
+<title>HaruBot — Music & Games</title>
+<script type="module" src="./index-D1Nckd2P.js">
+ // Set lake swimming fish sprites from real Discord emotes
+ document.addEventListener("DOMContentLoaded", () =>{
+ const s1 = document.getElementById("lake-sprite-1");
+ const s2 = document.getElementById("lake-sprite-2");
+ const s3 = document.getElementById("lake-sprite-3");
+ if (s1 && EMOTE_ASSETS["17_orange_clownfish"]) s1.src = EMOTE_ASSETS["17_orange_clownfish"];
+ if (s2 && EMOTE_ASSETS["26_crystalline_ice_swordfish"]) s2.src = EMOTE_ASSETS["26_crystalline_ice_swordfish"];
+ if (s3 && EMOTE_ASSETS["39_nebula_galaxy_whale"]) s3.src = EMOTE_ASSETS["39_nebula_galaxy_whale"];
+ });
+
+</script>
+<link rel="stylesheet" href="./shared.css?v=5.4">
+<link rel="stylesheet" href="./index-Vs_wrV2D.css">
+<style>
+ /* Topbar Modern Button Pills */
+ .topbar-btn {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ padding: 6px 14px;
+ border-radius: 10px;
+ background: rgba(255, 255, 255, 0.05);
+ border: 1px solid rgba(255, 255, 255, 0.12);
+ color: #f1f5f9;
+ font-size: 0.85rem;
+ font-weight: 600;
+ text-decoration: none;
+ transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+ cursor: pointer;
+ white-space: nowrap;
+ }
+ .topbar-btn:hover {
+ background: rgba(255, 255, 255, 0.12);
+ border-color: rgba(255, 255, 255, 0.25);
+ transform: none !important;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+ color: #ffffff;
+ }
+ .topbar-btn.purple {
+ background: rgba(168, 85, 247, 0.12);
+ border-color: rgba(168, 85, 247, 0.35);
+ color: #c084fc;
+ }
+ .topbar-btn.purple:hover {
+ background: rgba(168, 85, 247, 0.25);
+ box-shadow: 0 4px 14px rgba(168, 85, 247, 0.25);
+ color: #ffffff;
+ }
+ .topbar-btn.emerald {
+ background: rgba(16, 185, 129, 0.12);
+ border-color: rgba(16, 185, 129, 0.35);
+ color: #34d399;
+ }
+ .topbar-btn.emerald:hover {
+ background: rgba(16, 185, 129, 0.25);
+ box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+ color: #ffffff;
+ }
+ .topbar-btn.cyan {
+ background: rgba(56, 189, 248, 0.12);
+ border-color: rgba(56, 189, 248, 0.35);
+ color: #38bdf8;
+ }
+ .topbar-btn.cyan:hover {
+ background: rgba(56, 189, 248, 0.25);
+ box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+ color: #ffffff;
+ }
+ @media (max-width: 900px) {
+ .header-tools {
+ flex-wrap: wrap;
+ gap: 6px;
+ }
+ .topbar-btn {
+ padding: 4px 10px;
+ font-size: 0.78rem;
+ }
+ }
+
+/* ========================================================
+ HARUKI ECOSYSTEM - BESPOKE WHITE GLOWING VECTOR STYLING
+ ======================================================== */
+.quick-tags {
+ display: flex !important;
+ gap: 10px !important;
+ flex-wrap: wrap !important;
+ margin-top: 18px !important;
+}
+
+.quick-tags span {
+ display: inline-flex !important;
+ align-items: center !important;
+ gap: 8px !important;
+ padding: 6px 14px !important;
+ border: 1px solid rgba(255, 255, 255, 0.14) !important;
+ border-radius: 999px !important;
+ background: rgba(255, 255, 255, 0.05) !important;
+ font-size: 0.86rem !important;
+ font-weight: 600 !important;
+ color: #f1f5f9 !important;
+ line-height: 1 !important;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+ backdrop-filter: blur(10px) !important;
+}
+
+.quick-tags svg {
+ width: 16px !important;
+ height: 16px !important;
+ max-width: 16px !important;
+ max-height: 16px !important;
+ flex-shrink: 0 !important;
+ stroke: #ffffff !important;
+ filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) !important;
+ display: inline-block !important;
+ vertical-align: middle !important;
+}
+
+.player-btn-svg {
+ width: 15px !important;
+ height: 15px !important;
+ stroke: #ffffff !important;
+ fill: none;
+ filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+ vertical-align: middle;
+ display: inline-block;
+}
+
+.feature-icon-box {
+ width: 48px;
+ height: 48px;
+ border-radius: 14px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-bottom: 16px;
+ background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(99, 102, 241, 0.2));
+ border: 1.5px solid rgba(56, 189, 248, 0.55);
+ box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+
+.feature-icon-box svg {
+ width: 24px;
+ height: 24px;
+ stroke: #ffffff;
+ filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85));
+}
+
+.fx-btn {
+ display: inline-flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ gap: 6px !important;
+ font-weight: 600 !important;
+}
+
+.fx-btn svg {
+ width: 14px;
+ height: 14px;
+ stroke: #ffffff;
+ filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+.game-tab-btn {
+ display: inline-flex !important;
+ align-items: center !important;
+ gap: 6px !important;
+}
+
+.game-tab-btn svg {
+ width: 15px;
+ height: 15px;
+ stroke: #ffffff;
+ filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+
+/* Custom Cyber Dark Dropdowns (Replace Chrome native OS UI) */
+select.game-select, select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #0b1329 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 10px 40px 10px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+select:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+select option {
+  background-color: #0b1329 !important;
+  color: #f8fafc !important;
+  padding: 12px !important;
+}
+
+</style>
+
+<style>
+.hero-actions {
+  display: flex !important;
+  gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 36px !important;
+  margin-bottom: 24px !important;
+  flex-wrap: wrap !important;
+}
+.hero-actions .btn {
+  transform: none !important;
+}
+.hero-actions .btn:hover {
+  transform: none !important;
+  filter: brightness(1.15) !important;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.5) !important;
+}
+.feature-card:hover {
+  transform: none !important;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3) !important;
+}
+.fx-btn:hover, .game-tab-btn:hover, .pill-btn:hover {
+  transform: none !important;
+  filter: brightness(1.12) !important;
+}
+
+/* Custom Cyber Dark Dropdowns (Replace Chrome native OS UI) */
+select.game-select, select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #0b1329 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 10px 40px 10px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+select:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+select option {
+  background-color: #0b1329 !important;
+  color: #f8fafc !important;
+  padding: 12px !important;
+}
+
+</style>
+
+<style>
+/* ========================================================
+   HARUBOT LUXURY GLASSMORPHIC ECOSYSTEM NAVBAR & MOBILE DRAWER
+   ======================================================== */
+.navbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  width: 100% !important;
+  background: rgba(7, 9, 19, 0.88) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5) !important;
+  padding: 14px 0 !important;
+}
+.navbar-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+.navbar-content .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+}
+.brand-avatar-box {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  border: 1.5px solid rgba(129, 140, 248, 0.5) !important;
+  overflow: hidden !important;
+  box-shadow: 0 0 14px rgba(129, 140, 248, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #090c1a !important;
+}
+.brand-avatar {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.brand-name {
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+}
+.brand-badge {
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  letter-spacing: 0.08em !important;
+  background: rgba(129, 140, 248, 0.12) !important;
+  color: #818cf8 !important;
+  border: 1px solid rgba(129, 140, 248, 0.38) !important;
+}
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 22px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+}
+.nav-links li {
+  white-space: nowrap !important;
+}
+.nav-links a, .nav-link {
+  color: #94a3b8 !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+.nav-links a:hover, .nav-link:hover {
+  color: #ffffff !important;
+}
+@media (min-width: 901px) {
+  .mod-mobile-drawer {
+    display: none !important;
+  }
+}
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.mod-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: rgba(6, 9, 18, 0.96);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  padding: 16px 20px 24px 20px;
+  z-index: 999;
+  flex-direction: column;
+  animation: modDrawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.mod-mobile-drawer.open {
+  display: flex !important;
+}
+@keyframes modDrawerSlide {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mod-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mod-drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+}
+.mod-drawer-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+.mod-drawer-link svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    height: 60px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .navbar-content {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0 !important;
+    padding: 0 16px !important;
+    height: 100% !important;
+  }
+  .navbar-content .nav-links {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+  #bot-topbar-invite {
+    display: none !important;
+  }
+}
+</style>
+<style>
+/* ========================================================
+   CUSTOM CYBER GLASSMORPHIC DROPDOWNS (REPLACE NATIVE OS SELECT)
+   ======================================================== */
+.select-wrap, .form-group {
+  position: relative;
+}
+.cyber-dropdown-wrap {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  user-select: none !important;
+}
+.cyber-dropdown-trigger {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #0b1329 !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 12px !important;
+  color: #f8fafc !important;
+  padding: 11px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+}
+.cyber-dropdown-trigger:hover, .cyber-dropdown-wrap.open .cyber-dropdown-trigger {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+  background: #0f1738 !important;
+}
+.cyber-dropdown-text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  padding-right: 10px !important;
+}
+.cyber-dropdown-arrow {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: #38bdf8 !important;
+  stroke-width: 2.5 !important;
+  fill: none !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.25s ease !important;
+}
+.cyber-dropdown-wrap.open .cyber-dropdown-arrow {
+  transform: rotate(180deg) !important;
+}
+.cyber-dropdown-menu {
+  display: none !important;
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: rgba(11, 19, 41, 0.98) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.5) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(56, 189, 248, 0.25) !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+  padding: 6px !important;
+  animation: cyberMenuOpen 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+.cyber-dropdown-wrap.open .cyber-dropdown-menu {
+  display: block !important;
+}
+@keyframes cyberMenuOpen {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cyber-dropdown-item {
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #cbd5e1 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 2px !important;
+}
+.cyber-dropdown-item:hover {
+  background: rgba(56, 189, 248, 0.18) !important;
+  color: #38bdf8 !important;
+  transform: none !important;
+}
+.cyber-dropdown-item.active {
+  background: rgba(56, 189, 248, 0.28) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+.cyber-dropdown-item.active::after {
+  content: "✓" !important;
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+  margin-left: 8px !important;
+}
+.cyber-dropdown-menu::-webkit-scrollbar {
+  width: 6px !important;
+}
+.cyber-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4) !important;
+  border-radius: 3px !important;
+}
+
+/* ========================================================
+   FULL-WIDTH PC NAVBAR & GLUED MOBILE DRAWER
+   ======================================================== */
+.navbar {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  background: rgba(7, 9, 19, 0.92) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6) !important;
+  padding: 14px 0 !important;
+}
+.navbar-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 0 40px !important;
+  box-sizing: border-box !important;
+}
+.mod-mobile-drawer {
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: rgba(6, 9, 18, 0.98) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8) !important;
+  padding: 16px 20px 24px 20px !important;
+  z-index: 999 !important;
+  flex-direction: column !important;
+}
+.mod-mobile-drawer.open {
+  display: flex !important;
+}
+body.drawer-open {
+  overflow: hidden !important;
+}
+
+@media (min-width: 901px) {
+  .mod-mobile-drawer, #bot-mobile-drawer, .mobile-menu-btn, #bot-mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+/* Perfect 3x2 Grid for Features Section */
+.features {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="glow glow-one"></div><div class="glow glow-two"></div>
+<header class="navbar">
+  <div class="navbar-content">
+    <a href="./index.html" class="brand">
+      <div class="brand-avatar-box" style="border-color:rgba(129,140,248,0.5); box-shadow:0 0 14px rgba(129,140,248,0.35);">
+        <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="brand-avatar">
+      </div>
+      <span class="brand-name">HARUBOT</span>
+      <span class="brand-badge" style="background:rgba(129,140,248,0.12); color:#818cf8; border:1px solid rgba(129,140,248,0.38);">ENTERTAINMENT</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="./index.html" class="nav-link"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;margin-right:5px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span data-i18n="navBack">Về Portal Chính</span></a></li>
+      <li><a href="./harumod.html" class="nav-link" style="color:#10b981;font-weight:700;"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;margin-right:5px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>HaruMod</span></a></li>
+      <li><a href="#commands" class="nav-link"><span data-i18n="navCommands">Lệnh Bot</span></a></li>
+      <li><a href="./harubot-terms.html" class="nav-link"><span data-i18n="navTerms">Điều Khoản</span></a></li>
+      <li><a href="./harubot-privacy.html" class="nav-link"><span data-i18n="navPrivacy">Bảo Mật</span></a></li>
+    </ul>
+
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div class="lang-switch-wrap">
+        <button class="lang-btn active" id="lang-vi" onclick="setAppLanguage('vi')" type="button">VI</button>
+        <button class="lang-btn" id="lang-en" onclick="setAppLanguage('en')" type="button">EN</button>
+      </div>
+
+      <a href="https://discord.com/oauth2/authorize?client_id=1559868779951886338&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-primary btn-sm" id="bot-topbar-invite" style="height:38px;background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span data-i18n="invite">Mời HaruBot</span>
+      </a>
+
+      <!-- Mobile Menu Hamburger Button -->
+      <button id="bot-mobile-menu-btn" class="mobile-menu-btn" onclick="toggleHaruBotMobileMenu()" aria-label="Toggle navigation">
+        <svg class="hamburger-bars-icon" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg class="hamburger-close-icon" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;display:none;" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+<span id="connection-label" style="display:none;"></span>
+
+  <!-- Anchored Mobile Drawer (Zero gap on scroll) -->
+<div id="bot-mobile-drawer" class="mod-mobile-drawer">
+  <div class="mod-drawer-inner">
+    <a href="./index.html" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="navBack">Về Portal Chính</span>
+    </a>
+    <a href="./harumod.html" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link" style="color:#10b981;">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>HaruMod</span>
+    </a>
+    <a href="#commands" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link">
+      <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      <span data-i18n="navCommands">Lệnh Bot</span>
+    </a>
+    <a href="./harubot-terms.html" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span data-i18n="navTerms">Điều Khoản</span>
+    </a>
+    <a href="./harubot-privacy.html" onclick="toggleHaruBotMobileMenu()" class="mod-drawer-link">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span data-i18n="navPrivacy">Bảo Mật</span>
+    </a>
+    <a href="https://discord.com/oauth2/authorize?client_id=1559868779951886338&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-primary btn-sm" style="margin-top:10px;justify-content:center;background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span data-i18n="invite">Mời HaruBot Vào Server</span>
+    </a>
+  </div>
+</div>
+
+</header>
+<main class="shell">
+
+
+<!-- Mobile Navigation Drawer -->
+
+<section class="hero" id="home">
+<div class="hero-copy">
+<p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">NHẠC HAY · GAME VUI · CÙNG BẠN BÈ</span></p>
+<h1><span data-i18n="titleLine1">Chơi vui</span><br /><span class="gradient-text gradient-text-flowing" data-i18n="titleLine2">cùng Haru.</span></h1>
+<p class="intro" data-i18n="intro">Nghe nhạc, xem lyrics đồng bộ, thả cần câu cá và tích lũy RuCoin ngay trong máy chủ Discord của bạn.</p>
+<div class="actions">
+<button class="button button-primary" id="invite-button" type="button"><span data-i18n="invite">Thêm HaruBot</span><span aria-hidden="true">↗</span></button>
+<button class="button button-secondary" id="support-button" type="button"><span class="discord-glyph" aria-hidden="true">◉</span><span data-i18n="community">Máy chủ cộng đồng</span></button>
+</div>
+<p class="hint" id="hint">Mở Activity này trong Discord để bắt đầu khám phá.</p>
+<div class="quick-tags"><span><svg class='svg-icon' viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg><span data-i18n="tagMusic">Âm nhạc</span></span><span><svg class='svg-icon' viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v7a4.5 4.5 0 0 1-9 0v-2"/><path d="m3 11 3 2.5"/><path d="M15 11c1.5-1 3.5-1 5 0M14 15c2-1 4.5-1 6.5 0"/></svg><span data-i18n="tagFishing">Câu cá</span></span><span><svg class='svg-icon' viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="10" y2="9"/><line x1="17" y1="3" x2="14" y2="9"/></svg>RuCoin</span></div>
+</div>
+
+<div class="hero-art" aria-label="HaruBot music and fishing illustrations">
+<div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+<div class="showcase-grid">
+<article class="showcase-card music-showcase">
+<div class="card-head"><span class="tiny-brand"><span class="tiny-mark">H</span>HARUBOT</span><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+<div class="album-art" role="img" aria-label="Colorful music player illustration"><div class="vinyl"><span></span></div><div class="album-sparkle"></div><span class="album-bars"></span></div>
+<p class="card-kicker" data-i18n="musicKicker">ÂM NHẠC</p>
+<h2 data-i18n="musicTitle">Bật bài yêu thích.</h2>
+<p class="card-caption" data-i18n="musicCaption">Playlist · Điều khiển dễ dàng</p>
+<div class="mini-progress"><span></span></div>
+</article>
+<article class="showcase-card fish-showcase">
+<div class="card-head"><span class="tiny-brand"><span class="tiny-mark coin-mark">◈</span>RUCOIN</span><span class="tiny-status"><span class="live-dot"></span>GAME</span></div>
+<div class="mini-aquarium" aria-label="Minh họa cá hoạt hình trong hồ">
+<span class="bubble bubble-a"></span><span class="bubble bubble-b"></span><span class="bubble bubble-c"></span>
+<svg class="fish fish-one" viewBox="0 0 120 68" role="img" aria-label="Gold fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+<svg class="fish fish-two" viewBox="0 0 120 68" role="img" aria-label="Blue fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+<svg class="fish fish-three" viewBox="0 0 120 68" role="img" aria-label="Pink fish"><path class="fish-body" d="M25 34C39 12 75 12 91 34 75 56 39 56 25 34Z"/><path class="fish-tail" d="M28 34 7 16l4 18-4 18 21-18Z"/><path class="fish-fin" d="M52 18 64 5l7 16M52 50l12 13 7-16"/><circle class="fish-eye" cx="77" cy="29" r="3"/><path class="fish-shine" d="M48 34q11-9 19 0-8 11-19 0Z"/></svg>
+<span class="water-label" data-i18n="waterLabel">HỒ CÁ HARU</span>
+</div>
+<p class="card-kicker" data-i18n="fishKicker">CÂU CÁ & TÍCH LŨY</p>
+<h2 data-i18n="fishTitle">Thử vận may nào!</h2>
+<p class="card-caption" data-i18n="fishCaption">Câu cá · Chơi game · RuCoin</p>
+<div class="coin-pill"><span>◈</span><span data-i18n="coinLabel">Kiếm RuCoin cùng bạn bè</span></div>
+</article>
+</div>
+<div class="floating-note note-one"><svg style='width:20px;height:20px;stroke:#fff;fill:none;' viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#fff"/><circle cx="18" cy="16" r="3" fill="#fff"/></svg></div><div class="floating-note note-two"><svg style='width:16px;height:16px;stroke:#fff;fill:#fff;' viewBox="0 0 24 24"><polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"/></svg></div><div class="floating-note note-three">◈</div>
+</div>
+<article class="feature-card"><span class="feature-icon icon-fx" style="background:linear-gradient(135deg,rgba(56,189,248,0.25),rgba(99,102,241,0.2));border:1.5px solid rgba(56,189,248,0.55);"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" style="width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#38bdf8"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#38bdf8"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#38bdf8"/></svg></span><div><h3 data-i18n="featureFx">10+ Bộ Lọc MusicFX</h3><p data-i18n="featureFxText">Soft Bass, Super Bass, 8D Audio, Lofi Chill và bộ hiệu ứng âm thanh thời gian thực.</p></div><span class="card-arrow">↗</span></article>
 </section>
 
  
@@ -2000,7 +3163,7 @@ select option {
  const I18N_DICTIONARY = {
  vi: {
  previewBadge: "BẢN XEM TRƯỚC HARUBOT",
- navCommands: "Lệnh Bot",
+ navCommands: "Lệnh & Hướng dẫn",
  eyebrow: "NHẠC HAY · GAME VUI · CÙNG BẠN BÈ",
  titleLine1: "Chơi vui",
  titleLine2: "cùng Haru.",
@@ -2029,6 +3192,9 @@ select option {
  featureCoinText: "Chơi game và tích lũy RuCoin cùng cộng đồng.",
  featureGames: "Trò chơi cộng đồng",
  featureGamesText: "Thêm hoạt động vui vẻ để mọi người cùng tham gia.",
+ featureFx: "10+ Bộ Lọc MusicFX",
+ featureFxText: "Soft Bass, Super Bass, 8D Audio, Lofi Chill và bộ hiệu ứng âm thanh thời gian thực.",
+ navCommands: "Lệnh & Hướng dẫn",
  footerMade: 'Made for good moments<span class="heart"></span>',
  guideEyebrow: "BẮT ĐẦU NHANH",
  guideTitle: "Cách dùng & tất cả lệnh",
@@ -2145,7 +3311,7 @@ select option {
  },
  en: {
  previewBadge: "HARUBOT PREVIEW",
- navCommands: "Lệnh Bot",
+ navCommands: "Lệnh & Hướng dẫn",
  eyebrow: "GOOD MUSIC · FUN GAMES · WITH FRIENDS",
  titleLine1: "Play your way",
  titleLine2: "with Haru.",
@@ -2174,6 +3340,9 @@ select option {
  featureCoinText: "Play games and collect RuCoin with your community.",
  featureGames: "Community games",
  featureGamesText: "Give everyone more fun activities to play together.",
+ featureFx: "10+ MusicFX Audio Filters",
+ featureFxText: "Soft Bass, Super Bass, 8D Audio, Lofi Chill, and real-time audio enhancers.",
+ navCommands: "Commands & Guide",
  footerMade: 'Made for good moments<span class="heart"></span>',
  guideEyebrow: "GETTING STARTED",
  guideTitle: "How to use HaruBot",
@@ -2536,7 +3705,7 @@ select option {
     navHaruMod: "HaruMod",
     navTerms: "Terms",
     navPrivacy: "Privacy",
-    navCommands: "Commands",
+    navCommands: "Commands & Guide",
     navPreview: "HARUBOT DEMO PREVIEW",
     backpackBtnLabel: "Backpack",
     labelIsland: "SELECT REGION / WATERS",
@@ -2552,7 +3721,7 @@ select option {
     navHaruMod: "HaruMod",
     navTerms: "Điều Khoản",
     navPrivacy: "Bảo Mật",
-    navCommands: "Lệnh Bot",
+    navCommands: "Lệnh & Hướng dẫn",
     navPreview: "BẢN XEM TRƯỚC HARUBOT",
     backpackBtnLabel: "Túi đồ",
     labelIsland: "CHỌN QUẦN ĐẢO / VỰC NƯỚC",
@@ -2578,7 +3747,12 @@ select option {
         if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
           el.placeholder = dict[k];
         } else {
-          el.innerHTML = dict[k];
+          const svg = el.querySelector("svg");
+          if (svg) {
+            el.innerHTML = svg.outerHTML + " " + dict[k];
+          } else {
+            el.innerHTML = dict[k];
+          }
         }
       }
     });
@@ -4469,6 +5643,265 @@ document.addEventListener("click", function(e) {
     }
   }
 });
+</script>
+
+
+<script>
+// ========================================================
+// CUSTOM CYBER DROPDOWNS CONTROLLER
+// ========================================================
+function initCustomCyberDropdowns() {
+  document.querySelectorAll("select.game-select, #command-category").forEach(select => {
+    if (select.dataset.customized === "true") {
+      // If already initialized, update options
+      const wrap = select.closest(".cyber-dropdown-wrap");
+      if (wrap) {
+        const triggerText = wrap.querySelector(".cyber-dropdown-text");
+        const menu = wrap.querySelector(".cyber-dropdown-menu");
+        if (triggerText && menu) {
+          menu.innerHTML = "";
+          const selOpt = select.options[select.selectedIndex] || select.options[0];
+          if (selOpt) triggerText.innerText = selOpt.text;
+          Array.from(select.options).forEach((opt, idx) => {
+            const item = document.createElement("div");
+            item.className = "cyber-dropdown-item" + (idx === select.selectedIndex ? " active" : "");
+            item.innerText = opt.text;
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              select.selectedIndex = idx;
+              triggerText.innerText = opt.text;
+              menu.querySelectorAll(".cyber-dropdown-item").forEach(i => i.classList.remove("active"));
+              item.classList.add("active");
+              wrap.classList.remove("open");
+              select.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+            menu.appendChild(item);
+          });
+        }
+      }
+      return;
+    }
+
+    select.dataset.customized = "true";
+    select.style.display = "none";
+
+    const wrap = document.createElement("div");
+    wrap.className = "cyber-dropdown-wrap";
+    select.parentNode.insertBefore(wrap, select);
+    wrap.appendChild(select);
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "cyber-dropdown-trigger";
+
+    const triggerText = document.createElement("span");
+    triggerText.className = "cyber-dropdown-text";
+
+    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    arrow.setAttribute("viewBox", "0 0 24 24");
+    arrow.setAttribute("class", "cyber-dropdown-arrow");
+    arrow.innerHTML = "<polyline points='6 9 12 15 18 9'></polyline>";
+
+    trigger.appendChild(triggerText);
+    trigger.appendChild(arrow);
+    wrap.appendChild(trigger);
+
+    const menu = document.createElement("div");
+    menu.className = "cyber-dropdown-menu";
+    wrap.appendChild(menu);
+
+    function syncOptions() {
+      menu.innerHTML = "";
+      const selOpt = select.options[select.selectedIndex] || select.options[0];
+      triggerText.innerText = selOpt ? selOpt.text : "Select...";
+
+      Array.from(select.options).forEach((opt, idx) => {
+        const item = document.createElement("div");
+        item.className = "cyber-dropdown-item" + (idx === select.selectedIndex ? " active" : "");
+        item.innerText = opt.text;
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          select.selectedIndex = idx;
+          triggerText.innerText = opt.text;
+          menu.querySelectorAll(".cyber-dropdown-item").forEach(i => i.classList.remove("active"));
+          item.classList.add("active");
+          wrap.classList.remove("open");
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+        menu.appendChild(item);
+      });
+    }
+
+    syncOptions();
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      document.querySelectorAll(".cyber-dropdown-wrap.open").forEach(w => {
+        if (w !== wrap) w.classList.remove("open");
+      });
+      syncOptions();
+      wrap.classList.toggle("open");
+    });
+
+    select.addEventListener("change", () => {
+      const selOpt = select.options[select.selectedIndex];
+      if (selOpt) triggerText.innerText = selOpt.text;
+    });
+  });
+}
+
+// Global click closes custom dropdowns
+document.addEventListener("click", () => {
+  document.querySelectorAll(".cyber-dropdown-wrap.open").forEach(w => w.classList.remove("open"));
+});
+
+// ========================================================
+// MOBILE DRAWER CONTROLLER WITH BODY SCROLL LOCK
+// ========================================================
+function toggleHaruBotMobileMenu() {
+  const drawer = document.getElementById("bot-mobile-drawer");
+  const btn = document.getElementById("bot-mobile-menu-btn");
+  if (!drawer || !btn) return;
+  const isOpen = drawer.classList.toggle("open");
+  const bars = btn.querySelector(".hamburger-bars-icon");
+  const close = btn.querySelector(".hamburger-close-icon");
+  if (bars && close) {
+    bars.style.display = isOpen ? "none" : "block";
+    close.style.display = isOpen ? "block" : "none";
+  }
+  if (isOpen) {
+    document.body.classList.add("drawer-open");
+  } else {
+    document.body.classList.remove("drawer-open");
+  }
+}
+
+// Close drawer on scroll or click outside
+window.addEventListener("scroll", function() {
+  const drawer = document.getElementById("bot-mobile-drawer");
+  if (drawer && drawer.classList.contains("open")) {
+    toggleHaruBotMobileMenu();
+  }
+}, { passive: true });
+
+// ========================================================
+// HARUBOT COMMAND DIRECTORY POPULATION ENGINE
+// ========================================================
+const HARUBOT_COMMANDS_DATA = [
+  // Music
+  { cat: "music", name: "/play", descVi: "Phát bài hát, playlist từ YouTube hoặc Spotify", descEn: "Play a song, playlist, or music link", badge: "" },
+  { cat: "music", name: "/pause", descVi: "Tạm dừng bài hát đang phát", descEn: "Pause current playback", badge: "" },
+  { cat: "music", name: "/resume", descVi: "Tiếp tục phát nhạc", descEn: "Resume playback", badge: "" },
+  { cat: "music", name: "/skip", descVi: "Bỏ qua bài hát hiện tại", descEn: "Skip current track", badge: "" },
+  { cat: "music", name: "/queue", descVi: "Xem danh sách các bài hát trong hàng chờ", descEn: "View upcoming track queue", badge: "" },
+  { cat: "music", name: "/stop", descVi: "Dừng phát nhạc và xóa toàn bộ hàng chờ", descEn: "Stop music and clear queue", badge: "" },
+  { cat: "music", name: "/lyrics", descVi: "Hiển thị lời bài hát (lyrics) đồng bộ theo thời gian thực", descEn: "Display synced real-time lyrics", badge: "" },
+  { cat: "music", name: "/musicfx", descVi: "Mở bảng 10 bộ lọc âm thanh MusicFX (Soft Bass, 8D, Lofi)", descEn: "Open 10 MusicFX audio filters panel", badge: "Premium" },
+  { cat: "music", name: "/volume", descVi: "Điều chỉnh âm lượng phát nhạc (0 - 200%)", descEn: "Adjust music playback volume", badge: "" },
+  { cat: "music", name: "/loop", descVi: "Bật/Tắt chế độ lặp bài hát hoặc lặp hàng chờ", descEn: "Toggle repeat single track or queue", badge: "" },
+  // Fishing
+  { cat: "fishing", name: "/fish", descVi: "Thả cần câu cá tại vùng nước đang đứng", descEn: "Cast fishing rod to catch fish & loot", badge: "" },
+  { cat: "fishing", name: "/fishskills", descVi: "Nâng cấp cây kỹ năng câu cá hoặc mở khóa skip minigame", descEn: "Upgrade fishing skill tree with RuCoin", badge: "" },
+  { cat: "fishing", name: "/fishprofile", descVi: "Xem danh hiệu, cấp độ, EXP và thông số ngư dân", descEn: "View fishing level, EXP, and title", badge: "" },
+  { cat: "fishing", name: "/fishinventory", descVi: "Mở túi đồ kiểm tra cá câu được và nguyên liệu rèn", descEn: "View fish and material inventory", badge: "" },
+  { cat: "fishing", name: "/fishequip", descVi: "Trang bị cần câu, mồi câu và phụ kiện hỗ trợ", descEn: "Equip rod, bait, and fishing accessories", badge: "" },
+  { cat: "fishing", name: "/fishsell", descVi: "Bán cá trong túi để nhận RuCoin", descEn: "Sell caught fish for RuCoin", badge: "" },
+  { cat: "fishing", name: "/fishforge", descVi: "Đến xưởng rèn để cường hóa sao cho cần câu", descEn: "Forge and enhance fishing rod stars", badge: "" },
+  { cat: "fishing", name: "/fishaquarium", descVi: "Nuôi cá trong Thủy Cung để nhận RuCoin thụ động mỗi 10s", descEn: "Place fish in aquarium for passive RuCoin", badge: "" },
+  { cat: "fishing", name: "/fishboss", descVi: "Tham gia săn trùm Thủy Quái Leviathan cùng server", descEn: "Raid Leviathan ocean boss with server", badge: "" },
+  // Economy
+  { cat: "economy", name: "/daily", descVi: "Điểm danh nhận RuCoin miễn phí mỗi ngày", descEn: "Claim free daily RuCoin rewards", badge: "" },
+  { cat: "economy", name: "/rucoin", descVi: "Kiểm tra số dư ví RuCoin và lịch sử giao dịch", descEn: "Check RuCoin balance and wallet", badge: "" },
+  { cat: "economy", name: "/transfer", descVi: "Chuyển RuCoin cho bạn bè trong server", descEn: "Transfer RuCoin to friends", badge: "" },
+  { cat: "economy", name: "/coinflip", descVi: "Tung đồng xu may rủi đặt cược RuCoin", descEn: "Bet RuCoin on a coinflip duel", badge: "" },
+  // Utility & Admin
+  { cat: "other", name: "/help", descVi: "Mở menu hướng dẫn tra cứu tính năng của HaruBot", descEn: "Open interactive HaruBot help menu", badge: "" },
+  { cat: "other", name: "/language", descVi: "Chuyển đổi ngôn ngữ bot (Tiếng Việt / English)", descEn: "Switch bot language (VI / EN)", badge: "Admin" },
+  { cat: "other", name: "/prefix", descVi: "Tùy chỉnh tiền tố lệnh cho server", descEn: "Change custom command prefix", badge: "Admin" },
+  { cat: "other", name: "/ping", descVi: "Kiểm tra độ trễ WebSocket và bot API", descEn: "Check bot latency and response time", badge: "" }
+];
+
+function renderHaruBotCommandList() {
+  const container = document.getElementById("command-list");
+  if (!container) return;
+
+  const searchInput = document.getElementById("command-search");
+  const catSelect = document.getElementById("command-category");
+  const countEl = document.getElementById("command-count");
+
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+  const cat = catSelect ? catSelect.value : "all";
+  const isEn = (window.currentLang === "en");
+
+  const filtered = HARUBOT_COMMANDS_DATA.filter(cmd => {
+    const matchCat = (cat === "all" || cmd.cat === cat);
+    const desc = isEn ? cmd.descEn.toLowerCase() : cmd.descVi.toLowerCase();
+    const matchQuery = !query || cmd.name.toLowerCase().includes(query) || desc.includes(query);
+    return matchCat && matchQuery;
+  });
+
+  if (countEl) {
+    countEl.innerText = isEn ? `${filtered.length} commands` : `${filtered.length} lệnh`;
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:40px;color:#94a3b8;font-size:14px;">${isEn ? "No commands found matching your search." : "Không tìm thấy lệnh nào phù hợp."}</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(cmd => {
+    const desc = isEn ? cmd.descEn : cmd.descVi;
+    const badgeHtml = cmd.badge ? `<span style="font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(129,140,248,0.18);border:1px solid rgba(129,140,248,0.4);color:#818cf8;font-weight:700;">${cmd.badge}</span>` : "";
+    return `
+      <article class="command-item" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <code style="font-family:monospace;font-size:14px;color:#38bdf8;font-weight:700;background:rgba(56,189,248,0.1);padding:4px 10px;border-radius:6px;border:1px solid rgba(56,189,248,0.25);">${cmd.name}</code>
+          <span style="font-size:13.5px;color:#cbd5e1;font-weight:500;">${desc}</span>
+          ${badgeHtml}
+        </div>
+        <button type="button" class="btn-copy-cmd" onclick="copyCommand('${cmd.name}', this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:#94a3b8;padding:5px 10px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">
+          ${isEn ? "Copy" : "Sao chép"}
+        </button>
+      </article>
+    `;
+  }).join("");
+}
+
+function copyCommand(cmd, btn) {
+  navigator.clipboard.writeText(cmd).then(() => {
+    const originalText = btn.innerText;
+    btn.innerText = "✓ Copied!";
+    btn.style.color = "#38bdf8";
+    btn.style.borderColor = "#38bdf8";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.color = "";
+      btn.style.borderColor = "";
+    }, 1500);
+  });
+}
+
+// Hook live events
+document.addEventListener("DOMContentLoaded", () => {
+  initCustomCyberDropdowns();
+  renderHaruBotCommandList();
+
+  const searchInput = document.getElementById("command-search");
+  if (searchInput) searchInput.addEventListener("input", renderHaruBotCommandList);
+
+  const catSelect = document.getElementById("command-category");
+  if (catSelect) catSelect.addEventListener("change", () => {
+    renderHaruBotCommandList();
+  });
+});
+
+// Also re-render commands when language switches
+const origSetAppLanguage = window.setAppLanguage;
+window.setAppLanguage = function(lang) {
+  if (typeof origSetAppLanguage === "function") origSetAppLanguage(lang);
+  renderHaruBotCommandList();
+  initCustomCyberDropdowns();
+};
 </script>
 
 </body>
