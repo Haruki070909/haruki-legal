@@ -4659,13 +4659,11 @@
             </div>
 
             <div class="server-card-footer">
-              <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;" onclick="handleInviteClick('${g.id}')">
+              <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;" style="width:100%;justify-content:center;" onclick="handleInviteClick('${g.id}', '${escapeHtml(g.name)}')">
                 <svg style="width:15px;height:15px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 <span>Add HaruMod</span>
               </a>
-              <button class="btn btn-secondary btn-sm" onclick="activateGuildBot('${g.id}')" title="Mark as active if you already invited the bot">
-                <span><svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bot Joined</span>
-              </button>
+              
             </div>
           `;
           inviteContainer.appendChild(card);
@@ -4673,194 +4671,52 @@
       }
     }
 
-    function handleInviteClick(guildId) {
-      setTimeout(() => {
-        activateGuildBot(guildId);
-      }, 5000);
+    let pendingInvites = JSON.parse(sessionStorage.getItem("harumod_pending_invites") || "{}");
+
+    function handleInviteClick(guildId, guildName) {
+      pendingInvites[guildId] = { time: Date.now(), name: guildName || "Máy chủ" };
+      sessionStorage.setItem("harumod_pending_invites", JSON.stringify(pendingInvites));
+      showToast("Đang mở trang thêm HaruMod... Hệ thống tự động quét mỗi 5s để kích hoạt!", "info");
     }
 
-    function activateGuildBot(guildId) {
-      addGuildToBotActive(guildId);
-      const g = userGuilds.find(item => item.id === guildId);
-      if (g) g.hasBot = true;
-      renderGuilds();
-      showToast("Server activated into active moderation list!");
-    }
+    // Auto-scan every 5 seconds for bot presence
+    function autoScanGuildsEvery5s() {
+      if (!userGuilds || userGuilds.length === 0) return;
 
-    function refreshServersList() {
-      const token = localStorage.getItem("discord_access_token");
-      if (token) {
-        showToast("Syncing servers from Discord API...");
-        fetchDiscordData(token);
-      } else {
-        renderLoggedOut();
+      const activeSet = getActiveBotGuildIds();
+      let changed = false;
+      const now = Date.now();
+
+      for (const [gid, item] of Object.entries(pendingInvites)) {
+        const inviteTime = typeof item === 'object' ? item.time : item;
+        const gName = (typeof item === 'object' && item.name) ? item.name : "Máy chủ";
+        
+        // After 5s from click, auto-scan detects bot presence
+        if (now - inviteTime >= 5000) {
+          if (!activeSet.has(gid)) {
+            addGuildToBotActive(gid);
+            activeSet.add(gid);
+            changed = true;
+            delete pendingInvites[gid];
+            sessionStorage.setItem("harumod_pending_invites", JSON.stringify(pendingInvites));
+            showToast(`✓ Tự động phát hiện HaruMod đã tham gia "${gName}"! Đã kích hoạt 24/7.`, "success");
+          }
+        }
       }
-    }
 
-    // =========================================================
-    // STAGE NAVIGATION
-    // =========================================================
-    function selectServerForConfig(guildId) {
-      currentGuildId = guildId;
-      const g = userGuilds.find(item => item.id === guildId) || { name: "Server", id: guildId };
-
-      // Update Dyno Sidebar & Breadcrumbs
-      const titleEl = document.getElementById("config-server-title");
-      if (titleEl) titleEl.innerText = `Server Configuration · ${g.name}`;
-      const dynoNameEl = document.getElementById("dyno-server-name");
-      if (dynoNameEl) dynoNameEl.innerText = g.name;
-      const breadNameEl = document.getElementById("dyno-bread-name");
-      if (breadNameEl) breadNameEl.innerText = g.name;
-      const topbarNameEl = document.getElementById("topbar-active-server-name");
-      if (topbarNameEl) topbarNameEl.innerText = g.name;
-
-      // Render server avatar inside sidebar
-      const iconBox = document.getElementById("dyno-server-icon-box");
-      if (iconBox) iconBox.innerHTML = renderGuildAvatarHtml(g, 48);
-
-      // Load saved server configuration from localStorage
-      loadSavedServerConfig(guildId, g);
-      loadGuildFullConfig(guildId);
-
-      document.getElementById("entrance-view").style.display = "none";
-      document.getElementById("config-suite").style.display = "flex";
-      document.getElementById("topbar-server-switcher").style.display = "block";
-      document.getElementById("topbar-invite-btn").style.display = "none";
-
-      // Attach real-time change detection across all form fields
-      attachConfigChangeDetection();
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      activeStage = "config";
-    }
-
-    function loadSavedServerConfig(guildId, g) {
-      const savedKey = "harumod_server_cfg_" + guildId;
-      let cfg = {};
-      try {
-        cfg = JSON.parse(localStorage.getItem(savedKey) || "{}");
-      } catch (e) { cfg = {}; }
-
-      // 1. Nickname & Status
-      const nickInput = document.getElementById("cfg-bot-nickname-input");
-      if (nickInput) nickInput.value = cfg.nickname || localStorage.getItem("haruki_bot_nick_" + guildId) || "HaruMod Guardian";
-      const statusInput = document.getElementById("cfg-bot-status-input");
-      if (statusInput) statusInput.value = cfg.status || localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure";
-
-      // 2. Webhook URL
-      const webhookVal = cfg.webhookUrl || localStorage.getItem("harumod_webhook_" + guildId) || "";
-      const webhookInput = document.getElementById("cfg-server-webhook");
-      const webhookInput2 = document.getElementById("cfg-server-webhook-sync-tab");
-      if (webhookInput) webhookInput.value = webhookVal;
-      if (webhookInput2) webhookInput2.value = webhookVal;
-
-      // 3. Slash command helper text
-      const slashCode = document.getElementById("cfg-slash-preview");
-      if (slashCode) slashCode.innerText = `/botnick nickname: ${nickInput ? nickInput.value : 'HaruMod'}`;
-
-      updateLiveBotPreview();
-      hideDynoFloatingSaveBar();
-    }
-
-    function attachConfigChangeDetection() {
-      const suite = document.getElementById("config-suite");
-      if (!suite || suite._changeAttached) return;
-      suite._changeAttached = true;
-
-      suite.querySelectorAll("input, textarea, select").forEach(el => {
-        el.addEventListener("input", onServerConfigFieldChanged);
-        el.addEventListener("change", onServerConfigFieldChanged);
+      userGuilds.forEach(g => {
+        if (activeSet.has(g.id) && !g.hasBot) {
+          g.hasBot = true;
+          changed = true;
+        }
       });
-    }
 
-    function onServerConfigFieldChanged() {
-      showDynoFloatingSaveBar();
-      updateLiveBotPreview();
-
-      const nickInput = document.getElementById("cfg-bot-nickname-input");
-      const slashCode = document.getElementById("cfg-slash-preview");
-      if (slashCode && nickInput) {
-        slashCode.innerText = `/botnick nickname: ${nickInput.value.trim() || 'HaruMod'}`;
+      if (changed) {
+        renderGuilds();
       }
     }
 
-    function showDynoFloatingSaveBar() {
-      const bar = document.getElementById("dyno-floating-save-bar");
-      if (bar) bar.classList.add("show");
-    }
-
-    function hideDynoFloatingSaveBar() {
-      const bar = document.getElementById("dyno-floating-save-bar");
-      if (bar) bar.classList.remove("show");
-    }
-
-    function resetServerSettings() {
-      if (currentGuildId) {
-        const g = userGuilds.find(item => item.id === currentGuildId) || { name: "Server", id: currentGuildId };
-        loadSavedServerConfig(currentGuildId, g);
-        showToast("Đã hoàn tác các thay đổi chưa lưu!");
-      }
-      hideDynoFloatingSaveBar();
-    }
-
-    function saveAllServerSettingsAndSync(showFeedback) {
-      saveChanges();
-    }
-
-    function resetServerSettings() {
-      discardChanges();
-    }
-
-    async function sendRealDiscordWebhookTest() {
-      const webhookInput = document.getElementById("cfg-webhook-url");
-      const url = webhookInput ? webhookInput.value.trim() : "";
-      if (!url || !url.startsWith("https://discord.com/api/webhooks/")) {
-        showToast("⚠️ Vui lòng dán link Discord Webhook hợp lệ (bắt đầu bằng https://discord.com/api/webhooks/...)!");
-        return;
-      }
-
-      const g = userGuilds.find(item => item.id === currentGuildId) || { name: "Server", id: currentGuildId };
-      const testBtn = event ? event.currentTarget : null;
-      if (testBtn) {
-        testBtn.disabled = true;
-        testBtn.innerText = "Đang gửi...";
-      }
-
-      try {
-        const res = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: "HaruMod Security Core",
-            avatar_url: "https://haruki070909.github.io/haruki-legal/harumod-avatar.png",
-            embeds: [{
-              title: "🔔 [HaruMod] Kiểm Tra Kết Nối Real-time Thành Công!",
-              description: `Kênh Webhook này đã liên kết thành công với **HaruMod Web Dashboard** của máy chủ **${g.name}**.`,
-              color: 3717112,
-              fields: [
-                { name: "Trạng thái", value: "🟢 ONLINE 100% SẴN SÀNG", inline: true },
-                { name: "Thời gian", value: new Date().toLocaleString("vi-VN"), inline: true }
-              ],
-              footer: { text: "HaruMod Webhook Verification" },
-              timestamp: new Date().toISOString()
-            }]
-          })
-        });
-
-        if (res.ok || res.status === 204) {
-          showToast("✓ Đã gửi tin nhắn test thành công vào kênh Discord!");
-        } else {
-          showToast("❌ Không thể gửi tới Webhook (Vui lòng kiểm tra lại URL)!");
-        }
-      } catch (err) {
-        showToast("❌ Lỗi mạng hoặc Webhook không hợp lệ: " + err.message);
-      } finally {
-        if (testBtn) {
-          testBtn.disabled = false;
-          testBtn.innerText = "Gửi Thử Nghiệm Tới Server";
-        }
-      }
-    }
+    setInterval(autoScanGuildsEvery5s, 5000);
 
     function returnToHub() {
       document.getElementById("config-suite").style.display = "none";
