@@ -438,6 +438,33 @@ select option {
 
 
 
+
+/* Ultra-Smooth GPU-Accelerated Neon Cyan Wave Ripple (Zero Lag) */
+.neon-click-wave {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px #00f2fe, inset 0 0 8px rgba(0, 242, 254, 0.5);
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: neonWaveExpandGPU 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes neonWaveExpandGPU {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+  }
+}
+
 </style>
 
 
@@ -1138,22 +1165,7 @@ body.drawer-open {
 }
 </style>
 <style>
-/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
-.neon-click-wave {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
-  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-}
 
-@keyframes neonWaveExpand {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.95;
-  }
   50% {
     opacity: 0.7;
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
@@ -9061,185 +9073,12 @@ select option {
 
   <script>
 
-    // Spotlight follow
-
-    window.addEventListener("mousemove", (e) => {
-
-      document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
-
-      document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
-
-    });
+    
 
 
 
     
-  // Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
-  window.addEventListener("click", function(e) {
-    for (var i = 0; i < 2; i++) {
-      var wave = document.createElement("div");
-      wave.className = "neon-click-wave";
-      var baseSize = 20;
-      wave.style.width = baseSize + "px";
-      wave.style.height = baseSize + "px";
-      wave.style.left = (e.clientX - baseSize / 2) + "px";
-      wave.style.top = (e.clientY - baseSize / 2) + "px";
-      if (i === 1) {
-        wave.style.animationDelay = "0.12s";
-        wave.style.borderColor = "#38bdf8";
-      }
-      document.body.appendChild(wave);
-      setTimeout((function(el) { return function() { el.remove(); }; })(wave), 750);
-    }
-  });
-
-    function toggleHaruBotMobileMenu() {
-
-  const drawer = document.getElementById("bot-mobile-drawer");
-
-  const btn = document.getElementById("bot-mobile-menu-btn");
-
-  if (!drawer || !btn) return;
-
-  const isOpen = drawer.classList.toggle("open");
-
-  const bars = btn.querySelector(".hamburger-bars-icon");
-
-  const close = btn.querySelector(".hamburger-close-icon");
-
-  if (bars && close) {
-
-    bars.style.display = isOpen ? "none" : "block";
-
-    close.style.display = isOpen ? "block" : "none";
-
-  }
-
-}
-
-
-
-document.addEventListener("click", function(e) {
-
-  const drawer = document.getElementById("bot-mobile-drawer");
-
-  const btn = document.getElementById("bot-mobile-menu-btn");
-
-  if (drawer && drawer.classList.contains("open")) {
-
-    if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-
-      toggleHaruBotMobileMenu();
-
-    }
-
-  }
-
-});
-
-</script>
-
-
-
-
-<script>
-function initCustomCyberDropdowns() {
-  document.querySelectorAll("select.fishing-select, #command-category, select").forEach(select => {
-    if (select.dataset.customized === "true") {
-      const wrap = select.closest(".cyber-dropdown-wrap");
-      if (wrap) {
-        const triggerText = wrap.querySelector(".cyber-dropdown-text");
-        const menu = wrap.querySelector(".cyber-dropdown-menu");
-        if (triggerText && menu) {
-          menu.innerHTML = "";
-          const selOpt = select.options[select.selectedIndex] || select.options[0];
-          if (selOpt) triggerText.innerText = selOpt.text;
-          Array.from(select.options).forEach((opt, idx) => {
-            const item = document.createElement("div");
-            item.className = "cyber-dropdown-item" + (idx === select.selectedIndex ? " active" : "");
-            item.innerText = opt.text;
-            item.addEventListener("click", (e) => {
-              e.stopPropagation();
-              select.selectedIndex = idx;
-              triggerText.innerText = opt.text;
-              menu.querySelectorAll(".cyber-dropdown-item").forEach(i => i.classList.remove("active"));
-              item.classList.add("active");
-              wrap.classList.remove("open");
-              select.dispatchEvent(new Event("change", { bubbles: true }));
-            });
-            menu.appendChild(item);
-          });
-        }
-      }
-      return;
-    }
-
-    select.dataset.customized = "true";
-    select.style.display = "none";
-
-    const wrap = document.createElement("div");
-    wrap.className = "cyber-dropdown-wrap";
-    select.parentNode.insertBefore(wrap, select);
-    wrap.appendChild(select);
-
-    const trigger = document.createElement("button");
-    trigger.type = "button";
-    trigger.className = "cyber-dropdown-trigger";
-
-    const triggerText = document.createElement("span");
-    triggerText.className = "cyber-dropdown-text";
-
-    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    arrow.setAttribute("viewBox", "0 0 24 24");
-    arrow.setAttribute("class", "cyber-dropdown-arrow");
-    arrow.innerHTML = "<polyline points='6 9 12 15 18 9'></polyline>";
-
-    trigger.appendChild(triggerText);
-    trigger.appendChild(arrow);
-    wrap.appendChild(trigger);
-
-    const menu = document.createElement("div");
-    menu.className = "cyber-dropdown-menu";
-    wrap.appendChild(menu);
-
-    function syncOptions() {
-      menu.innerHTML = "";
-      const selOpt = select.options[select.selectedIndex] || select.options[0];
-      triggerText.innerText = selOpt ? selOpt.text : "Select...";
-
-      Array.from(select.options).forEach((opt, idx) => {
-        const item = document.createElement("div");
-        item.className = "cyber-dropdown-item" + (idx === select.selectedIndex ? " active" : "");
-        item.innerText = opt.text;
-        item.addEventListener("click", (e) => {
-          e.stopPropagation();
-          select.selectedIndex = idx;
-          triggerText.innerText = opt.text;
-          menu.querySelectorAll(".cyber-dropdown-item").forEach(i => i.classList.remove("active"));
-          item.classList.add("active");
-          wrap.classList.remove("open");
-          select.dispatchEvent(new Event("change", { bubbles: true }));
-        });
-        menu.appendChild(item);
-      });
-    }
-
-    syncOptions();
-
-    trigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      document.querySelectorAll(".cyber-dropdown-wrap.open").forEach(w => {
-        if (w !== wrap) w.classList.remove("open");
-      });
-      syncOptions();
-      wrap.classList.toggle("open");
-    });
-
-    select.addEventListener("change", () => {
-      const selOpt = select.options[select.selectedIndex];
-      if (selOpt) triggerText.innerText = selOpt.text;
-    });
-  });
+  
 }
 
 document.addEventListener("click", () => {
@@ -9381,6 +9220,29 @@ window.setAppLanguage = function(lang) {
   initCustomCyberDropdowns();
 };
 </script>
+
+
+  <!-- High-Performance Neon Wave Ripple on Click (GPU Composited) -->
+  <script>
+    (function() {
+      let lastClickTime = 0;
+      window.addEventListener("click", function(e) {
+        const now = performance.now();
+        if (now - lastClickTime < 50) return;
+        lastClickTime = now;
+
+        const wave = document.createElement("div");
+        wave.className = "neon-click-wave";
+        wave.style.left = e.clientX + "px";
+        wave.style.top = e.clientY + "px";
+        document.body.appendChild(wave);
+
+        wave.addEventListener("animationend", function() {
+          wave.remove();
+        }, { once: true });
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 
