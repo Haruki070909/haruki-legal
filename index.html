@@ -1132,6 +1132,34 @@
   gap: 8px !important;
 }
 </style>
+<style>
+/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
+.neon-click-wave {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
+  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes neonWaveExpand {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
+  }
+  100% {
+    transform: scale(7.5);
+    opacity: 0;
+    border-color: rgba(56, 189, 248, 0.1);
+  }
+}
+</style>
 </head>
 <body>
 
@@ -2124,34 +2152,26 @@
       document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
     });
 
-    // Explosive Spark Bursts on Click
-    window.addEventListener("click", (e) => {
-      const colors = ["#38bdf8", "#818cf8", "#10b981", "#34d399", "#f43f5e", "#ffffff"];
-      const sparkCount = 18;
-      for (let i = 0; i < sparkCount; i++) {
-        const spark = document.createElement("div");
-        spark.className = "cyber-spark";
-        const size = Math.random() * 5 + 3;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() - 0.5) * 0.4;
-        const distance = Math.random() * 65 + 35;
-        const tx = Math.cos(angle) * distance + "px";
-        const ty = Math.sin(angle) * distance + "px";
-
-        spark.style.width = size + "px";
-        spark.style.height = size + "px";
-        spark.style.backgroundColor = color;
-        spark.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
-        spark.style.left = e.clientX - size / 2 + "px";
-        spark.style.top = e.clientY - size / 2 + "px";
-        spark.style.setProperty("--tx", tx);
-        spark.style.setProperty("--ty", ty);
-
-        document.body.appendChild(spark);
-        setTimeout(() => spark.remove(), 650);
+    
+  // Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
+  window.addEventListener("click", function(e) {
+    for (var i = 0; i < 2; i++) {
+      var wave = document.createElement("div");
+      wave.className = "neon-click-wave";
+      var baseSize = 20;
+      wave.style.width = baseSize + "px";
+      wave.style.height = baseSize + "px";
+      wave.style.left = (e.clientX - baseSize / 2) + "px";
+      wave.style.top = (e.clientY - baseSize / 2) + "px";
+      if (i === 1) {
+        wave.style.animationDelay = "0.12s";
+        wave.style.borderColor = "#38bdf8";
       }
-    });
-  
+      document.body.appendChild(wave);
+      setTimeout((function(el) { return function() { el.remove(); }; })(wave), 750);
+    }
+  });
+
     // Mobile Drawer Toggle
     function togglePortalMobileMenu() {
       const drawer = document.getElementById("portal-mobile-drawer");
@@ -2177,5 +2197,20 @@
 
 </script>
 
+<script>
+  window.addEventListener("scroll", function() {
+    var drawer = document.getElementById("portal-mobile-drawer");
+    var btn = document.getElementById("portal-mobile-menu-btn");
+    if (drawer && drawer.classList.contains("open")) {
+      drawer.classList.remove("open");
+      if (btn) {
+        var bars = btn.querySelector(".hamburger-bars-icon");
+        var close = btn.querySelector(".hamburger-close-icon");
+        if (bars) bars.style.display = "block";
+        if (close) close.style.display = "none";
+      }
+    }
+  }, { passive: true });
+</script>
 </body>
 </html>
