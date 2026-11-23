@@ -929,6 +929,20 @@
   }
 }
 
+
+    /* Lazy Scroll Reveal - Render & Reveal only when scrolled into view */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 450px;
+    }
+    .scroll-reveal.is-revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
 </style>
 
 <style>
@@ -1295,7 +1309,7 @@
   <main class="container">
 
     <!-- Bots Showcase Section -->
-    <section id="bots">
+    <section id="bots" class="scroll-reveal">
       <div class="section-head">
         <span class="section-tag" data-i18n="secTagBots">HAI DÒNG SẢN PHẨM RIÊNG BIỆT</span>
         <h2 class="section-title" data-i18n="secTitleBots">Chọn Bot Phù Hợp Cho Máy Chủ Của Bạn</h2>
@@ -1308,7 +1322,7 @@
           <div>
             <div class="bot-header">
               <div class="bot-avatar-box cyan">
-                <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="bot-avatar">
+                <img src="./haru-avatar.webp" alt="HaruBot Avatar" class="bot-avatar" loading="lazy" decoding="async">
               </div>
               <div class="bot-header-info">
                 <h3>HaruBot <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); padding:3px 10px; border-radius:12px;">Entertainment</span></h3>
@@ -1370,7 +1384,7 @@
           <div>
             <div class="bot-header">
               <div class="bot-avatar-box emerald">
-                <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="bot-avatar">
+                <img src="./harumod-avatar.png" alt="HaruMod Avatar" class="bot-avatar" loading="lazy" decoding="async">
               </div>
               <div class="bot-header-info">
                 <h3>HaruMod <span style="font-size:0.75rem; font-weight:700; color:#10b981; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:3px 10px; border-radius:12px;">Security & Mod</span></h3>
@@ -1430,7 +1444,7 @@
     </section>
 
     <!-- Watcher Section -->
-    <section id="watcher" style="margin-top: 50px;">
+    <section id="watcher" class="scroll-reveal" style="margin-top: 50px;">
       <div class="card" style="border-left:4px solid var(--accent-purple); position:relative; overflow:hidden;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
           <div>
@@ -1456,10 +1470,10 @@
     </section>
 
     <!-- About Developer -->
-    <section id="about" style="margin-top: 50px;">
+    <section id="about" class="scroll-reveal" style="margin-top: 50px;">
       <div class="about-box">
         <div class="about-avatar-wrap">
-          <img id="discord-avatar" src="./haru-avatar.webp" alt="Haruki" class="about-avatar">
+          <img id="discord-avatar" src="./haru-avatar.webp" alt="Haruki" class="about-avatar" loading="lazy" decoding="async">
           <img id="discord-decoration" class="avatar-decoration" src="" style="display:none;" alt="">
           <span id="discord-status-dot" class="status-indicator offline" title="Discord: Ngoại tuyến"></span>
         </div>
@@ -1509,7 +1523,7 @@
     </section>
 
     <!-- Legal & Terms Section -->
-    <section id="legal" style="margin-top: 60px; margin-bottom: 80px;">
+    <section id="legal" class="scroll-reveal" style="margin-top: 60px; margin-bottom: 80px;">
       <div class="section-head">
         <span class="section-tag" data-i18n="secTagLegal">TRUNG TÂM PHÁP LÝ & XÁC MINH DISCORD</span>
         <h2 class="section-title" data-i18n="secTitleLegal">Điều Khoản Dịch Vụ & Chính Sách Quyền Riêng Tư</h2>
@@ -1710,16 +1724,10 @@
       }
     }
 
-    // Initial REST fetch
-    fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
-      .then(r => r.json())
-      .then(res => {
-        if (res.success && res.data) updatePresenceUI(res.data);
-      })
-      .catch(e => console.log("Lanyard fetch error", e));
-
-    // WebSocket real-time subscription
+    // Lazy Lanyard Connection: Only connect when user scrolls near #about
     let lanyardWs;
+    let lanyardInitialized = false;
+
     function connectLanyardWs() {
       try {
         lanyardWs = new WebSocket("wss://api.lanyard.rest/socket");
@@ -1745,13 +1753,43 @@
 
         lanyardWs.onclose = () => {
           clearInterval(heartbeatInterval);
-          setTimeout(connectLanyardWs, 5000);
+          if (lanyardInitialized) setTimeout(connectLanyardWs, 6000);
         };
       } catch(err) {
         console.log("WebSocket connect error", err);
       }
     }
-    connectLanyardWs();</script>
+
+    function initLanyardLazy() {
+      if (lanyardInitialized) return;
+      lanyardInitialized = true;
+
+      // REST fetch
+      fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
+        .then(r => r.json())
+        .then(res => {
+          if (res.success && res.data) updatePresenceUI(res.data);
+        })
+        .catch(e => console.log("Lanyard fetch error", e));
+
+      // WebSocket
+      connectLanyardWs();
+    }
+
+    const aboutTarget = document.getElementById("about");
+    if (aboutTarget && "IntersectionObserver" in window) {
+      const lObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            initLanyardLazy();
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "350px 0px" });
+      lObs.observe(aboutTarget);
+    } else {
+      initLanyardLazy();
+    }</script>
 
   <!-- Internationalization (VI/EN) Engine -->
   <script>
@@ -2070,5 +2108,30 @@
       }
     }, { passive: true });
   </script>
+
+  <!-- IntersectionObserver: Tới đâu mới tải và hiển thị tới đó (Zero Lag Scroll Reveal) -->
+  <script>
+    (function() {
+      const revealItems = document.querySelectorAll(".scroll-reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-revealed");
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: "0px 0px -40px 0px",
+          threshold: 0.05
+        });
+        revealItems.forEach(el => observer.observe(el));
+      } else {
+        revealItems.forEach(el => el.classList.add("is-revealed"));
+      }
+    })();
+  </script>
+
 </body>
 </html>
