@@ -2931,6 +2931,34 @@
   flex-shrink: 0 !important;
 }
 </style>
+<style>
+/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
+.neon-click-wave {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
+  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes neonWaveExpand {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
+  }
+  100% {
+    transform: scale(7.5);
+    opacity: 0;
+    border-color: rgba(56, 189, 248, 0.1);
+  }
+}
+</style>
 </head>
 <body>
   <canvas id="cyber-canvas"></canvas>
@@ -2962,7 +2990,7 @@
           </div>
           <a id="dropdown-add-server-btn" href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" style="text-decoration:none;display:flex;align-items:center;gap:8px;padding:12px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.08);color:var(--emerald-light);font-size:0.82rem;font-weight:700;">
             <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            <span data-i18n="dropdownAddBot">+ Add HaruMod to Other Server</span>
+            <span data-i18n="dropdownAddBot">Add HaruMod to Other Server</span>
           </a>
         </div>
       </div>
@@ -4133,7 +4161,7 @@
     </div>
 
     <!-- TAB 7: SIMULATOR -->
-    <div id="cfg-pane-sim" class="tab-pane">
+        <div id="cfg-pane-sim" class="tab-pane">
       <div class="panel-card">
         <div class="panel-header">
           <div>
@@ -4157,6 +4185,15 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="simulator-input-bar">
+            <input type="text" id="sim-input" class="input-field" placeholder="Type test message (e.g. free nitro at nitro-drop.ru)..." onkeydown="handleSimKey(event)">
+            <button class="btn btn-emerald btn-sm" onclick="sendSimMessage()" data-i18n="btnSendTest">Send Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
         <!-- TAB 8: DISCORD REAL-TIME SYNCHRONIZATION -->
         <div id="cfg-pane-sync" class="tab-pane">
@@ -4220,16 +4257,6 @@
             </div>
           </div>
         </div>
-
-          </div>
-
-          <div class="simulator-input-bar">
-            <input type="text" id="sim-input" class="input-field" placeholder="Type test message (e.g. free nitro at nitro-drop.ru)..." onkeydown="handleSimKey(event)">
-            <button class="btn btn-emerald btn-sm" onclick="sendSimMessage()" data-i18n="btnSendTest">Send Test</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
       </div> <!-- /.dyno-panes-wrapper -->
     </section> <!-- /.dyno-main-content -->
@@ -4541,7 +4568,7 @@
         activeContainer.innerHTML = `
           <div style="grid-column:1/-1;background:rgba(255,255,255,0.02);border:1px dashed var(--dash-border);border-radius:18px;padding:42px 24px;text-align:center;">
             <p style="color:var(--text-dim);font-size:1rem;margin-bottom:8px;font-weight:700;">No active servers with HaruMod found</p>
-            <p style="color:var(--text-muted);font-size:0.86rem;">Select one of your managed servers below and click "+ Add HaruMod" to invite the bot.</p>
+            <p style="color:var(--text-muted);font-size:0.86rem;">Select one of your managed servers below and click "Add HaruMod" to invite the bot.</p>
           </div>
         `;
       } else {
@@ -4634,10 +4661,10 @@
             <div class="server-card-footer">
               <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;" onclick="handleInviteClick('${g.id}')">
                 <svg style="width:15px;height:15px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>+ Add HaruMod</span>
+                <span>Add HaruMod</span>
               </a>
               <button class="btn btn-secondary btn-sm" onclick="activateGuildBot('${g.id}')" title="Mark as active if you already invited the bot">
-                <span>✓ Bot Joined</span>
+                <span><svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bot Joined</span>
               </button>
             </div>
           `;
@@ -5160,7 +5187,7 @@
         mockSimSub: "Test malicious payloads or type custom messages to see HaruMod react in real-time",
 
         dropdownTitle: "Active Managed Servers",
-        dropdownAddBot: "+ Add HaruMod to Other Server",
+        dropdownAddBot: "Add HaruMod to Other Server",
         navHaruMod: "HaruMod",
         navFeatures: "Features",
         navCommands: "Commands",
