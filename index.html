@@ -720,7 +720,189 @@
         margin: 0 auto;
       }
     }
-  </style>
+  
+    /* Mobile Card Layout for Legal URLs Table */
+    @media (max-width: 768px) {
+      .legal-table thead {
+        display: none !important;
+      }
+      .legal-table, 
+      .legal-table tbody, 
+      .legal-table tr, 
+      .legal-table td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .legal-table tr {
+        padding: 18px 16px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        background: transparent !important;
+      }
+      .legal-table tr:last-child {
+        border-bottom: none !important;
+      }
+      .legal-table td {
+        padding: 0 !important;
+        border: none !important;
+      }
+      .legal-table td:nth-child(1) {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        font-size: 1.05rem !important;
+      }
+      .legal-table td:nth-child(2) {
+        font-size: 0.88rem !important;
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+      }
+      .legal-table td:nth-child(3) {
+        width: 100% !important;
+      }
+      .legal-table .url-chip {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        word-break: normal !important;
+        font-size: 0.76rem !important;
+        padding: 9px 12px !important;
+        border-radius: 8px !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #38bdf8 !important;
+        box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+      }
+      .legal-table .url-chip::-webkit-scrollbar {
+        display: none !important;
+      }
+      .legal-table td:nth-child(4) {
+        text-align: left !important;
+        margin-top: 4px !important;
+      }
+      .legal-table td:nth-child(4) .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 42px !important;
+        font-size: 0.9rem !important;
+      }
+    }
+
+
+    /* Smooth Scroll & Sticky Header Offset */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+    section[id], #about, #harubot, #harumod, #watcher, #legal {
+      scroll-margin-top: 90px !important;
+    }
+
+    /* Generous Bottom Spacing before Footer */
+    #legal {
+      margin-top: 70px !important;
+      margin-bottom: 90px !important;
+    }
+    .footer {
+      margin-top: 50px !important;
+      padding: 50px 0 60px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      background: rgba(5, 7, 15, 0.6) !important;
+    }
+    .footer-content {
+      padding: 24px 0 !important;
+      gap: 24px !important;
+    }
+
+    /* Mobile Responsive Card Layout for Legal Table */
+    @media (max-width: 768px) {
+      #cyber-canvas {
+        display: none !important; /* Hide messy green spiderweb particles on mobile */
+      }
+      .bg-grid {
+        opacity: 0.15 !important;
+      }
+      .legal-table thead {
+        display: none !important;
+      }
+      .legal-table, 
+      .legal-table tbody, 
+      .legal-table tr, 
+      .legal-table td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .legal-table tr {
+        padding: 18px 16px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        background: transparent !important;
+      }
+      .legal-table tr:last-child {
+        border-bottom: none !important;
+      }
+      .legal-table td {
+        padding: 0 !important;
+        border: none !important;
+      }
+      .legal-table td:nth-child(1) {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        font-size: 1.05rem !important;
+      }
+      .legal-table td:nth-child(2) {
+        font-size: 0.88rem !important;
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+      }
+      .legal-table td:nth-child(3) {
+        width: 100% !important;
+      }
+      .legal-table .url-chip {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        word-break: normal !important;
+        font-size: 0.76rem !important;
+        padding: 10px 14px !important;
+        border-radius: 10px !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #38bdf8 !important;
+        box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+      }
+      .legal-table .url-chip::-webkit-scrollbar {
+        display: none !important;
+      }
+      .legal-table td:nth-child(4) {
+        text-align: left !important;
+        margin-top: 4px !important;
+      }
+      .legal-table td:nth-child(4) .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 42px !important;
+        font-size: 0.9rem !important;
+        border-radius: 10px !important;
+      }
+    }
+
+</style>
 
 <style>
 /* Perfect symmetrical leveling for bot cards */
