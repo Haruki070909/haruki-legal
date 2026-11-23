@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="./harumod-avatar.png">
   <style>
     html {
-      scroll-behavior: smooth !important;
+      
     }
     #features, #commands, section[id] {
       scroll-margin-top: 70px !important;
@@ -218,9 +218,7 @@
       opacity: 0;
       transform: translateY(28px);
       transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      content-visibility: auto;
-      contain-intrinsic-size: 1px 450px;
-    }
+      }
     .scroll-reveal.is-revealed {
       opacity: 1 !important;
       transform: translateY(0) !important;
@@ -1211,8 +1209,16 @@
       window.addEventListener("resize", resize, { passive: true });
       resize();
 
+      let isScrolling = false;
+      let scrollTimer = null;
+      window.addEventListener("scroll", function() {
+        isScrolling = true;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() { isScrolling = false; }, 90);
+      }, { passive: true });
+
       function animate() {
-        if (!isVisible) {
+        if (!isVisible || isScrolling) {
           requestAnimationFrame(animate);
           return;
         }
