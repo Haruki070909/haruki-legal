@@ -3024,6 +3024,188 @@
   }
 }
 </style>
+<style>
+  /* ========================================================= */
+  /* CUSTOM BESPOKE UI & STRICT SVG SAFEGUARDS (ZERO SLOP)      */
+  /* ========================================================= */
+  svg {
+    max-width: 100%;
+    fill: currentColor;
+  }
+  .btn svg, button svg, .btn-primary svg, .btn-secondary svg, .dyno-back-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+  .btn-sm svg {
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px !important;
+    min-height: 13px !important;
+    max-width: 13px !important;
+    max-height: 13px !important;
+  }
+  .config-card-icon {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    flex-shrink: 0 !important;
+  }
+  .config-card-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+  .dyno-nav-item svg {
+    width: 17px !important;
+    height: 17px !important;
+    min-width: 17px !important;
+    min-height: 17px !important;
+    max-width: 17px !important;
+    max-height: 17px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Custom Cyberpunk Dropdown (Replaces Native Browser Select completely) */
+  select,
+  select.form-input,
+  select.select-field {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    width: 100% !important;
+    background-color: #0b1120 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 14px center !important;
+    background-size: 16px 16px !important;
+    padding: 11px 40px 11px 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 12px !important;
+    color: #f8fafc !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  }
+  select:hover,
+  select.form-input:hover,
+  select.select-field:hover {
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    background-color: #0f172a !important;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.2) !important;
+  }
+  select:focus,
+  select.form-input:focus,
+  select.select-field:focus {
+    border-color: #10b981 !important;
+    background-color: #0f172a !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25), 0 0 20px rgba(16, 185, 129, 0.25) !important;
+  }
+  select option,
+  select.form-input option,
+  select.select-field option {
+    background-color: #0b1120 !important;
+    color: #f1f5f9 !important;
+    padding: 12px 16px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+  }
+  select option:checked {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+  }
+
+  /* Custom Glowing Toggle Switch (.switch / .slider) */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  input:checked + .slider {
+    background-color: #10b981;
+    border-color: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  }
+  input:checked + .slider:before {
+    transform: translateX(22px);
+    background-color: #ffffff;
+  }
+
+  /* Custom Inputs & Textareas */
+  input[type="text"].form-input,
+  input[type="number"].form-input,
+  textarea.form-input {
+    width: 100% !important;
+    background-color: #0b1120 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    padding: 11px 16px !important;
+    color: #f8fafc !important;
+    font-size: 0.9rem !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  input[type="text"].form-input:focus,
+  input[type="number"].form-input:focus,
+  textarea.form-input:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25), 0 0 16px rgba(16, 185, 129, 0.2) !important;
+    background-color: #0e1629 !important;
+  }
+</style>
 </head>
 <body>
   <canvas id="cyber-canvas"></canvas>
@@ -4226,7 +4408,7 @@
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(239, 68, 68, 0.12);color:#ef4444;border-color:rgba(239, 68, 68, 0.3);">
-                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
               </div>
               <div>
                 <h3 class="config-card-title">Xóa Tin Nhắn Siêu Tốc (Fast Purge / Bulk Delete)</h3>
@@ -4266,7 +4448,7 @@
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
               <span style="font-size:0.78rem;color:var(--text-muted);">Lưu ý: Discord API chỉ cho phép xóa tin nhắn dưới 14 ngày tuổi.</span>
               <button class="btn btn-primary" onclick="executeFastPurge(event)" style="background:#ef4444;border-color:#ef4444;">
-                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                 <span>Xóa Ngay Tin Nhắn</span>
               </button>
             </div>
@@ -4278,7 +4460,7 @@
             <div class="config-card">
               <div class="config-card-header">
                 <div class="config-card-icon" style="background:rgba(245, 158, 11, 0.12);color:#f59e0b;border-color:rgba(245, 158, 11, 0.3);">
-                  <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                  <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                 </div>
                 <div>
                   <h3 class="config-card-title">Chế Độ Chậm (Slowmode)</h3>
@@ -4307,7 +4489,7 @@
               </div>
 
               <button class="btn btn-primary" onclick="executeSlowmode(event)" style="width:100%;justify-content:center;">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
                 <span>Cập Nhật Slowmode Vào Kênh</span>
               </button>
             </div>
@@ -4316,7 +4498,7 @@
             <div class="config-card">
               <div class="config-card-header">
                 <div class="config-card-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;border-color:rgba(16, 185, 129, 0.3);">
-                  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                  <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                 </div>
                 <div>
                   <h3 class="config-card-title">Khóa Kênh Chat (Lockdown)</h3>
@@ -4333,11 +4515,11 @@
 
               <div style="display:flex;gap:10px;margin-top:18px;">
                 <button class="btn btn-secondary" onclick="executeChannelLock(true, event)" style="flex:1;justify-content:center;border-color:rgba(239, 68, 68, 0.4);color:#f87171;">
-                  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>
+                  <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>
                   <span>Khóa Kênh (Lock)</span>
                 </button>
                 <button class="btn btn-primary" onclick="executeChannelLock(false, event)" style="flex:1;justify-content:center;">
-                  <svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
+                  <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
                   <span>Mở Khóa (Unlock)</span>
                 </button>
               </div>
@@ -4352,7 +4534,7 @@
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(14, 165, 233, 0.12);color:#0ea5e9;border-color:rgba(14, 165, 233, 0.3);">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
               </div>
               <div>
                 <h3 class="config-card-title">Bảng Thực Thi Xử Phạt Trực Tiếp (Member Moderation)</h3>
@@ -4412,7 +4594,7 @@
 
             <div style="display:flex;justify-content:flex-end;">
               <button class="btn btn-primary" onclick="executeMemberModAction(event)">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                 <span>⚡ Thực Thi Xử Phạt Ngay</span>
               </button>
             </div>
@@ -4422,7 +4604,7 @@
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(255, 255, 255, 0.05);color:#fff;">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               </div>
               <div>
                 <h3 class="config-card-title">Lịch Sử Xử Phạt & Cảnh Cáo Gần Đây</h3>
@@ -4473,7 +4655,7 @@
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;border-color:rgba(16, 185, 129, 0.3);">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               </div>
               <div style="flex:1;">
                 <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -4507,7 +4689,7 @@
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(239, 68, 68, 0.12);color:#ef4444;border-color:rgba(239, 68, 68, 0.3);">
-                <svg viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
               </div>
               <div style="flex:1;">
                 <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -5189,6 +5371,18 @@
       if (iconBox) {
         iconBox.innerHTML = renderGuildAvatarHtml(g, 52);
       }
+
+      // INSTANT ZERO-LATENCY POPULATION OF ROLES & CHANNELS
+      if (guildId === "1426554369393954969") {
+        populateRoleDropdowns(REAL_GARDEN_DATA.roles);
+        populateChannelDropdowns(REAL_GARDEN_DATA.channels);
+      } else {
+        populateRoleDropdowns(DEFAULT_FALLBACK_ROLES);
+        populateChannelDropdowns(DEFAULT_FALLBACK_CHANNELS);
+      }
+
+      // Trigger background sync with live API (Local Engine or Gateway)
+      fetchRealDiscordGuildData(guildId);
 
       window.scrollTo({ top: 0, behavior: "smooth" });
       activeStage = "config";
@@ -6820,6 +7014,30 @@
     checkHaruModEngine();
     setInterval(checkHaruModEngine, 8000);
 
+    
+    // Pre-loaded offline cache for instant zero-latency role & channel population
+    const REAL_GARDEN_DATA = {"roles": [{"id": "1426554525074067629", "name": ".☘︎ ݁˖ Booster", "color": 10382335}, {"id": "1426555722761769087", "name": "Koya", "color": 0}, {"id": "1426557313883439234", "name": "Floral Helpers ⋆˚࿔", "color": 13490187}, {"id": "1426557729476051152", "name": "Akiko", "color": 0}, {"id": "1426557792315117671", "name": "Cloudy", "color": 0}, {"id": "1426557896308559874", "name": "Emoji.gg Bot", "color": 0}, {"id": "1426557975492821107", "name": "Jockie Music (1)", "color": 0}, {"id": "1426558119298863179", "name": "OwO", "color": 0}, {"id": "1426558195039604899", "name": "Mimu", "color": 0}, {"id": "1426558297468702816", "name": "carl-bot", "color": 0}, {"id": "1426558383669907469", "name": "Dyno", "color": 0}, {"id": "1426558772704186371", "name": "Statbot", "color": 0}, {"id": "1426558818451591191", "name": "Sx Bot", "color": 0}, {"id": "1426558908415213642", "name": "Boogie", "color": 0}, {"id": "1426558970100842601", "name": "TempVoice", "color": 0}, {"id": "1426559027407618111", "name": "Tickets v2", "color": 0}, {"id": "1426559063667249156", "name": "TTS Bot", "color": 0}, {"id": "1426565826793832528", "name": "🌸Floral Guests ؛༊", "color": 11127295}, {"id": "1426582430709714985", "name": "Valorant", "color": 8587274}, {"id": "1426582526775787622", "name": "TFT", "color": 15662848}, {"id": "1426582618438111322", "name": "Arena Of Valor (Liên quân)", "color": 9769490}, {"id": "1426582725120229526", "name": "Genshin Impact", "color": 2215103}, {"id": "1426582859266916402", "name": "PUBG", "color": 1776396}, {"id": "1426582924400267476", "name": "Roblox", "color": 16777215}, {"id": "1426583406275465246", "name": "Minecraft", "color": 65328}, {"id": "1426583647833821367", "name": "LOL (Liên Minh)", "color": 410348}, {"id": "1426583887475249285", "name": "Steam Game", "color": 1863679}, {"id": "1426586068073058459", "name": "Keto", "color": 0}, {"id": "1426586728894038231", "name": "Tickets Support", "color": 0}, {"id": "1426586730882138132", "name": "Tickets Admin", "color": 0}, {"id": "1428975391271419998", "name": "༺·Friendly𐫱༺·", "color": 10700305}, {"id": "1428976170199810100", "name": "Administrator⋆˚꩜｡", "color": 0}, {"id": "1455990461025226875", "name": "private access", "color": 0}, {"id": "1471857190745673772", "name": "Bongo", "color": 0}, {"id": "1471898724799221901", "name": "Senerity࣪ ☁︎ּ ֶָ֢. ˖", "color": 12444201}, {"id": "1472262980921196696", "name": "Cyona", "color": 485004}, {"id": "1472630354266296478", "name": "Musico", "color": 0}, {"id": "1472630419730993406", "name": "FredBoat♪♪", "color": 0}, {"id": "1472630595640102916", "name": "Valorant Stats | ValoTracker", "color": 0}, {"id": "1472631662830424126", "name": "Lara✨", "color": 0}, {"id": "1474035142078103554", "name": "Invite Tracker", "color": 0}, {"id": "1474046503663309034", "name": "؛༊ Staff", "color": 65393}, {"id": "1474096776217624577", "name": "Unidentified", "color": 854795}, {"id": "1477839976413659237", "name": "Hades Executive", "color": 14542592}, {"id": "1478221276387610707", "name": "Free Stuff", "color": 0}, {"id": "1479331482714636492", "name": "Wheat", "color": 0}, {"id": "1482397862028509377", "name": "6 HON DAI CO DON", "color": 60159}, {"id": "1482711973425840169", "name": "Bông Béo", "color": 3381759}, {"id": "1482727474227056704", "name": "King Of Busy", "color": 789002}, {"id": "1490741089395806218", "name": "PC", "color": 0}, {"id": "1490741137609199856", "name": "Mobile", "color": 0}, {"id": "1490741138045407304", "name": "Console", "color": 0}, {"id": "1493302077261218112", "name": "Cục Cưng Của Hades ❤️", "color": 15158332}, {"id": "1495348603437187194", "name": "Jockie Music", "color": 0}, {"id": "1498727043389456414", "name": "Scriptly", "color": 0}, {"id": "1499252355886088223", "name": "Big Dozer (Dicksucker)", "color": 16777215}, {"id": "1499609329484038246", "name": "Xio", "color": 16251902}, {"id": "1501868412790636624", "name": "Moderator⋆˚꩜｡", "color": 2688871}, {"id": "1502683879444709456", "name": "LG", "color": 3084625}, {"id": "1509829662468214786", "name": "Medal", "color": 0}, {"id": "1510612134873010239", "name": "Lofi Girl", "color": 0}, {"id": "1511608831220908123", "name": "Đánh vần abc", "color": 3735678}, {"id": "1511617877399310436", "name": "Vua Cờ Bạc", "color": 921783}, {"id": "1511791026682069215", "name": "Trùm Smuft hành gà", "color": 14869218}, {"id": "1511982458470400151", "name": "Kai", "color": 590079}, {"id": "1512114349290819634", "name": "new role", "color": 0}, {"id": "1512858112791543911", "name": "HornBot", "color": 0}, {"id": "1513343992056512624", "name": "Tsukiko", "color": 0}, {"id": "1519902340222816418", "name": "akwy", "color": 16711680}, {"id": "1522569206770565273", "name": "CTHQ", "color": 195}, {"id": "1527560913786376363", "name": "Male💎", "color": 752301}, {"id": "1527561358248382656", "name": "Female🌸", "color": 13005275}, {"id": "1528792113460936804", "name": "Dusky Bel", "color": 0}, {"id": "1534127733112569919", "name": "Orator", "color": 0}, {"id": "1535314046386049134", "name": "🌰Dream Seed", "color": 9388800}, {"id": "1535314221628129300", "name": "Little Sprout 🌱", "color": 9566279}, {"id": "1535314321725329408", "name": "Young Leaf 🍃", "color": 2790478}, {"id": "1535314496032342137", "name": "Greenling🌿", "color": 2252560}, {"id": "1535314604266094653", "name": "Dreamling☘️", "color": 16446310}, {"id": "1535314746075775018", "name": "🌾 Blooming Soul", "color": 16776604}, {"id": "1535314862400606228", "name": "🌷 Dream Blossom", "color": 14839807}, {"id": "1535314959905460294", "name": "🌳 Dreamwood", "color": 10092463}, {"id": "1535315891221176330", "name": "🌲 Evergreen", "color": 11206544}, {"id": "1535316005302046830", "name": "🌸 Garden Spirit", "color": 16711935}, {"id": "1535316176320602152", "name": "🌺 Dreamkeeper", "color": 14185713}, {"id": "1535316327344906342", "name": "✨ Garden of Dreams", "color": 16644526}, {"id": "1536009432251764836", "name": "Top 1 Nhiều Chuyện", "color": 16711684}, {"id": "1537013429598953596", "name": "NeonUtil", "color": 0}, {"id": "1537013573392273440", "name": "reaction bot🎉", "color": 0}, {"id": "1537448094206271608", "name": "Shindo Life", "color": 10181046}, {"id": "1537449064675680297", "name": "Goose Goose Duck", "color": 15158332}, {"id": "1537779203154640896", "name": "Chim = Đại Bàng", "color": 16406105}, {"id": "1537784082048614400", "name": "TrẻTrâu2k18", "color": 16749556}, {"id": "1543244011265986560", "name": "Co-Owner⋆˚꩜｡", "color": 0}, {"id": "1555275280703160451", "name": "Wuthering Waves", "color": 3724998}, {"id": "1555469462696755310", "name": "Hestia", "color": 1835195}, {"id": "1558715383601561751", "name": "RiuVoiz", "color": 16711901}, {"id": "1559619275361357946", "name": "HaruBot", "color": 0}, {"id": "1561029632428347425", "name": "Haru Bot Status Watcher", "color": 0}, {"id": "1561077769268633710", "name": "Top.gg", "color": 0}, {"id": "1561083137986142359", "name": "Vip", "color": 16776563}, {"id": "1561083361030705192", "name": "Vip+", "color": 0}, {"id": "1561083542560182322", "name": "MVP", "color": 16777215}, {"id": "1561083700328927252", "name": "MVP+", "color": 0}, {"id": "1563871728361406554", "name": "La Personne Veule", "color": 0}, {"id": "1564894737331392525", "name": "VirtualFisher", "color": 0}, {"id": "1567070951844220928", "name": "2Du", "color": 0}, {"id": "1573950539165859962", "name": "HaruMod", "color": 0}], "channels": [{"id": "1426559365317529700", "name": "staff", "type": 0}, {"id": "1426559393700511844", "name": "Staff Only", "type": 4}, {"id": "1426564122568298658", "name": "staff-cmd", "type": 0}, {"id": "1426564426449813684", "name": "🍃Whisper Garden𖦹", "type": 4}, {"id": "1426564427943252052", "name": "💐╎Create VC🌺", "type": 2}, {"id": "1426564429520048178", "name": "⋆˚꩜｡interface✾", "type": 0}, {"id": "1426566246765170728", "name": "🔒╎Hội sục chéo Sài Gònʚଓ", "type": 2}, {"id": "1426566653310799924", "name": "🛏️╎Sleeping Place ⋆.˚", "type": 2}, {"id": "1426566949478858864", "name": "💮╎AFK ⋆.˚", "type": 2}, {"id": "1426567222058287114", "name": "☀️╎Sunny Meadow 𝜗ৎ", "type": 2}, {"id": "1426568178636558366", "name": "🌺The Florist's Corner 𖧧", "type": 4}, {"id": "1426568420287320095", "name": "🌿╎garden-chat", "type": 0}, {"id": "1426568686239613148", "name": "🍃╎petal-playground", "type": 0}, {"id": "1426569284271738880", "name": "🌸˚˖⋆ Garden Gate ʚɞ", "type": 4}, {"id": "1426569608453685378", "name": "🪴╎entrance-pathꨄ", "type": 5}, {"id": "1426569744823222312", "name": "🍂╎farewell-garden", "type": 0}, {"id": "1426569927925567609", "name": "🍀╎rules", "type": 0}, {"id": "1426572015124484208", "name": "staff-log", "type": 0}, {"id": "1426585145376243805", "name": "🌻 Blooming Commands ⋆˙⟡", "type": 4}, {"id": "1426585333822128260", "name": "💮bot-cmds", "type": 0}, {"id": "1426585402587877447", "name": "💮music-cmds", "type": 0}, {"id": "1426585458560991312", "name": "💮game-cmds", "type": 0}, {"id": "1426586414442610709", "name": "🌸 Flower Help Desk ۶ৎ", "type": 4}, {"id": "1426586488329470075", "name": "🎀╎create-tickets", "type": 0}, {"id": "1426587057744117862", "name": "transcript", "type": 0}, {"id": "1429043367026757703", "name": "🌸 Garden Announcements؛༊", "type": 4}, {"id": "1429044075469733999", "name": "🧸ྀི╎valorant-eng", "type": 0}, {"id": "1471918783772758077", "name": "╭🧭「 ✦ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 ✦ 」🧭", "type": 4}, {"id": "1471918787115745510", "name": "📅 Monday Nov 23rd", "type": 2}, {"id": "1471918811799097437", "name": "🟢16 ⛔16 🌙14", "type": 2}, {"id": "1471918863217197138", "name": "Users: 268", "type": 2}, {"id": "1474036285311160371", "name": "🍂╎aov-update", "type": 0}, {"id": "1475124023594844201", "name": "💖╎Couple-1 💞", "type": 2}, {"id": "1475124106335748166", "name": "💖╎Couple-2💞", "type": 2}, {"id": "1478221074150985738", "name": "🎮╎free-game", "type": 0}, {"id": "1479331422715252819", "name": "🔮╎tarot", "type": 0}, {"id": "1480892211976474826", "name": "💘╎announcement", "type": 0}, {"id": "1486320303410778194", "name": "☀️╎6 Hondai Co Don 𝜗ৎ", "type": 2}, {"id": "1493290549862731886", "name": "🎀╎Hades and Persephone", "type": 2}, {"id": "1498992048676671620", "name": "🌿Custom VC", "type": 4}, {"id": "1502683937833484498", "name": "🌑╎Lonely Gang", "type": 2}, {"id": "1516833668943843441", "name": "🎮╎Tạo VC Liên Quân", "type": 2}, {"id": "1516835099717533846", "name": "🎮╎Game Talk (2) ⋆.˚", "type": 2}, {"id": "1516835163017838733", "name": "🏅╎Team 1", "type": 2}, {"id": "1521602742928281734", "name": "🏅╎Team 2", "type": 2}, {"id": "1526527096233398344", "name": "MISC", "type": 4}, {"id": "1526527275561128038", "name": "phishing", "type": 0}, {"id": "1528651365243555941", "name": "🎞️╎Watching Together (2) ⋆.˚", "type": 2}, {"id": "1528651442465017947", "name": "🎞️╎Watching Together (1) ⋆.˚", "type": 2}, {"id": "1528790889239941221", "name": "🐶╎DUSKY HANDSOME😎", "type": 2}, {"id": "1535312998023962625", "name": "⭐╎levels", "type": 0}, {"id": "1535396997048045701", "name": "💍╎roles", "type": 0}, {"id": "1559779032478781440", "name": "thanh-toan", "type": 0}, {"id": "1560089051971846214", "name": "🤖╎bot-command", "type": 0}, {"id": "1560109557852672010", "name": "🇻🇳╎noi-tu", "type": 0}, {"id": "1560109654812663878", "name": "🇺🇸╎noi-tu-tieng-anh", "type": 0}, {"id": "1561020586526773278", "name": "🟠・Haru Bot Status・SLOW", "type": 2}, {"id": "1561022447803957278", "name": "📡・Haru Bot Status", "type": 4}, {"id": "1561024193456242708", "name": "🟠・Ping・283ms", "type": 2}, {"id": "1561024196308373524", "name": "⏱️・Uptime・14h 31m", "type": 2}, {"id": "1561217251775094856", "name": "🪷Garden Mini Game🎴", "type": 4}, {"id": "1561229279440670731", "name": "╎sói-nằm-vùng", "type": 0}, {"id": "1561411440517054544", "name": "╎uno", "type": 0}, {"id": "1562049819990691941", "name": "╎haru-bot-update", "type": 0}, {"id": "1563853524339785808", "name": "🪼╎Divers of Dreams", "type": 2}, {"id": "1564013803367047299", "name": "╎vua-tieng-viet", "type": 0}, {"id": "1564895035361591326", "name": "╎cau-ca", "type": 0}, {"id": "1565029695828000828", "name": "╎cau-ca-haru", "type": 0}, {"id": "1565255232668311673", "name": "bot-bug", "type": 15}, {"id": "1566509318675759174", "name": "🎮╎Game Talk (1) ⋆.˚", "type": 2}, {"id": "1566837593541451826", "name": "🧊╎HaDus", "type": 2}, {"id": "1568402214039593088", "name": "server-hub", "type": 20}, {"id": "1573633644223004755", "name": "💝╎haru-shop", "type": 0}]};
+
+    const DEFAULT_FALLBACK_ROLES = [
+      { id: "role-admin", name: "👑 Administrator / Quản Trị Viên" },
+      { id: "role-mod", name: "🛡️ Moderator / Kiểm Duyệt Viên" },
+      { id: "role-staff", name: "⭐ Staff / Nhân Sự" },
+      { id: "role-vip", name: "💎 VIP Patron / Thành Viên Ưu Tú" },
+      { id: "role-member", name: "👤 Member / Thành Viên Chính Thức" },
+      { id: "role-muted", name: "🔇 Muted / Cách Ly Tạm Thời" },
+      { id: "role-bot", name: "🤖 HaruMod Security Bot" }
+    ];
+
+    const DEFAULT_FALLBACK_CHANNELS = [
+      { id: "ch-welcome", name: "👋・chào-mừng" },
+      { id: "ch-rules", name: "📜・quy-tắc-server" },
+      { id: "ch-announcements", name: "📢・thông-báo" },
+      { id: "ch-general", name: "💬・trò-chuyện-chung" },
+      { id: "ch-commands", name: "🤖・lệnh-bot" },
+      { id: "ch-mod-log", name: "🚨・nhật-ký-mod" },
+      { id: "ch-security-honeypot", name: "🍯・bẫy-raid-honeypot" }
+    ];
+
     function populateChannelDropdowns(channels) {
       const channelSelectIds = [
         "cfg-honeypot-channel",
@@ -6834,6 +7052,8 @@
         "cfg-goodbye-channel"
       ];
 
+      const list = (channels && channels.length > 0) ? channels : DEFAULT_FALLBACK_CHANNELS;
+
       channelSelectIds.forEach(id => {
         const sel = document.getElementById(id);
         if (!sel) return;
@@ -6841,16 +7061,11 @@
         const currentVal = sel.value;
         sel.innerHTML = "";
 
-        if (!channels || channels.length === 0) {
-          sel.innerHTML = `<option value="none">-- Không tìm thấy kênh nào --</option>`;
-          return;
-        }
-
-        channels.forEach(ch => {
+        list.forEach(ch => {
           const opt = document.createElement("option");
           opt.value = ch.id;
           opt.innerText = `# ${ch.name}`;
-          if (ch.id === currentVal || ch.name.toLowerCase().includes("log") || ch.name.toLowerCase().includes("mod")) {
+          if (ch.id === currentVal) {
             opt.selected = true;
           }
           sel.appendChild(opt);
@@ -6861,6 +7076,8 @@
     function populateRoleDropdowns(roles) {
       const roleSelectIds = ["cfg-role-muted", "cfg-role-autorole"];
 
+      const list = (roles && roles.length > 0) ? roles : DEFAULT_FALLBACK_ROLES;
+
       roleSelectIds.forEach(id => {
         const sel = document.getElementById(id);
         if (!sel) return;
@@ -6868,11 +7085,7 @@
         const currentVal = sel.value;
         sel.innerHTML = `<option value="">-- Chọn vai trò (Role) --</option>`;
 
-        if (!roles || roles.length === 0) {
-          return;
-        }
-
-        roles.forEach(r => {
+        list.forEach(r => {
           const opt = document.createElement("option");
           opt.value = r.id;
           opt.innerText = `@ ${r.name}`;
