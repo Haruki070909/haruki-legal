@@ -418,6 +418,77 @@
   gap: 8px !important;
 }
 </style>
+<style>
+    /* Mod Command Explorer Styling */
+    .mod-cat-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 8px 14px;
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .mod-cat-btn:hover {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .mod-cat-btn.active {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.55);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+    }
+    .mod-cmd-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.2s ease;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .mod-cmd-row:last-child {
+      border-bottom: none;
+    }
+    .mod-cmd-row:hover {
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .mod-cmd-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .mod-perm-badge {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+    .mod-perm-admin {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+    .mod-perm-mod {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .mod-perm-user {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+</style>
 </head>
 <body>
 
@@ -575,74 +646,35 @@
     </section>
 
     <!-- Commands Cheat-sheet -->
+        <!-- Interactive Hybrid Commands Explorer -->
     <section id="commands">
       <div class="section-head">
         <span class="section-tag" style="color:var(--accent-emerald);" data-i18n="secTagCmds">HỆ THỐNG LỆNH HYBRID</span>
         <h2 class="section-title" data-i18n="secTitleCmds">Hỗ Trợ Song Song Prefix <code>h?</code> & Slash <code>/</code></h2>
-        <p class="section-desc" data-i18n="secDescCmds">Chạy mượt mà trên cả máy tính lẫn điện thoại thông qua cùng một logic xử lý.</p>
+        <p class="section-desc" data-i18n="secDescCmds">Tra cứu nhanh toàn bộ lệnh điều hành, thiết lập bảo vệ tự động và quản lý server.</p>
       </div>
 
-      <div class="cmd-table-wrap">
-        <table class="cmd-table">
-          <thead>
-            <tr>
-              <th data-i18n="thCmd">Lệnh Prefix / Slash</th>
-              <th data-i18n="thArgs">Tham Số</th>
-              <th data-i18n="thDesc">Mô Tả Chức Năng</th>
-              <th data-i18n="thPerms">Quyền Yêu Cầu</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="code-badge">h?ban / /ban</span></td>
-              <td><code>@user [duration] [reason]</code></td>
-              <td data-i18n="c1">Ban user from server, supports tempban duration</td>
-              <td>Ban Members</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?kick / /kick</span></td>
-              <td><code>@user [reason]</code></td>
-              <td data-i18n="c2">Kick user immediately from the server</td>
-              <td>Kick Members</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?mute / /mute</span></td>
-              <td><code>@user [duration] [reason]</code></td>
-              <td data-i18n="c3">Mute/Timeout member via Discord native Timeout API</td>
-              <td>Moderate Members</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?hardmute / /hardmute</span></td>
-              <td><code>@user [reason]</code></td>
-              <td data-i18n="c4">Strip all roles and assign Muted quarantine role</td>
-              <td>Manage Roles</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?warn / /warn</span></td>
-              <td><code>@user [reason]</code></td>
-              <td data-i18n="c5">Warn member with ladder punishment (3 warns = auto mute)</td>
-              <td>Moderate Members</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?purge / /purge</span></td>
-              <td><code>[amount: 1-100] [@user]</code></td>
-              <td data-i18n="c6">Bulk delete messages with attached text transcript</td>
-              <td>Manage Messages</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?lock / /lock</span></td>
-              <td><code>[#channel]</code></td>
-              <td data-i18n="c7">Lockdown channel to prevent raids or spam</td>
-              <td>Manage Channels</td>
-            </tr>
-            <tr>
-              <td><span class="code-badge">h?ticket / /ticket</span></td>
-              <td><code>setup</code></td>
-              <td data-i18n="c8">Initialize interactive ticket panel with embed and buttons</td>
-              <td>Administrator</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Command Search & Category Filters -->
+      <div style="max-width:1200px; margin:0 auto 24px auto;">
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:16px;">
+          <div style="position:relative; flex:1; min-width:280px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); width:16px; height:16px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="mod-cmd-search" placeholder="Tìm tên lệnh, tham số hoặc chức năng (vd: ban, mute, antiraid)..." style="width:100%; box-sizing:border-box; background:#0b1329; border:1.5px solid rgba(16,185,129,0.35); border-radius:12px; padding:12px 16px 12px 42px; color:#ffffff; font-size:14px; outline:none; transition:all 0.2s ease;">
+          </div>
+          <div id="mod-cmd-tabs" style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="mod-cat-btn active" data-cat="all" onclick="filterModCmdCat('all', this)">Tất cả (<span id="mod-cmd-count">20</span>)</button>
+            <button class="mod-cat-btn" data-cat="security" onclick="filterModCmdCat('security', this)">Bảo Vệ & Anti-Raid</button>
+            <button class="mod-cat-btn" data-cat="moderation" onclick="filterModCmdCat('moderation', this)">Kiểm Duyệt & Xử Phạt</button>
+            <button class="mod-cat-btn" data-cat="logs" onclick="filterModCmdCat('logs', this)">Audit Logs & Nhật Ký</button>
+            <button class="mod-cat-btn" data-cat="utility" onclick="filterModCmdCat('utility', this)">Cấu Hình & Tiện Ích</button>
+          </div>
+        </div>
+
+        <div class="cmd-table-wrap" style="box-shadow:0 10px 40px rgba(0,0,0,0.6); border:1px solid rgba(16,185,129,0.25);">
+          <div id="mod-cmd-list-container">
+            <!-- Dynamic Command Rows rendered via JS -->
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -1049,6 +1081,121 @@
       }
     });
 
+</script>
+
+
+<script>
+const HARUMOD_COMMANDS_DATA = [
+  // Security & Anti-Raid
+  { cat: "security", cmd: "h?antiraid", slash: "/antiraid", args: "[on/off] [threshold]", descVi: "Kích hoạt lá chắn khẩn cấp tự động khóa cổng vào khi phát hiện raid bot", descEn: "Emergency anti-raid lockdown defense shield", perm: "Admin", permType: "admin" },
+  { cat: "security", cmd: "h?antispam", slash: "/antispam", args: "[on/off] [max_msgs]", descVi: "Phát hiện spam liên tục, tự động xóa tin nhắn rác và timeout người gửi", descEn: "Auto spam detection, message deletion & timeout", perm: "Admin", permType: "admin" },
+  { cat: "security", cmd: "h?antilink", slash: "/antilink", args: "[on/off] [allow_roles]", descVi: "Tự động chặn và xóa liên kết mời Discord lạ, link scam và phishing", descEn: "Block unauthorized Discord invites and phishing URLs", perm: "Admin", permType: "admin" },
+  { cat: "security", cmd: "h?honeypot", slash: "/honeypot", args: "setup [#channel]", descVi: "Tạo kênh bẫy Honeypot tàng hình; bot/spammer nhắn vào sẽ bị ban vĩnh viễn ngay lập tức", descEn: "Invisible honeypot trap to auto-ban selfbots instantly", perm: "Admin", permType: "admin" },
+  { cat: "security", cmd: "h?lock", slash: "/lock", args: "[#channel] [reason]", descVi: "Khóa quyền gửi tin nhắn trong kênh để kiểm soát tình hình khẩn cấp", descEn: "Lock channel to prevent unauthorized member messages", perm: "Manage Channels", permType: "mod" },
+  { cat: "security", cmd: "h?unlock", slash: "/unlock", args: "[#channel]", descVi: "Mở khóa lại quyền trò chuyện bình thường cho thành viên", descEn: "Unlock channel to restore normal permissions", perm: "Manage Channels", permType: "mod" },
+  
+  // Moderation & Sanctions
+  { cat: "moderation", cmd: "h?ban", slash: "/ban", args: "@user [duration] [reason]", descVi: "Ban thành viên khỏi máy chủ, hỗ trợ tempban và xóa sạch tin nhắn gần nhất", descEn: "Ban user with tempban duration & purge history", perm: "Ban Members", permType: "admin" },
+  { cat: "moderation", cmd: "h?unban", slash: "/unban", args: "userId [reason]", descVi: "Gỡ lệnh cấm tham gia theo User ID", descEn: "Unban user by Discord User ID", perm: "Ban Members", permType: "admin" },
+  { cat: "moderation", cmd: "h?kick", slash: "/kick", args: "@user [reason]", descVi: "Trục xuất thành viên ngay lập tức khỏi máy chủ", descEn: "Kick member immediately from the guild", perm: "Kick Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?mute", slash: "/timeout", args: "@user [duration] [reason]", descVi: "Timeout/Mute thành viên thông qua Discord Timeout API (1m đến 28d)", descEn: "Timeout member via Discord native Timeout API", perm: "Moderate Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?unmute", slash: "/untimeout", args: "@user", descVi: "Gỡ timeout trước hạn cho thành viên", descEn: "Remove timeout before expiration", perm: "Moderate Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?hardmute", slash: "/hardmute", args: "@user [reason]", descVi: "Cách ly hoàn toàn: tước toàn bộ role và gán vai trò Muted cách ly", descEn: "Quarantine member, strip all roles and apply Muted role", perm: "Manage Roles", permType: "admin" },
+  { cat: "moderation", cmd: "h?warn", slash: "/warn", args: "@user [reason]", descVi: "Cảnh cáo vi phạm theo thang điểm (3 cảnh cáo = tự động Mute 1 giờ)", descEn: "Warn member with ladder punishment (3 warns = auto mute)", perm: "Moderate Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?warnings", slash: "/warnings", args: "@user", descVi: "Xem lịch sử vi phạm và tổng số lần bị cảnh cáo của thành viên", descEn: "View user infraction history and warning points", perm: "Moderate Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?clearwarn", slash: "/clearwarn", args: "@user [warn_id]", descVi: "Xóa cảnh cáo vi phạm khỏi hồ sơ kỷ luật", descEn: "Clear infractions or specific warning ID", perm: "Moderate Members", permType: "mod" },
+  { cat: "moderation", cmd: "h?purge", slash: "/purge", args: "[1-100] [@user]", descVi: "Xóa tin nhắn hàng loạt theo số lượng hoặc lọc theo người gửi kèm file log", descEn: "Bulk delete messages with attached text transcript", perm: "Manage Messages", permType: "mod" },
+  { cat: "moderation", cmd: "h?slowmode", slash: "/slowmode", args: "[seconds: 0-21600]", descVi: "Đặt thời gian giãn cách tin nhắn giữa mỗi lần gửi trong kênh", descEn: "Set channel slowmode cooldown between messages", perm: "Manage Channels", permType: "mod" },
+
+  // Audit Logs & Monitoring
+  { cat: "logs", cmd: "h?setlogs", slash: "/setlogs", args: "[#channel]", descVi: "Cấu hình kênh ghi nhận 36 luồng sự kiện Audit Logs thời gian thực", descEn: "Configure destination channel for 36 action audit logs", perm: "Administrator", permType: "admin" },
+  { cat: "logs", cmd: "h?logevents", slash: "/logevents", args: "[all / category]", descVi: "Tùy biến bật/tắt từng nhóm log: Xóa tin, Sửa tin, Đổi Role, Voice, Tham gia", descEn: "Toggle specific audit log streams (Voice, Roles, Messages)", perm: "Administrator", permType: "admin" },
+
+  // Setup & Utility
+  { cat: "utility", cmd: "h?ticket", slash: "/ticket", args: "setup [#channel]", descVi: "Tạo bảng Ticket tương tác với nút bấm hỗ trợ giải đáp thắc mắc", descEn: "Initialize interactive ticket panel with buttons", perm: "Administrator", permType: "admin" },
+  { cat: "utility", cmd: "h?prefix", slash: "/prefix", args: "[new_prefix]", descVi: "Thay đổi tiền tố gọi bot theo ý muốn của server", descEn: "Change custom text command prefix", perm: "Administrator", permType: "admin" },
+  { cat: "utility", cmd: "h?settings", slash: "/settings", args: "", descVi: "Xem bảng tổng hợp toàn bộ trạng thái tính năng bảo vệ của server", descEn: "View overview of all active guild security settings", perm: "Administrator", permType: "admin" },
+  { cat: "utility", cmd: "h?ping", slash: "/ping", args: "", descVi: "Kiểm tra độ trễ mạng và WebSocket heartbeat", descEn: "Check bot latency and gateway heartbeat", perm: "Everyone", permType: "user" }
+];
+
+let currentModCmdCat = "all";
+
+function renderHaruModCommands() {
+  const container = document.getElementById("mod-cmd-list-container");
+  if (!container) return;
+
+  const searchInput = document.getElementById("mod-cmd-search");
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+  const isEn = (document.documentElement.lang === "en");
+
+  const filtered = HARUMOD_COMMANDS_DATA.filter(item => {
+    const matchCat = (currentModCmdCat === "all" || item.cat === currentModCmdCat);
+    const desc = isEn ? item.descEn.toLowerCase() : item.descVi.toLowerCase();
+    const matchQuery = !query || item.cmd.toLowerCase().includes(query) || item.slash.toLowerCase().includes(query) || desc.includes(query) || item.args.toLowerCase().includes(query);
+    return matchCat && matchQuery;
+  });
+
+  const countEl = document.getElementById("mod-cmd-count");
+  if (countEl && currentModCmdCat === "all") countEl.innerText = filtered.length;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:40px;color:#94a3b8;font-size:14px;">${isEn ? "No moderation commands matching your query." : "Không tìm thấy lệnh quản trị nào phù hợp."}</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => {
+    const desc = isEn ? item.descEn : item.descVi;
+    return `
+      <div class="mod-cmd-row">
+        <div class="mod-cmd-info">
+          <span class="code-badge" style="font-size:13.5px;padding:6px 12px;">${item.cmd} / ${item.slash}</span>
+          <code style="color:#94a3b8;font-size:12.5px;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);">${item.args}</code>
+          <span style="color:#e2e8f0;font-size:13.5px;font-weight:500;">${desc}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="mod-perm-badge mod-perm-${item.permType}">${item.perm}</span>
+          <button type="button" onclick="copyModCmd('${item.cmd}', this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:#94a3b8;padding:6px 12px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s ease;">
+            ${isEn ? "Copy" : "Sao chép"}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function filterModCmdCat(cat, btn) {
+  currentModCmdCat = cat;
+  document.querySelectorAll("#mod-cmd-tabs .mod-cat-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  renderHaruModCommands();
+}
+
+function copyModCmd(cmd, btn) {
+  navigator.clipboard.writeText(cmd).then(() => {
+    const orig = btn.innerText;
+    btn.innerText = "✓ Copied!";
+    btn.style.color = "#10b981";
+    btn.style.borderColor = "#10b981";
+    setTimeout(() => {
+      btn.innerText = orig;
+      btn.style.color = "";
+      btn.style.borderColor = "";
+    }, 1500);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHaruModCommands();
+  const searchInput = document.getElementById("mod-cmd-search");
+  if (searchInput) searchInput.addEventListener("input", renderHaruModCommands);
+});
+
+// Re-render when language switches
+const origModLang = window.setAppLanguage;
+window.setAppLanguage = function(lang) {
+  if (typeof origModLang === "function") origModLang(lang);
+  renderHaruModCommands();
+};
 </script>
 
 </body>
