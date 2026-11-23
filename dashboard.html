@@ -4380,8 +4380,32 @@
       }
     }
 
+    function renderAuthLoading() {
+      const container = document.getElementById("discord-auth-container");
+      if (container) {
+        container.innerHTML = `
+          <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.3);padding:6px 14px;border-radius:10px;color:#818cf8;font-size:0.82rem;font-weight:700;">
+            <svg style="width:14px;height:14px;animation:spin 1s linear infinite;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/></svg>
+            <span>Đang kết nối Discord...</span>
+          </div>
+        `;
+      }
+    }
+
     function checkOAuthCallback() {
       const hash = window.location.hash;
+      const search = window.location.search;
+
+      // Handle user rejection or OAuth error
+      if ((hash && hash.includes("error=")) || (search && search.includes("error="))) {
+        const p = new URLSearchParams(hash ? hash.substring(1) : search);
+        const err = p.get("error_description") || p.get("error") || "Discord OAuth Rejected";
+        showToast("Ủy quyền Discord bị từ chối: " + decodeURIComponent(err));
+        renderLoggedOut();
+        return;
+      }
+
+      // Handle implicit token flow: #access_token=...
       if (hash && hash.includes("access_token=")) {
         const params = new URLSearchParams(hash.substring(1));
         const token = params.get("access_token");
@@ -4393,6 +4417,7 @@
         }
       }
 
+      // Check saved token in localStorage
       const savedToken = localStorage.getItem("discord_access_token");
       if (savedToken) {
         fetchDiscordData(savedToken);
@@ -4402,12 +4427,14 @@
     }
 
     async function fetchDiscordData(token) {
+      renderAuthLoading();
       try {
         const userRes = await fetch("https://discord.com/api/v10/users/@me", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
         if (!userRes.ok) {
+          console.warn("Discord token invalid/expired, status:", userRes.status);
           localStorage.removeItem("discord_access_token");
           renderLoggedOut();
           return;
@@ -4416,19 +4443,32 @@
         currentUser = await userRes.json();
         renderLoggedInUser(currentUser);
 
-        const guildsRes = await fetch("https://discord.com/api/v10/users/@me/guilds", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Fetch user guilds
+        try {
+          const guildsRes = await fetch("https://discord.com/api/v10/users/@me/guilds", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
 
-        if (guildsRes.ok) {
-          const rawGuilds = await guildsRes.json();
-          processRealGuilds(rawGuilds);
-        } else {
-          renderLoggedOut();
+          if (guildsRes.ok) {
+            const rawGuilds = await guildsRes.json();
+            if (Array.isArray(rawGuilds)) {
+              processRealGuilds(rawGuilds);
+            } else {
+              console.warn("rawGuilds is not an array:", rawGuilds);
+            }
+          } else {
+            console.warn("Failed to fetch guilds, status:", guildsRes.status);
+          }
+        } catch (guildErr) {
+          console.error("Guild fetch error:", guildErr);
         }
       } catch (err) {
         console.error("Discord API fetch error:", err);
-        renderLoggedOut();
+        if (!currentUser) {
+          localStorage.removeItem("discord_access_token");
+          renderLoggedOut();
+          showToast("Không thể kết nối Discord API: " + (err.message || err));
+        }
       }
     }
 
@@ -4726,6 +4766,38 @@
     }
 
     setInterval(autoScanGuildsEvery5s, 5000);
+
+    function selectServerForConfig(guildId) {
+      currentGuildId = guildId;
+      const g = userGuilds.find(x => x.id === guildId) || {
+        id: guildId,
+        name: guildId === "1426554369393954969" ? "Garden Of Dream" : "Discord Server"
+      };
+
+      // Switch views
+      document.getElementById("entrance-view").style.display = "none";
+      document.getElementById("config-suite").style.display = "flex";
+      document.getElementById("topbar-invite-btn").style.display = "none";
+      document.getElementById("topbar-server-switcher").style.display = "block";
+
+      // Populate server info in header & sidebar
+      const sName = document.getElementById("dyno-server-name");
+      if (sName) sName.innerText = g.name;
+
+      const breadName = document.getElementById("dyno-bread-name");
+      if (breadName) breadName.innerText = g.name;
+
+      const topCurrent = document.getElementById("topbar-current-server-name");
+      if (topCurrent) topCurrent.innerText = g.name;
+
+      const iconBox = document.getElementById("dyno-server-icon-box");
+      if (iconBox) {
+        iconBox.innerHTML = renderGuildAvatarHtml(g, 52);
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      activeStage = "config";
+    }
 
     function returnToHub() {
       document.getElementById("config-suite").style.display = "none";
@@ -5637,9 +5709,9 @@
     }
 
     // Load saved identity whenever server config is opened
-    const originalSelectServerForConfig = selectServerForConfig;
+    const originalSelectServerForConfig = (typeof selectServerForConfig === "function") ? selectServerForConfig : null;
     selectServerForConfig = function(guildId) {
-      originalSelectServerForConfig(guildId);
+      if (typeof originalSelectServerForConfig === "function") originalSelectServerForConfig(guildId);
 
       // Load saved bot nickname for this guild
       const savedNick = localStorage.getItem("haruki_bot_nick_" + guildId) || "HaruMod Security";
@@ -6059,11 +6131,20 @@
       fetchRealDiscordGuildData(guildId);
     };
 
-    window.addEventListener("DOMContentLoaded", () => {
+    function initDashboardAuth() {
       const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
-      switchDashLang(savedLang);
+      if (typeof switchDashLang === "function") switchDashLang(savedLang);
       checkOAuthCallback();
-    });
+    }
+
+    if (document.readyState === "loading") {
+      window.addEventListener("DOMContentLoaded", initDashboardAuth);
+    } else {
+      initDashboardAuth();
+    }
+
+    window.addEventListener("pageshow", checkOAuthCallback);
+    window.addEventListener("hashchange", checkOAuthCallback);
   
     /* Mobile Menu Toggle Handler */
     
