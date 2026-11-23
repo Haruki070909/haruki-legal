@@ -1055,12 +1055,18 @@ footer {
 }
 
 .nav-links {
-  display: flex !important;
-  align-items: center !important;
-  gap: 28px !important;
-  list-style: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none !important;
+  }
 }
 
 .nav-links a {
@@ -1521,3 +1527,17 @@ svg[fill="none"] {
   100% { transform: scale(0) translate(var(--tx), var(--ty)); opacity: 0; }
 }
 
+
+/* Mobile Viewport Polish */
+@media (max-width: 900px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  .navbar-content {
+    padding: 0 16px !important;
+  }
+  .nav-links {
+    display: none !important;
+  }
+}
