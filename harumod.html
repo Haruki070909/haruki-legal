@@ -185,7 +185,34 @@
         font-size: 2.4rem;
       }
     }
-  </style>
+  
+/* Ultra-Smooth GPU-Accelerated Neon Cyan Wave Ripple (Zero Lag) */
+.neon-click-wave {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px #00f2fe, inset 0 0 8px rgba(0, 242, 254, 0.5);
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: neonWaveExpandGPU 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes neonWaveExpandGPU {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+  }
+}
+
+</style>
 
 <style>
 .hero-actions {
@@ -490,22 +517,7 @@
     }
 </style>
 <style>
-/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
-.neon-click-wave {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
-  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-}
 
-@keyframes neonWaveExpand {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.95;
-  }
   50% {
     opacity: 0.7;
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
@@ -707,7 +719,272 @@
     </section>
   </main>
 
-  <footer class="footer">
+  
+<!-- HaruMod Command Directory & Security Tools -->
+<section class="section-heading" id="commands-section" style="margin-top: 56px;">
+  <p class="eyebrow"><span class="eyebrow-line"></span><span>BẢNG LỆNH QUẢN TRỊ & BẢO MẬT</span></p>
+  <h2>Tra Cứu Lệnh HaruMod</h2>
+  <p>Toàn bộ 24+ lệnh quản trị, anti-raid, honeypot và phân quyền tự động dành cho Moderator & Server Owner.</p>
+</section>
+
+<div class="command-browser" style="max-width: 1200px; margin: 0 auto 60px auto; background: rgba(9, 11, 22, 0.75); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 20px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+    <div>
+      <span style="font-size: 11px; font-weight: 800; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.35); padding: 3px 8px; border-radius: 6px; text-transform: uppercase;">SLASH COMMANDS</span>
+      <h3 style="margin: 6px 0 0 0; font-size: 18px; color: #fff; font-weight: 700;">Danh Sách Lệnh HaruMod Live</h3>
+    </div>
+    <span id="mod-cmd-count" style="font-size: 12px; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 12px; border-radius: 20px;">24 lệnh</span>
+  </div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+    <input id="mod-cmd-search" type="search" placeholder="Tìm kiếm lệnh (vd: /ban, /honeypot, /automod, /botnick)..." style="flex: 1; min-width: 260px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 16px; color: #fff; font-size: 14px; outline: none;">
+    <select id="mod-cmd-category" style="background: rgba(12, 21, 39, 0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 11px 16px; color: #fff; font-size: 14px; outline: none; cursor: pointer;">
+      <option value="all">Tất cả nhóm lệnh</option>
+      <option value="mod">Xử Phạt & Răn Đe (Sanctions)</option>
+      <option value="defense">Phòng Thủ & Anti-Raid (Defense)</option>
+      <option value="roles">Role, Captcha & Tiện Ích (Management)</option>
+      <option value="sync">Đồng Bộ & Báo Cáo (Sync & Logs)</option>
+    </select>
+  </div>
+
+  <div id="mod-command-list" style="display: flex; flex-direction: column; gap: 8px;">
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/ban" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/ban</code>
+    <span class="command-description" data-vi="Cấm vĩnh viễn hoặc theo thời hạn thành viên vi phạm server." data-en="Ban a member permanently or temporarily." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cấm vĩnh viễn hoặc theo thời hạn thành viên vi phạm server.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/unban" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/unban</code>
+    <span class="command-description" data-vi="Gỡ lệnh cấm cho người dùng theo User ID." data-en="Unban a user by their Discord ID." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Gỡ lệnh cấm cho người dùng theo User ID.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/kick" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/kick</code>
+    <span class="command-description" data-vi="Trục xuất thành viên ra khỏi server ngay lập tức." data-en="Kick a member from the server." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Trục xuất thành viên ra khỏi server ngay lập tức.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/timeout" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/timeout</code>
+    <span class="command-description" data-vi="Tạm khóa mõm (Mute/Timeout) thành viên từ 60 giây đến 28 ngày." data-en="Timeout a member (60s to 28 days)." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tạm khóa mõm (Mute/Timeout) thành viên từ 60 giây đến 28 ngày.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/untimeout" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/untimeout</code>
+    <span class="command-description" data-vi="Gỡ lệnh timeout sớm cho thành viên." data-en="Remove timeout early." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Gỡ lệnh timeout sớm cho thành viên.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/warn" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/warn</code>
+    <span class="command-description" data-vi="Cảnh cáo thành viên và tự động ghi hồ sơ vi phạm (Case)." data-en="Warn a member and create a Case record." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Cảnh cáo thành viên và tự động ghi hồ sơ vi phạm (Case).</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/warnings" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/warnings</code>
+    <span class="command-description" data-vi="Tra cứu toàn bộ lịch sử cảnh cáo và vi phạm của một thành viên." data-en="View member warning history." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tra cứu toàn bộ lịch sử cảnh cáo và vi phạm của một thành viên.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/clearwarn" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/clearwarn</code>
+    <span class="command-description" data-vi="Xóa các cảnh cáo cũ cho thành viên." data-en="Clear member warnings." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Xóa các cảnh cáo cũ cho thành viên.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="mod" data-cmd="/cases" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/cases</code>
+    <span class="command-description" data-vi="Tra cứu chi tiết một hồ sơ xử phạt theo mã Case ID." data-en="Look up a sanction profile by Case ID." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tra cứu chi tiết một hồ sơ xử phạt theo mã Case ID.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/honeypot" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/honeypot</code>
+    <span class="command-description" data-vi="Thiết lập kênh bẫy ngầm tự động ban bot spam và tài khoản botnet." data-en="Configure honeypot trap channels for botnets." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Thiết lập kênh bẫy ngầm tự động ban bot spam và tài khoản botnet.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/automod" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/automod</code>
+    <span class="command-description" data-vi="Bật/tắt các bộ lọc từ cấm, link lừa đảo Nitro, spam ký tự." data-en="Toggle banned words, phishing links, and spam filters." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bật/tắt các bộ lọc từ cấm, link lừa đảo Nitro, spam ký tự.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/antiraid" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/antiraid</code>
+    <span class="command-description" data-vi="Kích hoạt khiên phòng chống đột kích ồ ạt nhiều tài khoản." data-en="Activate Anti-Raid shield mode." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Kích hoạt khiên phòng chống đột kích ồ ạt nhiều tài khoản.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/antinuke" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/antinuke</code>
+    <span class="command-description" data-vi="Bảo vệ kênh, role khỏi hành vi xóa hàng loạt trái phép." data-en="Protect channels and roles from mass deletion." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bảo vệ kênh, role khỏi hành vi xóa hàng loạt trái phép.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/lockdown" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/lockdown</code>
+    <span class="command-description" data-vi="Khóa khẩn cấp toàn bộ quyền gửi tin nhắn của server." data-en="Emergency lockdown of all server channels." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Khóa khẩn cấp toàn bộ quyền gửi tin nhắn của server.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/unlock" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/unlock</code>
+    <span class="command-description" data-vi="Mở khóa lại quyền gửi tin nhắn sau khi xử lý xong sự cố." data-en="Unlock channels after incident resolution." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mở khóa lại quyền gửi tin nhắn sau khi xử lý xong sự cố.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/purge" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/purge</code>
+    <span class="command-description" data-vi="Xóa nhanh hàng loạt tin nhắn rác trong kênh (tối đa 100 tin)." data-en="Purge bulk messages from a channel." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Xóa nhanh hàng loạt tin nhắn rác trong kênh (tối đa 100 tin).</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="defense" data-cmd="/slowmode" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/slowmode</code>
+    <span class="command-description" data-vi="Đặt thời gian chờ giữa 2 tin nhắn liên tiếp của thành viên." data-en="Set channel message slowmode delay." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Đặt thời gian chờ giữa 2 tin nhắn liên tiếp của thành viên.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="roles" data-cmd="/role" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/role</code>
+    <span class="command-description" data-vi="Gán hoặc thu hồi vai trò (role) cho thành viên an toàn." data-en="Safely assign or remove roles." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Gán hoặc thu hồi vai trò (role) cho thành viên an toàn.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="roles" data-cmd="/autorole" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/autorole</code>
+    <span class="command-description" data-vi="Tự động cấp role mặc định khi người mới gia nhập server." data-en="Automatically assign role to new members." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tự động cấp role mặc định khi người mới gia nhập server.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="roles" data-cmd="/verify" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/verify</code>
+    <span class="command-description" data-vi="Hệ thống xác minh Captcha nút bấm chống tài khoản ảo." data-en="Interactive button Captcha verification." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Hệ thống xác minh Captcha nút bấm chống tài khoản ảo.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="roles" data-cmd="/botnick" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/botnick</code>
+    <span class="command-description" data-vi="Đổi biệt danh và danh xưng bot trực tiếp trong server." data-en="Change bot server nickname directly." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Đổi biệt danh và danh xưng bot trực tiếp trong server.</span>
+  </div>
+  <span style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">MOD / ADMIN</span>
+</article>
+<article class="mod-cmd-item" data-cat="sync" data-cmd="/logs" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/logs</code>
+    <span class="command-description" data-vi="Xem trạng thái 36 luồng sự kiện an ninh và mod audit." data-en="View 36 security audit event streams." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Xem trạng thái 36 luồng sự kiện an ninh và mod audit.</span>
+  </div>
+  <span style="background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">ALL</span>
+</article>
+<article class="mod-cmd-item" data-cat="sync" data-cmd="/sync" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/sync</code>
+    <span class="command-description" data-vi="Đồng bộ tức thời các cấu hình từ Web Dashboard về Discord." data-en="Synchronize web settings to Discord in real time." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Đồng bộ tức thời các cấu hình từ Web Dashboard về Discord.</span>
+  </div>
+  <span style="background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">ALL</span>
+</article>
+<article class="mod-cmd-item" data-cat="sync" data-cmd="/help" style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px;transition:all 0.2s ease;">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;overflow:hidden;">
+    <code class="command-name" style="font-family:monospace;font-size:14px;color:#10b981;background:rgba(16,185,129,0.1);padding:4px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">/help</code>
+    <span class="command-description" data-vi="Mở bảng tra cứu toàn bộ lệnh và hướng dẫn HaruMod." data-en="Open HaruMod command directory and help guide." style="font-size:13px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mở bảng tra cứu toàn bộ lệnh và hướng dẫn HaruMod.</span>
+  </div>
+  <span style="background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:8px;">ALL</span>
+</article>
+  </div>
+
+  <p style="margin-top: 18px; font-size: 12px; color: #94a3b8; text-align: center;">
+    Hầu hết các lệnh trên yêu cầu quyền <code>Administrator</code> hoặc <code>Manage Server</code>. Gõ <code>/help</code> trực tiếp trong Discord để xem chi tiết.
+  </p>
+</div>
+
+<script>
+(function() {
+  function filterModCommands() {
+    var searchInput = document.getElementById("mod-cmd-search");
+    var categorySelect = document.getElementById("mod-cmd-category");
+    var countBadge = document.getElementById("mod-cmd-count");
+    if (!searchInput) return;
+
+    var query = (searchInput.value || "").trim().toLowerCase();
+    var cat = categorySelect ? categorySelect.value : "all";
+
+    var items = document.querySelectorAll("#mod-command-list .mod-cmd-item");
+    var matchCount = 0;
+
+    items.forEach(function(item) {
+      var itemCat = item.getAttribute("data-cat") || "";
+      var itemCmd = (item.getAttribute("data-cmd") || "").toLowerCase();
+      var descEl = item.querySelector(".command-description");
+      var descText = descEl ? descEl.textContent.toLowerCase() : "";
+
+      var catMatches = (cat === "all" || !cat || itemCat === cat);
+      var queryMatches = (!query || itemCmd.includes(query) || descText.includes(query));
+
+      if (catMatches && queryMatches) {
+        item.style.display = "flex";
+        matchCount++;
+      } else {
+        item.style.display = "none";
+      }
+    });
+
+    if (countBadge) {
+      countBadge.textContent = matchCount + " lệnh";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var searchInput = document.getElementById("mod-cmd-search");
+    var categorySelect = document.getElementById("mod-cmd-category");
+    if (searchInput) searchInput.addEventListener("input", filterModCommands);
+    if (categorySelect) categorySelect.addEventListener("change", filterModCommands);
+    filterModCommands();
+  });
+
+  // Auto-close Mobile Menu Drawer on Scroll
+  window.addEventListener("scroll", function() {
+    var drawer = document.getElementById("mod-mobile-drawer");
+    var btn = document.getElementById("mod-mobile-menu-btn");
+    if (drawer && drawer.classList.contains("open")) {
+      drawer.classList.remove("open");
+      if (btn) {
+        var bars = btn.querySelector(".hamburger-bars-icon");
+        var close = btn.querySelector(".hamburger-close-icon");
+        if (bars) bars.style.display = "block";
+        if (close) close.style.display = "none";
+      }
+    }
+  }, { passive: true });
+})();
+</script>
+
+<footer class="footer">
     <div class="container footer-content">
       <div>
         <a href="./index.html" class="brand" style="margin-bottom:8px;">
@@ -886,95 +1163,88 @@
 
   <!-- Interactive 60fps Starfield Constellation Canvas -->
   <script>
+    // High-Performance Ambient Cyber Sparks (Batched 1-call draw, 60-120fps Zero Lag)
     const canvas = document.getElementById("cyber-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let mouse = { x: null, y: null, radius: 150 };
+    if (canvas) {
+      const ctx = canvas.getContext("2d", { alpha: true });
+      let particles = [];
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let isVisible = true;
 
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      initParticles();
-    });
-
-    window.addEventListener("mousemove", (e) => {
-      mouse.x = e.x;
-      mouse.y = e.y;
-    });
-
-    window.addEventListener("mouseout", () => {
-      mouse.x = null;
-      mouse.y = null;
-    });
-
-    function initParticles() {
-      particles = [];
-      const particleCount = Math.min(Math.floor((width * height) / 12000), 100);
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 2 + 1,
-          color: "rgba(16, 185, 129, ",
-          alpha: Math.random() * 0.6 + 0.2
-        });
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
       }
-    }
 
-    canvas.width = width;
-    canvas.height = height;
-    initParticles();
+      function initParticles() {
+        particles = [];
+        const count = Math.min(Math.floor((width * height) / 45000), 22);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            radius: Math.random() * 1.5 + 1,
+            color: "rgba(16, 185, 129, ",
+            alpha: Math.random() * 0.45 + 0.2
+          });
+        }
+      }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, width, height);
+      window.addEventListener("resize", resize, { passive: true });
+      resize();
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx = -p.vx;
-        if (p.y < 0 || p.y > height) p.vy = -p.vy;
-
-        if (mouse.x !== null) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouse.radius) {
-            const force = (mouse.radius - dist) / mouse.radius;
-            p.x -= (dx / dist) * force * 1.5;
-            p.y -= (dy / dist) * force * 1.5;
-          }
+      function animate() {
+        if (!isVisible) {
+          requestAnimationFrame(animate);
+          return;
         }
 
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx = -p.vx;
+          if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ")";
+          ctx.fill();
+        }
+
+        // Batch all lines into ONE GPU stroke call (O(1) draw call)
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + p.alpha + ")";
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 110)})`;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            if (dx * dx + dy * dy < 6400) { // 80px distance
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
           }
         }
+        ctx.strokeStyle = "rgba(16, 185, 129, 0.11)";
+        ctx.lineWidth = 0.65;
+        ctx.stroke();
+
+        requestAnimationFrame(animate);
       }
 
-      requestAnimationFrame(animateParticles);
+      document.addEventListener("visibilitychange", function() {
+        isVisible = !document.hidden;
+      });
+
+      requestAnimationFrame(animate);
     }
-    animateParticles();
   
     // HaruMod Mobile Drawer Toggle
     function toggleHaruModMobileMenu() {
@@ -1052,31 +1322,11 @@
   <!-- Ambient Spotlight & Explosive Cyber Sparks System -->
   <div id="cyber-spotlight"></div>
   <script>
-    // Spotlight follow
-    window.addEventListener("mousemove", (e) => {
-      document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
-      document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
-    });
+    
 
     
   // Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
-  window.addEventListener("click", function(e) {
-    for (var i = 0; i < 2; i++) {
-      var wave = document.createElement("div");
-      wave.className = "neon-click-wave";
-      var baseSize = 20;
-      wave.style.width = baseSize + "px";
-      wave.style.height = baseSize + "px";
-      wave.style.left = (e.clientX - baseSize / 2) + "px";
-      wave.style.top = (e.clientY - baseSize / 2) + "px";
-      if (i === 1) {
-        wave.style.animationDelay = "0.12s";
-        wave.style.borderColor = "#38bdf8";
-      }
-      document.body.appendChild(wave);
-      setTimeout((function(el) { return function() { el.remove(); }; })(wave), 750);
-    }
-  });
+  
 
     function toggleHaruModMobileMenu() {
       const drawer = document.getElementById("mod-mobile-drawer");
@@ -1216,6 +1466,29 @@ window.setAppLanguage = function(lang) {
   renderHaruModCommands();
 };
 </script>
+
+
+  <!-- High-Performance Neon Wave Ripple on Click (GPU Composited) -->
+  <script>
+    (function() {
+      let lastClickTime = 0;
+      window.addEventListener("click", function(e) {
+        const now = performance.now();
+        if (now - lastClickTime < 50) return;
+        lastClickTime = now;
+
+        const wave = document.createElement("div");
+        wave.className = "neon-click-wave";
+        wave.style.left = e.clientX + "px";
+        wave.style.top = e.clientY + "px";
+        document.body.appendChild(wave);
+
+        wave.addEventListener("animationend", function() {
+          wave.remove();
+        }, { once: true });
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>
