@@ -6242,5 +6242,29 @@
     });
 
 </script>
+
+<script>
+// Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
+(function() {
+  document.addEventListener("click", function(e) {
+    for (var i = 0; i < 2; i++) {
+      var wave = document.createElement("div");
+      wave.className = "neon-click-wave";
+      var baseSize = 20;
+      wave.style.width = baseSize + "px";
+      wave.style.height = baseSize + "px";
+      wave.style.left = (e.clientX - baseSize / 2) + "px";
+      wave.style.top = (e.clientY - baseSize / 2) + "px";
+      if (i === 1) {
+        wave.style.animationDelay = "0.12s";
+        wave.style.borderColor = "#38bdf8";
+      }
+      document.body.appendChild(wave);
+      setTimeout(function(el) { return function() { el.remove(); }; }(wave), 750);
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
