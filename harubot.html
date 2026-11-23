@@ -522,6 +522,7 @@ select option {
       </button>
     </div>
   </div>
+<span id="connection-label" style="display:none;"></span>
 </header>
 
 <!-- Mobile Navigation Drawer -->
@@ -2509,6 +2510,7 @@ select option {
  function setAppLanguage(lang) {
   const isEn = (lang === "en");
   window.currentLang = isEn ? "en" : "vi";
+  const dict = (typeof I18N_DICTIONARY !== "undefined" && I18N_DICTIONARY[window.currentLang]) ? I18N_DICTIONARY[window.currentLang] : {};
   localStorage.setItem("haruki_lang", window.currentLang);
   document.documentElement.lang = window.currentLang;
 
