@@ -2993,9 +2993,7 @@
 
     /* Lazy Render Off-screen Server Cards */
     .server-card {
-      content-visibility: auto;
-      contain-intrinsic-size: 1px 190px;
-    }
+      }
 
 </style>
 <style>
@@ -5326,8 +5324,16 @@
       window.addEventListener("resize", resize, { passive: true });
       resize();
 
+      let isScrolling = false;
+      let scrollTimer = null;
+      window.addEventListener("scroll", function() {
+        isScrolling = true;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() { isScrolling = false; }, 90);
+      }, { passive: true });
+
       function animate() {
-        if (!isVisible) {
+        if (!isVisible || isScrolling) {
           requestAnimationFrame(animate);
           return;
         }
