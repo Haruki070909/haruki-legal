@@ -2262,20 +2262,49 @@
 
     /* Core Responsive Rules across Breakpoints */
     @media (max-width: 900px) {
-      /* Prevent horizontal scroll */
+      /* Prevent horizontal scroll & Clean Luxury Background */
       html, body {
         overflow-x: hidden !important;
         max-width: 100vw !important;
+        background: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(16, 185, 129, 0.12), transparent 70%), #070a13 !important;
+      }
+      #cyber-canvas {
+        display: none !important; /* Hide distracting green spiderweb particle lines on mobile */
+      }
+      .bg-grid {
+        opacity: 0.15 !important;
       }
 
       /* Sticky Topbar */
       .dash-topbar {
-        padding: 10px 16px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        padding: 0 16px !important;
         gap: 8px !important;
         height: 60px !important;
         position: sticky !important;
         top: 0 !important;
         z-index: 1000 !important;
+        box-sizing: border-box !important;
+      }
+      .topbar-left {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 10px !important;
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+      }
+      .topbar-right {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-left: auto !important;
+        flex: 0 0 auto !important;
       }
       .topbar-left {
         gap: 10px !important;
@@ -2335,10 +2364,14 @@
         padding: 0 4px !important;
       }
       .hero-trust-bar {
-        font-size: 0.78rem !important;
-        gap: 6px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
         margin-bottom: 24px !important;
-        flex-direction: column !important;
+        font-size: 0.8rem !important;
       }
       .hero-cta-group {
         flex-direction: column !important;
@@ -2368,8 +2401,28 @@
         max-width: 100% !important;
       }
       .mockup-header {
-        padding: 10px 14px !important;
-        font-size: 0.75rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 8px 12px !important;
+        font-size: 0.72rem !important;
+        gap: 6px !important;
+      }
+      .mockup-fps {
+        display: none !important; /* Prevent text overlap on small mobile screens */
+      }
+      .mockup-server-tag {
+        max-width: 220px !important;
+        padding: 4px 10px !important;
+        font-size: 0.72rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .mockup-dots {
+        gap: 4px !important;
+        flex-shrink: 0 !important;
       }
       .mockup-inner {
         grid-template-columns: 1fr !important;
@@ -2409,7 +2462,7 @@
       .hub-container {
         padding: 24px 14px !important;
       }
-      header {
+      .hub-container header {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 16px !important;
@@ -2537,6 +2590,30 @@
         width: 100% !important;
         justify-content: center !important;
       }
+    }
+
+
+    /* Sleek Trust Pills */
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.24);
+      color: #34d399;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .trust-dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      display: inline-block;
     }
 
 </style>
@@ -2685,10 +2762,9 @@
       </p>
       
       <div class="hero-trust-bar" data-i18n="heroTrust">
-        <span>Trusted to protect communities with</span> 
-        <strong>Secret Honeypot Traps</strong> · 
-        <strong>36 Action Logs</strong> · 
-        <strong>Multi-Tier Anti-Phishing</strong>
+        <span class="trust-pill"><span class="trust-dot"></span>Secret Honeypot Traps</span>
+        <span class="trust-pill"><span class="trust-dot"></span>36 Action Logs</span>
+        <span class="trust-pill"><span class="trust-dot"></span>Multi-Tier Anti-Phishing</span>
       </div>
 
       <div class="hero-cta-group">
@@ -4385,7 +4461,7 @@
         heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
         heroSubtitle: "Hệ thống bảo vệ máy chủ Discord tự động, toàn diện với Dashboard trực quan. Cấu hình Honeypot bẫy nuke, lọc Auto-Mod đa tầng và 36 luồng nhật ký sự kiện chuyên sâu.",
-        heroTrust: "<span>Được tin cậy bảo vệ cộng đồng Discord với</span> <strong>Bẫy Honeypot Bí Mật</strong> · <strong>36 Luồng Nhật Ký</strong> · <strong>Auto-Mod Triệt Tiêu Lừa Đảo</strong>",
+        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Bẫy Honeypot Bí Mật</span> <span class="trust-pill"><span class="trust-dot"></span>36 Luồng Nhật Ký</span> <span class="trust-pill"><span class="trust-dot"></span>Auto-Mod Đa Tầng</span>`,
         heroAddBtn: "Add to Discord",
         heroManageBtn: "Quản Lý Server",
         hubAuthTitle: "Quản Lý Máy Chủ Discord Của Bạn",
@@ -4519,7 +4595,7 @@
         heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
         heroSubtitle: "A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.",
-        heroTrust: "<span>Trusted to protect communities with</span> <strong>Secret Honeypot Traps</strong> · <strong>36 Action Logs</strong> · <strong>Multi-Tier Anti-Phishing</strong>",
+        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Secret Honeypot Traps</span> <span class="trust-pill"><span class="trust-dot"></span>36 Action Logs</span> <span class="trust-pill"><span class="trust-dot"></span>Multi-Tier Anti-Phishing</span>`,
         heroAddBtn: "Add to Discord",
         heroManageBtn: "Manage Servers",
         hubAuthTitle: "Manage Your Discord Servers",
