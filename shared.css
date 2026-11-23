@@ -1638,3 +1638,19 @@ section[id] {
     display: none !important;
   }
 }
+
+
+/* UNIVERSAL BULLETPROOF PC DESKTOP GUARDS (>=901px) */
+@media (min-width: 901px) {
+  .mobile-nav-drawer,
+  .mobile-nav-drawer.open,
+  .portal-mobile-drawer,
+  .portal-mobile-drawer.open,
+  .mod-mobile-drawer,
+  .mod-mobile-drawer.open,
+  .mobile-menu-btn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
