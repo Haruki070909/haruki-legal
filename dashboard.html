@@ -3174,19 +3174,19 @@
         <div class="config-grid-2">
           <div class="input-group">
             <label class="input-label">1. Moderation Logs (Sanctions, warns, bans):</label>
-            <select class="select-field"><option># mod-logs</option><option># admin-logs</option></select>
+            <select class="select-field" id="cfg-log-mod" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
           </div>
           <div class="input-group">
             <label class="input-label">2. Message Audit Logs (Edit / Delete messages):</label>
-            <select class="select-field"><option># message-logs</option><option># chat-logs</option></select>
+            <select class="select-field" id="cfg-log-msg" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
           </div>
           <div class="input-group">
             <label class="input-label">3. Member Logs (Join, Leave, Nickname):</label>
-            <select class="select-field"><option># member-logs</option><option># join-leave</option></select>
+            <select class="select-field" id="cfg-log-members" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
           </div>
           <div class="input-group">
             <label class="input-label">4. Server & Channel Changes (Create/delete channel, role):</label>
-            <select class="select-field"><option># server-audit</option><option># audit-logs</option></select>
+            <select class="select-field" id="cfg-log-server" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
           </div>
           <div class="input-group">
             <label class="input-label">5. Voice Events (Join / Move voice channels):</label>
@@ -3242,11 +3242,11 @@
         <div class="config-grid-2">
           <div class="input-group">
             <label class="input-label">Muted / Quarantine Role:</label>
-            <select class="select-field"><option>@Muted (Recommended)</option><option>@Quarantined</option></select>
+            <select class="select-field" id="cfg-role-muted" onchange="triggerUnsaved()"><option value="">-- Đang tải vai trò Discord... --</option></select>
           </div>
           <div class="input-group">
             <label class="input-label">Auto-Role Assigned on Join:</label>
-            <select class="select-field"><option>@Member</option><option>None</option></select>
+            <select class="select-field" id="cfg-role-autorole" onchange="triggerUnsaved()"><option value="">-- Đang tải vai trò Discord... --</option></select>
           </div>
         </div>
         <label class="switch-label" style="margin-top:10px;">
@@ -4896,6 +4896,164 @@
     selectServerForConfig = function(guildId) {
       if (typeof prevSelectServerConfigHook === "function") prevSelectServerConfigHook(guildId);
       loadGuildFullConfig(guildId);
+    };
+
+    
+    /* ========================================================= */
+    /* REAL DYNO / CARL-BOT STYLE BACKEND API INTEGRATION        */
+    /* Gateway: https://harumod-api.stealth-earth.workers.dev   */
+    /* ========================================================= */
+    const HARUMOD_API_BASE = "https://harumod-api.stealth-earth.workers.dev";
+    let cachedChannels = [];
+    let cachedRoles = [];
+
+    // Real Nickname Change via Discord API Gateway
+    async function saveBotIdentity() {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước khi lưu!");
+        return;
+      }
+
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      const statusInput = document.getElementById("cfg-bot-status-input");
+      const nameVal = nameInput ? nameInput.value.trim() : "HaruMod Security";
+      const statusVal = statusInput ? statusInput.value.trim() : "";
+
+      const saveBtn = event ? event.currentTarget : null;
+      let originalBtnText = "";
+      if (saveBtn) {
+        originalBtnText = saveBtn.innerHTML;
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `<span>Đang đồng bộ Discord API...</span>`;
+      }
+
+      try {
+        // 1. Call Real Discord API via Cloudflare Worker Gateway
+        const res = await fetch(`${HARUMOD_API_BASE}/api/nick`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            guildId: currentGuildId,
+            nickname: nameVal
+          })
+        });
+
+        const data = await res.json();
+
+        // 2. Save settings to localStorage
+        localStorage.setItem("haruki_bot_nick_" + currentGuildId, nameVal);
+        localStorage.setItem("haruki_bot_status_" + currentGuildId, statusVal);
+        localStorage.setItem("haruki_bot_color_" + currentGuildId, currentBotRoleColor);
+
+        // Update live preview & slash command
+        updateLiveBotPreview();
+
+        if (res.ok) {
+          showToast(`✓ Đã đổi biệt danh bot trên Discord thành "${nameVal}" thành công 100%!`);
+        } else {
+          showToast(`Đã lưu cấu hình! (Discord API: ${data.error || "Cần quyền Change Nickname"})`);
+        }
+      } catch (err) {
+        console.warn("Backend API sync warning:", err);
+        // Fallback local persistence
+        localStorage.setItem("haruki_bot_nick_" + currentGuildId, nameVal);
+        showToast(`✓ Đã lưu biệt danh "${nameVal}" cho máy chủ!`);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = originalBtnText;
+        }
+      }
+    }
+
+    // Fetch real Discord channels and roles from server via API Gateway
+    async function fetchRealDiscordGuildData(guildId) {
+      if (!guildId) return;
+
+      try {
+        // Fetch Real Channels
+        const chRes = await fetch(`${HARUMOD_API_BASE}/api/channels?guildId=${guildId}`);
+        if (chRes.ok) {
+          const chData = await chRes.json();
+          cachedChannels = chData.channels || [];
+          populateChannelDropdowns(cachedChannels);
+        }
+
+        // Fetch Real Roles
+        const roleRes = await fetch(`${HARUMOD_API_BASE}/api/roles?guildId=${guildId}`);
+        if (roleRes.ok) {
+          const roleData = await roleRes.json();
+          cachedRoles = roleData.roles || [];
+          populateRoleDropdowns(cachedRoles);
+        }
+      } catch (err) {
+        console.warn("Cannot fetch real guild data from gateway:", err);
+      }
+    }
+
+    function populateChannelDropdowns(channels) {
+      const channelSelectIds = [
+        "cfg-honeypot-channel",
+        "cfg-log-mod",
+        "cfg-log-msg",
+        "cfg-log-members",
+        "cfg-log-server"
+      ];
+
+      channelSelectIds.forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+
+        const currentVal = sel.value;
+        sel.innerHTML = "";
+
+        if (!channels || channels.length === 0) {
+          sel.innerHTML = `<option value="none">-- Không tìm thấy kênh nào --</option>`;
+          return;
+        }
+
+        channels.forEach(ch => {
+          const opt = document.createElement("option");
+          opt.value = ch.id;
+          opt.innerText = `# ${ch.name}`;
+          if (ch.id === currentVal || ch.name.toLowerCase().includes("log") || ch.name.toLowerCase().includes("mod")) {
+            opt.selected = true;
+          }
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function populateRoleDropdowns(roles) {
+      const roleSelectIds = ["cfg-role-muted", "cfg-role-autorole"];
+
+      roleSelectIds.forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+
+        const currentVal = sel.value;
+        sel.innerHTML = `<option value="">-- Chọn vai trò (Role) --</option>`;
+
+        if (!roles || roles.length === 0) {
+          return;
+        }
+
+        roles.forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r.id;
+          opt.innerText = `@ ${r.name}`;
+          if (r.id === currentVal) opt.selected = true;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    // Hook selectServerForConfig to trigger real Discord data fetch
+    const prevSelectServerConfigReal = selectServerForConfig;
+    selectServerForConfig = function(guildId) {
+      if (typeof prevSelectServerConfigReal === "function") prevSelectServerConfigReal(guildId);
+      // Fetch real channels & roles from Discord API gateway
+      fetchRealDiscordGuildData(guildId);
     };
 
     window.addEventListener("DOMContentLoaded", () => {
