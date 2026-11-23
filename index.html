@@ -16,7 +16,7 @@
       scroll-behavior: smooth !important;
     }
     #harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
-      scroll-margin-top: 100px !important;
+      scroll-margin-top: 70px !important;
     }
     svg[fill="none"] {
       fill: none !important;
@@ -802,7 +802,7 @@
       scroll-padding-top: 90px;
     }
     section[id], #about, #harubot, #harumod, #watcher, #legal {
-      scroll-margin-top: 90px !important;
+      scroll-margin-top: 70px !important;
     }
 
     /* Generous Bottom Spacing before Footer */
@@ -928,6 +928,108 @@
 }
 </style>
 
+<style>
+    /* Single-Row Mobile Navbar & Drawer */
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .portal-mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(6, 9, 18, 0.96);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      padding: 16px 20px 24px 20px;
+      z-index: 999;
+      flex-direction: column;
+      animation: drawerSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .portal-mobile-drawer.open {
+      display: flex !important;
+    }
+    @keyframes drawerSlideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .portal-drawer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .portal-drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .portal-drawer-link:hover, .portal-drawer-link:active {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+    .portal-drawer-link svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      color: #38bdf8;
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        height: 60px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .navbar-content {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: 60px !important;
+        padding: 0 16px !important;
+        gap: 0 !important;
+      }
+      .nav-links {
+        display: none !important;
+      }
+      .mobile-menu-btn {
+        display: inline-flex !important;
+      }
+      #cyber-canvas {
+        display: none !important;
+      }
+    }
+</style>
 </head>
 <body>
 
@@ -953,15 +1055,58 @@
         <a href="#legal" data-i18n="navLegal">Điều Khoản & Bảo Mật</a>
       </nav>
 
-      <div style="display:flex; align-items:center; gap:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
         <!-- Language Switcher -->
         <div class="lang-switch-wrap">
           <button id="portal-lang-vi" class="lang-btn active" onclick="setPortalLanguage('vi')">VI</button>
           <button id="portal-lang-en" class="lang-btn" onclick="setPortalLanguage('en')">EN</button>
         </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="portal-mobile-menu-btn" class="mobile-menu-btn" onclick="togglePortalMobileMenu()" aria-label="Toggle navigation">
+          <svg class="hamburger-bars-icon" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;" viewBox="0 0 24 24">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <svg class="hamburger-close-icon" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;display:none;" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="portal-mobile-drawer" class="portal-mobile-drawer">
+    <div class="portal-drawer-inner">
+      <a href="#about" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span data-i18n="navAbout">Về Tác Giả</span>
+      </a>
+      <a href="#harubot" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="6"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>
+        <span data-i18n="navHaruBot">HaruBot</span>
+      </a>
+      <a href="#harumod" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span data-i18n="navHaruMod">HaruMod</span>
+      </a>
+      <a href="#watcher" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span data-i18n="navWatcher">Watcher 24/7</span>
+      </a>
+      <a href="#legal" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span data-i18n="navLegal">Điều Khoản & Bảo Mật</span>
+      </a>
+      <a href="./dashboard.html" class="portal-drawer-link" style="color:#10b981;font-weight:700;border-top:1px solid rgba(255,255,255,0.08);margin-top:6px;padding-top:14px;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Web Dashboard</span>
+      </a>
+    </div>
+  </div>
 
   <!-- Hero Portal Section -->
   <section class="hero-portal container">
@@ -1327,7 +1472,31 @@
         }, 2500);
       });
     }
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
   <!-- Discord Real-time Presence Script (Lanyard Engine) -->
   <script>
@@ -1466,7 +1635,31 @@
       }
     }
     connectLanyardWs();
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
   <!-- Internationalization (VI/EN) Engine -->
   <script>
@@ -1613,7 +1806,31 @@
       const saved = localStorage.getItem("haruki_lang") || "en";
       setPortalLanguage(saved);
     });
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
   <!-- Interactive 60fps Starfield Constellation Canvas -->
   <script>
@@ -1709,7 +1926,31 @@
       requestAnimationFrame(animateParticles);
     }
     animateParticles();
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
   <!-- High-End 3D Elevation & Aura Glow handled seamlessly via GPU-accelerated CSS (Zero Jitter) -->
 
@@ -1745,7 +1986,31 @@
         }
       });
     });
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
 
   <!-- Ambient Spotlight & Explosive Cyber Sparks System -->
@@ -1784,7 +2049,31 @@
         setTimeout(() => spark.remove(), 650);
       }
     });
-  </script>
+  
+    // Mobile Drawer Toggle
+    function togglePortalMobileMenu() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (!drawer || !btn) return;
+      const isOpen = drawer.classList.toggle("open");
+      const bars = btn.querySelector(".hamburger-bars-icon");
+      const close = btn.querySelector(".hamburger-close-icon");
+      if (bars && close) {
+        bars.style.display = isOpen ? "none" : "block";
+        close.style.display = isOpen ? "block" : "none";
+      }
+    }
+    document.addEventListener("click", function(e) {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+          togglePortalMobileMenu();
+        }
+      }
+    });
+
+</script>
 
 </body>
 </html>
