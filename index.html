@@ -902,6 +902,33 @@
       }
     }
 
+
+/* Ultra-Smooth GPU-Accelerated Neon Cyan Wave Ripple (Zero Lag) */
+.neon-click-wave {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px #00f2fe, inset 0 0 8px rgba(0, 242, 254, 0.5);
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: neonWaveExpandGPU 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes neonWaveExpandGPU {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+  }
+}
+
 </style>
 
 <style>
@@ -1133,22 +1160,7 @@
 }
 </style>
 <style>
-/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
-.neon-click-wave {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
-  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-}
 
-@keyframes neonWaveExpand {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.95;
-  }
   50% {
     opacity: 0.7;
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
@@ -1601,32 +1613,7 @@
           toast.style.display = 'none';
         }, 2500);
       });
-    }
-  
-    // Mobile Drawer Toggle
-    function togglePortalMobileMenu() {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
-      }
-    }
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          togglePortalMobileMenu();
-        }
-      }
-    });
-
-</script>
+    }</script>
 
   <!-- Discord Real-time Presence Script (Lanyard Engine) -->
   <script>
@@ -1764,32 +1751,7 @@
         console.log("WebSocket connect error", err);
       }
     }
-    connectLanyardWs();
-  
-    // Mobile Drawer Toggle
-    function togglePortalMobileMenu() {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
-      }
-    }
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          togglePortalMobileMenu();
-        }
-      }
-    });
-
-</script>
+    connectLanyardWs();</script>
 
   <!-- Internationalization (VI/EN) Engine -->
   <script>
@@ -1935,157 +1897,100 @@
     document.addEventListener("DOMContentLoaded", () => {
       const saved = localStorage.getItem("haruki_lang") || "en";
       setPortalLanguage(saved);
-    });
-  
-    // Mobile Drawer Toggle
-    function togglePortalMobileMenu() {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
-      }
-    }
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          togglePortalMobileMenu();
-        }
-      }
-    });
+    });</script>
 
-</script>
-
-  <!-- Interactive 60fps Starfield Constellation Canvas -->
+  <!-- High-Performance Cyber Canvas (Batched Draw, 60fps Zero Lag) -->
   <script>
-    const canvas = document.getElementById("cyber-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let mouse = { x: null, y: null, radius: 150 };
+    (function() {
+      const canvas = document.getElementById("cyber-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d", { alpha: true });
+      let particles = [];
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let animId = null;
+      let isVisible = true;
 
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      initParticles();
-    });
-
-    window.addEventListener("mousemove", (e) => {
-      mouse.x = e.x;
-      mouse.y = e.y;
-    });
-
-    window.addEventListener("mouseout", () => {
-      mouse.x = null;
-      mouse.y = null;
-    });
-
-    function initParticles() {
-      particles = [];
-      const particleCount = Math.min(Math.floor((width * height) / 12000), 100);
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 2 + 1,
-          color: Math.random() > 0.5 ? "rgba(56, 189, 248, " : "rgba(16, 185, 129, ",
-          alpha: Math.random() * 0.6 + 0.2
-        });
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        init();
       }
-    }
 
-    canvas.width = width;
-    canvas.height = height;
-    initParticles();
+      function init() {
+        particles = [];
+        // Light count (max 26) to guarantee 60-120fps with zero frame drop
+        const count = Math.min(Math.floor((width * height) / 45000), 26);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            radius: Math.random() * 1.5 + 1,
+            color: Math.random() > 0.5 ? "rgba(56, 189, 248, " : "rgba(16, 185, 129, ",
+            alpha: Math.random() * 0.5 + 0.25
+          });
+        }
+      }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, width, height);
+      window.addEventListener("resize", resize, { passive: true });
+      resize();
 
-      // Draw and update particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx = -p.vx;
-        if (p.y < 0 || p.y > height) p.vy = -p.vy;
-
-        // Mouse interaction
-        if (mouse.x !== null) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouse.radius) {
-            const force = (mouse.radius - dist) / mouse.radius;
-            p.x -= (dx / dist) * force * 1.5;
-            p.y -= (dy / dist) * force * 1.5;
-          }
+      function loop() {
+        if (!isVisible) {
+          animId = requestAnimationFrame(loop);
+          return;
         }
 
+        ctx.clearRect(0, 0, width, height);
+
+        // 1. Draw all particle nodes
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx = -p.vx;
+          if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ")";
+          ctx.fill();
+        }
+
+        // 2. Batch all lines into ONE single stroke call (O(1) GPU draw call)
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + p.alpha + ")";
-        ctx.fill();
-
-        // Connect constellation lines
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 110)})`;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            // Use squared distance (avoid expensive Math.sqrt)
+            if (dx * dx + dy * dy < 7225) { // 85px max distance
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
           }
         }
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.12)";
+        ctx.lineWidth = 0.65;
+        ctx.stroke();
+
+        animId = requestAnimationFrame(loop);
       }
 
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-  
-    // Mobile Drawer Toggle
-    function togglePortalMobileMenu() {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
-      }
-    }
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          togglePortalMobileMenu();
-        }
-      }
-    });
+      // Pause when tab is hidden to save CPU/battery
+      document.addEventListener("visibilitychange", function() {
+        isVisible = !document.hidden;
+      });
 
-</script>
+      animId = requestAnimationFrame(loop);
+    })();
+  </script>
 
-  <!-- High-End 3D Elevation & Aura Glow handled seamlessly via GPU-accelerated CSS (Zero Jitter) -->
-
-
-  <!-- Smooth Scrolling with Navbar Offset Calculation -->
+  <!-- Smooth Scrolling Anchor Handler -->
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -2095,84 +2000,39 @@
         if (targetEl) {
           e.preventDefault();
           const nav = document.querySelector('.navbar');
-          const navHeight = nav ? nav.offsetHeight : 72;
-          const elementPosition = targetEl.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - (navHeight + 25);
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-
-          // Optional: highlight the card temporarily
-          targetEl.style.transition = 'box-shadow 0.4s ease';
-          if (targetId === '#harubot') {
-            targetEl.style.boxShadow = '0 0 35px rgba(56, 189, 248, 0.55)';
-            setTimeout(() => targetEl.style.boxShadow = '', 1200);
-          } else if (targetId === '#harumod') {
-            targetEl.style.boxShadow = '0 0 35px rgba(16, 185, 129, 0.55)';
-            setTimeout(() => targetEl.style.boxShadow = '', 1200);
-          }
+          const navHeight = nav ? nav.offsetHeight : 64;
+          const offsetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset - (navHeight + 20);
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
       });
     });
-  
-    // Mobile Drawer Toggle
-    function togglePortalMobileMenu() {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
-      }
-    }
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("portal-mobile-drawer");
-      const btn = document.getElementById("portal-mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          togglePortalMobileMenu();
-        }
-      }
-    });
+  </script>
 
-</script>
-
-
-  <!-- Ambient Spotlight & Explosive Cyber Sparks System -->
-  <div id="cyber-spotlight"></div>
+  <!-- High-Performance Neon Wave Ripple on Click (GPU Composited) -->
   <script>
-    // Spotlight follow
-    window.addEventListener("mousemove", (e) => {
-      document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
-      document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
-    });
+    (function() {
+      let lastClickTime = 0;
+      window.addEventListener("click", function(e) {
+        const now = performance.now();
+        // Throttle rapid clicks to prevent DOM flooding (min 50ms)
+        if (now - lastClickTime < 50) return;
+        lastClickTime = now;
 
-    
-  // Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
-  window.addEventListener("click", function(e) {
-    for (var i = 0; i < 2; i++) {
-      var wave = document.createElement("div");
-      wave.className = "neon-click-wave";
-      var baseSize = 20;
-      wave.style.width = baseSize + "px";
-      wave.style.height = baseSize + "px";
-      wave.style.left = (e.clientX - baseSize / 2) + "px";
-      wave.style.top = (e.clientY - baseSize / 2) + "px";
-      if (i === 1) {
-        wave.style.animationDelay = "0.12s";
-        wave.style.borderColor = "#38bdf8";
-      }
-      document.body.appendChild(wave);
-      setTimeout((function(el) { return function() { el.remove(); }; })(wave), 750);
-    }
-  });
+        const wave = document.createElement("div");
+        wave.className = "neon-click-wave";
+        wave.style.left = e.clientX + "px";
+        wave.style.top = e.clientY + "px";
+        document.body.appendChild(wave);
 
-    // Mobile Drawer Toggle
+        wave.addEventListener("animationend", function() {
+          wave.remove();
+        }, { once: true });
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- Single Robust Mobile Drawer Controller -->
+  <script>
     function togglePortalMobileMenu() {
       const drawer = document.getElementById("portal-mobile-drawer");
       const btn = document.getElementById("portal-mobile-menu-btn");
@@ -2185,6 +2045,7 @@
         close.style.display = isOpen ? "block" : "none";
       }
     }
+
     document.addEventListener("click", function(e) {
       const drawer = document.getElementById("portal-mobile-drawer");
       const btn = document.getElementById("portal-mobile-menu-btn");
@@ -2195,22 +2056,19 @@
       }
     });
 
-</script>
-
-<script>
-  window.addEventListener("scroll", function() {
-    var drawer = document.getElementById("portal-mobile-drawer");
-    var btn = document.getElementById("portal-mobile-menu-btn");
-    if (drawer && drawer.classList.contains("open")) {
-      drawer.classList.remove("open");
-      if (btn) {
-        var bars = btn.querySelector(".hamburger-bars-icon");
-        var close = btn.querySelector(".hamburger-close-icon");
-        if (bars) bars.style.display = "block";
-        if (close) close.style.display = "none";
+    window.addEventListener("scroll", function() {
+      const drawer = document.getElementById("portal-mobile-drawer");
+      const btn = document.getElementById("portal-mobile-menu-btn");
+      if (drawer && drawer.classList.contains("open")) {
+        drawer.classList.remove("open");
+        if (btn) {
+          const bars = btn.querySelector(".hamburger-bars-icon");
+          const close = btn.querySelector(".hamburger-close-icon");
+          if (bars) bars.style.display = "block";
+          if (close) close.style.display = "none";
+        }
       }
-    }
-  }, { passive: true });
-</script>
+    }, { passive: true });
+  </script>
 </body>
 </html>
