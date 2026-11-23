@@ -415,7 +415,7 @@ footer {
 
 .legal-section {
   margin-bottom: 36px;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 70px !important;
 }
 
 .legal-section h2 {
@@ -1154,7 +1154,7 @@ html {
 }
 
 #harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
-  scroll-margin-top: 100px !important;
+  scroll-margin-top: 70px !important; !important;
 }
 
 /* Fix SVG fill overriding line icons */
@@ -1621,10 +1621,10 @@ svg[fill="none"] {
 /* Universal Scroll Padding & Sticky Header Offset */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+  scroll-padding-top: 70px !important;
 }
 section[id] {
-  scroll-margin-top: 90px !important;
+  scroll-margin-top: 70px !important; !important;
 }
 
 @media (max-width: 900px) {
