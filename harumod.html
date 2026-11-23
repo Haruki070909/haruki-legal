@@ -212,6 +212,20 @@
   }
 }
 
+
+    /* Lazy Scroll Reveal - Render & Reveal only when scrolled into view */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 450px;
+    }
+    .scroll-reveal.is-revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
 </style>
 
 <style>
@@ -639,7 +653,7 @@
     </header>
 
     <!-- Key Modules Grid -->
-    <section id="features">
+    <section id="features" class="scroll-reveal">
       <div class="section-head">
         <span class="section-tag" style="color:var(--accent-emerald);" data-i18n="secTagFeat">KIẾN TRÚC MODULAR</span>
         <h2 class="section-title" data-i18n="secTitleFeat">6 Tầng Bảo Mật & Quản Trị Vững Chắc</h2>
@@ -687,7 +701,7 @@
 
     <!-- Commands Cheat-sheet -->
         <!-- Interactive Hybrid Commands Explorer -->
-    <section id="commands">
+    <section id="commands" class="scroll-reveal">
       <div class="section-head">
         <span class="section-tag" style="color:var(--accent-emerald);" data-i18n="secTagCmds">HỆ THỐNG LỆNH HYBRID</span>
         <h2 class="section-title" data-i18n="secTitleCmds">Hỗ Trợ Song Song Prefix <code>h?</code> & Slash <code>/</code></h2>
@@ -721,7 +735,7 @@
 
   
 <!-- HaruMod Command Directory & Security Tools -->
-<section class="section-heading" id="commands-section" style="margin-top: 56px;">
+<section class="section-heading scroll-reveal" id="commands-section" style="margin-top: 56px;">
   <p class="eyebrow"><span class="eyebrow-line"></span><span>BẢNG LỆNH QUẢN TRỊ & BẢO MẬT</span></p>
   <h2>Tra Cứu Lệnh HaruMod</h2>
   <p>Toàn bộ 24+ lệnh quản trị, anti-raid, honeypot và phân quyền tự động dành cho Moderator & Server Owner.</p>
@@ -1487,6 +1501,31 @@ window.setAppLanguage = function(lang) {
           wave.remove();
         }, { once: true });
       }, { passive: true });
+    })();
+  </script>
+
+
+  <!-- IntersectionObserver: Tới đâu mới tải và hiển thị tới đó (Zero Lag Scroll Reveal) -->
+  <script>
+    (function() {
+      const revealItems = document.querySelectorAll(".scroll-reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-revealed");
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: "0px 0px -40px 0px",
+          threshold: 0.05
+        });
+        revealItems.forEach(el => observer.observe(el));
+      } else {
+        revealItems.forEach(el => el.classList.add("is-revealed"));
+      }
     })();
   </script>
 
