@@ -1165,6 +1165,186 @@ body.drawer-open {
   }
 }
 </style>
+<style>
+/* Custom Glassmorphic Sliders & UI Elements */
+input[type="range"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  height: 6px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-radius: 999px !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+}
+input[type="range"]:hover {
+  background: rgba(56, 189, 248, 0.3) !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: #38bdf8 !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.8), 0 0 20px rgba(56, 189, 248, 0.4) !important;
+  border: 2px solid #ffffff !important;
+  transition: transform 0.15s ease !important;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2) !important;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: #38bdf8 !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.8) !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Soundwave Equalizer Animation */
+.audio-equalizer {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.audio-equalizer span {
+  width: 3px;
+  background: #38bdf8;
+  border-radius: 2px;
+  animation: soundwave 1.2s infinite ease-in-out;
+}
+.audio-equalizer span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.audio-equalizer span:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+.audio-equalizer span:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.audio-equalizer span:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+@keyframes soundwave {
+  0%, 100% { height: 20%; }
+  50% { height: 100%; }
+}
+
+/* Wide Horizontal Music Cockpit on PC */
+.music-cockpit {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  background: rgba(14, 18, 34, 0.85) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  border-radius: 20px !important;
+  padding: 24px !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.cockpit-player-card {
+  width: 100% !important;
+  background: rgba(9, 11, 22, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  padding: 22px !important;
+  margin-bottom: 20px !important;
+}
+
+.cockpit-top-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin-bottom: 18px !important;
+  flex-wrap: wrap !important;
+}
+
+.cockpit-track-info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex: 1 !important;
+  min-width: 260px !important;
+}
+
+.cockpit-controls-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  margin-top: 14px !important;
+}
+
+.player-action-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 9px 15px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #f1f5f9 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+}
+
+.player-action-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  color: #38bdf8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2) !important;
+}
+
+.player-play-btn {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.player-play-btn:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.8) !important;
+}
+
+.queue-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  margin-left: 4px;
+}
+
+/* 2-column Bottom Deck */
+.cockpit-bottom-deck {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+}
+@media (max-width: 900px) {
+  .cockpit-bottom-deck {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -1417,347 +1597,184 @@ body.drawer-open {
 <section class="guide-section" id="dashboard" style='margin-top: 48px;'>
 
 <div class="section-heading guide-heading">
-
 <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="dashEyebrow">BẢN DEMO TƯƠNG TÁC</span></p>
-
 <h2><span data-i18n="dashTitle">HaruBot Web Demo Showcase</span></h2>
-
 <p><span data-i18n="dashDesc">Bản mô phỏng tương tác hệ thống nghe nhạc, bộ lọc MusicFX và RPG Game độc quyền của HaruBot trực tiếp trên trình duyệt.</span></p>
-
 </div>
 
-
-
-<div style='background: rgba(14, 18, 34, 0.85); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); backdrop-filter: blur(12px);'>
-
+<div class="music-cockpit">
 <!-- Dashboard Header -->
-
 <div style='display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;'>
-
 <div style='display: flex; align-items: center; gap: 14px;'>
-
 <div style='width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #38bdf8); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 16px rgba(56,189,248,0.5);'>
-
   <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style='width:24px;height:24px;filter:drop-shadow(0 0 5px rgba(255,255,255,0.8));'>
-
     <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
-
   </svg>
-
 </div>
-
 <div>
-
 <h3 style='margin: 0; font-size: 17px; color: #fff; font-weight: 700;' data-i18n="musicPanelTitle">Bảng Điều Khiển Âm Nhạc · Haruki Starlight <span style='font-size:11px;background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 8px;border-radius:6px;border:1px solid rgba(56,189,248,0.4);vertical-align:middle;margin-left:6px;'>DEMO</span></h3>
-
-<span style='font-size: 13px; color: #94a3b8;'><span style='display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #22c55e;'></span><span data-i18n="musicOnline">Chế độ Thử nghiệm (Demo)</span>· Channel:<strong style='color: #38bdf8;'><svg class='player-btn-svg' viewBox="0 0 24 24" style='stroke:#38bdf8;'><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Demo Lounge</strong></span>
-
+<span style='font-size: 13px; color: #94a3b8;'><span style='display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #22c55e;'></span><span data-i18n="musicOnline">Chế độ Thử nghiệm (Demo)</span> · Channel: <strong style='color: #38bdf8;'><svg class='player-btn-svg' viewBox="0 0 24 24" style='stroke:#38bdf8;width:14px;height:14px;display:inline-block;vertical-align:middle;'><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> Demo Lounge</strong></span>
 </div>
-
 </div>
-
 <div style='display: flex; gap: 10px; align-items: center;'>
-
-<span style='font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-weight: 600;'>HaruBot Demo v2.4</span>
-
+<span style='font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; font-weight: 600;'>HaruBot Cockpit v3.0</span>
+</div>
 </div>
 
+<!-- Wide Horizontal Player Card -->
+<div class="cockpit-player-card">
+  <!-- Top: Track Info & Status -->
+  <div class="cockpit-top-row">
+    <div class="cockpit-track-info">
+      <div id="dash-cover-art" style='width: 76px; height: 76px; border-radius: 14px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(56,189,248,0.4); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: hidden; flex-shrink: 0;'>
+        <span id="dash-cover-icon" style='transition: transform 0.3s;display:inline-flex;align-items:center;justify-content:center;'>
+          <svg style='width:36px;height:36px;stroke:#38bdf8;fill:none;' viewBox="0 0 24 24" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#38bdf8"/><circle cx="18" cy="16" r="3" fill="#38bdf8"/></svg>
+        </span>
+        <div style='position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #38bdf8, #818cf8);'></div>
+      </div>
+      <div style='flex: 1; overflow: hidden;'>
+        <div style='display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap;'>
+          <span id="dash-status-badge" data-i18n="musicNowPlaying" style='font-size: 10px; font-weight: 800; background: #38bdf8; color: #090b16; padding: 2px 7px; border-radius: 4px; text-transform: uppercase;'>ĐANG PHÁT</span>
+          <span id="dash-source-badge" style='font-size: 11px; color: #94a3b8;'>YouTube / Spotify</span>
+          <div class="audio-equalizer"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <h4 id="dash-track-title" style='margin: 0 0 4px 0; font-size: 17px; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>Vùng An Toàn - B Ray</h4>
+        <p id="dash-track-artist" style='margin: 0; font-size: 13px; color: #94a3b8;'><span data-i18n="musicChannelPrefix">Kênh:</span> B Ray Official · <span data-i18n="musicRequestedBy">Yêu cầu bởi:</span> It's Haru</p>
+      </div>
+    </div>
+    
+    <!-- Volume Slider (Customized) -->
+    <div style='display: flex; align-items: center; gap: 10px; min-width: 200px;'>
+      <span id="dash-vol-icon" style='display:inline-flex;align-items:center;color:#94a3b8;'>
+        <svg class='player-btn-svg' viewBox="0 0 24 24" style="width:16px;height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </span>
+      <input id="dash-vol-slider" type="range" min="0" max="150" value="100" style='flex: 1; cursor: pointer;' oninput="updateVolume(this.value)">
+      <span id="dash-vol-value" style='font-size: 13px; font-weight: 700; color: #e2e8f0; min-width: 42px; text-align: right;'>100%</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar & Time -->
+  <div style='margin-bottom: 14px;'>
+    <div style='display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-family: monospace;'>
+      <span id="dash-time-curr">01:28</span>
+      <div style='display: flex; align-items: center; gap: 6px; color: #38bdf8;'>
+        <span style='display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; animation: pulseDot 1s infinite alternate;'></span>
+        <span id="dash-fx-indicator">Bass Thường (Trầm nhẹ)</span>
+      </div>
+      <span id="dash-time-total">04:26</span>
+    </div>
+    <div id="dash-progress-track" style='height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; cursor: pointer; position: relative; overflow: hidden;' onclick="seekAudio(event)">
+      <div id="dash-progress-bar" style='width: 33%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 999px; transition: width 0.3s ease; box-shadow: 0 0 10px rgba(56,189,248,0.5);'></div>
+    </div>
+  </div>
+
+  <!-- Wide Controls Bar -->
+  <div class="cockpit-controls-bar">
+    <button class="player-action-btn" onclick="seekRelative(-15)" title="Tua lại 15 giây">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="11 19 2 12 11 5 11 19"/><polygon points="22 19 13 12 22 5 22 19"/></svg> -15s
+    </button>
+    <button id="dash-play-btn" class="player-play-btn" onclick="sendBotCommand('pause')" title="Tạm dừng / Tiếp tục">
+      <span id="dash-play-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </span>
+    </button>
+    <button class="player-action-btn" onclick="seekRelative(15)" title="Tua tới 15 giây">
+      +15s <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>
+    </button>
+    <button class="player-action-btn" onclick="sendBotCommand('skip')" title="Bỏ qua bài (Skip)">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg> Skip
+    </button>
+    <button class="player-action-btn" style="color:#f87171;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.1);" onclick="sendBotCommand('stop')" title="Dừng phát">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><rect x="5" y="5" width="14" height="14"/></svg> Dừng
+    </button>
+    <button id="dash-loop-btn" class="player-action-btn" onclick="toggleLoop()" title="Chế độ lặp">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+      <span id="dash-loop-text" data-i18n="musicLoopOff">Tắt</span>
+    </button>
+    <button id="dash-shuffle-btn" class="player-action-btn" onclick="toggleShuffle()" title="Xáo trộn hàng chờ">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg> Xáo trộn
+    </button>
+    <button class="player-action-btn" onclick="openLyricsModal()" title="Xem lời bài hát (Lyrics)">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg>
+      <span data-i18n="musicBtnLyrics">Lời</span>
+    </button>
+    <button class="player-action-btn" onclick="document.getElementById('fx-section').scrollIntoView({behavior:'smooth'})" title="Bộ lọc MusicFX">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5"/></svg> FX
+    </button>
+    <button id="dash-queue-btn" class="player-action-btn" onclick="toggleQueueModal()" title="Xem danh sách hàng chờ">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span data-i18n="musicBtnQueue">Hàng chờ</span>
+      <span class="queue-badge" id="dash-queue-count">5</span>
+    </button>
+  </div>
 </div>
 
+<!-- Bottom Deck: Add Song & MusicFX Panel -->
+<div class="cockpit-bottom-deck">
+  <!-- Left: Quick Add Song -->
+  <div style='background: rgba(9, 11, 22, 0.75); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px;'>
+    <label style='display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #cbd5e1; margin-bottom: 12px;' data-i18n="musicAddQueueTitle">
+      <svg class='player-btn-svg' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Thêm bài hát vào hàng chờ (Queue)
+    </label>
+    <div style='display: flex; gap: 8px;'>
+      <input id="web-song-input" type="text" data-i18n-placeholder="musicInputPlaceholder" placeholder="Dán link YouTube / Spotify hoặc tên bài hát..." style='flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 13px; outline: none;' onkeydown="if(event.key==='Enter')addSongToQueue()">
+      <button class="button button-primary" style='padding: 11px 18px; font-size: 13px; white-space: nowrap; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;' onclick="addSongToQueue()">
+        <span data-i18n="musicPlayNow">Phát ngay</span>
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </div>
+    <div style='display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;'>
+      <button class="pill-btn" onclick="quickAddSuggest('Đường Tôi Chở Em Về - buitruonglinh')">Đường Tôi Chở Em Về</button>
+      <button class="pill-btn" onclick="quickAddSuggest('Chẳng Còn Thời Gian Ấy - Bem')">Chẳng Còn Thời Gian Ấy</button>
+      <button class="pill-btn" onclick="quickAddSuggest('Nắng Lung Linh - Nguyễn Thương')">Nắng Lung Linh</button>
+    </div>
+  </div>
 
-
-<!-- Main Controller Grid -->
-
-<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;'>
-
- 
-
-<!-- Left: Current Player Card -->
-
-<div style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;'>
-
-<div>
-
-<div style='display: flex; gap: 16px; align-items: center; margin-bottom: 16px;'>
-
-<div id="dash-cover-art" style='width: 78px; height: 78px; border-radius: 14px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(56,189,248,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: hidden;'>
-
-<span id="dash-cover-icon" style='transition: transform 0.3s;display:inline-flex;align-items:center;justify-content:center;'><svg style='width:36px;height:36px;stroke:#ffffff;fill:none;' viewBox="0 0 24 24" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span>
-
-<div style='position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #38bdf8;'></div>
-
+  <!-- Right: 10 MusicFX Audio Filters -->
+  <div id="fx-section" style='background: rgba(9, 11, 22, 0.75); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px;'>
+    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;'>
+      <label style='font-size: 14px; font-weight: 700; color: #cbd5e1; margin: 0; display: flex; align-items: center; gap: 8px;' data-i18n="musicFxSectionTitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" style="width:16px;height:16px;"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5"/></svg>
+        10 Bộ Lọc Âm Thanh MusicFX
+      </label>
+      <span id="current-fx-name" style='font-size: 11px; padding: 3px 8px; border-radius: 12px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 600; border: 1px solid rgba(56,189,248,0.3);'>Bass Thường</span>
+    </div>
+    <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;'>
+      <button class="fx-btn active" data-i18n="fxBassSoft" onclick="setMusicFX('bass_soft', 'Bass Thường (Trầm nhẹ)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M2 12h20M6 8v8M10 5v14M14 8v8M18 10v4"/></svg> Soft Bass
+      </button>
+      <button class="fx-btn" data-i18n="fxBassBoost" onclick="setMusicFX('bass_boost', 'Siêu Bass (Bassboost Căng)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="12 2 15 8 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 8 12 2"/></svg> Super Bass
+      </button>
+      <button class="fx-btn" data-i18n="fxNightcore" onclick="setMusicFX('nightcore', 'Nightcore (Tốc độ & Tone cao)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Nightcore
+      </button>
+      <button class="fx-btn" data-i18n="fx8d" onclick="setMusicFX('8d', '8D Audio (Âm vòm đảo chiều)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg> 8D Audio
+      </button>
+      <button class="fx-btn" data-i18n="fxLofi" onclick="setMusicFX('lofi', 'Lofi Chill (Ấm áp, thư thái)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg> Lofi Chill
+      </button>
+      <button class="fx-btn" data-i18n="fxRadio" onclick="setMusicFX('radio', 'Loa Cổ Điển (1980s Retro)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><rect x="2" y="7" width="20" height="14" rx="2"/><circle cx="8" cy="14" r="3"/><line x1="4.5" y1="3" x2="19.5" y2="7"/></svg> Vintage Radio
+      </button>
+      <button class="fx-btn" data-i18n="fxVaporwave" onclick="setMusicFX('vaporwave', 'Anime Cute (Nhẹ nhàng trong sáng)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Anime Cute
+      </button>
+      <button class="fx-btn" data-i18n="fxVocal" onclick="setMusicFX('vocal', 'Phòng Thu VIP (Tôn giọng hát)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Phòng Thu VIP
+      </button>
+      <button class="fx-btn" data-i18n="fxDolby" onclick="setMusicFX('dolby', 'Âm Vòm 3D Không Gian', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg> Âm Vòm 3D
+      </button>
+      <button class="fx-btn" data-i18n="fxFlat" onclick="setMusicFX('flat', 'Tắt Toàn Bộ (Âm thanh gốc)', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Tắt Toàn Bộ
+      </button>
+    </div>
+  </div>
 </div>
-
-<div style='flex: 1; overflow: hidden;'>
-
-<div style='display: flex; align-items: center; gap: 6px; margin-bottom: 4px;'>
-
-<span id="dash-status-badge" data-i18n="musicNowPlaying" style='font-size: 10px; font-weight: 800; background: #38bdf8; color: #090b16; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;'>ĐANG PHÁT</span>
-
-<span id="dash-source-badge" style='font-size: 11px; color: #94a3b8;'>YouTube / Spotify</span>
-
 </div>
-
-<h4 id="dash-track-title" style='margin: 0 0 4px 0; font-size: 16px; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>Vùng An Toàn - B Ray</h4>
-
-<p id="dash-track-artist" style='margin: 0; font-size: 13px; color: #94a3b8;'><span data-i18n="musicChannelPrefix">Kênh:</span>B Ray Official ·<span data-i18n="musicRequestedBy">Yêu cầu bởi:</span>It's Haru</p>
-
-</div>
-
-</div>
-
-
-
-<!-- Progress Bar & Time -->
-
-<div style='margin-bottom: 16px;'>
-
-<div style='display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-family: monospace;'>
-
-<span id="dash-time-curr">01:28</span>
-
-<div style='display: flex; align-items: center; gap: 4px; color: #38bdf8;'>
-
-<span style='display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; animation: pulseDot 1s infinite alternate;'></span>
-
-<span id="dash-fx-indicator">Bass Thường (Trầm nhẹ)</span>
-
-</div>
-
-<span id="dash-time-total">04:26</span>
-
-</div>
-
-<div id="dash-progress-track" style='height: 7px; background: rgba(255,255,255,0.1); border-radius: 4px; cursor: pointer; position: relative; overflow: hidden;' onclick="seekAudio(event)">
-
-<div id="dash-progress-bar" style='width: 33%; height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 4px; transition: width 0.3s ease;'></div>
-
-</div>
-
-</div>
-
-
-
-<!-- Discord Row 1 Buttons -->
-
-<div style='display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px;'>
-
-<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;' onclick="sendBotCommand('pause')" title="Tạm dừng / Tiếp tục">
-
-<span id="dash-play-icon"><svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span>
-
-</button>
-
-<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center;' onclick="sendBotCommand('skip')" title="Bỏ qua bài (Skip)">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
-
-</button>
-
-<button class="button button-secondary" style='padding: 10px 0; font-size: 14px; display: flex; justify-content: center; align-items: center; background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #f87171;' onclick="sendBotCommand('stop')" title="Dừng phát">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14"/></svg>
-
-</button>
-
-<button id="dash-loop-btn" class="button button-secondary" style='padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;' onclick="toggleLoop()" title="Chế độ lặp">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span id="dash-loop-text" data-i18n="musicLoopOff" style='font-size: 11px; margin-left: 3px;'>Tắt</span>
-
-</button>
-
-<button id="dash-shuffle-btn" class="button button-secondary" style='padding: 10px 0; font-size: 13px; display: flex; justify-content: center; align-items: center;' onclick="toggleShuffle()" title="Xáo trộn hàng chờ">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-
-</button>
-
-</div>
-
-
-
-<!-- Discord Row 2 Buttons -->
-
-<div style='display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;'>
-
-<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="seekRelative(-15)" title="Tua lại 15 giây">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="11 19 2 12 11 5 11 19"/><polygon points="22 19 13 12 22 5 22 19"/></svg>-15s
-
-</button>
-
-<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="seekRelative(15)" title="Tua tới 15 giây">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>+15s
-
-</button>
-
-<button class="button button-secondary" style='padding: 8px 10px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; gap: 6px;' onclick="openLyricsModal()" title="Xem lời bài hát (Lyrics)">
-<svg class='player-btn-svg' viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg><span data-i18n="musicBtnLyrics">Lời</span>
-</button>
-
-<button class="button button-secondary" style='padding: 8px 0; font-size: 12px; display: flex; justify-content: center; align-items: center;' onclick="document.getElementById('fx-section').scrollIntoView({behavior:'smooth'})" title="Bộ lọc MusicFX">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#ffffff"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#ffffff"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#ffffff"/></svg>FX
-
-</button>
-
-<button class="button button-secondary" style='padding: 8px 10px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; gap: 6px;' onclick="toggleQueueModal()" title="Xem danh sách hàng chờ">
-<svg class='player-btn-svg' viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span data-i18n="musicBtnQueue">Hàng chờ</span>
-</button>
-
-</div>
-
-</div>
-
-
-
-<!-- Volume Control -->
-
-<div style='display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);'>
-
-<span id="dash-vol-icon" style='display:inline-flex;align-items:center;'><svg class='player-btn-svg' viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
-
-<input id="dash-vol-slider" type="range" min="0" max="150" value="100" style='flex: 1; accent-color: #38bdf8; cursor: pointer;' oninput="updateVolume(this.value)">
-
-<span id="dash-vol-value" style='font-size: 13px; font-weight: 700; color: #e2e8f0; min-width: 46px; text-align: right;'>100%</span>
-
-</div>
-
-</div>
-
-
-
-<!-- Right: Add Song & MusicFX Panel -->
-
-<div style='display: flex; flex-direction: column; gap: 16px;'>
-
-<!-- Quick Add Song -->
-
-<div style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px;'>
-
-<label style='display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;' data-i18n="musicAddQueueTitle">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24" style='margin-right:4px;'><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Thêm bài hát vào hàng chờ (Queue)
-
-</label>
-
-<div style='display: flex; gap: 8px;'>
-
-<input id="web-song-input" type="text" data-i18n-placeholder="musicInputPlaceholder" placeholder="Dán link YouTube / Spotify hoặc tên bài hát..." style='flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none;' onkeydown="if(event.key==='Enter')addSongToQueue()">
-
-<button class="button button-primary" style='padding: 10px 18px; font-size: 13px; white-space: nowrap;' onclick="addSongToQueue()">
-
-<span data-i18n="musicPlayNow">Phát ngay<svg class='player-btn-svg' viewBox="0 0 24 24" style='width:13px;height:13px;margin-left:4px;'><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="16" r="3" fill="#ffffff"/></svg></span>
-
-</button>
-
-</div>
-
-<div style='display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;'>
-
-<button class="pill-btn" onclick="quickAddSuggest('Đường Tôi Chở Em Về - buitruonglinh')">Đường Tôi Chở Em Về</button>
-
-<button class="pill-btn" onclick="quickAddSuggest('Chẳng Còn Thời Gian Ấy - Bem')">Chẳng Còn Thời Gian Ấy</button>
-
-<button class="pill-btn" onclick="quickAddSuggest('Nắng Lung Linh - Nguyễn Thương')">Nắng Lung Linh</button>
-
-</div>
-
-</div>
-
-
-
-<!-- MusicFX 10 Filters -->
-
-<div id="fx-section" style='background: rgba(9, 11, 22, 0.7); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 18px; flex: 1;'>
-
-<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;'>
-
-<label style='font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 0;' data-i18n="musicFxSectionTitle">
-
-<svg class='player-btn-svg' viewBox="0 0 24 24" style='margin-right:6px;stroke:#38bdf8;'><line x1="4" y1="21" x2="4" y2="14"/><circle cx="4" cy="12" r="2.5" fill="#38bdf8"/><line x1="12" y1="21" x2="12" y2="12"/><circle cx="12" cy="10" r="2.5" fill="#38bdf8"/><line x1="20" y1="21" x2="20" y2="16"/><circle cx="20" cy="14" r="2.5" fill="#38bdf8"/></svg>10 Bộ Lọc Âm Thanh MusicFX
-
-</label>
-
-<span id="current-fx-name" style='font-size: 11px; padding: 3px 8px; border-radius: 12px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 600;'>Bass Thường</span>
-
-</div>
-
-<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;'>
-
-<button class="fx-btn active" data-i18n="fxBassSoft" onclick="setMusicFX('bass_soft', 'Bass Thường (Trầm nhẹ)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 12h20M6 8v8M10 5v14M14 8v8M18 10v4"/></svg>Bass Thường
-
-</button>
-
-<button class="fx-btn" data-i18n="fxBassBoost" onclick="setMusicFX('bass_boost', 'Siêu Bass (Bassboost Căng)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 15 8 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 8 12 2"/></svg>Siêu Bass
-
-</button>
-
-<button class="fx-btn" data-i18n="fxNightcore" onclick="setMusicFX('nightcore', 'Nightcore (Tốc độ & Tone cao)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Nightcore
-
-</button>
-
-<button class="fx-btn" data-i18n="fx8d" onclick="setMusicFX('8d', '8D Audio (Âm vòm đảo chiều)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>8D Audio
-
-</button>
-
-<button class="fx-btn" data-i18n="fxLofi" onclick="setMusicFX('lofi', 'Lofi Chill (Ấm áp, thư thái)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Lofi Chill
-
-</button>
-
-<button class="fx-btn" data-i18n="fxRadio" onclick="setMusicFX('radio', 'Loa Phát Thanh (1980s Retro)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><circle cx="8" cy="14" r="3"/><line x1="4.5" y1="3" x2="19.5" y2="7"/></svg>Loa Cổ Điển
-
-</button>
-
-<button class="fx-btn" data-i18n="fxVaporwave" onclick="setMusicFX('vaporwave', 'Vaporwave (Chậm rãi, hoài niệm)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2a4 4 0 0 1 4 4c0 3-4 6-4 6s-4-3-4-6a4 4 0 0 1 4-4z"/><path d="M12 22a4 4 0 0 1-4-4c0-3 4-6 4-6s4 3 4 6a4 4 0 0 1-4 4z"/></svg>Anime Cute
-
-</button>
-
-<button class="fx-btn" data-i18n="fxVocal" onclick="setMusicFX('vocal', 'Vocal Booster (Tôn giọng hát)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>Phòng Thu VIP
-
-</button>
-
-<button class="fx-btn" data-i18n="fxDolby" onclick="setMusicFX('dolby', 'Dolby Atmos (Không gian rạp hát)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>Âm Vòm 3D
-
-</button>
-
-<button class="fx-btn" data-i18n="fxFlat" onclick="setMusicFX('flat', 'Tắt bộ lọc (Âm thanh gốc)', this)">
-
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Tắt Toàn Bộ
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-</div>
-
-</div>
-
 </section>
 
 
