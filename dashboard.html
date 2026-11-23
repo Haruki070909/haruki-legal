@@ -2963,6 +2963,33 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.5; transform: scale(0.85); }
     }
+
+/* Ultra-Smooth GPU-Accelerated Neon Cyan Wave Ripple (Zero Lag) */
+.neon-click-wave {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px #00f2fe, inset 0 0 8px rgba(0, 242, 254, 0.5);
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: neonWaveExpandGPU 0.45s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes neonWaveExpandGPU {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+  }
+}
+
 </style>
 <style>
 /* Dashboard PC Navbar No-Wrap */
@@ -2980,22 +3007,7 @@
 }
 </style>
 <style>
-/* Luxurious Neon Cyan Expanding Wave Ripple Effect */
-.neon-click-wave {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85), inset 0 0 12px rgba(56, 189, 248, 0.5);
-  animation: neonWaveExpand 0.65s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-}
 
-@keyframes neonWaveExpand {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.95;
-  }
   50% {
     opacity: 0.7;
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.9), inset 0 0 16px rgba(56, 189, 248, 0.6);
@@ -5273,67 +5285,88 @@
     }
 
     // High-Tech Canvas Particles
+    // High-Performance Ambient Cyber Sparks (Batched 1-call draw, 60-120fps Zero Lag)
     const canvas = document.getElementById("cyber-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    if (canvas) {
+      const ctx = canvas.getContext("2d", { alpha: true });
+      let particles = [];
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let isVisible = true;
 
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      initParticles();
-    });
-
-    function initParticles() {
-      particles = [];
-      const count = Math.min(Math.floor((width * height) / 13000), 65);
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 2 + 1,
-          color: "rgba(16, 185, 129, ",
-          alpha: Math.random() * 0.5 + 0.2
-        });
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
       }
-    }
 
-    canvas.width = width;
-    canvas.height = height;
-    initParticles();
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx = -p.vx;
-        if (p.y < 0 || p.y > height) p.vy = -p.vy;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + p.alpha + ")";
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.14 * (1 - dist / 110)})`;
-            ctx.stroke();
-          }
+      function initParticles() {
+        particles = [];
+        const count = Math.min(Math.floor((width * height) / 45000), 22);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            radius: Math.random() * 1.5 + 1,
+            color: "rgba(16, 185, 129, ",
+            alpha: Math.random() * 0.45 + 0.2
+          });
         }
       }
+
+      window.addEventListener("resize", resize, { passive: true });
+      resize();
+
+      function animate() {
+        if (!isVisible) {
+          requestAnimationFrame(animate);
+          return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx = -p.vx;
+          if (p.y < 0 || p.y > height) p.vy = -p.vy;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ")";
+          ctx.fill();
+        }
+
+        // Batch all lines into ONE GPU stroke call (O(1) draw call)
+        ctx.beginPath();
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            if (dx * dx + dy * dy < 6400) { // 80px distance
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
+          }
+        }
+        ctx.strokeStyle = "rgba(16, 185, 129, 0.11)";
+        ctx.lineWidth = 0.65;
+        ctx.stroke();
+
+        requestAnimationFrame(animate);
+      }
+
+      document.addEventListener("visibilitychange", function() {
+        isVisible = !document.hidden;
+      });
+
       requestAnimationFrame(animate);
     }
-    animate();
 
     
     /* ========================================================= */
@@ -6351,6 +6384,29 @@
   });
 })();
 </script>
+
+
+  <!-- High-Performance Neon Wave Ripple on Click (GPU Composited) -->
+  <script>
+    (function() {
+      let lastClickTime = 0;
+      window.addEventListener("click", function(e) {
+        const now = performance.now();
+        if (now - lastClickTime < 50) return;
+        lastClickTime = now;
+
+        const wave = document.createElement("div");
+        wave.className = "neon-click-wave";
+        wave.style.left = e.clientX + "px";
+        wave.style.top = e.clientY + "px";
+        document.body.appendChild(wave);
+
+        wave.addEventListener("animationend", function() {
+          wave.remove();
+        }, { once: true });
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>
