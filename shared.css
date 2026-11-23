@@ -1632,3 +1632,9 @@ section[id] {
     display: none !important;
   }
 }
+
+@media (min-width: 901px) {
+  .portal-mobile-drawer, .mod-mobile-drawer, .mobile-nav-drawer {
+    display: none !important;
+  }
+}
