@@ -12,9 +12,7 @@
   <link rel="icon" type="image/webp" href="./haru-avatar.webp">
   <style>
 
-    html {
-      scroll-behavior: smooth !important;
-    }
+    /* Native instantaneous hardware scroll */
     #harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
       scroll-margin-top: 70px !important;
     }
@@ -516,15 +514,15 @@
        ABOUT DEVELOPER & DISCORD PRESENCE
        ======================================================== */
     .about-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      background: #0b101d; /* Solid GPU-cached surface */
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-lg);
       padding: 48px;
-      backdrop-filter: blur(16px);
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 40px;
       align-items: center;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     }
     .about-avatar-wrap {
       position: relative !important;
@@ -798,7 +796,7 @@
 
     /* Smooth Scroll & Sticky Header Offset */
     html {
-      scroll-behavior: smooth;
+      
       scroll-padding-top: 90px;
     }
     section[id], #about, #harubot, #harumod, #watcher, #legal {
@@ -930,17 +928,15 @@
 }
 
 
-    /* Lazy Scroll Reveal - Render & Reveal only when scrolled into view */
+    /* Butter-Smooth Scroll Reveal (Zero Layout Shift) */
     .scroll-reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      content-visibility: auto;
-      contain-intrinsic-size: 1px 450px;
+      transform: translateY(18px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
     }
     .scroll-reveal.is-revealed {
       opacity: 1 !important;
-      transform: translateY(0) !important;
+      transform: none !important;
     }
 
 </style>
@@ -1975,10 +1971,20 @@
       window.addEventListener("resize", resize, { passive: true });
       resize();
 
+      let isScrolling = false;
+      let scrollTimer = null;
+      window.addEventListener("scroll", function() {
+        isScrolling = true;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() {
+          isScrolling = false;
+        }, 90);
+      }, { passive: true });
+
       function loop() {
-        if (!isVisible) {
+        if (!isVisible || isScrolling) {
           animId = requestAnimationFrame(loop);
-          return;
+          return; // Zero canvas GPU load while scrolling!
         }
 
         ctx.clearRect(0, 0, width, height);
