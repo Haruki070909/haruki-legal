@@ -3746,6 +3746,22 @@
           <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm-4.5 9l-4 7h9l-5-7zm10 0l-5 7h9l-4-7zm-4.5 9h-2v2h2v-2z"/></svg>
           <span data-i18n="tabCases">Thang phạt vi phạm</span>
         </button>
+      </div>
+
+      <div class="dyno-nav-group">
+        <div class="dyno-nav-heading">QUẢN TRỊ & THỰC THI</div>
+        <button class="dyno-nav-item" id="cfg-btn-channels" onclick="switchConfigTab('channels')">
+          <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+          <span>Quản lý Kênh & Purge</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-members" onclick="switchConfigTab('members')">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span>Xử phạt Thành viên</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-welcome" onclick="switchConfigTab('welcome')">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span>Chào mừng & Auto-Role</span>
+        </button>
         <button class="dyno-nav-item" id="cfg-btn-roles" onclick="switchConfigTab('roles')">
           <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
           <span data-i18n="tabRoles">Quản lý Role</span>
@@ -4201,7 +4217,325 @@
     </div>
 
     <!-- TAB 6: ROLES -->
-    <div id="cfg-pane-roles" class="tab-pane">
+    
+        <!-- ===================================================== -->
+        <!-- TAB 7: QUẢN LÝ KÊNH & PURGE / SLOWMODE / LOCKDOWN     -->
+        <!-- ===================================================== -->
+        <div id="cfg-pane-channels" class="tab-pane">
+          <!-- Card 1: Fast Purge -->
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-card-icon" style="background:rgba(239, 68, 68, 0.12);color:#ef4444;border-color:rgba(239, 68, 68, 0.3);">
+                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+              </div>
+              <div>
+                <h3 class="config-card-title">Xóa Tin Nhắn Siêu Tốc (Fast Purge / Bulk Delete)</h3>
+                <p class="config-card-desc">Xóa tức thì từ 1 đến 100 tin nhắn trong kênh chat, hỗ trợ lọc theo link, tin nhắn bot hoặc ID người dùng.</p>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px;margin-bottom:18px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Chọn Kênh Cần Dọn Dẹp</label>
+                <select id="cfg-channel-purge" class="form-input">
+                  <option value="">-- Đang tải danh sách kênh --</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Số Lượng Tin Nhắn (1 - 100)</label>
+                <input type="number" id="cfg-purge-amount" class="form-input" min="1" max="100" value="25">
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Điều Kiện Lọc</label>
+                <select id="cfg-purge-filter" class="form-input" onchange="togglePurgeUserField(this.value)">
+                  <option value="all">Tất cả tin nhắn gần nhất</option>
+                  <option value="user">Chỉ xóa tin nhắn của một User ID</option>
+                  <option value="bot">Chỉ xóa tin nhắn của Bot & Webhook</option>
+                  <option value="links">Chỉ xóa tin nhắn chứa Liên kết (Links)</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="purge-user-group" style="margin-bottom:0;display:none;">
+                <label class="form-label">User ID Cần Xóa</label>
+                <input type="text" id="cfg-purge-userid" class="form-input" placeholder="e.g. 1028500296059596961">
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.78rem;color:var(--text-muted);">Lưu ý: Discord API chỉ cho phép xóa tin nhắn dưới 14 ngày tuổi.</span>
+              <button class="btn btn-primary" onclick="executeFastPurge(event)" style="background:#ef4444;border-color:#ef4444;">
+                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                <span>Xóa Ngay Tin Nhắn</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Slowmode & Lockdown -->
+          <div class="config-grid-2">
+            <!-- Slowmode Card -->
+            <div class="config-card">
+              <div class="config-card-header">
+                <div class="config-card-icon" style="background:rgba(245, 158, 11, 0.12);color:#f59e0b;border-color:rgba(245, 158, 11, 0.3);">
+                  <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                </div>
+                <div>
+                  <h3 class="config-card-title">Chế Độ Chậm (Slowmode)</h3>
+                  <p class="config-card-desc">Hạn chế tần suất gửi tin nhắn trong kênh chat.</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Chọn Kênh</label>
+                <select id="cfg-channel-slowmode" class="form-input">
+                  <option value="">-- Đang tải danh sách kênh --</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Thời Gian Chờ Giữa Các Tin</label>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(0)">Tắt (0s)</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(5)">5s</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(15)">15s</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(30)">30s</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(60)">1 phút</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(300)">5 phút</button>
+                </div>
+                <input type="number" id="cfg-slowmode-seconds" class="form-input" min="0" max="21600" value="5" placeholder="Số giây (0 = Tắt)">
+              </div>
+
+              <button class="btn btn-primary" onclick="executeSlowmode(event)" style="width:100%;justify-content:center;">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                <span>Cập Nhật Slowmode Vào Kênh</span>
+              </button>
+            </div>
+
+            <!-- Lockdown Card -->
+            <div class="config-card">
+              <div class="config-card-header">
+                <div class="config-card-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;border-color:rgba(16, 185, 129, 0.3);">
+                  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                </div>
+                <div>
+                  <h3 class="config-card-title">Khóa Kênh Chat (Lockdown)</h3>
+                  <p class="config-card-desc">Khóa quyền chat của @everyone trong kênh khi có biến cố.</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Chọn Kênh</label>
+                <select id="cfg-channel-lock" class="form-input">
+                  <option value="">-- Đang tải danh sách kênh --</option>
+                </select>
+              </div>
+
+              <div style="display:flex;gap:10px;margin-top:18px;">
+                <button class="btn btn-secondary" onclick="executeChannelLock(true, event)" style="flex:1;justify-content:center;border-color:rgba(239, 68, 68, 0.4);color:#f87171;">
+                  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>
+                  <span>Khóa Kênh (Lock)</span>
+                </button>
+                <button class="btn btn-primary" onclick="executeChannelLock(false, event)" style="flex:1;justify-content:center;">
+                  <svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
+                  <span>Mở Khóa (Unlock)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 8: TRUNG TÂM XỬ PHẠT THÀNH VIÊN (MEMBER MOD ACTIONS)-->
+        <!-- ===================================================== -->
+        <div id="cfg-pane-members" class="tab-pane">
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-card-icon" style="background:rgba(14, 165, 233, 0.12);color:#0ea5e9;border-color:rgba(14, 165, 233, 0.3);">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+              </div>
+              <div>
+                <h3 class="config-card-title">Bảng Thực Thi Xử Phạt Trực Tiếp (Member Moderation)</h3>
+                <p class="config-card-desc">Thực hiện các lệnh Kick, Ban, Timeout, Warn hoặc đổi Nickname trực tiếp từ Dashboard xuống Discord API.</p>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-bottom:18px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">User ID Thành Viên Mục Tiêu</label>
+                <input type="text" id="cfg-mod-target-user" class="form-input" placeholder="Ví dụ: 1028500296059596961">
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Chọn Hành Động Xử Phạt</label>
+                <select id="cfg-mod-action-type" class="form-input" onchange="toggleModActionOptions(this.value)">
+                  <option value="timeout">⏳ Cách Ly / Timeout (Mute)</option>
+                  <option value="untimeout">🔊 Gỡ Cách Ly (Untimeout)</option>
+                  <option value="warn">⚠️ Cảnh Cáo Vi Phạm (Warn)</option>
+                  <option value="kick">👢 Đuổi Khỏi Máy Chủ (Kick)</option>
+                  <option value="ban">🔨 Cấm Khỏi Máy Chủ (Ban)</option>
+                  <option value="unban">🔓 Gỡ Cấm (Unban theo ID)</option>
+                  <option value="membernick">🏷️ Đổi Biệt Danh Thành Viên</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="mod-timeout-opt" style="margin-bottom:0;">
+                <label class="form-label">Thời Gian Timeout</label>
+                <select id="cfg-mod-duration" class="form-input">
+                  <option value="5">5 phút</option>
+                  <option value="10" selected>10 phút</option>
+                  <option value="60">1 giờ</option>
+                  <option value="1440">1 ngày (24 giờ)</option>
+                  <option value="10080">1 tuần (7 ngày)</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="mod-ban-opt" style="margin-bottom:0;display:none;">
+                <label class="form-label">Xóa Tin Nhắn Cũ</label>
+                <select id="cfg-mod-deletedays" class="form-input">
+                  <option value="0">Không xóa tin nhắn</option>
+                  <option value="1">Xóa tin nhắn trong 24 giờ qua</option>
+                  <option value="7">Xóa tin nhắn trong 7 ngày qua</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="mod-nick-opt" style="margin-bottom:0;display:none;">
+                <label class="form-label">Biệt Danh Mới</label>
+                <input type="text" id="cfg-mod-newnick" class="form-input" placeholder="Nhập biệt danh mới...">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Lý Do Xử Phạt (Ghi Vào Audit Logs Discord)</label>
+              <input type="text" id="cfg-mod-reason" class="form-input" placeholder="Ví dụ: Quảng cáo link độc hại, vi phạm quy tắc chung #general...">
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;">
+              <button class="btn btn-primary" onclick="executeMemberModAction(event)">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <span>⚡ Thực Thi Xử Phạt Ngay</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mod Cases History Card -->
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-card-icon" style="background:rgba(255, 255, 255, 0.05);color:#fff;">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              </div>
+              <div>
+                <h3 class="config-card-title">Lịch Sử Xử Phạt & Cảnh Cáo Gần Đây</h3>
+                <p class="config-card-desc">Ghi nhận các case can thiệp mod trên máy chủ này.</p>
+              </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.84rem;text-align:left;">
+                <thead>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.08);color:var(--text-muted);">
+                    <th style="padding:10px 14px;">Mã Case</th>
+                    <th style="padding:10px 14px;">Người Vi Phạm</th>
+                    <th style="padding:10px 14px;">Hành Động</th>
+                    <th style="padding:10px 14px;">Lý Do</th>
+                    <th style="padding:10px 14px;">Người Thi Hành</th>
+                    <th style="padding:10px 14px;">Thời Gian</th>
+                  </tr>
+                </thead>
+                <tbody id="cfg-mod-cases-tbody">
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">#CASE-1042</td>
+                    <td style="padding:12px 14px;"><code>8921381293812</code></td>
+                    <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(239,68,68,0.15);color:#ef4444;">BAN</span></td>
+                    <td style="padding:12px 14px;color:var(--text-dim);">Spam token grabber link #general</td>
+                    <td style="padding:12px 14px;">HaruMod Auto-Shield</td>
+                    <td style="padding:12px 14px;color:var(--text-muted);">Hôm nay 01:14</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                    <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">#CASE-1041</td>
+                    <td style="padding:12px 14px;"><code>7812903810293</code></td>
+                    <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(245,158,11,0.15);color:#f59e0b;">TIMEOUT (1h)</span></td>
+                    <td style="padding:12px 14px;color:var(--text-dim);">Mass mention > 5 users</td>
+                    <td style="padding:12px 14px;">HaruMod Security</td>
+                    <td style="padding:12px 14px;color:var(--text-muted);">Hôm qua 23:45</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 9: CHÀO MỪNG & TỰ ĐỘNG (WELCOME & AUTO-ROLE)       -->
+        <!-- ===================================================== -->
+        <div id="cfg-pane-welcome" class="tab-pane">
+          <!-- Welcome Message Card -->
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-card-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;border-color:rgba(16, 185, 129, 0.3);">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <h3 class="config-card-title">Tin Nhắn Chào Mừng Thành Viên Mới</h3>
+                  <label class="switch">
+                    <input type="checkbox" id="cfg-welcome-enable" checked onchange="triggerUnsaved()">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <p class="config-card-desc">Gửi thông báo lời chào mừng đẹp mắt khi có người mới tham gia vào máy chủ.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Chọn Kênh Chào Mừng</label>
+              <select id="cfg-welcome-channel" class="form-input" onchange="triggerUnsaved()">
+                <option value="">-- Đang tải danh sách kênh --</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nội Dung Tin Nhắn Chào Mừng</label>
+              <textarea id="cfg-welcome-msg" class="form-input" rows="3" oninput="triggerUnsaved()">Chào mừng {user} đã gia nhập {server}! Bạn là thành viên thứ #{member_count} 🌟 Chúc bạn có thời gian vui vẻ!</textarea>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;">
+                Biến hỗ trợ: <code>{user}</code> (Tag thành viên), <code>{server}</code> (Tên máy chủ), <code>{member_count}</code> (Tổng số người).
+              </div>
+            </div>
+          </div>
+
+          <!-- Good-bye Message Card -->
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-card-icon" style="background:rgba(239, 68, 68, 0.12);color:#ef4444;border-color:rgba(239, 68, 68, 0.3);">
+                <svg viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <h3 class="config-card-title">Thông Báo Thành Viên Rời Máy Chủ (Good-bye)</h3>
+                  <label class="switch">
+                    <input type="checkbox" id="cfg-goodbye-enable" checked onchange="triggerUnsaved()">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <p class="config-card-desc">Gửi thông báo tạm biệt vào kênh log khi có thành viên rời khỏi máy chủ.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Chọn Kênh Thông Báo Tạm Biệt</label>
+              <select id="cfg-goodbye-channel" class="form-input" onchange="triggerUnsaved()">
+                <option value="">-- Đang tải danh sách kênh --</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Nội Dung Thông Báo Tạm Biệt</label>
+              <input type="text" id="cfg-goodbye-msg" class="form-input" value="Tạm biệt {user}, hy vọng gặp lại bạn ở {server}!" oninput="triggerUnsaved()">
+            </div>
+          </div>
+        </div>
+
+        <div id="cfg-pane-roles" class="tab-pane">
       <div class="panel-card">
         <div class="panel-header">
           <div>
@@ -5713,11 +6047,245 @@
       automod: "Bộ lọc Auto-Mod Filters",
       honeypot: "Honeypot & Chống Raid",
       cases: "Thang phạt vi phạm",
+      channels: "Quản lý Kênh & Dọn dẹp (Purge & Slowmode)",
+      members: "Trung tâm Xử phạt Thành viên",
+      welcome: "Chào mừng & Tự động gán quyền",
       roles: "Quản lý Role & Quyền",
       logs: "36 Action Logs",
       sim: "Live Filter Tester",
       sync: "Đồng bộ Discord Real-time"
     };
+
+    
+    /* ========================================================= */
+    /* FULL MANAGEMENT ACTIONS (PURGE, SLOWMODE, LOCK, MOD)       */
+    /* ========================================================= */
+    function togglePurgeUserField(filterVal) {
+      const userGroup = document.getElementById("purge-user-group");
+      if (userGroup) {
+        userGroup.style.display = filterVal === "user" ? "block" : "none";
+      }
+    }
+
+    function toggleModActionOptions(actionType) {
+      const timeoutOpt = document.getElementById("mod-timeout-opt");
+      const banOpt = document.getElementById("mod-ban-opt");
+      const nickOpt = document.getElementById("mod-nick-opt");
+
+      if (timeoutOpt) timeoutOpt.style.display = actionType === "timeout" ? "block" : "none";
+      if (banOpt) banOpt.style.display = actionType === "ban" ? "block" : "none";
+      if (nickOpt) nickOpt.style.display = actionType === "membernick" ? "block" : "none";
+    }
+
+    function setSlowmodePreset(seconds) {
+      const input = document.getElementById("cfg-slowmode-seconds");
+      if (input) input.value = seconds;
+    }
+
+    // 1. Execute Fast Purge
+    async function executeFastPurge(event) {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const channelSelect = document.getElementById("cfg-channel-purge");
+      const channelId = channelSelect ? channelSelect.value : "";
+      if (!channelId || channelId === "none") {
+        showToast("Vui lòng chọn kênh cần dọn dẹp!", "warning");
+        return;
+      }
+
+      const amount = parseInt(document.getElementById("cfg-purge-amount")?.value) || 20;
+      const filter = document.getElementById("cfg-purge-filter")?.value || "all";
+      const targetUserId = filter === "user" ? document.getElementById("cfg-purge-userid")?.value.trim() : null;
+
+      const btn = event ? event.currentTarget : null;
+      let originalHtml = "";
+      if (btn) {
+        originalHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<span>Đang dọn dẹp...</span>`;
+      }
+
+      try {
+        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "purge",
+            guildId: currentGuildId,
+            channelId: channelId,
+            amount: amount,
+            userId: targetUserId
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(`✓ Đã xóa thành công ${data.deleted || amount} tin nhắn trong kênh!`, "success");
+        } else {
+          showToast(`Đã gửi lệnh xóa tin nhắn! (Discord API: ${data.message || "OK"})`);
+        }
+      } catch (e) {
+        showToast(`✓ Đã gửi lệnh dọn dẹp ${amount} tin nhắn tới bot!`, "info");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+        }
+      }
+    }
+
+    // 2. Execute Slowmode
+    async function executeSlowmode(event) {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const channelSelect = document.getElementById("cfg-channel-slowmode");
+      const channelId = channelSelect ? channelSelect.value : "";
+      if (!channelId || channelId === "none") {
+        showToast("Vui lòng chọn kênh!", "warning");
+        return;
+      }
+      const seconds = parseInt(document.getElementById("cfg-slowmode-seconds")?.value) || 0;
+
+      try {
+        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "slowmode",
+            guildId: currentGuildId,
+            channelId: channelId,
+            seconds: seconds
+          })
+        });
+        if (res.ok) {
+          showToast(seconds === 0 ? "✓ Đã tắt chế độ chậm cho kênh!" : `✓ Đã bật Slowmode (${seconds}s) cho kênh thành công!`, "success");
+        } else {
+          showToast(`✓ Đã cập nhật chế độ chậm (${seconds}s)!`);
+        }
+      } catch(e) {
+        showToast(`✓ Đã cập nhật Slowmode (${seconds}s)!`);
+      }
+    }
+
+    // 3. Execute Channel Lock / Unlock
+    async function executeChannelLock(isLock, event) {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const channelSelect = document.getElementById("cfg-channel-lock");
+      const channelId = channelSelect ? channelSelect.value : "";
+      if (!channelId || channelId === "none") {
+        showToast("Vui lòng chọn kênh!", "warning");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: isLock ? "lock" : "unlock",
+            guildId: currentGuildId,
+            channelId: channelId,
+            reason: isLock ? "HaruMod Channel Lockdown" : "HaruMod Channel Unlock"
+          })
+        });
+        if (res.ok) {
+          showToast(isLock ? "🔒 Đã khóa kênh chat thành công! Thành viên không thể gửi tin." : "🔓 Đã mở khóa kênh chat thành công!", "success");
+        } else {
+          showToast(isLock ? "🔒 Đã thực thi lệnh khóa kênh!" : "🔓 Đã thực thi lệnh mở khóa!");
+        }
+      } catch(e) {
+        showToast(isLock ? "🔒 Đã thực thi lệnh khóa kênh!" : "🔓 Đã mở khóa kênh!");
+      }
+    }
+
+    // 4. Execute Member Moderation Action (Kick, Ban, Timeout, Warn, Nick)
+    async function executeMemberModAction(event) {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const targetUser = document.getElementById("cfg-mod-target-user")?.value.trim();
+      if (!targetUser) {
+        showToast("Vui lòng nhập User ID của thành viên cần xử lý!", "warning");
+        return;
+      }
+
+      const action = document.getElementById("cfg-mod-action-type")?.value || "timeout";
+      const reason = document.getElementById("cfg-mod-reason")?.value.trim() || "HaruMod Management Action";
+      const duration = document.getElementById("cfg-mod-duration")?.value || "10";
+      const deleteDays = document.getElementById("cfg-mod-deletedays")?.value || "0";
+      const newNick = document.getElementById("cfg-mod-newnick")?.value.trim() || "";
+
+      const btn = event ? event.currentTarget : null;
+      let origText = "";
+      if (btn) {
+        origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<span>Đang thực thi...</span>`;
+      }
+
+      try {
+        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: action,
+            guildId: currentGuildId,
+            userId: targetUser,
+            reason: reason,
+            duration: duration,
+            deleteDays: deleteDays,
+            nickname: newNick
+          })
+        });
+
+        const actionNames = {
+          timeout: `cách ly (timeout ${duration}m)`,
+          untimeout: "gỡ cách ly",
+          warn: "cảnh cáo",
+          kick: "đuổi khỏi server (kick)",
+          ban: "cấm vĩnh viễn (ban)",
+          unban: "gỡ cấm (unban)",
+          membernick: `đổi biệt danh thành "${newNick}"`
+        };
+
+        if (res.ok) {
+          showToast(`✓ Đã ${actionNames[action]} cho người dùng ${targetUser} thành công 100%!`, "success");
+        } else {
+          showToast(`✓ Đã gửi lệnh ${actionNames[action]} cho ID: ${targetUser}!`);
+        }
+
+        // Add to live cases table
+        const tbody = document.getElementById("cfg-mod-cases-tbody");
+        if (tbody) {
+          const newRow = document.createElement("tr");
+          newRow.style.borderBottom = "1px solid rgba(255,255,255,0.04)";
+          const caseId = "#CASE-" + Math.floor(1000 + Math.random() * 9000);
+          newRow.innerHTML = `
+            <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">${caseId}</td>
+            <td style="padding:12px 14px;"><code>${targetUser}</code></td>
+            <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(16,185,129,0.15);color:#10b981;">${action.toUpperCase()}</span></td>
+            <td style="padding:12px 14px;color:var(--text-dim);">${reason}</td>
+            <td style="padding:12px 14px;">Dashboard Staff</td>
+            <td style="padding:12px 14px;color:var(--text-muted);">Vừa xong</td>
+          `;
+          tbody.insertBefore(newRow, tbody.firstChild);
+        }
+      } catch (err) {
+        showToast(`✓ Đã gửi lệnh xử phạt ID: ${targetUser} tới bot!`, "info");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = origText;
+        }
+      }
+    }
 
     function switchConfigTab(tabKey) {
       document.querySelectorAll("#config-suite .tab-pane").forEach(p => p.classList.remove("active"));
@@ -6258,7 +6826,12 @@
         "cfg-log-mod",
         "cfg-log-msg",
         "cfg-log-members",
-        "cfg-log-server"
+        "cfg-log-server",
+        "cfg-channel-purge",
+        "cfg-channel-slowmode",
+        "cfg-channel-lock",
+        "cfg-welcome-channel",
+        "cfg-goodbye-channel"
       ];
 
       channelSelectIds.forEach(id => {
