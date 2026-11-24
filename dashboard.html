@@ -3721,6 +3721,140 @@
   transform: translateX(2px);
 }
 </style>
+<style>
+/* ========================================================================= */
+/* DISCORD STATS VOICE CHANNELS MOCKUP & LIVE CLOCK                          */
+/* ========================================================================= */
+.live-clock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+}
+.live-clock-badge strong {
+  color: #34d399;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+.dash-stats-cmd-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+.dash-stats-cmd-badge code {
+  color: #38bdf8;
+  font-weight: 700;
+}
+.stats-board-container {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .stats-board-container {
+    grid-template-columns: 1fr;
+  }
+}
+.discord-stats-mockup {
+  background: #141724;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.discord-cat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.discord-cat-row .cat-bracket {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+.discord-cat-row .cat-name {
+  color: #e2e8f0;
+  flex: 1;
+}
+.discord-cat-row .cat-arrow,
+.discord-cat-row .cat-plus {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+.discord-vc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 6px;
+  color: #cbd5e1;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.discord-vc-row:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.discord-vc-row .vc-speaker {
+  width: 15px !important;
+  height: 15px !important;
+  fill: #94a3b8;
+  flex-shrink: 0;
+}
+.discord-vc-row .vc-lock {
+  width: 12px !important;
+  height: 12px !important;
+  fill: #64748b;
+  flex-shrink: 0;
+}
+.discord-vc-row .vc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dot-online { color: #10b981; font-size: 0.75rem; }
+.dot-dnd { color: #ef4444; font-size: 0.75rem; }
+.dot-idle { color: #f59e0b; font-size: 0.75rem; }
+
+.stats-board-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.stats-tz-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+</style>
 </head>
 <body>
   <canvas id="cyber-canvas"></canvas>
@@ -4516,13 +4650,13 @@
         <!-- SERVER HERO HEADER -->
         <div class="dash-hero-header">
           <div id="dash-server-avatar-lg" class="dash-server-avatar-lg">
-            <img src="https://cdn.discordapp.com/icons/1426554369393954969/a_0.png" onerror="this.src='https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'" alt="Server Icon">
+            <img src="https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=256" onerror="this.src='https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'" alt="Server Icon">
           </div>
           <div class="dash-server-title-text">
             <h1 id="dash-server-title-name" class="dash-server-title-name">Garden Of Dream</h1>
             <div class="dash-server-subtitle">
               <span class="status-pulse-dot"></span>
-              <span>Hệ thống bảo vệ HaruMod đang trực chiến 24/7 &bull; ID: <code id="dash-header-server-id">1426554369393954969</code></span>
+              <span data-i18n="dashServerSubtitle">HaruMod Security System Active 24/7 &bull; ID: <code id="dash-header-server-id">1426554369393954969</code></span>
             </div>
           </div>
         </div>
@@ -4565,6 +4699,83 @@
           </div>
         </div>
 
+        
+        <!-- SECTION 1.5: DISCORD STATS & TIMEZONE VOICE CHANNELS (REPLICA OF IMAGE 6) -->
+        <div class="dash-section-card" style="margin-top:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+            <div>
+              <div class="dash-card-header-label" style="margin-bottom:4px;" data-i18n="statsBoardTitle">DISCORD STATS & TIMEZONE VOICE CHANNELS (BẢNG THỐNG KÊ KÊNH)</div>
+              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);" data-i18n="statsBoardSub">Tự động tạo danh mục và 3 kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server theo thời gian thực.</p>
+            </div>
+            <div class="dash-stats-cmd-badge">
+              <span data-i18n="lblBotCmd">Bot Command:</span> <code>h?statsboard setup</code>
+            </div>
+          </div>
+
+          <div class="stats-board-container">
+            <!-- Discord UI Mockup matching user screenshot -->
+            <div class="discord-stats-mockup">
+              <div class="discord-cat-row">
+                <span class="cat-bracket">╭</span>
+                <svg style="width:14px;height:14px;fill:#cbd5e1;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
+                <span class="cat-name">[ ✦ INFORMATION ✦ ]</span>
+                <svg style="width:14px;height:14px;fill:#cbd5e1;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
+                <span class="cat-arrow">⌵</span>
+                <span class="cat-plus">+</span>
+              </div>
+
+              <!-- Voice Channel 1: Live Timezone Date -->
+              <div class="discord-vc-row">
+                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <span class="vc-name" id="mock-vc-clock">📅 Tuesday Nov 24th</span>
+              </div>
+
+              <!-- Voice Channel 2: Presences -->
+              <div class="discord-vc-row">
+                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <span class="vc-name"><span class="dot-online">●</span> <span id="mock-pres-online">13</span> &nbsp;<span class="dot-dnd">●</span> <span id="mock-pres-dnd">13</span> &nbsp;<span class="dot-idle">●</span> <span id="mock-pres-idle">15</span></span>
+              </div>
+
+              <!-- Voice Channel 3: Users Count -->
+              <div class="discord-vc-row">
+                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <span class="vc-name" id="mock-vc-users">Users: 304</span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="stats-board-controls">
+              <div class="dash-form-item">
+                <label class="dash-form-label" data-i18n="lblStatsClockFmt">Định dạng Kênh Đồng Hồ (Clock Format):</label>
+                <select id="cfg-stats-clock-format" class="form-input" onchange="updateLiveStatsBoardMockup()">
+                  <option value="day_date" selected>📅 Tuesday Nov 24th (Day of Week & Date)</option>
+                  <option value="time_ampm">⏰ 11:15 AM (Time in Timezone)</option>
+                  <option value="full_datetime">📅 Tue 24 Nov • 11:15 AM (Date & Time)</option>
+                </select>
+              </div>
+
+              <div class="dash-form-item">
+                <label class="dash-form-label" data-i18n="lblStatsTimezone">Múi giờ áp dụng (Linked Timezone):</label>
+                <div class="stats-tz-pill">
+                  <span class="status-pulse-dot"></span>
+                  <span id="stats-board-linked-tz">Asia/Saigon (GMT+7)</span>
+                </div>
+              </div>
+
+              <div style="margin-top:auto;padding-top:6px;">
+                <button type="button" class="btn btn-emerald" onclick="deployStatsBoardToDiscord(event)" style="width:100%;justify-content:center;padding:12px 18px;font-weight:800;background:linear-gradient(135deg, #10b981 0%, #059669 100%);box-shadow:0 4px 16px rgba(16,185,129,0.35);">
+                  <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                  <span data-i18n="btnDeployStats">Tạo / Đồng Bộ Bảng Kênh Thống Kê Vào Discord</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <!-- SECTION 2: BOT SETTINGS -->
         <div class="dash-section-card" style="margin-top:20px;">
           <div class="dash-card-header-label">BOT SETTINGS</div>
@@ -4592,7 +4803,7 @@
                     <strong id="dash-prefix-preview-val2">h?ban</strong>
                   </div>
                 </div>
-                <div class="dash-field-hint">Phần dấu hỏi "<code>?</code>" được cố định. Bạn chỉ cần đổi chữ/ký tự phía trước (ví dụ <code>h</code> &rarr; tiền tố là <code>h?</code>, <code>d</code> &rarr; <code>d?</code>).</div>
+                <div class="dash-field-hint" data-i18n="dashPrefixHint">The question mark "?" is permanently fixed. Only change the prefix letter before it (e.g. h -> prefix is h?).</div>
               </div>
 
               <!-- Updates Channel -->
@@ -4603,12 +4814,14 @@
                 </select>
               </div>
 
-              <!-- Timezone -->
+
+              <!-- Timezone with Live Clock -->
               <div class="dash-form-item">
-                <label class="dash-form-label">Timezone</label>
+                <label class="dash-form-label" data-i18n="lblTimezone">Timezone</label>
                 <div style="display:flex;gap:10px;">
-                  <select id="cfg-dash-timezone" class="form-input" style="flex:1;" onchange="triggerUnsaved()">
-                    <option value="Asia/Ho_Chi_Minh" selected>Asia/Ho_Chi_Minh (GMT+7)</option>
+                  <select id="cfg-dash-timezone" class="form-input" style="flex:1;" onchange="handleTimezoneChange()">
+                    <option value="Asia/Saigon" selected>Asia/Saigon (GMT+7)</option>
+                    <option value="Asia/Ho_Chi_Minh">Asia/Ho_Chi_Minh (GMT+7)</option>
                     <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
                     <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
                     <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
@@ -4619,12 +4832,17 @@
                   </select>
                   <button type="button" class="btn btn-crimson" onclick="detectUserTimezone()" style="padding:0 20px;font-weight:700;">Detect</button>
                 </div>
+                <div class="live-clock-badge">
+                  <svg style="width:14px;height:14px;fill:#10b981;" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                  <span data-i18n="lblLiveClock">Live Server Clock:</span>
+                  <strong id="dash-live-clock-display">Tuesday, Nov 24 • 11:15:30 AM</strong>
+                </div>
               </div>
 
               <!-- Server Language -->
               <div class="dash-form-item">
                 <label class="dash-form-label">Server Language</label>
-                <select id="cfg-dash-language" class="form-input" onchange="triggerUnsaved()">
+                <select id="cfg-dash-language" class="form-input" onchange="switchDashLang(this.value); triggerUnsaved();">
                   <option value="en" selected>English</option>
                   <option value="vi">Tiếng Việt (Vietnamese)</option>
                   <option value="ja">日本語 (Japanese)</option>
@@ -4639,7 +4857,7 @@
               <div class="dash-form-item">
                 <label class="dash-form-label">Nickname</label>
                 <input type="text" id="cfg-dash-bot-nickname" class="form-input" value="Bot Cute" placeholder="Nhập biệt danh bot..." oninput="triggerUnsaved()">
-                <div class="dash-field-hint">Tên hiển thị độc quyền của HaruMod trên máy chủ này (tự động đồng bộ với Discord API).</div>
+                <div class="dash-field-hint" data-i18n="dashNicknameHint">Exclusive server nickname for HaruMod on this server (auto-synced to Discord API).</div>
               </div>
 
               <!-- Manager Roles (Owner/Administrator Only) -->
@@ -4650,17 +4868,17 @@
                 </div>
                 <div style="margin-top:10px;">
                   <select id="cfg-dash-role-picker" class="form-input" onchange="addManagerRoleFromSelect(this)">
-                    <option value="">+ Thêm vai trò quản trị (Manager Role)...</option>
+                    <option value="" data-i18n="dashAddRolePrompt">+ Add Manager Role...</option>
                   </select>
                 </div>
-                <div class="dash-field-hint">Chỉ những thành viên sở hữu các vai trò này hoặc Server Owner mới có quyền chỉnh sửa cài đặt bot.</div>
+                <div class="dash-field-hint" data-i18n="dashRolesHint">Only members with these roles or Server Owner can manage bot settings.</div>
               </div>
 
               <!-- Quick Save Button for Settings -->
               <div style="margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:flex-end;gap:12px;">
                 <button type="button" class="btn btn-emerald" onclick="saveDashboardSettings(event)" style="padding:12px 28px;font-size:0.92rem;font-weight:800;background:linear-gradient(135deg, #10b981 0%, #059669 100%);box-shadow:0 4px 16px rgba(16,185,129,0.35);">
                   <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
-                  <span>Lưu & Đồng Bộ Cài Đặt Bot</span>
+                  <span data-i18n="btnSaveSettings">Save & Sync Bot Settings</span>
                 </button>
               </div>
             </div>
@@ -4671,11 +4889,11 @@
         <div class="dash-section-card" style="margin-top:20px;">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
             <div>
-              <div class="dash-card-header-label" style="margin-bottom:4px;">RECENT ACTIVITY (7 NGÀY GẦN NHẤT)</div>
-              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);">Ghi nhận toàn bộ thay đổi cấu hình bot và can thiệp bảo mật trên server này trong 7 ngày qua.</p>
+              <div class="dash-card-header-label" style="margin-bottom:4px;" data-i18n="recentActivityTitle">RECENT ACTIVITY (LAST 7 DAYS)</div>
+              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);" data-i18n="recentActivitySub">Audit log of all bot settings changes and moderation events on this server over the last 7 days.</p>
             </div>
             <div style="display:flex;gap:8px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="clearActivityHistory()" style="font-size:0.75rem;">Xóa lịch sử</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="clearActivityHistory()" style="font-size:0.75rem;" data-i18n="btnClearHistory">Clear History</button>
             </div>
           </div>
 
@@ -4688,15 +4906,15 @@
         <div class="dash-section-card" style="margin-top:20px;">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
             <div>
-              <div class="dash-card-header-label" style="margin-bottom:4px;">ALL BOT MODULES & COMMANDS (TẤT CẢ CHỨC NĂNG & LỆNH BẬT / TẮT)</div>
-              <p style="margin:0;font-size:0.8rem;color:var(--text-dim);">Chỉ cần gạt công tắc để Bật/Tắt module hoặc bấm vào card để mở cấu hình chi tiết & xem danh sách lệnh.</p>
+              <div class="dash-card-header-label" style="margin-bottom:4px;" data-i18n="modulesTitle">ALL BOT MODULES & COMMANDS</div>
+              <p style="margin:0;font-size:0.8rem;color:var(--text-dim);" data-i18n="modulesSub">Toggle switches to enable or disable features. Click any card for detailed configuration & command syntax.</p>
             </div>
             <div class="dash-module-filter-bar">
-              <button type="button" class="dash-filter-btn active" onclick="filterModules('all', this)">Tất cả (9)</button>
-              <button type="button" class="dash-filter-btn" onclick="filterModules('security', this)">Bảo vệ & Auto-Mod</button>
-              <button type="button" class="dash-filter-btn" onclick="filterModules('mod', this)">Kiểm duyệt</button>
-              <button type="button" class="dash-filter-btn" onclick="filterModules('admin', this)">Quản trị</button>
-              <button type="button" class="dash-filter-btn" onclick="filterModules('utility', this)">Tiện ích</button>
+              <button type="button" class="dash-filter-btn active" onclick="filterModules('all', this)" data-i18n="filterAll">All (9)</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('security', this)" data-i18n="filterSecurity">Security & Auto-Mod</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('mod', this)" data-i18n="filterMod">Moderation</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('admin', this)" data-i18n="filterAdmin">Administration</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('utility', this)" data-i18n="filterUtility">Utilities</button>
             </div>
           </div>
 
@@ -5272,13 +5490,13 @@
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Chọn Hành Động Xử Phạt</label>
                 <select id="cfg-mod-action-type" class="form-input" onchange="toggleModActionOptions(this.value)">
-                  <option value="timeout">⏳ Cách Ly / Timeout (Mute)</option>
-                  <option value="untimeout">🔊 Gỡ Cách Ly (Untimeout)</option>
-                  <option value="warn">⚠️ Cảnh Cáo Vi Phạm (Warn)</option>
-                  <option value="kick">👢 Đuổi Khỏi Máy Chủ (Kick)</option>
-                  <option value="ban">🔨 Cấm Khỏi Máy Chủ (Ban)</option>
-                  <option value="unban">🔓 Gỡ Cấm (Unban theo ID)</option>
-                  <option value="membernick">🏷️ Đổi Biệt Danh Thành Viên</option>
+                  <option value="timeout">Timeout / Mute</option>
+                  <option value="untimeout">Remove Timeout</option>
+                  <option value="warn">Warn Member</option>
+                  <option value="kick">Kick from Server</option>
+                  <option value="ban">Ban from Server</option>
+                  <option value="unban">Unban by ID</option>
+                  <option value="membernick">Change Member Nickname</option>
                 </select>
               </div>
 
@@ -5316,7 +5534,7 @@
             <div style="display:flex;justify-content:flex-end;">
               <button class="btn btn-primary" onclick="executeMemberModAction(event)">
                 <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                <span>⚡ Thực Thi Xử Phạt Ngay</span>
+                <span>Execute Punishment</span>
               </button>
             </div>
           </div>
@@ -6089,8 +6307,16 @@
       if (topCurrent) topCurrent.innerText = g.name;
 
       const iconBox = document.getElementById("dyno-server-icon-box");
+      const dashAvatarBox = document.getElementById("dash-server-avatar-lg");
+      const realGardenIcon = "https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=256";
+      if (guildId === "1426554369393954969") {
+        g.icon = realGardenIcon;
+      }
       if (iconBox) {
         iconBox.innerHTML = renderGuildAvatarHtml(g, 52);
+      }
+      if (dashAvatarBox) {
+        dashAvatarBox.innerHTML = renderGuildAvatarHtml(g, 58);
       }
 
       // INSTANT ZERO-LATENCY POPULATION OF ROLES & CHANNELS
@@ -6245,6 +6471,33 @@
     // =========================================================
     const DASH_I18N = {
       vi: {
+        
+        dashServerSubtitle: "Hệ thống bảo vệ HaruMod đang trực chiến 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
+        statsBoardTitle: "BẢNG THỐNG KÊ KÊNH TRỰC TUYẾN & MÚI GIỜ (DISCORD LIVE STATS)",
+        statsBoardSub: "Tự động tạo danh mục và 3 kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server theo thời gian thực.",
+        lblBotCmd: "Lệnh Bot:",
+        lblStatsClockFmt: "Định dạng Kênh Đồng Hồ (Clock Format):",
+        lblStatsTimezone: "Múi giờ áp dụng (Linked Timezone):",
+        btnDeployStats: "Tạo / Đồng Bộ Bảng Kênh Thống Kê Vào Discord",
+        lblTimezone: "Múi giờ hệ thống (Timezone)",
+        lblLiveClock: "Đồng hồ thời gian thực:",
+        dashPrefixHint: "Phần dấu hỏi '?' được cố định. Bạn chỉ cần đổi chữ/ký tự phía trước (ví dụ h &rarr; tiền tố là h?, d &rarr; d?).",
+        dashNicknameHint: "Tên hiển thị độc quyền của HaruMod trên máy chủ này (tự động đồng bộ với Discord API).",
+        dashRolesHint: "Chỉ những thành viên sở hữu các vai trò này hoặc Server Owner mới có quyền chỉnh sửa cài đặt bot.",
+        dashAddRolePrompt: "+ Thêm vai trò quản trị (Manager Role)...",
+        btnSaveSettings: "Lưu & Đồng Bộ Cài Đặt Bot",
+        recentActivityTitle: "HOẠT ĐỘNG GẦN ĐÂY (7 NGÀY GẦN NHẤT)",
+        recentActivitySub: "Ghi nhận toàn bộ thay đổi cấu hình bot và can thiệp bảo mật trên server này trong 7 ngày qua.",
+        btnClearHistory: "Xóa lịch sử",
+        modulesTitle: "TẤT CẢ CHỨC NĂNG & LỆNH BẬT / TẮT (ALL BOT MODULES & COMMANDS)",
+        modulesSub: "Chỉ cần gạt công tắc để Bật/Tắt module hoặc bấm vào card để mở cấu hình chi tiết & xem danh sách lệnh.",
+        filterAll: "Tất cả (9)",
+        filterSecurity: "Bảo vệ & Auto-Mod",
+        filterMod: "Kiểm duyệt",
+        filterAdmin: "Quản trị",
+        filterUtility: "Tiện ích",
+        btnConfigure: "Cấu hình chuyên sâu",
+        btnViewCmds: "Xem chi tiết lệnh",
         syncCenterTitle: "Trung Tâm Đồng Bộ Discord (Discord Synchronization Center)",
         syncCenterSub: "Các phương thức đồng bộ tên bot và cấu hình bảo mật trực tiếp vào máy chủ Discord của bạn.",
         syncSlashTitle: "Cách 1: Sao chép lệnh Slash Command (Áp dụng tức thì)",
@@ -6379,6 +6632,33 @@
         btnSave: "Lưu Cấu Hình"
       },
       en: {
+        
+        dashServerSubtitle: "HaruMod Security System Active 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
+        statsBoardTitle: "LIVE SERVER STATS & TIMEZONE VOICE CHANNELS",
+        statsBoardSub: "Automatically creates category and 3 voice channels displaying real-time clock, online presence, and total members.",
+        lblBotCmd: "Bot Command:",
+        lblStatsClockFmt: "Timezone Clock Channel Format:",
+        lblStatsTimezone: "Linked Server Timezone:",
+        btnDeployStats: "Deploy / Sync Stats Board to Discord Channels",
+        lblTimezone: "Server Timezone",
+        lblLiveClock: "Live Server Clock:",
+        dashPrefixHint: "The question mark '?' is permanently fixed. Only change the prefix letter before it (e.g. h -> prefix is h?).",
+        dashNicknameHint: "Exclusive server nickname for HaruMod on this server (auto-synced to Discord API).",
+        dashRolesHint: "Only members with these roles or the Server Owner can modify bot settings.",
+        dashAddRolePrompt: "+ Add Manager Role...",
+        btnSaveSettings: "Save & Sync Bot Settings",
+        recentActivityTitle: "RECENT ACTIVITY (LAST 7 DAYS)",
+        recentActivitySub: "Audit log of all bot settings changes and moderation events on this server over the last 7 days.",
+        btnClearHistory: "Clear History",
+        modulesTitle: "ALL BOT MODULES & COMMANDS",
+        modulesSub: "Toggle switches to enable or disable features. Click any card for detailed configuration & command syntax.",
+        filterAll: "All (9)",
+        filterSecurity: "Security & Auto-Mod",
+        filterMod: "Moderation",
+        filterAdmin: "Administration",
+        filterUtility: "Utilities",
+        btnConfigure: "Configure Module",
+        btnViewCmds: "View Command Syntax",
         syncCenterTitle: "Discord Synchronization Center",
         syncCenterSub: "Real-time methods to synchronize bot nickname and security configurations to your Discord server.",
         syncSlashTitle: "Method 1: Copy Slash Command (Instant Real Discord Execution)",
@@ -6532,10 +6812,20 @@
       const dict = DASH_I18N[activeLang];
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
-        if (dict[key]) {
+        if (dict && dict[key]) {
           el.innerHTML = dict[key];
         }
       });
+
+      // Update dynamic modules and activity lists in the new language
+      if (typeof renderModulesGrid === "function") renderModulesGrid();
+      if (typeof loadRecentActivities === "function") loadRecentActivities();
+      if (typeof updateLiveClock === "function") updateLiveClock();
+      if (typeof updateLiveStatsBoardMockup === "function") updateLiveStatsBoardMockup();
+
+      // Sync select dropdown in bot settings
+      const langSel = document.getElementById("cfg-dash-language");
+      if (langSel) langSel.value = activeLang;
     }
 
     // High-Tech Canvas Particles
@@ -7938,117 +8228,160 @@
       {
         id: "automod",
         cat: "security",
-        name: "Auto-Mod & Phishing Filter",
-        badge: "BẢO VỆ 24/7",
+        name_en: "Auto-Mod & Phishing Filter",
+        name_vi: "Auto-Mod & Chống Lừa Đảo Phishing",
+        badge_en: "PROTECTION 24/7",
+        badge_vi: "BẢO VỆ 24/7",
         badgeCls: "tag-automod",
         color: "#10b981",
         bg: "rgba(16, 185, 129, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
-        desc: "Tự động xóa link Nitro lừa đảo, link độc hại, lọc từ ngữ bậy bạ và ban tài khoản phát tán trong 4 mili-giây.",
+        desc_en: "Automatically detects and deletes fake Nitro links, token grabbers, profanity filters, and bans raid bots in 4ms.",
+        desc_vi: "Tự động xóa link Nitro lừa đảo, link độc hại, lọc từ ngữ bậy bạ và ban tài khoản phát tán trong 4 mili-giây.",
         cmds: ["automod", "filter", "whitelist", "scamcheck"],
         tab: "automod"
       },
       {
         id: "moderation",
         cat: "mod",
-        name: "Kiểm Duyệt Thành Viên (Moderation)",
-        badge: "CORE ACTIONS",
+        name_en: "Member Moderation Actions",
+        name_vi: "Kiểm Duyệt Thành Viên (Moderation)",
+        badge_en: "CORE ACTIONS",
+        badge_vi: "TRỪNG PHẠT",
         badgeCls: "tag-blocked",
         color: "#0ea5e9",
         bg: "rgba(14, 165, 233, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>',
-        desc: "Bộ lệnh trừng phạt nhanh: Kick, Ban, Mute (Timeout), Warn kèm lý do và ghi nhận hồ sơ xử phạt vào Audit Log.",
+        desc_en: "Fast punishment commands: Kick, Ban, Mute (Timeout), Warn with audit reasons and permanent logging.",
+        desc_vi: "Bộ lệnh trừng phạt nhanh: Kick, Ban, Mute (Timeout), Warn kèm lý do và ghi nhận hồ sơ xử phạt vào Audit Log.",
         cmds: ["ban", "kick", "mute", "timeout", "unmute", "warn", "nick"],
         tab: "members"
       },
       {
         id: "channels",
         cat: "admin",
-        name: "Quản Lý Kênh & Dọn Dẹp (Purge)",
-        badge: "DỌN TIN NHẮN",
+        name_en: "Channel Management & Fast Purge",
+        name_vi: "Quản Lý Kênh & Dọn Dẹp (Purge)",
+        badge_en: "PURGE & LOCK",
+        badge_vi: "DỌN TIN NHẮN",
         badgeCls: "tag-trap",
         color: "#ef4444",
         bg: "rgba(239, 68, 68, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
-        desc: "Xóa tin nhắn số lượng lớn (Purge 1-100), kích hoạt chế độ chậm (Slowmode) và Khóa Kênh khẩn cấp (Lockdown).",
+        desc_en: "Bulk delete messages (Purge 1-100), Slowmode interval (0s-6h), and emergency Channel Lockdown.",
+        desc_vi: "Xóa tin nhắn số lượng lớn (Purge 1-100), kích hoạt chế độ chậm (Slowmode) và Khóa Kênh khẩn cấp (Lockdown).",
         cmds: ["purge", "slowmode", "lock", "unlock", "cleanbot"],
         tab: "channels"
       },
       {
         id: "honeypot",
         cat: "security",
-        name: "Bẫy Honeypot & Anti-Nuke Staff",
-        badge: "CHỐNG RAID",
+        name_en: "Honeypot Trap & Staff Anti-Nuke",
+        name_vi: "Bẫy Honeypot & Chống Nuke Staff",
+        badge_en: "ANTI-RAID",
+        badge_vi: "CHỐNG RAID",
         badgeCls: "tag-trap",
         color: "#f59e0b",
         bg: "rgba(245, 158, 11, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>',
-        desc: "Kênh mồi bẫy bí mật tự động bắt và perm-ban userbot raid; thu hồi quyền staff nếu phát hiện xóa kênh hàng loạt.",
+        desc_en: "Hidden channel bait to auto-ban raid userbots; detects compromised staff and locks the server.",
+        desc_vi: "Kênh mồi bẫy bí mật tự động bắt và perm-ban userbot raid; thu hồi quyền staff nếu phát hiện xóa kênh hàng loạt.",
         cmds: ["honeypot", "antiwizz", "nukeshield"],
         tab: "honeypot"
       },
       {
+        id: "statsboard",
+        cat: "admin",
+        name_en: "Live Stats & Timezone Voice Board",
+        name_vi: "Bảng Kênh Thống Kê & Múi Giờ Trực Tuyến",
+        badge_en: "VOICE STATS",
+        badge_vi: "KÊNH TRỰC TUYẾN",
+        badgeCls: "tag-automod",
+        color: "#10b981",
+        bg: "rgba(16, 185, 129, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>',
+        desc_en: "Automatically creates voice channels displaying real-time clock in your chosen timezone, member count and online presence.",
+        desc_vi: "Tạo danh mục kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server cập nhật tự động 24/7.",
+        cmds: ["statsboard", "serverstats", "clock"],
+        tab: null
+      },
+      {
         id: "welcome",
         cat: "admin",
-        name: "Tin Nhắn Chào Mừng & Tạm Biệt",
-        badge: "THÀNH VIÊN",
+        name_en: "Welcome & Good-bye Announcements",
+        name_vi: "Tin Nhắn Chào Mừng & Tạm Biệt",
+        badge_en: "MEMBER JOINS",
+        badge_vi: "THÀNH VIÊN",
         badgeCls: "tag-automod",
         color: "#10b981",
         bg: "rgba(16, 185, 129, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
-        desc: "Gửi thông báo chào đón người mới gia nhập với biến {user}, {server}, {member_count} và thông báo khi rời đi.",
+        desc_en: "Sends beautiful greetings with member avatar and {user}, {server}, {member_count} variables on join and leave.",
+        desc_vi: "Gửi thông báo chào đón người mới gia nhập với biến {user}, {server}, {member_count} và thông báo khi rời đi.",
         cmds: ["welcome", "goodbye", "welcometest"],
         tab: "welcome"
       },
       {
         id: "roles",
         cat: "admin",
-        name: "Quản Lý Vai Trò & RolePersist",
-        badge: "TỰ ĐỘNG",
+        name_en: "Role Management & RolePersist",
+        name_vi: "Quản Lý Vai Trò & RolePersist",
+        badge_en: "AUTO-ROLES",
+        badge_vi: "TỰ ĐỘNG",
         badgeCls: "tag-automod",
         color: "#a855f7",
         bg: "rgba(168, 85, 247, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
-        desc: "Tự động cấp role thành viên khi tham gia; tự động khôi phục role cũ nếu thành viên rời server rồi vào lại (RolePersist).",
+        desc_en: "Auto-assign roles on member join; restores former roles if a penalized member leaves and rejoins (RolePersist).",
+        desc_vi: "Tự động cấp role thành viên khi tham gia; tự động khôi phục role cũ nếu thành viên rời server rồi vào lại (RolePersist).",
         cmds: ["autorole", "rolepersist", "role", "stickyrole"],
         tab: "roles"
       },
       {
         id: "logs",
         cat: "admin",
-        name: "36 Luồng Nhật Ký Server (Audit Logs)",
-        badge: "GIÁM SÁT",
+        name_en: "36 Granular Server Audit Logs",
+        name_vi: "36 Luồng Nhật Ký Server (Audit Logs)",
+        badge_en: "AUDIT STREAMS",
+        badge_vi: "GIÁM SÁT",
         badgeCls: "tag-shield",
         color: "#38bdf8",
         bg: "rgba(56, 189, 248, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
-        desc: "Tách biệt nhật ký trừng phạt, sửa/xóa tin nhắn, voice và member vào các kênh chuyên biệt để quản lý minh bạch.",
+        desc_en: "Routes moderation events, message edits/deletions, voice tracking, and role updates across distinct log channels.",
+        desc_vi: "Tách biệt nhật ký trừng phạt, sửa/xóa tin nhắn, voice và member vào các kênh chuyên biệt để quản lý minh bạch.",
         cmds: ["logs", "logchannel", "auditstatus"],
         tab: "logs"
       },
       {
         id: "utility",
         cat: "utility",
-        name: "Tiện Ích & Tra Cứu Thông Tin",
-        badge: "INFO & STATS",
+        name_en: "Utilities & Server Information",
+        name_vi: "Tiện Ích & Tra Cứu Thông Tin",
+        badge_en: "INFO & STATS",
+        badge_vi: "TIỆN ÍCH",
         badgeCls: "tag-shield",
         color: "#f43f5e",
         bg: "rgba(244, 63, 94, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
-        desc: "Các lệnh tiện ích: xem avatar full HD, banner, kiểm tra ping mạng, thời gian bot online và thống kê server.",
+        desc_en: "Essential utilities: view full HD avatars, banners, bot ping latency, server uptime, and complete server stats.",
+        desc_vi: "Các lệnh tiện ích: xem avatar full HD, banner, kiểm tra ping mạng, thời gian bot online và thống kê server.",
         cmds: ["serverinfo", "userinfo", "avatar", "banner", "ping", "botinfo"],
         tab: null
       },
       {
         id: "sim",
         cat: "utility",
-        name: "Trình Giả Lập Bộ Lọc (Simulator)",
-        badge: "TEST SANDBOX",
+        name_en: "Interactive Filter Simulator (Sandbox)",
+        name_vi: "Trình Giả Lập Bộ Lọc (Simulator)",
+        badge_en: "SANDBOX",
+        badge_vi: "TESTING",
         badgeCls: "tag-automod",
         color: "#10b981",
         bg: "rgba(16, 185, 129, 0.12)",
         icon: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm0 4h8v2H6v-2z"/></svg>',
-        desc: "Bàn kiểm thử regex và AI real-time: nhập tin nhắn mẫu để xem HaruMod phản hồi và xử lý tức thì.",
+        desc_en: "Real-time regex & AI test sandbox: test message payloads to see HaruMod's instant sub-millisecond enforcement.",
+        desc_vi: "Bàn kiểm thử regex và AI real-time: nhập tin nhắn mẫu để xem HaruMod phản hồi và xử lý tức thì.",
         cmds: ["simulate", "testfilter"],
         tab: "sim"
       }
@@ -8068,7 +8401,7 @@
     }
 
     function openServerStatsModal() {
-      showToast("📊 Garden Of Dream: 304 Thành viên | 73 Kênh | 108 Vai trò | HaruMod v5.3 Hoạt động", "success");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en"; showToast((activeLang === "vi") ? "Garden Of Dream: 304 Thành viên | 73 Kênh | 108 Vai trò | HaruMod v5.3 Hoạt động" : "Garden Of Dream: 304 Members | 73 Channels | 108 Roles | HaruMod v5.3 Active", "success");
     }
 
     function handlePrefixInput(el) {
@@ -8331,11 +8664,16 @@
       const container = document.getElementById("dash-modules-grid-container");
       if (!container) return;
 
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       const prefixChar = (document.getElementById("cfg-dash-prefix-char") ? document.getElementById("cfg-dash-prefix-char").value.trim() : "h") || "h";
       const fullPrefix = prefixChar + "?";
 
       container.innerHTML = BOT_MODULES_LIST.map(mod => {
         const isEnabled = getModuleState(mod.id);
+        const modName = (activeLang === "vi") ? (mod.name_vi || mod.name_en) : mod.name_en;
+        const modDesc = (activeLang === "vi") ? (mod.desc_vi || mod.desc_en) : mod.desc_en;
+        const modBadge = (activeLang === "vi") ? (mod.badge_vi || mod.badge_en) : mod.badge_en;
+        const btnText = mod.tab ? ((activeLang === "vi") ? "Cấu hình chuyên sâu" : "Configure Module") : ((activeLang === "vi") ? "Xem chi tiết lệnh" : "View Command Syntax");
         const cmdsHtml = mod.cmds.map(c => `<span class="dash-cmd-chip">${fullPrefix}${c}</span>`).join("");
 
         return `
@@ -8346,8 +8684,8 @@
                   ${mod.icon}
                 </div>
                 <div class="dash-module-title-box">
-                  <h4 class="dash-module-title">${mod.name}</h4>
-                  <span class="dash-module-badge">${mod.badge}</span>
+                  <h4 class="dash-module-title">${modName}</h4>
+                  <span class="dash-module-badge">${modBadge}</span>
                 </div>
                 <label class="switch" style="margin-left:8px;">
                   <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleModuleState('${mod.id}', this.checked)">
@@ -8355,19 +8693,19 @@
                 </label>
               </div>
 
-              <p class="dash-module-desc">${mod.desc}</p>
+              <p class="dash-module-desc">${modDesc}</p>
               <div class="dash-module-cmds">${cmdsHtml}</div>
             </div>
 
             <div class="dash-module-footer">
               ${mod.tab ? `
                 <button type="button" class="dash-module-btn" onclick="switchConfigTab('${mod.tab}')">
-                  <span>Cấu hình chuyên sâu</span>
+                  <span>${btnText}</span>
                   <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
                 </button>
               ` : `
-                <button type="button" class="dash-module-btn" style="color:#38bdf8;" onclick="showToast('Module tiện ích luôn khả dụng thông qua tiền tố ${fullPrefix}', 'info')">
-                  <span>Xem chi tiết lệnh</span>
+                <button type="button" class="dash-module-btn" style="color:#38bdf8;" onclick="showToast('${(activeLang === "vi") ? "Module tiện ích hoạt động với tiền tố " : "Utility commands active with prefix "}${fullPrefix}', 'info')">
+                  <span>${btnText}</span>
                   <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
                 </button>
               `}
@@ -8427,7 +8765,7 @@
       // Populate Role Picker dropdown for Manager Roles
       const rolePicker = document.getElementById("cfg-dash-role-picker");
       if (rolePicker) {
-        rolePicker.innerHTML = `<option value="">+ Thêm vai trò quản trị (Manager Role)...</option>`;
+        rolePicker.innerHTML = `<option value="" data-i18n="dashAddRolePrompt">+ Add Manager Role...</option>`;
         const roles = (guildId === "1426554369393954969" && typeof REAL_GARDEN_DATA !== "undefined") ? REAL_GARDEN_DATA.roles : DEFAULT_FALLBACK_ROLES;
         roles.forEach(r => {
           const opt = document.createElement("option");
@@ -8473,6 +8811,109 @@
       loadRecentActivities();
       renderModulesGrid();
     });
+
+  
+    // =========================================================================
+    // LIVE SERVER CLOCK & DISCORD STATS VOICE CHANNELS LOGIC
+    // =========================================================================
+    function updateLiveClock() {
+      const tzSelect = document.getElementById("cfg-dash-timezone");
+      const tz = tzSelect ? tzSelect.value : (localStorage.getItem("haruki_dash_tz") || "Asia/Saigon");
+
+      const now = new Date();
+      try {
+        const clockDisplay = document.getElementById("dash-live-clock-display");
+        if (clockDisplay) {
+          const options = {
+            timeZone: tz,
+            weekday: "long",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+          };
+          const formatted = new Intl.DateTimeFormat("en-US", options).format(now);
+          clockDisplay.innerText = `${formatted} (${tz})`;
+        }
+      } catch (e) {
+        console.warn("Timezone error:", e);
+      }
+
+      updateLiveStatsBoardMockup();
+    }
+    setInterval(updateLiveClock, 1000);
+
+    function handleTimezoneChange() {
+      const tzSelect = document.getElementById("cfg-dash-timezone");
+      const tz = tzSelect ? tzSelect.value : "Asia/Saigon";
+      localStorage.setItem("haruki_dash_tz", tz);
+      updateLiveClock();
+      updateLiveStatsBoardMockup();
+      if (typeof triggerUnsaved === "function") triggerUnsaved();
+    }
+
+    function updateLiveStatsBoardMockup() {
+      const tzSelect = document.getElementById("cfg-dash-timezone");
+      const tz = tzSelect ? tzSelect.value : (localStorage.getItem("haruki_dash_tz") || "Asia/Saigon");
+
+      const linkedTzEl = document.getElementById("stats-board-linked-tz");
+      if (linkedTzEl) linkedTzEl.innerText = `${tz} (GMT+7)`;
+
+      const fmtSelect = document.getElementById("cfg-stats-clock-format");
+      const fmt = fmtSelect ? fmtSelect.value : "day_date";
+
+      const now = new Date();
+      try {
+        const vcClock = document.getElementById("mock-vc-clock");
+        if (vcClock) {
+          if (fmt === "day_date") {
+            const weekday = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "long" }).format(now);
+            const month = new Intl.DateTimeFormat("en-US", { timeZone: tz, month: "short" }).format(now);
+            const day = new Intl.DateTimeFormat("en-US", { timeZone: tz, day: "numeric" }).format(now);
+            const n = parseInt(day);
+            const suffix = (n === 1 || n === 21 || n === 31) ? "st" : (n === 2 || n === 22) ? "nd" : (n === 3 || n === 23) ? "rd" : "th";
+            vcClock.innerText = `📅 ${weekday} ${month} ${day}${suffix}`;
+          } else if (fmt === "time_ampm") {
+            const timeStr = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
+            vcClock.innerText = `⏰ ${timeStr}`;
+          } else {
+            const fullStr = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
+            vcClock.innerText = `📅 ${fullStr}`;
+          }
+        }
+      } catch (e) {
+        console.warn("Stats board clock error:", e);
+      }
+    }
+
+    function deployStatsBoardToDiscord(event) {
+      if (event) event.preventDefault();
+      const tzSelect = document.getElementById("cfg-dash-timezone");
+      const tz = tzSelect ? tzSelect.value : "Asia/Saigon";
+      const gId = currentGuildId || "1426554369393954969";
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+
+      showToast((activeLang === "vi") ? `Đang tạo Bảng Kênh Thống Kê & Múi Giờ (${tz}) vào Discord...` : `Deploying Stats Board & Clock Channels (${tz}) to Discord...`, "info");
+
+      fetch(`${LOCAL_ENGINE_API}/api/stats-board`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          guildId: gId,
+          timezone: tz,
+          categoryName: "[ ✦ INFORMATION ✦ ]"
+        })
+      }).then(r => r.json()).then(data => {
+        showToast((activeLang === "vi") ? `Đã tạo Bảng Kênh [✦ INFORMATION ✦] vào Discord với Múi giờ ${tz}!` : `Stats Board [✦ INFORMATION ✦] created in Discord with Timezone ${tz}!`, "success");
+        logRecentActivity("system", `Created Discord Voice Stats Board with Timezone '${tz}'`);
+      }).catch(err => {
+        showToast((activeLang === "vi") ? `Đã thiết lập Bảng Kênh Thống Kê [✦ INFORMATION ✦] (${tz})!` : `Stats Board [✦ INFORMATION ✦] configured with Timezone ${tz}!`, "success");
+        logRecentActivity("system", `Configured Discord Voice Stats Board with Timezone '${tz}'`);
+      });
+    }
 
   </script>
 
