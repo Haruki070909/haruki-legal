@@ -2303,7 +2303,7 @@
         align-items: center !important;
         justify-content: space-between !important;
         flex-wrap: nowrap !important;
-        padding: 0 16px !important;
+        padding: 0 14px !important;
         gap: 8px !important;
         height: 60px !important;
         position: sticky !important;
@@ -2315,10 +2315,35 @@
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        gap: 10px !important;
+        gap: 8px !important;
         flex: 0 0 auto !important;
         min-width: 0 !important;
       }
+      .dash-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+      }
+      .dash-brand-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        flex-shrink: 0 !important;
+      }
+      .dash-brand-title {
+        font-size: 1.05rem !important;
+        white-space: nowrap !important;
+      }
+      .dash-badge {
+        display: none !important; /* Hide SECURITY badge on mobile to avoid overlapping */
+      }
+
+      /* STRICTLY HIDE DESKTOP NAV LINKS ON MOBILE */
+      .dash-topbar .nav-links, .nav-links {
+        display: none !important;
+      }
+
+      /* Topbar right items */
       .topbar-right {
         display: flex !important;
         flex-direction: row !important;
@@ -2327,40 +2352,28 @@
         margin-left: auto !important;
         flex: 0 0 auto !important;
       }
-      .topbar-left {
-        gap: 10px !important;
-        flex: 1 !important;
-        min-width: 0 !important;
-      }
-      .dash-brand {
-        gap: 8px !important;
-      }
-      .dash-brand-avatar {
-        width: 32px !important;
-        height: 32px !important;
-      }
-      .dash-brand-title {
-        font-size: 1.05rem !important;
-      }
-      .dash-badge {
-        font-size: 0.65rem !important;
-        padding: 2px 7px !important;
-      }
-
-      /* STRICTLY HIDE DESKTOP NAV LINKS ON MOBILE (Fixes User's Broken Header) */
-      .dash-topbar .nav-links, .nav-links {
-        display: none !important;
-      }
-
-      /* Topbar right items */
-      .topbar-right {
-        gap: 10px !important;
+      #harumod-engine-badge, .dash-topbar .engine-status-pill {
+        display: none !important; /* Mobile moves engine status to mobile drawer */
       }
       #topbar-invite-btn, #discord-auth-container {
         display: none !important;
       }
+      .lang-switcher {
+        display: inline-flex !important;
+        padding: 2px !important;
+        gap: 2px !important;
+      }
+      .lang-btn {
+        padding: 4px 8px !important;
+        font-size: 0.72rem !important;
+      }
       .mobile-menu-btn {
         display: flex !important;
+        width: 38px !important;
+        height: 38px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
       }
 
       /* Hero Section Mobile */
@@ -2597,19 +2610,34 @@
       }
       
       /* Sticky Save Bar Mobile */
-      .sticky-save-bar {
-        left: 10px !important;
-        right: 10px !important;
+      #sticky-save-bar, .save-bar, .sticky-save-bar {
+        left: 12px !important;
+        right: 12px !important;
         bottom: 12px !important;
         width: auto !important;
-        max-width: calc(100% - 20px) !important;
-        padding: 12px 14px !important;
+        max-width: calc(100% - 24px) !important;
+        transform: translateY(180px) !important;
+        padding: 14px 16px !important;
         flex-direction: column !important;
+        align-items: stretch !important;
         gap: 10px !important;
+        border-radius: 14px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 20px rgba(16, 185, 129, 0.25) !important;
       }
-      .sticky-save-bar .btn {
+      #sticky-save-bar.visible, .save-bar.visible, .sticky-save-bar.visible {
+        transform: translateY(0) !important;
+      }
+      #sticky-save-bar .save-bar-text, .save-bar .save-bar-text {
+        font-size: 0.86rem !important;
+        text-align: center !important;
+        line-height: 1.4 !important;
+        word-break: break-word !important;
+      }
+      #sticky-save-bar .btn, .save-bar .btn {
         width: 100% !important;
         justify-content: center !important;
+        height: 42px !important;
       }
     }
 
@@ -4777,6 +4805,11 @@
     </div>
 
     <div class="mobile-drawer-actions">
+      <!-- Engine Status Pill inside Mobile Drawer -->
+      <div id="mobile-drawer-engine-badge" class="engine-status-pill engine-active" onclick="openModal('modal-api-diagnostics'); toggleMobileMenu();" style="width:100%;box-sizing:border-box;justify-content:center;padding:10px 14px;border-radius:12px;font-size:0.82rem;margin-bottom:6px;cursor:pointer;">
+        <span class="engine-status-dot" style="width:8px;height:8px;border-radius:50%;display:inline-block;background:#10b981;"></span>
+        <span id="mobile-engine-label">API Discord: Đã kết nối (28ms)</span>
+      </div>
       <a href="https://discord.com/oauth2/authorize?client_id=1573727590538289283&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-emerald mobile-drawer-btn">
         <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         <span data-i18n="topbarAddDiscord">Add to Discord</span>
@@ -7204,6 +7237,9 @@
         cfgSuite.classList.remove("active");
         cfgSuite.style.setProperty("display", "none", "important");
       }
+      const saveBar = document.getElementById("sticky-save-bar");
+      if (saveBar) saveBar.classList.remove("visible");
+      hasUnsavedChanges = false;
       const entrance = document.getElementById("entrance-view");
       if (entrance) {
         entrance.style.display = "block";
@@ -7551,6 +7587,9 @@
         cfgSuite.classList.remove("active");
         cfgSuite.style.setProperty("display", "none", "important");
       }
+      const saveBar = document.getElementById("sticky-save-bar");
+      if (saveBar) saveBar.classList.remove("visible");
+      hasUnsavedChanges = false;
       document.getElementById("entrance-view").style.display = "block";
       document.getElementById("topbar-server-switcher").style.display = "none";
       document.getElementById("topbar-invite-btn").style.display = "inline-flex";
@@ -7595,8 +7634,13 @@
     }
 
     function triggerUnsaved() {
+      const cfgSuite = document.getElementById("config-suite");
+      if (!currentUser || !currentGuildId || !cfgSuite || !cfgSuite.classList.contains("active")) {
+        return;
+      }
+      hasUnsavedChanges = true;
       const bar = document.getElementById("sticky-save-bar");
-      bar.classList.add("visible");
+      if (bar) bar.classList.add("visible");
     }
 
     function discardChanges() {
@@ -9145,6 +9189,10 @@
     let hasUnsavedChanges = false;
 
     function triggerUnsaved() {
+      const cfgSuite = document.getElementById("config-suite");
+      if (!currentUser || !currentGuildId || !cfgSuite || !cfgSuite.classList.contains("active")) {
+        return;
+      }
       hasUnsavedChanges = true;
       const bar = document.getElementById("sticky-save-bar");
       if (bar) bar.classList.add("visible");
@@ -10516,15 +10564,24 @@
     function updateApiStatusBadge(isConnected, latency = 28) {
       const badge = document.getElementById("harumod-engine-badge");
       const label = document.getElementById("harumod-engine-label");
+      const mobBadge = document.getElementById("mobile-drawer-engine-badge");
+      const mobLabel = document.getElementById("mobile-engine-label");
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+
+      const text = isConnected 
+        ? (activeLang === "vi" ? `API Discord: Đã kết nối (${latency}ms)` : `Discord API: Connected (${latency}ms)`)
+        : (activeLang === "vi" ? "Lỗi kết nối API Discord" : "Discord API Error");
 
       if (badge && label) {
         badge.classList.remove("engine-idle");
         badge.classList.add(isConnected ? "engine-connected" : "engine-error");
         badge.onclick = () => openModal("modal-api-diagnostics");
-        label.textContent = isConnected 
-          ? (activeLang === "vi" ? `API Discord: Đã kết nối (${latency}ms)` : `Discord API: Connected (${latency}ms)`)
-          : (activeLang === "vi" ? "Lỗi kết nối API Discord" : "Discord API Error");
+        label.textContent = text;
+      }
+      if (mobBadge && mobLabel) {
+        mobBadge.classList.remove("engine-idle");
+        mobBadge.classList.add(isConnected ? "engine-connected" : "engine-error");
+        mobLabel.textContent = text;
       }
     }
 
@@ -10865,6 +10922,10 @@
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
       }
+
+      const saveBar = document.getElementById("sticky-save-bar");
+      if (saveBar) saveBar.classList.remove("visible");
+      hasUnsavedChanges = false;
 
       // Check Discord OAuth login status: if not logged in, enforce logged-out state
       if (typeof checkOAuthCallback === "function") {
