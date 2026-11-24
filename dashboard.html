@@ -1807,12 +1807,15 @@
     /* 3. SERVER CONFIGURATION SUITE (STAGE 2)                  */
     /* ========================================================= */
     #config-suite {
-      display: none;
+      display: none !important;
       width: 100% !important;
       max-width: 1680px !important;
       margin: 24px auto 100px !important;
       padding: 0 32px !important;
       box-sizing: border-box !important;
+    }
+    #config-suite.active {
+      display: flex !important;
     }
 
     .config-header {
@@ -2639,7 +2642,6 @@
     /* DYNO & CARL-BOT STYLE CONFIGURATION SIDEBAR LAYOUT        */
     /* ========================================================= */
     .dyno-layout {
-      display: flex !important;
       width: 100% !important;
       max-width: 1680px !important;
       margin: 24px auto 100px !important;
@@ -5301,7 +5303,7 @@
   <!-- ========================================================= -->
   <!-- VIEW 2: SERVER CONFIGURATION SUITE                        -->
   <!-- ========================================================= -->
-  <main id="config-suite" class="view-stage dyno-layout">
+  <main id="config-suite" class="view-stage dyno-layout" style="display:none !important;">
     
     <!-- DYNO & CARL-BOT STYLE SIDEBAR -->
     <aside class="dyno-sidebar">
@@ -5412,8 +5414,8 @@
     <section class="dyno-main-content">
       <div class="dyno-top-bar">
         <div>
-          <div class="dyno-breadcrumbs"><span onclick="returnToHub()">Servers</span> / <span id="dyno-bread-name">Garden Of Dream</span> / <span id="dyno-bread-tab" class="active">Dashboard Tổng Quan</span></div>
-          <h2 id="dyno-active-title" class="dyno-active-title">Dashboard Tổng Quan Máy Chủ</h2>
+          <div class="dyno-breadcrumbs"><span onclick="returnToHub()">Servers</span> / <span id="dyno-bread-name">Garden Of Dream</span> / <span id="dyno-bread-tab" class="active">Server Dashboard</span></div>
+          <h2 id="dyno-active-title" class="dyno-active-title">Server Overview Dashboard</h2>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
           <span style="font-size:0.75rem;color:var(--emerald-light);background:rgba(16,185,129,0.15);padding:5px 12px;border-radius:8px;border:1px solid rgba(16,185,129,0.35);font-weight:800;letter-spacing:0.04em;">
@@ -7165,6 +7167,25 @@
       currentUser = null;
       userGuilds = [];
 
+      // Strictly hide server customization when not logged in
+      const cfgSuite = document.getElementById("config-suite");
+      if (cfgSuite) {
+        cfgSuite.classList.remove("active");
+        cfgSuite.style.setProperty("display", "none", "important");
+      }
+      const entrance = document.getElementById("entrance-view");
+      if (entrance) {
+        entrance.style.display = "block";
+      }
+      const topSwitcher = document.getElementById("topbar-server-switcher");
+      if (topSwitcher) {
+        topSwitcher.style.display = "none";
+      }
+      const inviteBtn = document.getElementById("topbar-invite-btn");
+      if (inviteBtn) {
+        inviteBtn.style.display = "inline-flex";
+      }
+
       const container = document.getElementById("discord-auth-container");
       container.innerHTML = `
         <button class="btn btn-discord btn-sm" onclick="startDiscordLogin()">
@@ -7434,6 +7455,11 @@
     setInterval(autoScanGuildsEvery5s, 5000);
 
     function selectServerForConfig(guildId) {
+      if (!currentUser) {
+        showToast("Vui lòng đăng nhập Discord để quản lý và chỉnh sửa server!", "info");
+        startDiscordLogin();
+        return;
+      }
       currentGuildId = guildId;
       const g = userGuilds.find(x => x.id === guildId) || {
         id: guildId,
@@ -7442,7 +7468,9 @@
 
       // Switch views
       document.getElementById("entrance-view").style.display = "none";
-      document.getElementById("config-suite").style.display = "flex";
+      const cfgSuite = document.getElementById("config-suite");
+      cfgSuite.classList.add("active");
+      cfgSuite.style.setProperty("display", "flex", "important");
       document.getElementById("topbar-invite-btn").style.display = "none";
       document.getElementById("topbar-server-switcher").style.display = "block";
 
@@ -7487,7 +7515,11 @@
     }
 
     function returnToHub() {
-      document.getElementById("config-suite").style.display = "none";
+      const cfgSuite = document.getElementById("config-suite");
+      if (cfgSuite) {
+        cfgSuite.classList.remove("active");
+        cfgSuite.style.setProperty("display", "none", "important");
+      }
       document.getElementById("entrance-view").style.display = "block";
       document.getElementById("topbar-server-switcher").style.display = "none";
       document.getElementById("topbar-invite-btn").style.display = "inline-flex";
@@ -8265,15 +8297,13 @@
 
       // Update active tab breadcrumb and title in the new language
       const curTab = document.querySelector(".dyno-nav-item.active");
-      if (curTab && curTab.id) {
-        const tabKey = curTab.id.replace("cfg-btn-", "");
-        const tabTitle = (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang]) ? DYNO_TAB_TITLES_I18N[activeLang][tabKey] : "";
-        if (tabTitle) {
-          const breadEl = document.getElementById("dyno-bread-tab");
-          if (breadEl) breadEl.innerText = tabTitle;
-          const titleEl = document.getElementById("dyno-active-title");
-          if (titleEl) titleEl.innerText = tabTitle;
-        }
+      const tabKey = (curTab && curTab.id) ? curTab.id.replace("cfg-btn-", "") : "dashboard";
+      const tabTitle = (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang]) ? DYNO_TAB_TITLES_I18N[activeLang][tabKey] : "";
+      if (tabTitle) {
+        const breadEl = document.getElementById("dyno-bread-tab");
+        if (breadEl) breadEl.innerText = tabTitle;
+        const titleEl = document.getElementById("dyno-active-title");
+        if (titleEl) titleEl.innerText = tabTitle;
       }
 
       // Update dynamic modules and activity lists in the new language
@@ -10791,7 +10821,7 @@
 
 
     // =========================================================
-    // ENSURE STRICT BILINGUAL INITIALIZATION ON LOAD
+    // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
       const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
@@ -10803,6 +10833,13 @@
       }
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
+      }
+
+      // Check Discord OAuth login status: if not logged in, enforce logged-out state
+      if (typeof checkOAuthCallback === "function") {
+        checkOAuthCallback();
+      } else {
+        renderLoggedOut();
       }
     });
 
