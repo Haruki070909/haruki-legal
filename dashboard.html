@@ -3206,6 +3206,521 @@
     background-color: #0e1629 !important;
   }
 </style>
+<style>
+/* ========================================================================= */
+/* SERVER DASHBOARD & BOT SETTINGS (DYNO-STYLE REPLICA)                     */
+/* ========================================================================= */
+.dash-hero-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 8px 4px;
+}
+.dash-server-avatar-lg {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  background: #1e293b;
+}
+.dash-server-avatar-lg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dash-server-title-name {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+.dash-server-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--emerald-light);
+  font-weight: 600;
+}
+.status-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  display: inline-block;
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+
+/* Section Card Base */
+.dash-section-card {
+  background: #121622;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.dash-card-header-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* Server Info Grid */
+.dash-server-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+@media (max-width: 860px) {
+  .dash-server-info-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+.dash-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dash-info-col-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media (min-width: 861px) {
+  .dash-info-col-right {
+    align-items: flex-end;
+  }
+}
+.dash-stat-row {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+.dash-stat-num {
+  color: #ffffff;
+  font-weight: 800;
+  margin-left: 4px;
+}
+.dash-action-links {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.dash-link-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f43f5e;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dash-link-red:hover {
+  color: #fb7185;
+  text-decoration: underline;
+}
+.btn-crimson {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(244, 63, 94, 0.4) !important;
+  padding: 10px 20px !important;
+  border-radius: 9px !important;
+  font-weight: 800 !important;
+  font-size: 0.86rem !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important;
+  transition: all 0.2s !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.btn-crimson:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.5) !important;
+  border-color: rgba(244, 63, 94, 0.7) !important;
+}
+
+/* Bot Settings Grid */
+.dash-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 900px) {
+  .dash-settings-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.dash-settings-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.dash-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #cbd5e1;
+  font-size: 0.86rem;
+  font-weight: 600;
+  user-select: none;
+}
+.dash-checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #f43f5e;
+  cursor: pointer;
+}
+.dash-form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dash-form-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dash-field-hint {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.help-circle-tooltip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-size: 0.65rem;
+  font-weight: 800;
+  cursor: help;
+}
+
+/* Prefix Input */
+.dash-prefix-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dash-prefix-box {
+  display: inline-flex;
+  align-items: center;
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.dash-prefix-box:focus-within {
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+}
+.dash-prefix-input {
+  width: 65px !important;
+  border: none !important;
+  background: transparent !important;
+  text-align: center !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: #10b981 !important;
+  padding: 10px 4px !important;
+  box-shadow: none !important;
+}
+.dash-prefix-suffix {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f43f5e;
+  font-weight: 800;
+  font-size: 1.15rem;
+  padding: 10px 14px;
+  user-select: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dash-prefix-preview-tag {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+.dash-prefix-preview-tag strong {
+  color: #34d399;
+  font-family: 'JetBrains Mono', monospace;
+  margin-left: 2px;
+}
+
+/* Manager Roles Tag Box */
+.manager-roles-tagbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  min-height: 48px;
+  align-items: center;
+}
+.role-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #182033;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.role-tag-chip .chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.role-tag-chip .chip-remove {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 0 0 4px;
+  display: flex;
+  align-items: center;
+}
+.role-tag-chip .chip-remove:hover {
+  color: #f43f5e;
+}
+
+/* Activity Timeline */
+.dash-activity-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dash-activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: all 0.2s;
+  flex-wrap: wrap;
+}
+.dash-activity-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dash-act-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dash-act-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.dash-act-tag.prefix { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.dash-act-tag.nick { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+.dash-act-tag.module { background: rgba(244,63,94,0.15); color: #fb7185; border: 1px solid rgba(244,63,94,0.3); }
+.dash-act-tag.channel { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.dash-act-tag.role { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+.dash-act-tag.system { background: rgba(255,255,255,0.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.15); }
+.dash-act-desc {
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+.dash-act-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+.dash-act-user {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+/* Modules Section & Grid */
+.dash-module-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dash-filter-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dash-filter-btn:hover,
+.dash-filter-btn.active {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+.dash-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.dash-module-card {
+  background: #0e1320;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.dash-module-card:hover {
+  border-color: rgba(16, 185, 129, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.dash-module-card.disabled {
+  opacity: 0.65;
+  border-color: rgba(255, 255, 255, 0.04);
+  background: #090d17;
+}
+.dash-module-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.dash-module-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dash-module-icon-wrap svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+.dash-module-title-box {
+  flex: 1;
+}
+.dash-module-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.dash-module-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+.dash-module-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.45;
+  margin: 8px 0 14px;
+  flex: 1;
+}
+.dash-module-cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+.dash-cmd-chip {
+  background: #080c14;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: #38bdf8;
+}
+.dash-module-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.dash-module-btn {
+  background: none;
+  border: none;
+  color: #10b981;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.dash-module-btn:hover {
+  color: #34d399;
+  transform: translateX(2px);
+}
+</style>
 </head>
 <body>
   <canvas id="cyber-canvas"></canvas>
@@ -3904,7 +4419,11 @@
 
       <div class="dyno-nav-group">
         <div class="dyno-nav-heading">TỔNG QUAN</div>
-        <button class="dyno-nav-item active" id="cfg-btn-identity" onclick="switchConfigTab('identity')">
+        <button class="dyno-nav-item active" id="cfg-btn-dashboard" onclick="switchConfigTab('dashboard')">
+          <svg style="width:17px;height:17px;" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          <span>Dashboard Máy Chủ</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-identity" onclick="switchConfigTab('identity')">
           <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.72V7h2a5 5 0 0 1 5 5v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0V12a3 3 0 0 0-3-3h-2v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V9H8a3 3 0 0 0-3 3v4a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V12a5 5 0 0 1 5-5h2V5.72c-.6-.34-1-.98-1-1.72a2 2 0 0 1 2-2zm-3 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
           <span data-i18n="tabIdentity">Nhận diện & Biệt danh</span>
         </button>
@@ -3971,8 +4490,8 @@
     <section class="dyno-main-content">
       <div class="dyno-top-bar">
         <div>
-          <div class="dyno-breadcrumbs"><span onclick="returnToHub()">Servers</span> / <span id="dyno-bread-name">Garden Of Dream</span> / <span id="dyno-bread-tab" class="active">Nhận diện & Biệt danh</span></div>
-          <h2 id="dyno-active-title" class="dyno-active-title">Nhận diện & Biệt danh Bot</h2>
+          <div class="dyno-breadcrumbs"><span onclick="returnToHub()">Servers</span> / <span id="dyno-bread-name">Garden Of Dream</span> / <span id="dyno-bread-tab" class="active">Dashboard Tổng Quan</span></div>
+          <h2 id="dyno-active-title" class="dyno-active-title">Dashboard Tổng Quan Máy Chủ</h2>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
           <span style="font-size:0.75rem;color:var(--emerald-light);background:rgba(16,185,129,0.15);padding:5px 12px;border-radius:8px;border:1px solid rgba(16,185,129,0.35);font-weight:800;letter-spacing:0.04em;">
@@ -3988,7 +4507,209 @@
       <div class="dyno-panes-wrapper">
 
         <!-- TAB 0: BOT IDENTITY & NICKNAME MANAGER (FULLY WORKING) -->
-    <div id="cfg-pane-identity" class="tab-pane active">
+    
+      <!-- ===================================================== -->
+      <!-- TAB 0: SERVER DASHBOARD & BOT SETTINGS (DYNO REPLICA) -->
+      <!-- ===================================================== -->
+      <div id="cfg-pane-dashboard" class="tab-pane active">
+
+        <!-- SERVER HERO HEADER -->
+        <div class="dash-hero-header">
+          <div id="dash-server-avatar-lg" class="dash-server-avatar-lg">
+            <img src="https://cdn.discordapp.com/icons/1426554369393954969/a_0.png" onerror="this.src='https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'" alt="Server Icon">
+          </div>
+          <div class="dash-server-title-text">
+            <h1 id="dash-server-title-name" class="dash-server-title-name">Garden Of Dream</h1>
+            <div class="dash-server-subtitle">
+              <span class="status-pulse-dot"></span>
+              <span>Hệ thống bảo vệ HaruMod đang trực chiến 24/7 &bull; ID: <code id="dash-header-server-id">1426554369393954969</code></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: SERVER INFO -->
+        <div class="dash-section-card">
+          <div class="dash-card-header-label">SERVER INFO</div>
+          <div class="dash-server-info-grid">
+            <div class="dash-info-col">
+              <div class="dash-stat-row">Members: <strong id="stat-dash-members" class="dash-stat-num">304</strong></div>
+              <div class="dash-stat-row">Voice Channels: <strong id="stat-dash-vc" class="dash-stat-num">26</strong></div>
+              <div class="dash-action-links">
+                <a href="javascript:void(0)" onclick="copyServerId()" class="dash-link-red">
+                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                  <span>Copy Server ID</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="dash-info-col">
+              <div class="dash-stat-row">Categories: <strong id="stat-dash-cat" class="dash-stat-num">12</strong></div>
+              <div class="dash-stat-row">Roles: <strong id="stat-dash-roles" class="dash-stat-num">108</strong></div>
+              <div class="dash-action-links">
+                <a href="javascript:void(0)" onclick="openHelpModal()" class="dash-link-red">
+                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 .88-.36 1.68-.93 2.25z"/></svg>
+                  <span>Need Help?</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="dash-info-col dash-info-col-right">
+              <div class="dash-stat-row">Text Channels: <strong id="stat-dash-tc" class="dash-stat-num">47</strong></div>
+              <div style="margin-top:14px;">
+                <button type="button" class="btn btn-crimson" onclick="openServerStatsModal()">
+                  <svg style="width:15px;height:15px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                  <span>View Server Stats</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: BOT SETTINGS -->
+        <div class="dash-section-card" style="margin-top:20px;">
+          <div class="dash-card-header-label">BOT SETTINGS</div>
+
+          <div class="dash-settings-grid">
+            <!-- Left Column -->
+            <div class="dash-settings-col">
+              <!-- Disable warnings checkbox -->
+              <label class="dash-checkbox-label">
+                <input type="checkbox" id="cfg-dash-disable-warnings" onchange="triggerUnsaved()">
+                <span>Disable warnings for disabled commands/modules</span>
+              </label>
+
+              <!-- Command Prefix -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Command Prefix</label>
+                <div class="dash-prefix-input-wrap">
+                  <div class="dash-prefix-box">
+                    <input type="text" id="cfg-dash-prefix-char" value="h" maxlength="3" class="form-input dash-prefix-input" oninput="handlePrefixInput(this)">
+                    <span class="dash-prefix-suffix">?</span>
+                  </div>
+                  <div class="dash-prefix-preview-tag">
+                    <span>Preview:</span>
+                    <strong id="dash-prefix-preview-val">h?help</strong>,
+                    <strong id="dash-prefix-preview-val2">h?ban</strong>
+                  </div>
+                </div>
+                <div class="dash-field-hint">Phần dấu hỏi "<code>?</code>" được cố định. Bạn chỉ cần đổi chữ/ký tự phía trước (ví dụ <code>h</code> &rarr; tiền tố là <code>h?</code>, <code>d</code> &rarr; <code>d?</code>).</div>
+              </div>
+
+              <!-- Updates Channel -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Updates Channel <span class="help-circle-tooltip" title="Kênh bot sẽ tự động gửi thông báo cập nhật phiên bản mới">?</span></label>
+                <select id="cfg-dash-updates-channel" class="form-input" onchange="triggerUnsaved()">
+                  <option value="">Select..</option>
+                </select>
+              </div>
+
+              <!-- Timezone -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Timezone</label>
+                <div style="display:flex;gap:10px;">
+                  <select id="cfg-dash-timezone" class="form-input" style="flex:1;" onchange="triggerUnsaved()">
+                    <option value="Asia/Ho_Chi_Minh" selected>Asia/Ho_Chi_Minh (GMT+7)</option>
+                    <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
+                    <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                    <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
+                    <option value="America/New_York">America/New_York (EST)</option>
+                    <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                    <option value="Europe/London">Europe/London (GMT)</option>
+                    <option value="UTC">UTC</option>
+                  </select>
+                  <button type="button" class="btn btn-crimson" onclick="detectUserTimezone()" style="padding:0 20px;font-weight:700;">Detect</button>
+                </div>
+              </div>
+
+              <!-- Server Language -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Server Language</label>
+                <select id="cfg-dash-language" class="form-input" onchange="triggerUnsaved()">
+                  <option value="en" selected>English</option>
+                  <option value="vi">Tiếng Việt (Vietnamese)</option>
+                  <option value="ja">日本語 (Japanese)</option>
+                  <option value="ko">한국어 (Korean)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="dash-settings-col">
+              <!-- Nickname -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Nickname</label>
+                <input type="text" id="cfg-dash-bot-nickname" class="form-input" value="Bot Cute" placeholder="Nhập biệt danh bot..." oninput="triggerUnsaved()">
+                <div class="dash-field-hint">Tên hiển thị độc quyền của HaruMod trên máy chủ này (tự động đồng bộ với Discord API).</div>
+              </div>
+
+              <!-- Manager Roles (Owner/Administrator Only) -->
+              <div class="dash-form-item">
+                <label class="dash-form-label">Manager Roles (Owner/Administrator Only)</label>
+                <div id="cfg-dash-manager-roles-box" class="manager-roles-tagbox">
+                  <!-- Dynamically populated tags with × -->
+                </div>
+                <div style="margin-top:10px;">
+                  <select id="cfg-dash-role-picker" class="form-input" onchange="addManagerRoleFromSelect(this)">
+                    <option value="">+ Thêm vai trò quản trị (Manager Role)...</option>
+                  </select>
+                </div>
+                <div class="dash-field-hint">Chỉ những thành viên sở hữu các vai trò này hoặc Server Owner mới có quyền chỉnh sửa cài đặt bot.</div>
+              </div>
+
+              <!-- Quick Save Button for Settings -->
+              <div style="margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:flex-end;gap:12px;">
+                <button type="button" class="btn btn-emerald" onclick="saveDashboardSettings(event)" style="padding:12px 28px;font-size:0.92rem;font-weight:800;background:linear-gradient(135deg, #10b981 0%, #059669 100%);box-shadow:0 4px 16px rgba(16,185,129,0.35);">
+                  <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                  <span>Lưu & Đồng Bộ Cài Đặt Bot</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: RECENT ACTIVITY (7 NGÀY GẦN NHẤT) -->
+        <div class="dash-section-card" style="margin-top:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+            <div>
+              <div class="dash-card-header-label" style="margin-bottom:4px;">RECENT ACTIVITY (7 NGÀY GẦN NHẤT)</div>
+              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);">Ghi nhận toàn bộ thay đổi cấu hình bot và can thiệp bảo mật trên server này trong 7 ngày qua.</p>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="clearActivityHistory()" style="font-size:0.75rem;">Xóa lịch sử</button>
+            </div>
+          </div>
+
+          <div id="dash-recent-activity-list" class="dash-activity-timeline">
+            <!-- Dynamically populated activity rows -->
+          </div>
+        </div>
+
+        <!-- SECTION 4: ALL MODULES & COMMANDS -->
+        <div class="dash-section-card" style="margin-top:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <div>
+              <div class="dash-card-header-label" style="margin-bottom:4px;">ALL BOT MODULES & COMMANDS (TẤT CẢ CHỨC NĂNG & LỆNH BẬT / TẮT)</div>
+              <p style="margin:0;font-size:0.8rem;color:var(--text-dim);">Chỉ cần gạt công tắc để Bật/Tắt module hoặc bấm vào card để mở cấu hình chi tiết & xem danh sách lệnh.</p>
+            </div>
+            <div class="dash-module-filter-bar">
+              <button type="button" class="dash-filter-btn active" onclick="filterModules('all', this)">Tất cả (9)</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('security', this)">Bảo vệ & Auto-Mod</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('mod', this)">Kiểm duyệt</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('admin', this)">Quản trị</button>
+              <button type="button" class="dash-filter-btn" onclick="filterModules('utility', this)">Tiện ích</button>
+            </div>
+          </div>
+
+          <!-- MODULES GRID -->
+          <div class="dash-modules-grid" id="dash-modules-grid-container">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TAB 1: NHẬN DIỆN & BIỆT DANH -->
+      <div id="cfg-pane-identity" class="tab-pane">
       <div class="panel-card">
         <div class="panel-header">
           <div>
@@ -6236,6 +6957,7 @@
     let currentBotRoleColor = "#10b981";
 
     const DYNO_TAB_TITLES = {
+      dashboard: "Dashboard Tổng Quan Máy Chủ",
       identity: "Nhận diện & Biệt danh Bot",
       overview: "Tổng quan an ninh",
       automod: "Bộ lọc Auto-Mod Filters",
@@ -7205,6 +7927,553 @@
         }, { once: true });
       }, { passive: true });
     })();
+  
+
+    // =========================================================================
+    // SERVER DASHBOARD, BOT SETTINGS & MODULES MANAGER LOGIC
+    // =========================================================================
+    let currentManagerRoles = ["🌸 The Florist 𖦹", "🫧 Bloom Keeper ♡", "Floral Helpers ⋆˚࿔"];
+
+    const BOT_MODULES_LIST = [
+      {
+        id: "automod",
+        cat: "security",
+        name: "Auto-Mod & Phishing Filter",
+        badge: "BẢO VỆ 24/7",
+        badgeCls: "tag-automod",
+        color: "#10b981",
+        bg: "rgba(16, 185, 129, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+        desc: "Tự động xóa link Nitro lừa đảo, link độc hại, lọc từ ngữ bậy bạ và ban tài khoản phát tán trong 4 mili-giây.",
+        cmds: ["automod", "filter", "whitelist", "scamcheck"],
+        tab: "automod"
+      },
+      {
+        id: "moderation",
+        cat: "mod",
+        name: "Kiểm Duyệt Thành Viên (Moderation)",
+        badge: "CORE ACTIONS",
+        badgeCls: "tag-blocked",
+        color: "#0ea5e9",
+        bg: "rgba(14, 165, 233, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>',
+        desc: "Bộ lệnh trừng phạt nhanh: Kick, Ban, Mute (Timeout), Warn kèm lý do và ghi nhận hồ sơ xử phạt vào Audit Log.",
+        cmds: ["ban", "kick", "mute", "timeout", "unmute", "warn", "nick"],
+        tab: "members"
+      },
+      {
+        id: "channels",
+        cat: "admin",
+        name: "Quản Lý Kênh & Dọn Dẹp (Purge)",
+        badge: "DỌN TIN NHẮN",
+        badgeCls: "tag-trap",
+        color: "#ef4444",
+        bg: "rgba(239, 68, 68, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
+        desc: "Xóa tin nhắn số lượng lớn (Purge 1-100), kích hoạt chế độ chậm (Slowmode) và Khóa Kênh khẩn cấp (Lockdown).",
+        cmds: ["purge", "slowmode", "lock", "unlock", "cleanbot"],
+        tab: "channels"
+      },
+      {
+        id: "honeypot",
+        cat: "security",
+        name: "Bẫy Honeypot & Anti-Nuke Staff",
+        badge: "CHỐNG RAID",
+        badgeCls: "tag-trap",
+        color: "#f59e0b",
+        bg: "rgba(245, 158, 11, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>',
+        desc: "Kênh mồi bẫy bí mật tự động bắt và perm-ban userbot raid; thu hồi quyền staff nếu phát hiện xóa kênh hàng loạt.",
+        cmds: ["honeypot", "antiwizz", "nukeshield"],
+        tab: "honeypot"
+      },
+      {
+        id: "welcome",
+        cat: "admin",
+        name: "Tin Nhắn Chào Mừng & Tạm Biệt",
+        badge: "THÀNH VIÊN",
+        badgeCls: "tag-automod",
+        color: "#10b981",
+        bg: "rgba(16, 185, 129, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
+        desc: "Gửi thông báo chào đón người mới gia nhập với biến {user}, {server}, {member_count} và thông báo khi rời đi.",
+        cmds: ["welcome", "goodbye", "welcometest"],
+        tab: "welcome"
+      },
+      {
+        id: "roles",
+        cat: "admin",
+        name: "Quản Lý Vai Trò & RolePersist",
+        badge: "TỰ ĐỘNG",
+        badgeCls: "tag-automod",
+        color: "#a855f7",
+        bg: "rgba(168, 85, 247, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
+        desc: "Tự động cấp role thành viên khi tham gia; tự động khôi phục role cũ nếu thành viên rời server rồi vào lại (RolePersist).",
+        cmds: ["autorole", "rolepersist", "role", "stickyrole"],
+        tab: "roles"
+      },
+      {
+        id: "logs",
+        cat: "admin",
+        name: "36 Luồng Nhật Ký Server (Audit Logs)",
+        badge: "GIÁM SÁT",
+        badgeCls: "tag-shield",
+        color: "#38bdf8",
+        bg: "rgba(56, 189, 248, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
+        desc: "Tách biệt nhật ký trừng phạt, sửa/xóa tin nhắn, voice và member vào các kênh chuyên biệt để quản lý minh bạch.",
+        cmds: ["logs", "logchannel", "auditstatus"],
+        tab: "logs"
+      },
+      {
+        id: "utility",
+        cat: "utility",
+        name: "Tiện Ích & Tra Cứu Thông Tin",
+        badge: "INFO & STATS",
+        badgeCls: "tag-shield",
+        color: "#f43f5e",
+        bg: "rgba(244, 63, 94, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
+        desc: "Các lệnh tiện ích: xem avatar full HD, banner, kiểm tra ping mạng, thời gian bot online và thống kê server.",
+        cmds: ["serverinfo", "userinfo", "avatar", "banner", "ping", "botinfo"],
+        tab: null
+      },
+      {
+        id: "sim",
+        cat: "utility",
+        name: "Trình Giả Lập Bộ Lọc (Simulator)",
+        badge: "TEST SANDBOX",
+        badgeCls: "tag-automod",
+        color: "#10b981",
+        bg: "rgba(16, 185, 129, 0.12)",
+        icon: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm0 4h8v2H6v-2z"/></svg>',
+        desc: "Bàn kiểm thử regex và AI real-time: nhập tin nhắn mẫu để xem HaruMod phản hồi và xử lý tức thì.",
+        cmds: ["simulate", "testfilter"],
+        tab: "sim"
+      }
+    ];
+
+    function copyServerId() {
+      const id = currentGuildId || "1426554369393954969";
+      navigator.clipboard.writeText(id).then(() => {
+        showToast("Đã sao chép ID Máy Chủ: " + id, "success");
+      }).catch(() => {
+        showToast("ID Máy Chủ: " + id, "info");
+      });
+    }
+
+    function openHelpModal() {
+      showToast("Tài liệu hướng dẫn & Hỗ trợ kỹ thuật: https://discord.gg/haruki", "info");
+    }
+
+    function openServerStatsModal() {
+      showToast("📊 Garden Of Dream: 304 Thành viên | 73 Kênh | 108 Vai trò | HaruMod v5.3 Hoạt động", "success");
+    }
+
+    function handlePrefixInput(el) {
+      let val = el.value.replace(/\?/g, "").trim();
+      if (!val) val = "h";
+      el.value = val;
+      const full = val + "?";
+
+      document.getElementById("dash-prefix-preview-val").innerText = full + "help";
+      document.getElementById("dash-prefix-preview-val2").innerText = full + "ban";
+
+      if (typeof triggerUnsaved === "function") triggerUnsaved();
+    }
+
+    function detectUserTimezone() {
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Ho_Chi_Minh";
+        const sel = document.getElementById("cfg-dash-timezone");
+        if (sel) {
+          let found = false;
+          for (let opt of sel.options) {
+            if (opt.value === tz) {
+              opt.selected = true;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            const newOpt = new Option(tz, tz, true, true);
+            sel.add(newOpt);
+          }
+          showToast("Đã nhận diện TimeZone: " + tz, "success");
+          if (typeof triggerUnsaved === "function") triggerUnsaved();
+        }
+      } catch (e) {
+        showToast("Không thể tự động nhận diện TimeZone", "warning");
+      }
+    }
+
+    function renderManagerRolesTags() {
+      const box = document.getElementById("cfg-dash-manager-roles-box");
+      if (!box) return;
+
+      const colors = ["#f472b6", "#38bdf8", "#a78bfa", "#34d399", "#fbbf24"];
+      box.innerHTML = "";
+
+      if (currentManagerRoles.length === 0) {
+        box.innerHTML = `<span style="font-size:0.78rem;color:var(--text-muted);">Chưa chọn vai trò nào (Mặc định Server Owner có toàn quyền).</span>`;
+        return;
+      }
+
+      currentManagerRoles.forEach((roleName, idx) => {
+        const color = colors[idx % colors.length];
+        const chip = document.createElement("span");
+        chip.className = "role-tag-chip";
+        chip.innerHTML = `
+          <span class="chip-dot" style="background:${color};"></span>
+          <span>${roleName}</span>
+          <button type="button" class="chip-remove" onclick="removeManagerRole('${roleName.replace(/'/g, "\\'")}')" title="Xóa vai trò">&times;</button>
+        `;
+        box.appendChild(chip);
+      });
+    }
+
+    function removeManagerRole(roleName) {
+      currentManagerRoles = currentManagerRoles.filter(r => r !== roleName);
+      renderManagerRolesTags();
+      logRecentActivity("role", `Đã xóa vai trò quản trị '${roleName}' khỏi Manager Roles`);
+      if (typeof triggerUnsaved === "function") triggerUnsaved();
+    }
+
+    function addManagerRoleFromSelect(sel) {
+      const roleName = sel.value;
+      if (!roleName) return;
+
+      if (!currentManagerRoles.includes(roleName)) {
+        currentManagerRoles.push(roleName);
+        renderManagerRolesTags();
+        logRecentActivity("role", `Đã thêm vai trò '${roleName}' vào Manager Roles`);
+        showToast(`Đã thêm vai trò quản trị: ${roleName}`, "success");
+        if (typeof triggerUnsaved === "function") triggerUnsaved();
+      }
+      sel.value = "";
+    }
+
+    function saveDashboardSettings(e) {
+      if (e) e.preventDefault();
+      const prefixChar = document.getElementById("cfg-dash-prefix-char").value.trim() || "h";
+      const fullPrefix = prefixChar + "?";
+      const nickname = document.getElementById("cfg-dash-bot-nickname").value.trim() || "Bot Cute";
+      const updatesChannel = document.getElementById("cfg-dash-updates-channel").value;
+      const timezone = document.getElementById("cfg-dash-timezone").value;
+      const lang = document.getElementById("cfg-dash-language").value;
+      const disableWarnings = document.getElementById("cfg-dash-disable-warnings").checked;
+
+      const gId = currentGuildId || "1426554369393954969";
+
+      // Save to localStorage
+      const settings = {
+        prefix: fullPrefix,
+        prefixChar: prefixChar,
+        nickname: nickname,
+        updatesChannel: updatesChannel,
+        timezone: timezone,
+        lang: lang,
+        disableWarnings: disableWarnings,
+        managerRoles: currentManagerRoles
+      };
+
+      localStorage.setItem("haruki_bot_settings_" + gId, JSON.stringify(settings));
+      localStorage.setItem("haruki_bot_nick_" + gId, nickname);
+
+      // Log activity
+      logRecentActivity("nick", `Đổi Server Bot Nickname thành '${nickname}'`);
+      logRecentActivity("prefix", `Cập nhật Command Prefix thành '${fullPrefix}'`);
+      logRecentActivity("channel", `Cập nhật Updates Channel`);
+
+      // Sync nickname down to local engine
+      fetch(`${LOCAL_ENGINE_API}/api/nick`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ guildId: gId, nick: nickname })
+      }).then(r => r.json()).then(data => {
+        console.log("Nickname synced to Discord:", data);
+      }).catch(err => console.log("Engine offline, nick saved in client:", err));
+
+      const bar = document.getElementById("sticky-save-bar");
+      if (bar) bar.classList.remove("visible");
+
+      showToast(`Đã lưu thành công! Prefix: ${fullPrefix} &bull; Nickname: ${nickname}`, "success");
+    }
+
+    // =========================================================================
+    // RECENT ACTIVITY (7 NGÀY GẦN NHẤT)
+    // =========================================================================
+    const DEFAULT_ACTIVITIES = [
+      { tag: "nick", cat: "NICKNAME", desc: "Đổi Server Bot Nickname thành 'Bot Cute'", time: "Hôm nay 10:45", user: "@Harus" },
+      { tag: "prefix", cat: "PREFIX", desc: "Cập nhật Command Prefix thành 'h?'", time: "Hôm nay 09:12", user: "@Harus" },
+      { tag: "channel", cat: "UPDATES", desc: "Đặt Updates Channel thành '#staff-cmd'", time: "Hôm qua 18:30", user: "@Harus" },
+      { tag: "module", cat: "MODULE", desc: "Bật module 'Auto-Mod & Phishing Filter'", time: "2 ngày trước", user: "@Harus" },
+      { tag: "role", cat: "ROLE", desc: "Thêm vai trò quản trị 'Floral Helpers ⋆˚࿔'", time: "4 ngày trước", user: "@Harus" },
+      { tag: "system", cat: "SYSTEM", desc: "Đồng bộ thời gian thực 108 Vai trò & 73 Kênh Discord", time: "6 ngày trước", user: "HaruMod Gateway" }
+    ];
+
+    function loadRecentActivities() {
+      const gId = currentGuildId || "1426554369393954969";
+      const saved = localStorage.getItem("haruki_recent_activity_" + gId);
+      let list = DEFAULT_ACTIVITIES;
+      if (saved) {
+        try { list = JSON.parse(saved); } catch (e) {}
+      }
+      renderRecentActivities(list);
+    }
+
+    function renderRecentActivities(list) {
+      const container = document.getElementById("dash-recent-activity-list");
+      if (!container) return;
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:24px;font-size:0.84rem;color:var(--text-muted);">Không có hoạt động nào trong 7 ngày gần nhất.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.slice(0, 10).map(item => `
+        <div class="dash-activity-item">
+          <div class="dash-act-left">
+            <span class="dash-act-tag ${item.tag || 'system'}">${item.cat || 'ACTION'}</span>
+            <span class="dash-act-desc">${item.desc}</span>
+          </div>
+          <div class="dash-act-meta">
+            <span class="dash-act-user">${item.user || '@Harus'}</span>
+            <span>&bull;</span>
+            <span>${item.time}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function logRecentActivity(tag, desc) {
+      const gId = currentGuildId || "1426554369393954969";
+      const saved = localStorage.getItem("haruki_recent_activity_" + gId);
+      let list = DEFAULT_ACTIVITIES.slice();
+      if (saved) {
+        try { list = JSON.parse(saved); } catch (e) {}
+      }
+
+      const now = new Date();
+      const timeStr = "Vừa xong (" + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0') + ")";
+
+      list.unshift({
+        tag: tag,
+        cat: tag.toUpperCase(),
+        desc: desc,
+        time: timeStr,
+        user: "@Harus"
+      });
+
+      // Keep within 25 items
+      list = list.slice(0, 25);
+      localStorage.setItem("haruki_recent_activity_" + gId, JSON.stringify(list));
+      renderRecentActivities(list);
+    }
+
+    function clearActivityHistory() {
+      const gId = currentGuildId || "1426554369393954969";
+      localStorage.removeItem("haruki_recent_activity_" + gId);
+      renderRecentActivities([]);
+      showToast("Đã xóa lịch sử hoạt động gần đây!", "info");
+    }
+
+    // =========================================================================
+    // MODULES MANAGER GRID & TOGGLE LOGIC
+    // =========================================================================
+    function getModuleState(modId) {
+      const gId = currentGuildId || "1426554369393954969";
+      const saved = localStorage.getItem("haruki_module_" + gId + "_" + modId);
+      if (saved !== null) {
+        return saved === "true";
+      }
+      return true; // Default ON
+    }
+
+    function toggleModuleState(modId, isChecked) {
+      const gId = currentGuildId || "1426554369393954969";
+      localStorage.setItem("haruki_module_" + gId + "_" + modId, isChecked ? "true" : "false");
+
+      const card = document.getElementById("mod-card-" + modId);
+      if (card) {
+        if (isChecked) {
+          card.classList.remove("disabled");
+        } else {
+          card.classList.add("disabled");
+        }
+      }
+
+      const mod = BOT_MODULES_LIST.find(m => m.id === modId);
+      const modName = mod ? mod.name : modId;
+      const statusText = isChecked ? "BẬT" : "TẮT";
+
+      showToast(`Đã ${statusText} module: ${modName}`, isChecked ? "success" : "warning");
+      logRecentActivity("module", `Đã ${statusText} module '${modName}'`);
+    }
+
+    function filterModules(cat, btn) {
+      document.querySelectorAll(".dash-filter-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      const cards = document.querySelectorAll(".dash-module-card");
+      cards.forEach(card => {
+        const cardCat = card.getAttribute("data-cat");
+        if (cat === "all" || cardCat === cat) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    function renderModulesGrid() {
+      const container = document.getElementById("dash-modules-grid-container");
+      if (!container) return;
+
+      const prefixChar = (document.getElementById("cfg-dash-prefix-char") ? document.getElementById("cfg-dash-prefix-char").value.trim() : "h") || "h";
+      const fullPrefix = prefixChar + "?";
+
+      container.innerHTML = BOT_MODULES_LIST.map(mod => {
+        const isEnabled = getModuleState(mod.id);
+        const cmdsHtml = mod.cmds.map(c => `<span class="dash-cmd-chip">${fullPrefix}${c}</span>`).join("");
+
+        return `
+          <div class="dash-module-card ${isEnabled ? '' : 'disabled'}" id="mod-card-${mod.id}" data-cat="${mod.cat}">
+            <div>
+              <div class="dash-module-top">
+                <div class="dash-module-icon-wrap" style="background:${mod.bg};color:${mod.color};border-color:${mod.color}40;">
+                  ${mod.icon}
+                </div>
+                <div class="dash-module-title-box">
+                  <h4 class="dash-module-title">${mod.name}</h4>
+                  <span class="dash-module-badge">${mod.badge}</span>
+                </div>
+                <label class="switch" style="margin-left:8px;">
+                  <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleModuleState('${mod.id}', this.checked)">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <p class="dash-module-desc">${mod.desc}</p>
+              <div class="dash-module-cmds">${cmdsHtml}</div>
+            </div>
+
+            <div class="dash-module-footer">
+              ${mod.tab ? `
+                <button type="button" class="dash-module-btn" onclick="switchConfigTab('${mod.tab}')">
+                  <span>Cấu hình chuyên sâu</span>
+                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                </button>
+              ` : `
+                <button type="button" class="dash-module-btn" style="color:#38bdf8;" onclick="showToast('Module tiện ích luôn khả dụng thông qua tiền tố ${fullPrefix}', 'info')">
+                  <span>Xem chi tiết lệnh</span>
+                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Enhance selectServerForConfig to load all Dashboard components
+    const _original_selectServerForConfig = selectServerForConfig;
+    selectServerForConfig = function(guildId) {
+      if (typeof _original_selectServerForConfig === "function") {
+        _original_selectServerForConfig(guildId);
+      }
+
+      // Switch to dashboard tab by default
+      switchConfigTab('dashboard');
+
+      // Populate Server Info stats
+      const membersStat = document.getElementById("stat-dash-members");
+      if (membersStat) membersStat.innerText = (guildId === "1426554369393954969") ? "304" : "152";
+
+      const rolesStat = document.getElementById("stat-dash-roles");
+      if (rolesStat) rolesStat.innerText = (guildId === "1426554369393954969") ? "108" : "34";
+
+      const tcStat = document.getElementById("stat-dash-tc");
+      if (tcStat) tcStat.innerText = (guildId === "1426554369393954969") ? "47" : "18";
+
+      const vcStat = document.getElementById("stat-dash-vc");
+      if (vcStat) vcStat.innerText = (guildId === "1426554369393954969") ? "26" : "8";
+
+      const sTitle = document.getElementById("dash-server-title-name");
+      if (sTitle) {
+        sTitle.innerText = (guildId === "1426554369393954969") ? "Garden Of Dream" : "Discord Server";
+      }
+
+      const sIdBadge = document.getElementById("dash-header-server-id");
+      if (sIdBadge) sIdBadge.innerText = guildId;
+
+      // Populate Updates Channel dropdown
+      const chSel = document.getElementById("cfg-dash-updates-channel");
+      if (chSel) {
+        chSel.innerHTML = `<option value="">Select..</option>`;
+        const channels = (guildId === "1426554369393954969" && typeof REAL_GARDEN_DATA !== "undefined") ? REAL_GARDEN_DATA.channels : DEFAULT_FALLBACK_CHANNELS;
+        channels.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c.id;
+          opt.innerText = "# " + c.name;
+          if (c.name.includes("cmd") || c.name.includes("update") || c.name.includes("staff")) {
+            opt.selected = true;
+          }
+          chSel.appendChild(opt);
+        });
+      }
+
+      // Populate Role Picker dropdown for Manager Roles
+      const rolePicker = document.getElementById("cfg-dash-role-picker");
+      if (rolePicker) {
+        rolePicker.innerHTML = `<option value="">+ Thêm vai trò quản trị (Manager Role)...</option>`;
+        const roles = (guildId === "1426554369393954969" && typeof REAL_GARDEN_DATA !== "undefined") ? REAL_GARDEN_DATA.roles : DEFAULT_FALLBACK_ROLES;
+        roles.forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r.name;
+          opt.innerText = "@ " + r.name;
+          rolePicker.appendChild(opt);
+        });
+      }
+
+      // Load saved settings
+      const savedSettingsStr = localStorage.getItem("haruki_bot_settings_" + guildId);
+      if (savedSettingsStr) {
+        try {
+          const s = JSON.parse(savedSettingsStr);
+          if (s.prefixChar) {
+            document.getElementById("cfg-dash-prefix-char").value = s.prefixChar;
+            handlePrefixInput(document.getElementById("cfg-dash-prefix-char"));
+          }
+          if (s.nickname) document.getElementById("cfg-dash-bot-nickname").value = s.nickname;
+          if (s.updatesChannel) document.getElementById("cfg-dash-updates-channel").value = s.updatesChannel;
+          if (s.timezone) document.getElementById("cfg-dash-timezone").value = s.timezone;
+          if (s.lang) document.getElementById("cfg-dash-language").value = s.lang;
+          if (s.disableWarnings !== undefined) document.getElementById("cfg-dash-disable-warnings").checked = s.disableWarnings;
+          if (s.managerRoles) currentManagerRoles = s.managerRoles;
+        } catch(e) {}
+      } else {
+        // Defaults
+        document.getElementById("cfg-dash-prefix-char").value = "h";
+        handlePrefixInput(document.getElementById("cfg-dash-prefix-char"));
+        document.getElementById("cfg-dash-bot-nickname").value = "Bot Cute";
+        document.getElementById("cfg-dash-timezone").value = "Asia/Ho_Chi_Minh";
+        document.getElementById("cfg-dash-language").value = "en";
+      }
+
+      renderManagerRolesTags();
+      loadRecentActivities();
+      renderModulesGrid();
+    };
+
+    // Auto render on load
+    document.addEventListener("DOMContentLoaded", () => {
+      renderManagerRolesTags();
+      loadRecentActivities();
+      renderModulesGrid();
+    });
+
   </script>
 
 </body>
