@@ -1602,14 +1602,15 @@
 
     .tab-pane {
       display: none;
-      animation: tabFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow-anchor: none;
     }
     .tab-pane.active {
       display: block;
+      animation: tabFadeIn 0.14s ease-out;
     }
     @keyframes tabFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .panel-card {
@@ -1887,13 +1888,7 @@
       box-shadow: 0 0 18px var(--emerald-glow);
     }
 
-    .tab-pane {
-      display: none;
-      animation: fadeIn 0.25s ease;
-    }
-    .tab-pane.active {
-      display: block;
-    }
+    /* .tab-pane controlled cleanly above with zero vertical shift */
 
     .panel-card {
       background: rgba(9, 14, 26, 0.85);
@@ -2824,6 +2819,15 @@
     .dyno-main-content {
       flex: 1;
       min-width: 0;
+      overflow-anchor: none;
+    }
+    .dyno-panes-wrapper {
+      overflow-anchor: none;
+    }
+    @media (min-width: 993px) {
+      .dyno-panes-wrapper {
+        min-height: 760px;
+      }
     }
     .dyno-top-bar {
       display: flex;
@@ -5951,21 +5955,75 @@
 
 <!-- TAB 1: OVERVIEW -->
     <div id="cfg-pane-overview" class="tab-pane">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:18px;margin-bottom:26px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:18px;margin-bottom:24px;">
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statShield">PRIMARY SECURITY SHIELD</div>
-          <div style="font-size:2rem;font-weight:900;color:var(--emerald-light);margin-top:6px;">100% ACTIVE</div>
-          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Auto-Mod, Honeypot & Anti-Wizz</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statShield">LIVE SERVER STATUS (DISCORD 1-1)</div>
+          <div id="live-sec-members" style="font-size:1.85rem;font-weight:900;color:var(--emerald-light);margin-top:6px;font-variant-numeric:tabular-nums;">Đang tải...</div>
+          <div id="live-sec-online" style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Kết nối trực tiếp Discord API v10</div>
         </div>
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statThreats">THREATS NEUTRALIZED</div>
-          <div style="font-size:2rem;font-weight:900;color:#ffffff;margin-top:6px;font-variant-numeric:tabular-nums;">4,921</div>
-          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">12 phishing links blocked past 24h</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statThreats">BANS &amp; NATIVE AUTOMOD</div>
+          <div id="live-sec-bans-automod" style="font-size:1.85rem;font-weight:900;color:#ffffff;margin-top:6px;font-variant-numeric:tabular-nums;">--</div>
+          <div id="live-sec-mfa" style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Đang đọc dữ liệu bảo mật thật từ Discord...</div>
         </div>
         <div class="panel-card" style="margin-bottom:0;">
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statLogs">AUDIT LOGS RECORDED</div>
-          <div style="font-size:2rem;font-weight:900;color:var(--cyan-accent);margin-top:6px;font-variant-numeric:tabular-nums;">38,104</div>
-          <div style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Multi-stream routed across 6 channels</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);font-weight:800;letter-spacing:0.04em;" data-i18n="statLogs">CHANNELS &amp; ROLES (LIVE)</div>
+          <div id="live-sec-channels-roles" style="font-size:1.85rem;font-weight:900;color:var(--cyan-accent);margin-top:6px;font-variant-numeric:tabular-nums;">--</div>
+          <div id="live-sec-sync-time" style="font-size:0.8rem;color:var(--text-dim);margin-top:4px;">Chưa đồng bộ</div>
+        </div>
+      </div>
+
+      <!-- REAL 1-1 DISCORD NATIVE SECURITY SETTINGS PANEL -->
+      <div class="panel-card" style="border-color:rgba(16,185,129,0.28);">
+        <div class="panel-header" style="flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 class="panel-title">🛡️ Cài Đặt Bảo Mật Discord Trực Tiếp (1-1 Real-Time)</h3>
+            <p class="panel-subtitle">Đọc và chỉnh sửa trực tiếp cấp độ xác minh, bộ lọc nội dung và nhật ký Audit Log thật trên máy chủ Discord của bạn.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="fetchRealDiscordGuildData(currentGuildId, true)">
+              🔄 Đọc lại từ Discord
+            </button>
+            <button type="button" class="btn btn-emerald btn-sm" onclick="applyRealDiscordSecuritySettings(event)">
+              ⚡ Áp dụng ngay lên Discord
+            </button>
+          </div>
+        </div>
+
+        <div class="config-grid-2" style="margin-bottom:18px;">
+          <div>
+            <label class="dash-form-label" style="display:block;margin-bottom:6px;">Cấp độ xác minh tài khoản (Discord Verification Level)</label>
+            <select id="cfg-discord-verification-level" class="form-input" onchange="triggerUnsaved()">
+              <option value="0">0 — Không giới hạn (None)</option>
+              <option value="1">1 — Thấp: Bắt buộc xác minh Email (Low)</option>
+              <option value="2">2 — Trung bình: Tạo tài khoản trên 5 phút (Medium)</option>
+              <option value="3">3 — Cao: Ở trong server trên 10 phút (High)</option>
+              <option value="4">4 — Rất cao: Bắt buộc xác minh SĐT (Highest)</option>
+            </select>
+          </div>
+          <div>
+            <label class="dash-form-label" style="display:block;margin-bottom:6px;">Bộ lọc ảnh / nội dung nhạy cảm (Explicit Content Filter)</label>
+            <select id="cfg-discord-content-filter" class="form-input" onchange="triggerUnsaved()">
+              <option value="0">0 — Tắt quét ảnh (Disabled)</option>
+              <option value="1">1 — Quét thành viên chưa có Role (Members Without Roles)</option>
+              <option value="2">2 — Quét toàn bộ thành viên (All Members)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;">
+          <div style="background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;">
+            <div style="font-size:0.82rem;font-weight:800;color:#34d399;margin-bottom:10px;">📜 Nhật ký Audit Log thật gần đây (Discord)</div>
+            <div id="live-discord-audit-list" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;font-size:0.78rem;color:var(--text-dim);">
+              <div>Đang tải nhật ký Audit Log thật từ Discord...</div>
+            </div>
+          </div>
+          <div style="background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;">
+            <div style="font-size:0.82rem;font-weight:800;color:#38bdf8;margin-bottom:10px;">🤖 Discord Native AutoMod &amp; Danh sách Ban thật</div>
+            <div id="live-discord-automod-bans" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;font-size:0.78rem;color:var(--text-dim);">
+              <div>Đang quét Discord Native AutoMod &amp; Ban list...</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -6835,7 +6893,6 @@
           </div>
         </div>
 
-      </div> <!-- /.dyno-panes-wrapper -->
         <!-- TAB: AUTOBAN (IMAGE 4) -->
     <div id="cfg-pane-autoban" class="tab-pane">
       <div class="panel-card" style="padding:26px;">
@@ -6998,8 +7055,8 @@
           </div>
         </div>
       </div>
-    </div>iv>
-      </div>
+    </div>
+      </div> <!-- /.dyno-panes-wrapper -->
     </section> <!-- /.dyno-main-content -->
   </main>
 
@@ -8950,7 +9007,7 @@
       }
     }
 
-    // 3. Execute Channel Lock / Unlock
+    // 3. Execute Channel Lock / Unlock (Real 1-1 Discord API)
     async function executeChannelLock(isLock, event) {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước!", "warning");
@@ -8963,41 +9020,31 @@
         return;
       }
 
-      try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: isLock ? "lock" : "unlock",
-            guildId: currentGuildId,
-            channelId: channelId,
-            reason: isLock ? "HaruMod Channel Lockdown" : "HaruMod Channel Unlock"
-          })
-        });
-        if (res.ok) {
-          showToast(isLock ? "🔒 Đã khóa kênh chat thành công! Thành viên không thể gửi tin." : "🔓 Đã mở khóa kênh chat thành công!", "success");
-        } else {
-          showToast(isLock ? "🔒 Đã thực thi lệnh khóa kênh!" : "🔓 Đã thực thi lệnh mở khóa!");
-        }
-      } catch(e) {
-        showToast(isLock ? "🔒 Đã thực thi lệnh khóa kênh!" : "🔓 Đã mở khóa kênh!");
+      const res = isLock
+        ? await DiscordAPI.lockChannel(channelId, currentGuildId)
+        : await DiscordAPI.unlockChannel(channelId, currentGuildId);
+
+      if (res.ok) {
+        showToast(isLock ? "🔒 Đã khóa kênh chat thành công 100% trên Discord!" : "🔓 Đã mở khóa kênh chat thành công 100% trên Discord!", "success");
+      } else {
+        showToast(`❌ Không thể ${isLock ? "khóa" : "mở khóa"} kênh: ${res.error || "Thiếu quyền Manage Channels"}`, "danger");
       }
     }
 
-    // 4. Execute Member Moderation Action (Kick, Ban, Timeout, Warn, Nick)
+    // 4. Execute Member Moderation Action (Real 1-1 Discord API: Kick, Ban, Timeout, Unban, Untimeout, Nick)
     async function executeMemberModAction(event) {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước!", "warning");
         return;
       }
       const targetUser = document.getElementById("cfg-mod-target-user")?.value.trim();
-      if (!targetUser) {
-        showToast("Vui lòng nhập User ID của thành viên cần xử lý!", "warning");
+      if (!targetUser || !/^\d{15,22}$/.test(targetUser)) {
+        showToast("Vui lòng nhập đúng Discord User ID (17–20 chữ số) của thành viên!", "warning");
         return;
       }
 
       const action = document.getElementById("cfg-mod-action-type")?.value || "timeout";
-      const reason = document.getElementById("cfg-mod-reason")?.value.trim() || "HaruMod Management Action";
+      const reason = document.getElementById("cfg-mod-reason")?.value.trim() || "HaruMod Dashboard Moderation";
       const duration = document.getElementById("cfg-mod-duration")?.value || "10";
       const deleteDays = document.getElementById("cfg-mod-deletedays")?.value || "0";
       const newNick = document.getElementById("cfg-mod-newnick")?.value.trim() || "";
@@ -9007,23 +9054,31 @@
       if (btn) {
         origText = btn.innerHTML;
         btn.disabled = true;
-        btn.innerHTML = `<span>Đang thực thi...</span>`;
+        btn.innerHTML = `<span>Đang đồng bộ Discord 1-1...</span>`;
       }
 
       try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: action,
-            guildId: currentGuildId,
-            userId: targetUser,
-            reason: reason,
-            duration: duration,
-            deleteDays: deleteDays,
-            nickname: newNick
-          })
-        });
+        let res = { ok: false, error: "Hành động không hỗ trợ" };
+        if (action === "timeout") {
+          res = await DiscordAPI.timeoutMember(currentGuildId, targetUser, parseInt(duration) || 10, reason);
+        } else if (action === "untimeout") {
+          res = await DiscordAPI.request(`/guilds/${currentGuildId}/members/${targetUser}`, "PATCH", { communication_disabled_until: null }, { "X-Audit-Log-Reason": reason });
+        } else if (action === "kick") {
+          res = await DiscordAPI.kickMember(currentGuildId, targetUser, reason);
+        } else if (action === "ban") {
+          res = await DiscordAPI.banMember(currentGuildId, targetUser, reason, parseInt(deleteDays) || 0);
+        } else if (action === "unban") {
+          res = await DiscordAPI.request(`/guilds/${currentGuildId}/bans/${targetUser}`, "DELETE", null, { "X-Audit-Log-Reason": reason });
+        } else if (action === "membernick") {
+          res = await DiscordAPI.request(`/guilds/${currentGuildId}/members/${targetUser}`, "PATCH", { nick: newNick }, { "X-Audit-Log-Reason": reason });
+        } else if (action === "warn") {
+          const logCh = document.getElementById("cfg-actionlog-main-channel")?.value || activeChatChannelId;
+          if (logCh) {
+            res = await DiscordAPI.sendMessage(logCh, `⚠️ **Cảnh cáo thành viên** <@${targetUser}> (\`${targetUser}\`)\n📝 **Lý do:** ${reason}`);
+          } else {
+            res = { ok: false, error: "Chưa chọn kênh gửi cảnh cáo (Action Log)" };
+          }
+        }
 
         const actionNames = {
           timeout: `cách ly (timeout ${duration}m)`,
@@ -9036,29 +9091,27 @@
         };
 
         if (res.ok) {
-          showToast(`✓ Đã ${actionNames[action]} cho người dùng ${targetUser} thành công 100%!`, "success");
+          showToast(`✓ Đã ${actionNames[action]} cho người dùng ${targetUser} trực tiếp trên Discord!`, "success");
+          const tbody = document.getElementById("cfg-mod-cases-tbody");
+          if (tbody) {
+            const newRow = document.createElement("tr");
+            newRow.style.borderBottom = "1px solid rgba(255,255,255,0.04)";
+            const caseId = "#CASE-" + Math.floor(1000 + Math.random() * 9000);
+            newRow.innerHTML = `
+              <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">${caseId}</td>
+              <td style="padding:12px 14px;"><code>${targetUser}</code></td>
+              <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(16,185,129,0.15);color:#10b981;">${action.toUpperCase()}</span></td>
+              <td style="padding:12px 14px;color:var(--text-dim);">${reason}</td>
+              <td style="padding:12px 14px;">${currentUser ? escapeHtml(currentUser.username) : "Dashboard Staff"}</td>
+              <td style="padding:12px 14px;color:var(--text-muted);">Vừa xong</td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+          }
         } else {
-          showToast(`✓ Đã gửi lệnh ${actionNames[action]} cho ID: ${targetUser}!`);
-        }
-
-        // Add to live cases table
-        const tbody = document.getElementById("cfg-mod-cases-tbody");
-        if (tbody) {
-          const newRow = document.createElement("tr");
-          newRow.style.borderBottom = "1px solid rgba(255,255,255,0.04)";
-          const caseId = "#CASE-" + Math.floor(1000 + Math.random() * 9000);
-          newRow.innerHTML = `
-            <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">${caseId}</td>
-            <td style="padding:12px 14px;"><code>${targetUser}</code></td>
-            <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(16,185,129,0.15);color:#10b981;">${action.toUpperCase()}</span></td>
-            <td style="padding:12px 14px;color:var(--text-dim);">${reason}</td>
-            <td style="padding:12px 14px;">Dashboard Staff</td>
-            <td style="padding:12px 14px;color:var(--text-muted);">Vừa xong</td>
-          `;
-          tbody.insertBefore(newRow, tbody.firstChild);
+          showToast(`❌ Thao tác thất bại trên Discord: ${res.error || "Bot thiếu quyền hoặc Role thấp hơn mục tiêu"}`, "danger");
         }
       } catch (err) {
-        showToast(`✓ Đã gửi lệnh xử phạt ID: ${targetUser} tới bot!`, "info");
+        showToast(`❌ Lỗi kết nối Discord API: ${err.message}`, "danger");
       } finally {
         if (btn) {
           btn.disabled = false;
@@ -9068,6 +9121,12 @@
     }
 
     function switchConfigTab(tabKey) {
+      // Prevent browser focus-scroll jumping when clicking sidebar buttons
+      if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains("dyno-nav-item")) {
+        document.activeElement.blur();
+      }
+      const prevScrollY = window.scrollY;
+
       document.querySelectorAll("#config-suite .tab-pane").forEach(p => p.classList.remove("active"));
       document.querySelectorAll(".dyno-nav-item").forEach(b => b.classList.remove("active"));
       document.querySelectorAll(".config-tabs .tab-btn").forEach(b => b.classList.remove("active"));
@@ -9076,7 +9135,8 @@
       if (targetPane) targetPane.classList.add("active");
       if (tabKey === 'chat' && typeof loadChannelMessages === 'function') {
         const sel = document.getElementById("chat-channel-select");
-        const chId = (sel && sel.value) ? sel.value : (activeChatChannelId || "1426568420287320095");
+        const chId = (sel && sel.value) ? sel.value : (activeChatChannelId || (cachedChannels[0] && cachedChannels[0].id) || "1426568420287320095");
+        activeChatChannelId = chId;
         loadChannelMessages(chId);
       }
 
@@ -9100,6 +9160,22 @@
       }
       if (tabKey === "autoban" && typeof renderAutobanRules === "function") renderAutobanRules();
       if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
+
+      // Stabilize viewport with ZERO downward jitter/jump
+      requestAnimationFrame(() => {
+        if (window.innerWidth > 992) {
+          // On Desktop: keep top-aligned or preserve exact Y if already near top (never jump down)
+          const targetY = prevScrollY > 120 ? 0 : prevScrollY;
+          window.scrollTo({ top: targetY, left: 0, behavior: "instant" });
+        } else {
+          // On Mobile: scroll cleanly to main content header so user sees the selected tab cleanly
+          const topBar = document.querySelector("#config-suite .dyno-top-bar");
+          if (topBar) {
+            const topPos = Math.max(0, topBar.getBoundingClientRect().top + window.scrollY - 72);
+            window.scrollTo({ top: topPos, left: 0, behavior: "smooth" });
+          }
+        }
+      });
     }
 
     // Live Preview updates as user types
@@ -9206,10 +9282,122 @@
       showToast("Unsaved changes discarded!");
     }
 
-    // Save full server configuration to localStorage & trigger sync
-    function saveChanges() {
+    // Harvest complete 1-1 Guild Config payload across ALL tabs
+    function collectFullGuildConfig() {
+      const nameInput = document.getElementById("cfg-bot-nickname-input");
+      const dashNickInput = document.getElementById("cfg-dash-bot-name");
+      const statusInput = document.getElementById("cfg-bot-status-input");
+      const webhookInput = document.getElementById("cfg-server-webhook");
+      const prefixChar = document.getElementById("cfg-dash-prefix-char")?.value.trim() || "h";
+      const tzVal = document.getElementById("cfg-dash-timezone")?.value || "Asia/Ho_Chi_Minh";
+      const verSel = document.getElementById("cfg-discord-verification-level");
+      const filterSel = document.getElementById("cfg-discord-content-filter");
+
+      const nick = (nameInput && nameInput.value.trim()) || (dashNickInput && dashNickInput.value.trim()) || "HaruMod";
+
+      return {
+        guildId: currentGuildId,
+        botNickname: nick,
+        botStatus: statusInput ? statusInput.value.trim() : "Watching members · 100% Secure",
+        botRoleColor: currentBotRoleColor || "#10b981",
+        prefix: prefixChar + "?",
+        timezone: tzVal,
+        updatesChannel: document.getElementById("cfg-dash-updates-channel")?.value || "",
+        webhookUrl: webhookInput ? webhookInput.value.trim() : "",
+        discordSecurity: {
+          verification_level: verSel ? parseInt(verSel.value) : null,
+          explicit_content_filter: filterSel ? parseInt(filterSel.value) : null
+        },
+        automod: {
+          antiPhish: document.getElementById("cfg-automod-active") ? document.getElementById("cfg-automod-active").checked : true,
+          antiHoneypot: document.getElementById("cfg-honeypot-active") ? document.getElementById("cfg-honeypot-active").checked : true,
+          antiWizz: document.getElementById("cfg-antiwizz-active") ? document.getElementById("cfg-antiwizz-active").checked : true,
+          antiFile: document.getElementById("cfg-fileblock-active") ? document.getElementById("cfg-fileblock-active").checked : true,
+          rules: typeof automodRules !== "undefined" ? automodRules : [],
+          defaultLogChannel: document.getElementById("automod-default-log-channel")?.value || "",
+          defaultIgnoredChannel: document.getElementById("automod-default-ignored-channels")?.value || "",
+          defaultIgnoredRole: document.getElementById("automod-default-ignored-roles")?.value || ""
+        },
+        autoban: {
+          enabled: document.getElementById("cfg-switch-autoban") ? document.getElementById("cfg-switch-autoban").checked : true,
+          rules: typeof autobanRules !== "undefined" ? autobanRules : []
+        },
+        actionLog: {
+          enabled: document.getElementById("cfg-switch-actionlog") ? document.getElementById("cfg-switch-actionlog").checked : true,
+          mainChannel: document.getElementById("cfg-actionlog-main-channel")?.value || "",
+          specifyChannels: document.getElementById("opt-specify-channels") ? document.getElementById("opt-specify-channels").checked : false,
+          ignoredChannels: typeof actionLogIgnoredChannels !== "undefined" ? actionLogIgnoredChannels : [],
+          ignoredRoles: typeof actionLogIgnoredRoles !== "undefined" ? actionLogIgnoredRoles : []
+        },
+        autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
+        autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
+        savedAt: new Date().toISOString()
+      };
+    }
+
+    function applyCloudGuildConfigToUI(cfg) {
+      if (!cfg || typeof cfg !== "object") return;
+      if (cfg.botNickname) {
+        const nameInput = document.getElementById("cfg-bot-nickname-input");
+        const dashNick = document.getElementById("cfg-dash-bot-name");
+        if (nameInput) nameInput.value = cfg.botNickname;
+        if (dashNick) dashNick.value = cfg.botNickname;
+      }
+      if (cfg.botStatus) {
+        const statusInput = document.getElementById("cfg-bot-status-input");
+        if (statusInput) statusInput.value = cfg.botStatus;
+      }
+      if (cfg.prefix && document.getElementById("cfg-dash-prefix-char")) {
+        document.getElementById("cfg-dash-prefix-char").value = cfg.prefix.replace("?", "") || "h";
+      }
+      if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
+        document.getElementById("cfg-dash-timezone").value = cfg.timezone;
+      }
+      if (cfg.updatesChannel && document.getElementById("cfg-dash-updates-channel")) {
+        document.getElementById("cfg-dash-updates-channel").value = cfg.updatesChannel;
+      }
+      if (cfg.webhookUrl) {
+        const w1 = document.getElementById("cfg-server-webhook");
+        const w2 = document.getElementById("cfg-server-webhook-sync-tab");
+        if (w1) w1.value = cfg.webhookUrl;
+        if (w2) w2.value = cfg.webhookUrl;
+      }
+      if (cfg.automod) {
+        if (document.getElementById("cfg-automod-active") && typeof cfg.automod.antiPhish === "boolean") document.getElementById("cfg-automod-active").checked = cfg.automod.antiPhish;
+        if (document.getElementById("cfg-honeypot-active") && typeof cfg.automod.antiHoneypot === "boolean") document.getElementById("cfg-honeypot-active").checked = cfg.automod.antiHoneypot;
+        if (document.getElementById("cfg-antiwizz-active") && typeof cfg.automod.antiWizz === "boolean") document.getElementById("cfg-antiwizz-active").checked = cfg.automod.antiWizz;
+        if (document.getElementById("cfg-fileblock-active") && typeof cfg.automod.antiFile === "boolean") document.getElementById("cfg-fileblock-active").checked = cfg.automod.antiFile;
+        if (Array.isArray(cfg.automod.rules) && cfg.automod.rules.length > 0 && typeof automodRules !== "undefined") {
+          automodRules = cfg.automod.rules;
+          if (typeof renderAutomodRules === "function") renderAutomodRules();
+        }
+      }
+      if (cfg.autoban && Array.isArray(cfg.autoban.rules) && cfg.autoban.rules.length > 0 && typeof autobanRules !== "undefined") {
+        autobanRules = cfg.autoban.rules;
+        if (typeof renderAutobanRules === "function") renderAutobanRules();
+      }
+      if (cfg.actionLog) {
+        if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") document.getElementById("cfg-switch-actionlog").checked = cfg.actionLog.enabled;
+        if (cfg.actionLog.mainChannel && document.getElementById("cfg-actionlog-main-channel")) document.getElementById("cfg-actionlog-main-channel").value = cfg.actionLog.mainChannel;
+        if (Array.isArray(cfg.actionLog.ignoredChannels) && typeof actionLogIgnoredChannels !== "undefined") actionLogIgnoredChannels = cfg.actionLog.ignoredChannels;
+        if (Array.isArray(cfg.actionLog.ignoredRoles) && typeof actionLogIgnoredRoles !== "undefined") actionLogIgnoredRoles = cfg.actionLog.ignoredRoles;
+        if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+      }
+      if (Array.isArray(cfg.autoDelete) && cfg.autoDelete.length > 0 && typeof autoDeleteRules !== "undefined") {
+        autoDeleteRules = cfg.autoDelete;
+        if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
+      }
+      if (Array.isArray(cfg.autoPurge) && cfg.autoPurge.length > 0 && typeof autoPurgeJobs !== "undefined") {
+        autoPurgeJobs = cfg.autoPurge;
+        if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+      }
+      updateLiveBotPreview();
+    }
+
+    // Master 1-1 Save & Sync Function (called by Topbar 'Lưu & Đồng bộ ngay' AND Sticky Save Bar!)
+    async function saveAllServerSettingsAndSync(syncSecurityAlso = false) {
       if (!currentGuildId) {
-        showToast("No active server selected!");
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
         return;
       }
 
@@ -9217,41 +9405,62 @@
       if (bar) bar.classList.remove("visible");
       hasUnsavedChanges = false;
 
-      // Harvest all form data
-      const nameInput = document.getElementById("cfg-bot-nickname-input");
-      const statusInput = document.getElementById("cfg-bot-status-input");
-      const webhookInput = document.getElementById("cfg-server-webhook");
-
-      const configData = {
-        guildId: currentGuildId,
-        botNickname: nameInput ? nameInput.value.trim() : "HaruMod Security",
-        botStatus: statusInput ? statusInput.value.trim() : "Watching members · 100% Secure",
-        botRoleColor: currentBotRoleColor || "#10b981",
-        webhookUrl: webhookInput ? webhookInput.value.trim() : "",
-        automod: {
-          antiPhish: document.getElementById("cfg-automod-active") ? document.getElementById("cfg-automod-active").checked : true,
-          antiHoneypot: document.getElementById("cfg-honeypot-active") ? document.getElementById("cfg-honeypot-active").checked : true,
-          antiWizz: document.getElementById("cfg-antiwizz-active") ? document.getElementById("cfg-antiwizz-active").checked : true,
-          antiFile: document.getElementById("cfg-fileblock-active") ? document.getElementById("cfg-fileblock-active").checked : true,
-        },
-        savedAt: new Date().toISOString()
-      };
-
-      // Save to localStorage under specific guild ID
+      const configData = collectFullGuildConfig();
       localStorage.setItem("harumod_guild_cfg_" + currentGuildId, JSON.stringify(configData));
 
-      // Update sync slash command
       const cmdCode = document.getElementById("sync-command-code");
-      if (cmdCode) {
-        cmdCode.innerText = `/botnick nickname: ${configData.botNickname}`;
+      if (cmdCode) cmdCode.innerText = `/botnick nickname: ${configData.botNickname}`;
+
+      showToast("⏳ Đang lưu lên Cloud DB & đồng bộ 1-1 với Discord...", "info");
+
+      try {
+        const res = await fetch(`${CLOUD_GATEWAY_API}/guild/${currentGuildId}/config`, {
+          method: "PUT",
+          headers: buildGatewayHeaders(),
+          body: JSON.stringify({
+            config: configData,
+            updatedBy: currentUser ? `${currentUser.username} (${currentUser.id})` : "Dashboard",
+            syncNickname: true,
+            syncSecurity: Boolean(syncSecurityAlso)
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          const syncedParts = ["Cloud DB"];
+          if (data.discordSync && data.discordSync.nickname && data.discordSync.nickname.ok) syncedParts.push("Biệt danh Bot");
+          if (data.discordSync && data.discordSync.security && data.discordSync.security.ok) syncedParts.push("Bảo mật Discord");
+          showToast(`✓ Đồng bộ 1-1 thành công (${syncedParts.join(" + ")})!`, "success");
+          if (data.discordSync && data.discordSync.security && !data.discordSync.security.ok) {
+            showToast(`⚠️ Đã lưu DB, nhưng Discord từ chối đổi Security Level: ${data.discordSync.security.data?.message || "Thiếu quyền Manage Guild"}`, "warning");
+          }
+        } else {
+          showToast(`⚠️ Đã lưu tạm local — lỗi Cloud Sync: ${data.error || res.status}`, "warning");
+        }
+      } catch (err) {
+        showToast(`⚠️ Không kết nối được Cloud Gateway: ${err.message}`, "danger");
       }
 
-      // If webhook is present, dispatch real Discord embed
       if (configData.webhookUrl && configData.webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
         dispatchDiscordWebhookSync(configData.webhookUrl, configData);
       }
+    }
 
-      showToast(`✓ Server configuration saved & synchronized for ${currentGuildId}!`);
+    async function applyRealDiscordSecuritySettings(ev) {
+      if (!currentGuildId) return;
+      const btn = ev ? ev.currentTarget : null;
+      const orig = btn ? btn.innerHTML : "";
+      if (btn) { btn.disabled = true; btn.innerHTML = "⏳ Đang đồng bộ Discord..."; }
+      try {
+        await saveAllServerSettingsAndSync(true);
+        await fetchRealDiscordGuildData(currentGuildId, false);
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+      }
+    }
+
+    // Save full server configuration to Cloud DB & trigger 1-1 Discord sync
+    function saveChanges() {
+      saveAllServerSettingsAndSync(true);
     }
 
     // Load full server configuration when switching to a server
@@ -9434,59 +9643,80 @@
 
     
     /* ========================================================= */
-    /* REAL HARUMOD BROWSER & DISCORD REAL-TIME SYNC ENGINE   */
-    /* Supports: Direct API, Local Engine (127.0.0.1:3001)       */
+    /* REAL HARUMOD 1-1 CLOUD & LOCAL DISCORD SYNC ENGINE v4.0   */
+    /* Supports: 24/7 HTTPS Cloud Gateway + Local Engine (3001)  */
     /* ========================================================= */
     const LOCAL_ENGINE_API = "http://127.0.0.1:3001";
+    const CLOUD_GATEWAY_API = "https://sepay-webhook-p0o1.onrender.com/api/harumod";
     let isHaruModEngineActive = false;
+    let activeGatewayName = "Cloud HTTPS Gateway";
     let cachedChannels = [];
     let cachedRoles = [];
+    let liveGuildSnapshot = null;
 
-    // Check HaruMod Browser Engine status
+    function buildGatewayHeaders(extra = {}) {
+      const h = { "Content-Type": "application/json", ...extra };
+      const customTok = localStorage.getItem("haruki_custom_bot_token");
+      if (customTok && customTok.trim().length > 25) {
+        h["X-HaruMod-Token"] = customTok.trim();
+      }
+      return h;
+    }
+
+    function getActiveGatewayBase() {
+      return isHaruModEngineActive ? `${LOCAL_ENGINE_API}/api/harumod` : CLOUD_GATEWAY_API;
+    }
+
+    // Check Local Engine (fast probe on localhost) & Cloud HTTPS Gateway (works 24/7 everywhere!)
     async function checkHaruModEngine() {
+      // 1. Only probe localhost:3001 when running on localhost/file or desktop HTTP/HTTPS with short timeout
       try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/ping`, { method: "GET" });
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 700);
+        const res = await fetch(`${LOCAL_ENGINE_API}/api/harumod/ping`, { method: "GET", signal: ctrl.signal });
+        clearTimeout(t);
         if (res.ok) {
           const data = await res.json();
-          if (data && data.status === "ready") {
+          if (data && data.status === "ready" && data.discordApi === "connected") {
             isHaruModEngineActive = true;
-            updateEngineStatusBadge(true);
+            activeGatewayName = "Local Engine (3001)";
+            updateApiStatusBadge(true, data.latencyMs || 25);
             return true;
           }
         }
       } catch (e) {
-        // Not running local engine
+        isHaruModEngineActive = false;
       }
-      isHaruModEngineActive = false;
-      updateEngineStatusBadge(false);
+
+      // 2. Always-on 24/7 HTTPS Cloud Gateway (works on iPhone, Android, Chrome, Safari, Edge!)
+      try {
+        const res = await fetch(`${CLOUD_GATEWAY_API}/ping`, { method: "GET", headers: buildGatewayHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.status === "ready") {
+            activeGatewayName = "Cloud HTTPS Gateway (24/7)";
+            const ok = data.discordApi === "connected";
+            updateApiStatusBadge(ok, data.latencyMs || 120);
+            if (ok && data.bot) {
+              const botEl = document.getElementById("diag-bot-username");
+              if (botEl) botEl.textContent = `${data.bot.username}#${data.bot.discriminator || "0"} (ID: ${data.bot.id})`;
+            }
+            return ok;
+          }
+        }
+      } catch (e) {
+        // Cloud cold-starting or offline
+      }
+
+      updateApiStatusBadge(false, 0);
       return false;
     }
 
     function updateEngineStatusBadge(active) {
-      const badge = document.getElementById("harumod-engine-badge");
-      const label = document.getElementById("harumod-engine-label");
-      if (!badge || !label) return;
-
-      if (active) {
-        badge.className = "engine-status-pill engine-active";
-        badge.title = "Trình duyệt HaruMod đang kết nối trực tiếp với Discord API. Mọi cập nhật sẽ có hiệu lực tức thì 100%!";
-        label.innerText = "🟢 Trình Duyệt HaruMod: Sync Real-time 100%";
-      } else {
-        badge.className = "engine-status-pill engine-idle";
-        badge.title = "Bấm để xem hướng dẫn mở bằng Trình Duyệt HaruMod trên Desktop!";
-        label.innerText = "⚡ Khuyên dùng: Mở Trình Duyệt HaruMod";
-      }
+      updateApiStatusBadge(active, active ? 30 : 0);
     }
 
-    function showEngineInfoModal() {
-      if (isHaruModEngineActive) {
-        showToast("✓ Trình duyệt HaruMod đang kết nối trực tiếp Discord API (< 50ms)!", "success");
-      } else {
-        alert("💡 Mẹo Đồng Bộ Trực Tiếp Discord:\n\nBạn hãy mở biểu tượng 'Trinh Duyet HaruMod' ngay trên Desktop của bạn!\nTrình duyệt chuyên dụng sẽ tự động kích hoạt tính năng đồng bộ Discord API tức thì 100% mà không bị giới hạn bảo mật thông thường!");
-      }
-    }
-
-    // Real Nickname Change with Fallback Pipeline
+    // Real 1-1 Nickname Change via Cloud Gateway / Local Engine
     async function saveBotIdentity() {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước khi lưu!", "warning");
@@ -9495,71 +9725,33 @@
 
       const nameInput = document.getElementById("cfg-bot-nickname-input");
       const statusInput = document.getElementById("cfg-bot-status-input");
-      const nameVal = nameInput ? nameInput.value.trim() : "HaruMod Security";
+      const nameVal = nameInput ? nameInput.value.trim() : "HaruMod";
       const statusVal = statusInput ? statusInput.value.trim() : "";
 
-      const saveBtn = event ? event.currentTarget : null;
+      const saveBtn = (typeof event !== "undefined" && event && event.currentTarget) ? event.currentTarget : null;
       let originalBtnText = "";
       if (saveBtn) {
         originalBtnText = saveBtn.innerHTML;
         saveBtn.disabled = true;
-        saveBtn.innerHTML = `<span>Đang đồng bộ Discord API...</span>`;
+        saveBtn.innerHTML = `<span>Đang đồng bộ Discord 1-1...</span>`;
       }
 
-      let syncSuccess = false;
-      let syncMethod = "";
+      const res = await DiscordAPI.setBotNickname(currentGuildId, nameVal);
 
-      // METHOD 1: Local HaruMod Browser Engine (Priority 1)
-      try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/nick`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            guildId: currentGuildId,
-            nickname: nameVal
-          })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          syncSuccess = true;
-          syncMethod = "HaruMod Engine Core";
-        }
-      } catch (err) {
-        // Fallback to Method 2
-      }
-
-      // METHOD 2: Direct Discord API (Works in HaruMod Browser with disabled web security)
-      if (!syncSuccess) {
-        try {
-          const res = await fetch(`https://discord.com/api/v10/guilds/${currentGuildId}/members/@me`, {
-            method: "PATCH",
-            headers: {
-              
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ nick: nameVal })
-          });
-          if (res.ok) {
-            syncSuccess = true;
-            syncMethod = "Discord API Direct";
-          }
-        } catch (err) {
-          // Direct fetch blocked
-        }
-      }
-
-      // Always persist to localStorage
+      // Persist to localStorage & Cloud DB
       localStorage.setItem("haruki_bot_nick_" + currentGuildId, nameVal);
       localStorage.setItem("haruki_bot_status_" + currentGuildId, statusVal);
       localStorage.setItem("haruki_bot_color_" + currentGuildId, currentBotRoleColor);
-
-      // Update UI Live Preview
+      const dashNick = document.getElementById("cfg-dash-bot-name");
+      if (dashNick) dashNick.value = nameVal;
       updateLiveBotPreview();
 
-      if (syncSuccess) {
-        showToast(`✓ Đã đổi biệt danh bot trên Discord thành "${nameVal}" thành công 100%! (${syncMethod})`, "success");
+      if (res.ok) {
+        showToast(`✓ Đã đổi biệt danh bot trên Discord thành "${nameVal}" thành công 100%! (${activeGatewayName})`, "success");
+        // Also persist full config in background
+        saveAllServerSettingsAndSync(false);
       } else {
-        showToast(`✓ Đã lưu biệt danh "${nameVal}"! Mở "Trình Duyệt HaruMod" trên Desktop để sync thẳng vào Discord.`);
+        showToast(`❌ Không đổi được biệt danh trên Discord: ${res.error || "Bot thiếu quyền Change Nickname"}`, "danger");
       }
 
       if (saveBtn) {
@@ -9568,58 +9760,177 @@
       }
     }
 
-    // Fetch real Discord channels and roles from server
-    async function fetchRealDiscordGuildData(guildId) {
-      if (!guildId) return;
+    // Render Real Live Discord Security Info into Overview Tab & Diagnostics Modal
+    function renderLiveDiscordSecuritySnapshot(snapshot) {
+      if (!snapshot || !snapshot.guild) return;
+      liveGuildSnapshot = snapshot;
+      const g = snapshot.guild;
+      const channels = Array.isArray(snapshot.channels) ? snapshot.channels : [];
+      const roles = Array.isArray(snapshot.roles) ? snapshot.roles : [];
+      const bans = Array.isArray(snapshot.bans) ? snapshot.bans : [];
+      const automodList = Array.isArray(snapshot.discordAutomodRules) ? snapshot.discordAutomodRules : [];
 
-      try {
-        // Try Local Engine first
-        let chData = null;
-        let roleData = null;
+      // 1. Update live stat cards
+      const memEl = document.getElementById("live-sec-members");
+      if (memEl) memEl.textContent = `${(g.approximate_member_count || 0).toLocaleString()} thành viên`;
+      const onlEl = document.getElementById("live-sec-online");
+      if (onlEl) onlEl.textContent = `🟢 ${(g.approximate_presence_count || 0).toLocaleString()} đang trực tuyến · Boost Lv.${g.premium_tier || 0}`;
 
-        try {
-          const chRes = await fetch(`${LOCAL_ENGINE_API}/api/channels?guildId=${guildId}`);
-          if (chRes.ok) chData = await chRes.json();
-          const roleRes = await fetch(`${LOCAL_ENGINE_API}/api/roles?guildId=${guildId}`);
-          if (roleRes.ok) roleData = await roleRes.json();
-        } catch(e) {}
+      const bansEl = document.getElementById("live-sec-bans-automod");
+      if (bansEl) bansEl.textContent = `${bans.length} Bans · ${automodList.length} AutoMod`;
+      const mfaEl = document.getElementById("live-sec-mfa");
+      if (mfaEl) {
+        const mfaTxt = g.mfa_level === 1 ? "🔒 2FA Moderator: ĐÃ BẬT" : "⚠️ 2FA Moderator: Chưa bắt buộc";
+        mfaEl.textContent = mfaTxt;
+      }
 
-        // Fallback to direct Discord API
-        if (!chData) {
-          try {
-            const chRes = await fetch(`https://discord.com/api/v10/guilds/${guildId}/channels`, {
-              headers: {}
-            });
-            if (chRes.ok) chData = await chRes.json();
-          } catch(e) {}
+      const crEl = document.getElementById("live-sec-channels-roles");
+      if (crEl) crEl.textContent = `${channels.length} Kênh · ${roles.length} Roles`;
+      const syncTimeEl = document.getElementById("live-sec-sync-time");
+      if (syncTimeEl) syncTimeEl.textContent = `✓ Đồng bộ 1-1 lúc ${new Date().toLocaleTimeString("vi-VN")} (${snapshot.latencyMs || 0}ms)`;
+
+      // 2. Sync real Discord verification_level & explicit_content_filter into dropdowns
+      const verSel = document.getElementById("cfg-discord-verification-level");
+      if (verSel && typeof g.verification_level === "number") verSel.value = String(g.verification_level);
+      const filSel = document.getElementById("cfg-discord-content-filter");
+      if (filSel && typeof g.explicit_content_filter === "number") filSel.value = String(g.explicit_content_filter);
+
+      // 3. Sync real Bot Nickname currently active on Discord
+      const liveNick = (snapshot.botMember && snapshot.botMember.nick) ? snapshot.botMember.nick : "HaruMod";
+      const nickInput = document.getElementById("cfg-bot-nickname-input");
+      const dashNick = document.getElementById("cfg-dash-bot-name");
+      if (nickInput && !hasUnsavedChanges) nickInput.value = liveNick;
+      if (dashNick && !hasUnsavedChanges) dashNick.value = liveNick;
+      updateLiveBotPreview();
+
+      // 4. Render Real Audit Logs feed
+      const auditBox = document.getElementById("live-discord-audit-list");
+      if (auditBox) {
+        const entries = (snapshot.auditLogs && Array.isArray(snapshot.auditLogs.audit_log_entries)) ? snapshot.auditLogs.audit_log_entries : [];
+        const usersMap = {};
+        if (snapshot.auditLogs && Array.isArray(snapshot.auditLogs.users)) {
+          snapshot.auditLogs.users.forEach(u => { usersMap[u.id] = u.global_name || u.username; });
         }
-
-        if (!roleData) {
-          try {
-            const roleRes = await fetch(`https://discord.com/api/v10/guilds/${guildId}/roles`, {
-              headers: {}
-            });
-            if (roleRes.ok) roleData = await roleRes.json();
-          } catch(e) {}
+        const actionLabels = {
+          1: "Cập nhật Server", 10: "Tạo Kênh", 11: "Sửa Kênh", 12: "Xóa Kênh",
+          13: "Sửa Quyền Kênh", 20: "Kick Thành Viên", 22: "Ban Thành Viên", 23: "Unban Thành Viên",
+          24: "Cập nhật Member/Timeout", 25: "Đổi Role Thành Viên", 30: "Tạo Role", 31: "Sửa Role",
+          32: "Xóa Role", 72: "Xóa Tin Nhắn", 73: "Purge Hàng Loạt", 140: "Tạo AutoMod Rule", 141: "Sửa AutoMod Rule"
+        };
+        if (entries.length === 0) {
+          auditBox.innerHTML = `<div style="color:var(--text-muted);">Không có sự kiện Audit Log hoặc Bot cần quyền View Audit Log.</div>`;
+        } else {
+          auditBox.innerHTML = entries.slice(0, 12).map(e => {
+            const actor = usersMap[e.user_id] || `ID:${e.user_id || "System"}`;
+            const actName = actionLabels[e.action_type] || `Action #${e.action_type}`;
+            const reasonTxt = e.reason ? ` — <em>${escapeHtml(e.reason)}</em>` : "";
+            return `<div style="padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
+              <strong style="color:#e2e8f0;">${escapeHtml(actName)}</strong> bởi <span style="color:#34d399;">${escapeHtml(actor)}</span>${reasonTxt}
+            </div>`;
+          }).join("");
         }
+      }
 
-        if (chData) {
-          cachedChannels = Array.isArray(chData) ? chData : (chData.channels || []);
-          populateChannelDropdowns(cachedChannels);
+      // 5. Render Real Discord Native AutoMod Rules & Bans
+      const amBox = document.getElementById("live-discord-automod-bans");
+      if (amBox) {
+        let html = "";
+        if (automodList.length > 0) {
+          html += automodList.map(r => `
+            <div style="padding:7px 10px;border-radius:8px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);display:flex;justify-content:space-between;align-items:center;">
+              <span>🛡️ <strong>${escapeHtml(r.name)}</strong></span>
+              <span style="font-size:0.7rem;color:${r.enabled ? '#34d399' : '#f87171'};font-weight:800;">${r.enabled ? 'ACTIVE' : 'OFF'}</span>
+            </div>
+          `).join("");
+        } else {
+          html += `<div style="padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03);color:var(--text-muted);">Chưa có Discord Native AutoMod Rule nào trên server này.</div>`;
         }
+        if (bans.length > 0) {
+          html += `<div style="margin-top:6px;font-weight:700;color:#fca5a5;">🚫 Danh sách Ban gần đây (${bans.length}):</div>`;
+          html += bans.slice(0, 6).map(b => {
+            const uname = b.user ? (b.user.global_name || b.user.username) : "Unknown";
+            const uid = b.user ? b.user.id : "";
+            return `<div style="padding:6px 10px;border-radius:8px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <span>${escapeHtml(uname)} <code style="font-size:0.7rem;">${uid}</code></span>
+              <button type="button" class="btn-secondary" style="padding:3px 8px;font-size:0.68rem;" onclick="quickUnbanUser('${uid}', '${escapeHtml(uname)}')">Unban</button>
+            </div>`;
+          }).join("");
+        }
+        amBox.innerHTML = html;
+      }
 
-        if (roleData) {
-          cachedRoles = Array.isArray(roleData) ? roleData : (roleData.roles || []);
-          populateRoleDropdowns(cachedRoles);
-        }
-      } catch (err) {
-        console.warn("Cannot fetch real guild data:", err);
+      // 6. Update Diagnostics modal real fields
+      const diagGuild = document.getElementById("diag-target-guild");
+      if (diagGuild) diagGuild.textContent = `${g.name} (ID: ${g.id})`;
+      const diagCr = document.getElementById("diag-channels-roles");
+      if (diagCr) diagCr.textContent = `✓ ${channels.length} Channels • ${roles.length} Roles Loaded (Live 1-1)`;
+      const diagGw = document.getElementById("diag-gateway-name");
+      if (diagGw) diagGw.textContent = activeGatewayName;
+    }
+
+    async function quickUnbanUser(userId, username) {
+      if (!currentGuildId || !userId) return;
+      const res = await DiscordAPI.request(`/guilds/${currentGuildId}/bans/${userId}`, "DELETE", null, { "X-Audit-Log-Reason": "HaruMod Dashboard Quick Unban" });
+      if (res.ok) {
+        showToast(`✓ Đã gỡ cấm (Unban) ${username} trực tiếp trên Discord!`, "success");
+        fetchRealDiscordGuildData(currentGuildId, false);
+      } else {
+        showToast(`❌ Không thể Unban: ${res.error || "Thiếu quyền Ban Members"}`, "danger");
       }
     }
 
-    // Start engine checking
+    // Fetch 100% REAL Discord Guild Info, Security Settings, Channels, Roles & Saved Cloud Config
+    async function fetchRealDiscordGuildData(guildId, showFeedback = false) {
+      if (!guildId) return;
+
+      const endpoints = isHaruModEngineActive
+        ? [`${LOCAL_ENGINE_API}/api/harumod/guild/${guildId}/overview`, `${CLOUD_GATEWAY_API}/guild/${guildId}/overview`]
+        : [`${CLOUD_GATEWAY_API}/guild/${guildId}/overview`, `${LOCAL_ENGINE_API}/api/harumod/guild/${guildId}/overview`];
+
+      let snapshot = null;
+      for (const ep of endpoints) {
+        try {
+          const res = await fetch(ep, { method: "GET", headers: buildGatewayHeaders() });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.ok) {
+              snapshot = data;
+              updateApiStatusBadge(true, data.latencyMs || 80);
+              break;
+            }
+          }
+        } catch (err) {
+          console.warn("[HaruMod] Overview endpoint failed:", ep, err);
+        }
+      }
+
+      if (snapshot) {
+        if (Array.isArray(snapshot.channels) && snapshot.channels.length > 0) {
+          cachedChannels = snapshot.channels.sort((a, b) => (a.position || 0) - (b.position || 0));
+        }
+        if (Array.isArray(snapshot.roles) && snapshot.roles.length > 0) {
+          cachedRoles = snapshot.roles.filter(r => r.name !== "@everyone").sort((a, b) => (b.position || 0) - (a.position || 0));
+        }
+        populateAllDynoDropdowns();
+        renderLiveDiscordSecuritySnapshot(snapshot);
+        if (snapshot.savedConfig && Object.keys(snapshot.savedConfig).length > 0) {
+          applyCloudGuildConfigToUI(snapshot.savedConfig);
+        }
+        if (showFeedback) {
+          showToast(`✓ Đã đọc trực tiếp dữ liệu 1-1 từ Discord (${cachedChannels.length} kênh, ${cachedRoles.length} roles)!`, "success");
+        }
+      } else {
+        // Ensure dropdowns still populate from fallback cache if bot isn't in server yet
+        populateAllDynoDropdowns();
+        if (showFeedback) {
+          showToast("⚠️ Không đọc được dữ liệu máy chủ này — hãy kiểm tra HaruMod đã vào server chưa!", "warning");
+        }
+      }
+    }
+
+    // Start engine checking (initial + every 30s)
     checkHaruModEngine();
-    setInterval(checkHaruModEngine, 8000);
+    setInterval(checkHaruModEngine, 30000);
 
     
     // Pre-loaded offline cache for instant zero-latency role & channel population
@@ -9693,22 +10004,30 @@
         "cfg-honeypot-channel",
         "cfg-welcome-channel",
         "cfg-goodbye-channel",
-        "cfg-dash-updates-channel"
+        "cfg-dash-updates-channel",
+        "chat-channel-select"
       ];
 
       chSelectIds.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
         const curVal = el.value;
-        el.innerHTML = '<option value="">Select Channel..</option>';
-        channels.forEach(ch => {
+        el.innerHTML = id === "chat-channel-select" ? "" : '<option value="">Select Channel..</option>';
+        const listForSelect = id === "chat-channel-select" ? channels.filter(c => c.type === 0 || c.type === 5) : channels;
+        listForSelect.forEach(ch => {
           const opt = document.createElement("option");
           opt.value = ch.id;
           const prefix = ch.type === 2 ? "🔊 " : (ch.type === 4 ? "📁 " : "# ");
           opt.textContent = prefix + ch.name;
           el.appendChild(opt);
         });
-        if (curVal) el.value = curVal;
+        if (curVal && listForSelect.some(c => c.id === curVal)) {
+          el.value = curVal;
+        } else if (id === "chat-channel-select" && listForSelect.length > 0) {
+          const defCh = listForSelect.find(c => c.id === activeChatChannelId) || listForSelect[0];
+          el.value = defCh.id;
+          activeChatChannelId = defCh.id;
+        }
       });
 
       // Select default #staff-log or #staff if not set
@@ -10223,31 +10542,68 @@
       if (input) input.value = sec;
     }
 
-    function executeSlowmodeDirect() {
-      const chId = document.getElementById("cfg-channel-slowmode").value;
-      const sec = parseInt(document.getElementById("slowmode-seconds-val").value) || 0;
-      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+    async function executeSlowmodeDirect() {
+      const chId = document.getElementById("cfg-channel-slowmode")?.value;
+      const sec = parseInt(document.getElementById("slowmode-seconds-val")?.value) || 0;
+      if (!chId) { showToast("Vui lòng chọn kênh chat!", "warning"); return; }
+      const channels = (cachedChannels && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const ch = channels.find(c => c.id === chId);
       const name = ch ? ch.name : chId;
-      showToast("Applied " + sec + "s Slowmode to #" + name, "success");
-      logRecentActivity("Slowmode", "Đặt chế độ chậm " + sec + "s cho #" + name, "Applied " + sec + "s Slowmode to #" + name);
+      const res = await DiscordAPI.setSlowmode(chId, sec);
+      if (res.ok) {
+        showToast(`✓ Đã đặt Slowmode ${sec}s trực tiếp trên Discord cho #${name}!`, "success");
+        logRecentActivity("Slowmode", "Đặt chế độ chậm " + sec + "s cho #" + name, "Applied " + sec + "s Slowmode to #" + name);
+      } else {
+        showToast(`❌ Lỗi đặt Slowmode cho #${name}: ${res.error || "Thiếu quyền Manage Channels"}`, "danger");
+      }
     }
 
-    function executeLockdownDirect(isLock) {
-      const chId = document.getElementById("cfg-channel-lock").value;
-      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+    async function executeLockdownDirect(isLock) {
+      const chId = document.getElementById("cfg-channel-lock")?.value;
+      if (!chId || !currentGuildId) { showToast("Vui lòng chọn máy chủ và kênh!", "warning"); return; }
+      const channels = (cachedChannels && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const ch = channels.find(c => c.id === chId);
       const name = ch ? ch.name : chId;
       const verb = isLock ? "Locked" : "Unlocked";
-      showToast(verb + " channel #" + name, isLock ? "warning" : "success");
-      logRecentActivity("Lockdown", (isLock ? "Khóa kênh #" : "Mở khóa kênh #") + name, verb + " channel #" + name);
+      const res = isLock ? await DiscordAPI.lockChannel(chId, currentGuildId) : await DiscordAPI.unlockChannel(chId, currentGuildId);
+      if (res.ok) {
+        showToast(`✓ ${isLock ? "🔒 Đã khóa kênh" : "🔓 Đã mở khóa kênh"} #${name} trực tiếp trên Discord!`, isLock ? "warning" : "success");
+        logRecentActivity("Lockdown", (isLock ? "Khóa kênh #" : "Mở khóa kênh #") + name, verb + " channel #" + name);
+      } else {
+        showToast(`❌ Lỗi ${isLock ? "khóa" : "mở khóa"} kênh #${name}: ${res.error || "Thiếu quyền Manage Channels"}`, "danger");
+      }
     }
 
-    function executePurgeDirect() {
-      const chId = document.getElementById("cfg-channel-purge").value;
-      const amount = document.getElementById("purge-amount-val").value || 25;
-      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+    async function executePurgeDirect() {
+      const chId = document.getElementById("cfg-channel-purge")?.value;
+      const amount = Math.min(100, Math.max(2, parseInt(document.getElementById("purge-amount-val")?.value) || 25));
+      if (!chId) { showToast("Vui lòng chọn kênh cần dọn dẹp!", "warning"); return; }
+      const channels = (cachedChannels && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const ch = channels.find(c => c.id === chId);
       const name = ch ? ch.name : chId;
-      showToast("Purged " + amount + " messages from #" + name, "success");
-      logRecentActivity("Purge", "Dọn dẹp " + amount + " tin nhắn từ #" + name, "Purged " + amount + " messages from #" + name);
+      showToast(`⏳ Đang lấy ${amount} tin nhắn mới nhất ở #${name} để xóa...`, "info");
+      const msgsRes = await DiscordAPI.getMessages(chId, amount);
+      if (!msgsRes.ok || !Array.isArray(msgsRes.data)) {
+        showToast(`❌ Không đọc được tin nhắn ở #${name}: ${msgsRes.error || "Thiếu quyền Read Message History"}`, "danger");
+        return;
+      }
+      const cutoff = Date.now() - 14 * 86400 * 1000;
+      const ids = msgsRes.data.filter(m => new Date(m.timestamp).getTime() > cutoff).map(m => m.id);
+      if (ids.length < 2) {
+        if (ids.length === 1) {
+          const d1 = await DiscordAPI.deleteMessage(chId, ids[0]);
+          if (d1.ok) { showToast(`✓ Đã xóa 1 tin nhắn trong #${name}!`, "success"); return; }
+        }
+        showToast(`⚠️ Không có tin nhắn hợp lệ (< 14 ngày) để xóa hàng loạt trong #${name}.`, "warning");
+        return;
+      }
+      const delRes = await DiscordAPI.bulkDelete(chId, ids);
+      if (delRes.ok) {
+        showToast(`✓ Đã xóa thật ${ids.length} tin nhắn trong #${name} trên Discord!`, "success");
+        logRecentActivity("Purge", "Dọn dẹp " + ids.length + " tin nhắn từ #" + name, "Purged " + ids.length + " messages from #" + name);
+      } else {
+        showToast(`❌ Không thể Purge #${name}: ${delRes.error || "Thiếu quyền Manage Messages"}`, "danger");
+      }
     }
 
 
@@ -10456,52 +10812,51 @@
     const DiscordAPI = {
       base: "https://discord.com/api/v10",
 
-      async request(endpoint, method = "GET", body = null, extraHeaders = {}) {
-        const token = getActiveDiscordToken();
-        const url = endpoint.startsWith("http") ? endpoint : `${this.base}${endpoint}`;
-        
-        const headers = {
-          "Authorization": `Bot ${token}`,
-          "Content-Type": "application/json",
-          ...extraHeaders
-        };
-        if (!body) delete headers["Content-Type"];
-
-        const opts = { method, headers };
-        if (body) opts.body = JSON.stringify(body);
-
-        // 1. Try Direct Discord API (CORS validated)
-        try {
-          const res = await fetch(url, opts);
-          if (res.ok) {
-            updateApiStatusBadge(true);
-            if (res.status === 204) return { ok: true, status: 204 };
-            const json = await res.json();
-            return { ok: true, status: res.status, data: json };
-          }
-          if (res.status === 429) {
-            const retry = await res.json();
-            return { ok: false, status: 429, error: "Rate limit", retry_after: retry.retry_after };
-          }
-        } catch(err) {
-          console.warn("[DiscordAPI] Direct fetch exception, trying engine gateway fallback:", err);
+      async request(endpoint, methodOrOpts = "GET", body = null, extraHeaders = {}) {
+        // Support both request(path, "POST", data, headers) AND request(path, { method, body, headers })
+        let method = "GET";
+        if (methodOrOpts && typeof methodOrOpts === "object") {
+          method = (methodOrOpts.method || "GET").toUpperCase();
+          body = methodOrOpts.body !== undefined ? methodOrOpts.body : body;
+          extraHeaders = methodOrOpts.headers || extraHeaders;
+        } else {
+          method = String(methodOrOpts || "GET").toUpperCase();
         }
 
-        // 2. Fallback to Local Engine Daemon (3001)
-        try {
-          const fallbackRes = await fetch("http://127.0.0.1:3001/api/proxy", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ path: endpoint, method, data: body, headers: extraHeaders })
-          });
-          if (fallbackRes.ok) {
-            updateApiStatusBadge(true);
-            const json = await fallbackRes.json();
-            return { ok: true, status: fallbackRes.status, data: json };
-          }
-        } catch(e) {}
+        const proxyPayload = JSON.stringify({ path: endpoint, method, data: body, headers: extraHeaders });
+        const gateways = isHaruModEngineActive
+          ? [`${LOCAL_ENGINE_API}/api/harumod/proxy`, `${CLOUD_GATEWAY_API}/proxy`]
+          : [`${CLOUD_GATEWAY_API}/proxy`, `${LOCAL_ENGINE_API}/api/harumod/proxy`];
 
-        return { ok: false, error: "Failed to connect to Discord API" };
+        let lastError = "Không thể kết nối tới Gateway Discord API";
+        for (const gwUrl of gateways) {
+          try {
+            const t0 = Date.now();
+            const res = await fetch(gwUrl, {
+              method: "POST",
+              headers: buildGatewayHeaders(),
+              body: proxyPayload
+            });
+            const lat = Math.max(1, Date.now() - t0);
+            let json = null;
+            try { json = await res.json(); } catch (_) {}
+
+            if (res.ok) {
+              updateApiStatusBadge(true, lat);
+              return { ok: true, status: res.status, data: json };
+            }
+            // Real Discord API HTTP error (e.g. 403 Missing Permissions, 404 Not Found, 429 Rate Limit)
+            const errMsg = (json && (json.message || json.error)) ? `${json.message || json.error} (HTTP ${res.status})` : `HTTP ${res.status}`;
+            if (res.status >= 400 && res.status < 500) {
+              updateApiStatusBadge(true, lat);
+              return { ok: false, status: res.status, error: errMsg, data: json };
+            }
+            lastError = errMsg;
+          } catch (err) {
+            lastError = err.message || lastError;
+          }
+        }
+        return { ok: false, error: lastError };
       },
 
       async getGuild(guildId) {
@@ -10839,18 +11194,20 @@
         }).format(now);
 
         const vc1Name = `📅 ${dateStr}`;
-        const vc2Name = `🟢 13 ⛔ 13 🌙 15`;
-        const vc3Name = (activeLang === "vi") ? `Thành viên: 304` : `Users: 304`;
+        const liveMembers = (liveGuildSnapshot && liveGuildSnapshot.guild && liveGuildSnapshot.guild.approximate_member_count) ? liveGuildSnapshot.guild.approximate_member_count : 0;
+        const liveOnline = (liveGuildSnapshot && liveGuildSnapshot.guild && liveGuildSnapshot.guild.approximate_presence_count) ? liveGuildSnapshot.guild.approximate_presence_count : 0;
+        const vc2Name = `🟢 Online: ${liveOnline}`;
+        const vc3Name = (activeLang === "vi") ? `👥 Thành viên: ${liveMembers}` : `👥 Users: ${liveMembers}`;
 
         // 1. Fetch channels to check if category already exists
-        const chRes = await DiscordAPI.request(`/guilds/${guildId}/channels`);
-        const channels = (chRes.ok && Array.isArray(chRes.data)) ? chRes.data : [];
+        const chRes = await DiscordAPI.request(`/guilds/${guildId}/channels`, "GET");
+        if (!chRes.ok) throw new Error(chRes.error || "Cannot fetch server channels");
+        const channels = Array.isArray(chRes.data) ? chRes.data : [];
 
         let cat = channels.find(c => c.type === 4 && (c.name.includes("INFORMATION") || c.name.includes("THÔNG TIN")));
         if (!cat) {
-          const createCat = await DiscordAPI.request(`/guilds/${guildId}/channels`, {
-            method: "POST",
-            body: { name: "╭🧭 [ ✦ INFORMATION ✦ ] 🧭", type: 4, position: 0 }
+          const createCat = await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", {
+            name: "╭🧭 [ ✦ INFORMATION ✦ ] 🧭", type: 4, position: 0
           });
           if (createCat.ok) cat = createCat.data;
         }
@@ -10861,34 +11218,25 @@
         // Create or update VC 1 (Date)
         let vcDate = subVCs.find(c => c.name.startsWith("📅") || c.name.toLowerCase().includes("thứ") || c.name.toLowerCase().includes("day"));
         if (vcDate) {
-          await DiscordAPI.request(`/channels/${vcDate.id}`, { method: "PATCH", body: { name: vc1Name } });
+          await DiscordAPI.request(`/channels/${vcDate.id}`, "PATCH", { name: vc1Name });
         } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, {
-            method: "POST",
-            body: { name: vc1Name, type: 2, parent_id: catId }
-          });
+          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc1Name, type: 2, parent_id: catId });
         }
 
-        // Create or update VC 2 (Status)
+        // Create or update VC 2 (Online)
         let vcStatus = subVCs.find(c => c.name.includes("🟢") || c.name.includes("🌙"));
         if (vcStatus) {
-          await DiscordAPI.request(`/channels/${vcStatus.id}`, { method: "PATCH", body: { name: vc2Name } });
+          await DiscordAPI.request(`/channels/${vcStatus.id}`, "PATCH", { name: vc2Name });
         } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, {
-            method: "POST",
-            body: { name: vc2Name, type: 2, parent_id: catId }
-          });
+          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc2Name, type: 2, parent_id: catId });
         }
 
         // Create or update VC 3 (Users)
         let vcUsers = subVCs.find(c => c.name.toLowerCase().includes("users") || c.name.toLowerCase().includes("thành viên"));
         if (vcUsers) {
-          await DiscordAPI.request(`/channels/${vcUsers.id}`, { method: "PATCH", body: { name: vc3Name } });
+          await DiscordAPI.request(`/channels/${vcUsers.id}`, "PATCH", { name: vc3Name });
         } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, {
-            method: "POST",
-            body: { name: vc3Name, type: 2, parent_id: catId }
-          });
+          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc3Name, type: 2, parent_id: catId });
         }
 
         showToast(dict.toastStatsSuccess || "Successfully deployed stats channels to Discord!", "success");
@@ -11139,12 +11487,16 @@
             <strong style="color:#fff;" id="diag-bot-username">HaruMod#4249 (ID: 1573727590538289283)</strong>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;">
-            <span>Target Guild</span>
-            <strong style="color:#fff;">Garden Of Dream (ID: 1426554369393954969)</strong>
+            <span>Active Gateway</span>
+            <strong style="color:#34d399;" id="diag-gateway-name">Cloud HTTPS Gateway (24/7)</strong>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;">
-            <span>Read Channels & Roles</span>
-            <strong style="color:#34d399;">✓ 73 Channels &bull; 109 Roles Loaded</strong>
+            <span>Target Guild</span>
+            <strong style="color:#fff;" id="diag-target-guild">Chưa chọn máy chủ</strong>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;">
+            <span>Read Channels &amp; Roles</span>
+            <strong style="color:#34d399;" id="diag-channels-roles">Sẵn sàng tải trực tiếp từ Discord</strong>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:0.82rem;">
             <span>Live Chat Message Stream</span>
