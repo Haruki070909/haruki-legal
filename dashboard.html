@@ -2995,6 +2995,552 @@
     .server-card {
       }
 
+
+    /* ========================================================= */
+    /* DYNO REPLICA MODERATION SUITE STYLES                       */
+    /* ========================================================= */
+    .dyno-module-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .dyno-module-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dyno-module-crumbs {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dyno-module-crumb-parent {
+      color: #e11d48;
+      cursor: pointer;
+    }
+    .dyno-module-crumb-slash {
+      color: var(--text-muted);
+    }
+    .dyno-help-ico {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 1.5px solid var(--text-muted);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: help;
+      transition: all 0.2s;
+    }
+    .dyno-help-ico:hover {
+      border-color: #e11d48;
+      color: #e11d48;
+    }
+    .dyno-module-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+    .dyno-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .dyno-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .dyno-switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .dyno-switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 2px;
+      background-color: white;
+      transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .dyno-switch input:checked + .dyno-switch-slider {
+      background-color: #10b981;
+      border-color: #10b981;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    }
+    .dyno-switch input:checked + .dyno-switch-slider:before {
+      transform: translateX(19px);
+    }
+
+    /* Module About Card */
+    .dyno-about-box {
+      background: rgba(14, 20, 36, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+    }
+    .dyno-about-heading {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .dyno-about-desc {
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--text-dim);
+    }
+
+    /* Sub Tabs (e.g. inside Auto Delete & Purge) */
+    .dyno-subtabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+    .dyno-subtab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dyno-subtab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .dyno-subtab-btn.active {
+      background: #e11d48;
+      border-color: #e11d48;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+    }
+
+    /* Two-Column Dyno Layout */
+    .dyno-two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    @media (max-width: 992px) {
+      .dyno-two-cols { grid-template-columns: 1fr; }
+    }
+    .dyno-card-panel {
+      background: rgba(14, 20, 36, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+    .dyno-card-header {
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Action Log Options Row */
+    .dyno-opts-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding: 14px 18px;
+      background: rgba(14, 20, 36, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+    .dyno-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      user-select: none;
+    }
+    .dyno-checkbox-label input[type="checkbox"], .dyno-checkbox-label input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 17px;
+      height: 17px;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      transition: all 0.2s;
+    }
+    .dyno-checkbox-label input[type="radio"] {
+      border-radius: 50%;
+    }
+    .dyno-checkbox-label input[type="checkbox"]:checked, .dyno-checkbox-label input[type="radio"]:checked {
+      background: #e11d48;
+      border-color: #e11d48;
+      box-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
+    }
+    .dyno-checkbox-label input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      top: 2px; left: 5px;
+      width: 4px; height: 8px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .dyno-checkbox-label input[type="radio"]:checked::after {
+      content: "";
+      position: absolute;
+      top: 4px; left: 4px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    /* Buttons */
+    .btn-crimson {
+      background: #e11d48;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-crimson:hover {
+      background: #f43f5e;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(225, 29, 72, 0.45);
+    }
+    .btn-emerald-solid {
+      background: #10b981;
+      color: #03140e;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-emerald-solid:hover {
+      background: #34d399;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.45);
+    }
+
+    /* Action Log Events Grid (3 cols) */
+    .dyno-events-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 20px;
+    }
+    @media (max-width: 1024px) {
+      .dyno-events-matrix { grid-template-columns: 1fr; }
+    }
+    .dyno-events-cat {
+      background: rgba(14, 20, 36, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .dyno-events-cat-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dyno-badge-new {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      padding: 2px 6px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .dyno-event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dyno-event-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .dyno-per-event-select {
+      font-size: 0.72rem;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      max-width: 130px;
+      display: none;
+    }
+
+    /* Tagbox for Ignored Channels / Roles */
+    .dyno-tagbox-wrapper {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .dyno-tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 28px;
+    }
+    .dyno-chip-tag {
+      background: rgba(225, 29, 72, 0.15);
+      border: 1px solid rgba(225, 29, 72, 0.35);
+      color: #fda4af;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dyno-chip-tag span.remove-tag {
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.15s;
+    }
+    .dyno-chip-tag span.remove-tag:hover {
+      color: #fff;
+    }
+
+    /* Rules Table for Autoban & Automod */
+    .dyno-rules-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .dyno-rule-card {
+      background: rgba(14, 20, 36, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.2s;
+    }
+    .dyno-rule-card:hover {
+      border-color: rgba(225, 29, 72, 0.4);
+    }
+    .dyno-rule-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dyno-rule-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .dyno-rule-meta {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dyno-rule-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dyno-icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dyno-icon-btn:hover {
+      color: #e11d48;
+      background: rgba(225, 29, 72, 0.12);
+    }
+    .dyno-icon-btn svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    /* Modals Overlay & Card */
+    .dyno-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .dyno-modal-overlay.open {
+      display: flex;
+    }
+    .dyno-modal-card {
+      background: #0d1222;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.8), 0 0 32px rgba(225, 29, 72, 0.15);
+      padding: 26px;
+      position: relative;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .dyno-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .dyno-modal-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .dyno-modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.3rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .dyno-modal-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .dyno-modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .dyno-modal-footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .dyno-collapsible-trigger {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #cbd5e1;
+      cursor: pointer;
+      padding: 8px 0;
+      user-select: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 8px;
+    }
+    .dyno-collapsible-trigger:hover {
+      color: #fff;
+    }
+    .dyno-collapsible-body {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      padding: 10px 0 16px;
+    }
+    .dyno-collapsible-body.open {
+      display: flex;
+    }
+
 </style>
 <style>
 /* Dashboard PC Navbar No-Wrap */
@@ -4535,87 +5081,99 @@
     <aside class="dyno-sidebar">
       <div class="dyno-server-header">
         <div id="dyno-server-icon-box" class="dyno-server-icon-box">
-          <!-- Dynamically populated avatar -->
+          <img id="dyno-sidebar-avatar-img" src="https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=256" alt="Server Icon">
         </div>
         <div class="dyno-server-meta">
           <h3 id="dyno-server-name" class="dyno-server-name">Garden Of Dream</h3>
           <div class="dyno-server-status">
             <span class="dyno-status-dot"></span>
-            <span id="dyno-bot-status-text">HaruMod Active</span>
+            <span id="dyno-bot-status-text" data-i18n="sideStatusActive">HaruMod Active</span>
           </div>
         </div>
       </div>
 
       <button class="dyno-back-btn" onclick="returnToHub()">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        <span data-i18n="btnBackToServers">Quay lại Máy chủ</span>
+        <span data-i18n="btnBackToServers">Back to Servers</span>
       </button>
 
+      <!-- GROUP 1: GENERAL -->
       <div class="dyno-nav-group">
-        <div class="dyno-nav-heading">TỔNG QUAN</div>
+        <div class="dyno-nav-heading" data-i18n="navGroupGeneral">GENERAL</div>
         <button class="dyno-nav-item active" id="cfg-btn-dashboard" onclick="switchConfigTab('dashboard')">
           <svg style="width:17px;height:17px;" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-          <span>Dashboard Máy Chủ</span>
+          <span data-i18n="sideDashboard">Server Dashboard</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-identity" onclick="switchConfigTab('identity')">
           <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.72V7h2a5 5 0 0 1 5 5v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0V12a3 3 0 0 0-3-3h-2v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V9H8a3 3 0 0 0-3 3v4a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V12a5 5 0 0 1 5-5h2V5.72c-.6-.34-1-.98-1-1.72a2 2 0 0 1 2-2zm-3 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
-          <span data-i18n="tabIdentity">Nhận diện & Biệt danh</span>
+          <span data-i18n="sideIdentity">Bot Identity & Nickname</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-overview" onclick="switchConfigTab('overview')">
-          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-          <span data-i18n="tabOverview">Tổng quan an ninh</span>
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          <span data-i18n="sideOverview">Security Overview</span>
         </button>
       </div>
 
+      <!-- GROUP 2: MODERATION (MATCHING USER SCREENSHOT media_1795493741656_22d4de5f.png) -->
       <div class="dyno-nav-group">
-        <div class="dyno-nav-heading">BẢO VỆ & KIỂM DUYỆT</div>
+        <div class="dyno-nav-heading" data-i18n="navGroupMod">MODERATION</div>
+        <button class="dyno-nav-item" id="cfg-btn-logs" onclick="switchConfigTab('logs')">
+          <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span data-i18n="sideActionLog">Action Log</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-channels" onclick="switchConfigTab('channels')">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          <span data-i18n="sideAutoDeletePurge">Auto Delete & Purge</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-autoban" onclick="switchConfigTab('autoban')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/></svg>
+          <span data-i18n="sideAutoban">Autoban</span>
+        </button>
         <button class="dyno-nav-item" id="cfg-btn-automod" onclick="switchConfigTab('automod')">
           <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-          <span data-i18n="tabAutoMod">Bộ lọc Auto-Mod</span>
+          <span data-i18n="sideAutomod">Automod</span>
         </button>
+        <button class="dyno-nav-item" id="cfg-btn-members" onclick="switchConfigTab('members')">
+          <svg viewBox="0 0 24 24"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm-4 6c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span data-i18n="sideModeration">Moderation</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-slowmode" onclick="switchConfigTab('slowmode')">
+          <svg viewBox="0 0 24 24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zM12 11.5l-4-4V4h8v3.5l-4 4z"/></svg>
+          <span data-i18n="sideSlowmode">Slowmode & Lockdown</span>
+        </button>
+      </div>
+
+      <!-- GROUP 3: DEFENSE & ROLES -->
+      <div class="dyno-nav-group">
+        <div class="dyno-nav-heading" data-i18n="navGroupDefense">DEFENSE & ROLES</div>
         <button class="dyno-nav-item" id="cfg-btn-honeypot" onclick="switchConfigTab('honeypot')">
           <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>
-          <span data-i18n="tabHoneypot">Honeypot & Anti-Raid</span>
+          <span data-i18n="sideHoneypot">Honeypot & Anti-Raid</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-cases" onclick="switchConfigTab('cases')">
           <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm-4.5 9l-4 7h9l-5-7zm10 0l-5 7h9l-4-7zm-4.5 9h-2v2h2v-2z"/></svg>
-          <span data-i18n="tabCases">Thang phạt vi phạm</span>
-        </button>
-      </div>
-
-      <div class="dyno-nav-group">
-        <div class="dyno-nav-heading">QUẢN TRỊ & THỰC THI</div>
-        <button class="dyno-nav-item" id="cfg-btn-channels" onclick="switchConfigTab('channels')">
-          <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-          <span>Quản lý Kênh & Purge</span>
-        </button>
-        <button class="dyno-nav-item" id="cfg-btn-members" onclick="switchConfigTab('members')">
-          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          <span>Xử phạt Thành viên</span>
-        </button>
-        <button class="dyno-nav-item" id="cfg-btn-welcome" onclick="switchConfigTab('welcome')">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          <span>Chào mừng & Auto-Role</span>
+          <span data-i18n="sideLadder">Sanction Ladder</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-roles" onclick="switchConfigTab('roles')">
           <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-          <span data-i18n="tabRoles">Quản lý Role</span>
+          <span data-i18n="sideRoles">Role Management</span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-welcome" onclick="switchConfigTab('welcome')">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span data-i18n="sideWelcome">Welcome & Goodbyes</span>
         </button>
       </div>
 
+      <!-- GROUP 4: SYSTEM & TOOLS -->
       <div class="dyno-nav-group">
-        <div class="dyno-nav-heading">NHẬT KÝ & ĐỒNG BỘ</div>
-        <button class="dyno-nav-item" id="cfg-btn-logs" onclick="switchConfigTab('logs')">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-          <span data-i18n="tabLogs">36 Action Logs</span>
-        </button>
+        <div class="dyno-nav-heading" data-i18n="navGroupSystem">SYSTEM & TOOLS</div>
         <button class="dyno-nav-item" id="cfg-btn-sim" onclick="switchConfigTab('sim')">
-          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-          <span data-i18n="tabSim">Live Filter Tester</span>
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+          <span data-i18n="sideSimulator">Live Filter Tester</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-sync" onclick="switchConfigTab('sync')">
-          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-          <span data-i18n="tabSync">Đồng bộ Discord Real-time</span>
+          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+          <span data-i18n="sideSync">Discord Real-time Sync</span>
         </button>
       </div>
     </aside>
@@ -4650,7 +5208,7 @@
         <!-- SERVER HERO HEADER -->
         <div class="dash-hero-header">
           <div id="dash-server-avatar-lg" class="dash-server-avatar-lg">
-            <img src="https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=256" onerror="this.src='https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png'" alt="Server Icon">
+            <img src="https://cdn.discordapp.com/icons/1426554369393954969/a_f48df17db8c94e69ea9e0a268e25b197.gif?size=256" onerror="this.src='./harumod-avatar.png'" alt="Server Icon">
           </div>
           <div class="dash-server-title-text">
             <h1 id="dash-server-title-name" class="dash-server-title-name">Garden Of Dream</h1>
@@ -5163,53 +5721,48 @@
     </div>
 
     <!-- TAB 2: AUTOMOD -->
+        <!-- TAB: AUTOMOD (IMAGES 5, 6, 7) -->
     <div id="cfg-pane-automod" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="badwordsTitle">Banned Words & Slurs Filter</h3>
-            <p class="panel-subtitle" data-i18n="badwordsSub">Auto-deletes messages containing unauthorized promotions, toxicity, or slurs.</p>
+      <div class="panel-card" style="padding:26px;">
+        <!-- Topbar -->
+        <div class="dyno-module-topbar">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="automodModuleTitle">Automod</span>
+              <span class="dyno-help-ico" title="Deep real-time message filtering, anti-spam and policy enforcement">?</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span data-i18n="moduleEnabled">Enable Module</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-automod" checked onchange="triggerUnsaved()">
+              <span class="dyno-switch-slider"></span>
+            </label>
           </div>
         </div>
-        <div class="input-group">
-          <label class="input-label" data-i18n="lblBadwordsList">Banned word list (comma separated):</label>
-          <textarea class="input-field" rows="3" id="cfg-badwords" oninput="triggerUnsaved()">dm, dkm, scam, discord.gg/, telegram, hack, leak token</textarea>
-        </div>
-        <div class="input-group">
-          <label class="input-label" data-i18n="lblBadwordsAction">Action on violation:</label>
-          <select class="select-field" id="cfg-badwords-action" onchange="triggerUnsaved()">
-            <option value="delete">Delete Message Only</option>
-            <option value="warn">Delete Message + Warn Member</option>
-            <option value="timeout" selected>Delete Message + 10-Minute Timeout</option>
-            <option value="kick">Kick from Server</option>
-          </select>
-        </div>
-      </div>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="linksTitle">Anti-Invite & Anti-Phishing Link Shield</h3>
-            <p class="panel-subtitle" data-i18n="linksSub">Blocks unauthorized discord.gg invites and checks against 45,000+ verified malicious Nitro scam domains.</p>
+        <!-- Action Bar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="btn-crimson" onclick="openAutomodRuleModal()">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              <span data-i18n="btnCreateRule">Create Rule</span>
+            </button>
+            <button class="btn-secondary" onclick="openAutomodDefaultModal()">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+              <span data-i18n="btnManageDefaultSettings">Manage Default Settings</span>
+            </button>
+          </div>
+          <div style="width:100%;max-width:280px;">
+            <input type="text" class="form-input" id="search-automod-rules" placeholder="Search rules..." oninput="filterAutomodRules(this.value)">
           </div>
         </div>
-        <div class="config-grid-2">
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblInviteMode">Discord Invite Blocker Mode:</label>
-            <select class="select-field" id="cfg-invite-mode" onchange="triggerUnsaved()">
-              <option value="all">Block all external server invites</option>
-              <option value="norole" selected>Only block new members without roles</option>
-              <option value="disabled">Disabled</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblPhishingAction">Action on Phishing Links:</label>
-            <select class="select-field" id="cfg-phishing-action" onchange="triggerUnsaved()">
-              <option value="ban" selected>Permanent Ban + Purge 7 days</option>
-              <option value="kick">Kick from Server</option>
-              <option value="timeout">24-Hour Timeout</option>
-            </select>
-          </div>
+
+        <!-- Rules List -->
+        <div id="automod-rules-list" class="dyno-rules-container">
+          <!-- Dynamically populated -->
         </div>
       </div>
     </div>
@@ -5270,39 +5823,185 @@
     </div>
 
     <!-- TAB 4: LOGS -->
+        <!-- TAB: ACTION LOG (EXACT DYNO REPLICA - IMAGE 10) -->
     <div id="cfg-pane-logs" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="logsTitle">36 Granular Action Audit Logs</h3>
-            <p class="panel-subtitle" data-i18n="logsSub">Smart multi-stream routing across 6 distinct channels to eliminate log clutter.</p>
+      <div class="panel-card" style="padding:26px;">
+        <!-- Topbar -->
+        <div class="dyno-module-topbar">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="actionLogModuleTitle">Action Log</span>
+              <span class="dyno-help-ico" title="Full server event dispatch & audit tracking">?</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span id="lbl-actionlog-status" data-i18n="moduleEnabled">Enable Module</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-actionlog" checked onchange="toggleActionLogModule(this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
           </div>
         </div>
-        <div class="config-grid-2">
-          <div class="input-group">
-            <label class="input-label">1. Moderation Logs (Sanctions, warns, bans):</label>
-            <select class="select-field" id="cfg-log-mod" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
+
+        <!-- Options Bar -->
+        <div class="dyno-opts-row">
+          <label class="dyno-checkbox-label">
+            <input type="checkbox" id="opt-specify-channels" onchange="toggleSpecifyChannels(this.checked)">
+            <span data-i18n="optSpecifyChannels">SPECIFY CHANNELS FOR EACH EVENT</span>
+            <span class="dyno-help-ico" title="Route different event categories to distinct Discord channels">?</span>
+          </label>
+          <label class="dyno-checkbox-label">
+            <input type="checkbox" id="opt-show-avatar" checked onchange="triggerUnsaved()">
+            <span data-i18n="optShowAvatar">SHOW AVATAR ON JOIN/LEAVE</span>
+            <span class="dyno-help-ico" title="Display user avatars inside join and leave log embeds">?</span>
+          </label>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:0.75rem;font-weight:800;color:var(--text-dim);text-transform:uppercase;" data-i18n="lblNewAccountAge">NEW ACCOUNT AGE (DAYS)</span>
+            <input type="number" id="opt-new-account-age" value="3" min="0" max="365" style="width:65px;padding:6px 10px;background:#090d1a;border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#fff;font-weight:700;">
+            <button class="btn-crimson" onclick="updateNewAccountAge()" data-i18n="btnUpdate">Update</button>
           </div>
-          <div class="input-group">
-            <label class="input-label">2. Message Audit Logs (Edit / Delete messages):</label>
-            <select class="select-field" id="cfg-log-msg" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
+        </div>
+
+        <!-- LOG CHANNEL Section -->
+        <div style="background:rgba(14,20,36,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:24px;">
+          <div style="font-size:0.82rem;font-weight:800;color:#fff;letter-spacing:0.04em;text-transform:uppercase;" data-i18n="lblLogChannelHead">LOG CHANNEL</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);margin-top:2px;margin-bottom:12px;" data-i18n="lblLogChannelSub">Where the events selected below will be posted.</div>
+          <div style="display:flex;align-items:center;gap:12px;max-width:540px;">
+            <select id="cfg-actionlog-main-channel" class="form-input" style="width:100%;" onchange="triggerUnsaved()">
+              <!-- Dynamically populated with real channels -->
+            </select>
           </div>
-          <div class="input-group">
-            <label class="input-label">3. Member Logs (Join, Leave, Nickname):</label>
-            <select class="select-field" id="cfg-log-members" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
+        </div>
+
+        <!-- EVENTS Section -->
+        <div style="font-size:0.86rem;font-weight:800;color:#fff;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;" data-i18n="lblEventsTitle">EVENTS</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:16px;" data-i18n="lblEventsSub">Choose which events will be logged.</div>
+
+        <div class="dyno-events-matrix">
+          <!-- Col 1: Message Events -->
+          <div class="dyno-events-cat">
+            <div class="dyno-events-cat-title">
+              <span data-i18n="catMsgEvents">Message Events</span>
+              <select class="dyno-per-event-select" id="override-ch-msg" onchange="triggerUnsaved()"></select>
+            </div>
+            <div class="dyno-event-list">
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-msg-delete" checked onchange="triggerUnsaved()"> <span data-i18n="evMsgDelete">MESSAGE DELETE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-msg-edit" checked onchange="triggerUnsaved()"> <span data-i18n="evMsgEdit">MESSAGE EDIT</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-img-delete" checked onchange="triggerUnsaved()"> <span data-i18n="evImgDelete">IMAGE DELETE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-bulk-delete" onchange="triggerUnsaved()"> <span data-i18n="evBulkDelete">BULK MESSAGE DELETE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-invites" checked onchange="triggerUnsaved()"> <span data-i18n="evInvites">LOG INVITES/INVITE INFO</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-mod-cmds" checked onchange="triggerUnsaved()"> <span data-i18n="evModCmds">MODERATOR COMMANDS</span></span></label>
+            </div>
           </div>
-          <div class="input-group">
-            <label class="input-label">4. Server & Channel Changes (Create/delete channel, role):</label>
-            <select class="select-field" id="cfg-log-server" onchange="triggerUnsaved()"><option value="">-- Đang tải kênh Discord... --</option></select>
+
+          <!-- Col 2: Member Events -->
+          <div class="dyno-events-cat">
+            <div class="dyno-events-cat-title">
+              <span data-i18n="catMemberEvents">Member Events</span>
+              <select class="dyno-per-event-select" id="override-ch-member" onchange="triggerUnsaved()"></select>
+            </div>
+            <div class="dyno-event-list">
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-member-join" checked onchange="triggerUnsaved()"> <span data-i18n="evMemberJoin">MEMBER JOIN</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-member-leave" checked onchange="triggerUnsaved()"> <span data-i18n="evMemberLeave">MEMBER LEAVE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-role-add" checked onchange="triggerUnsaved()"> <span data-i18n="evRoleAdd">MEMBER ROLE ADD</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-role-remove" checked onchange="triggerUnsaved()"> <span data-i18n="evRoleRemove">MEMBER ROLE REMOVE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-timeout" checked onchange="triggerUnsaved()"> <span data-i18n="evTimeout">MEMBER TIMEOUT</span> <span class="dyno-badge-new">NEW</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-nick" checked onchange="triggerUnsaved()"> <span data-i18n="evNick">NICKNAME CHANGE</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-ban" checked onchange="triggerUnsaved()"> <span data-i18n="evBan">MEMBER BAN</span></span></label>
+              <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-unban" checked onchange="triggerUnsaved()"> <span data-i18n="evUnban">MEMBER UNBAN</span></span></label>
+            </div>
           </div>
-          <div class="input-group">
-            <label class="input-label">5. Voice Events (Join / Move voice channels):</label>
-            <select class="select-field"><option># voice-logs</option><option># voice-audit</option></select>
+
+          <!-- Col 3: Role & Channel & Emoji & Voice Events -->
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <!-- Role Events -->
+            <div class="dyno-events-cat">
+              <div class="dyno-events-cat-title">
+                <span data-i18n="catRoleEvents">Role Events</span>
+                <select class="dyno-per-event-select" id="override-ch-role" onchange="triggerUnsaved()"></select>
+              </div>
+              <div class="dyno-event-list">
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-role-create" checked onchange="triggerUnsaved()"> <span data-i18n="evRoleCreate">ROLE CREATE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-role-delete" checked onchange="triggerUnsaved()"> <span data-i18n="evRoleDelete">ROLE DELETE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-role-update" onchange="triggerUnsaved()"> <span data-i18n="evRoleUpdate">ROLE UPDATE</span></span></label>
+              </div>
+            </div>
+
+            <!-- Channel Events -->
+            <div class="dyno-events-cat">
+              <div class="dyno-events-cat-title">
+                <span data-i18n="catChannelEvents">Channel Events</span>
+                <select class="dyno-per-event-select" id="override-ch-channel" onchange="triggerUnsaved()"></select>
+              </div>
+              <div class="dyno-event-list">
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-ch-create" onchange="triggerUnsaved()"> <span data-i18n="evChCreate">CHANNEL CREATE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-ch-update" checked onchange="triggerUnsaved()"> <span data-i18n="evChUpdate">CHANNEL UPDATE</span> <span class="dyno-badge-new">NEW</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-ch-delete" onchange="triggerUnsaved()"> <span data-i18n="evChDelete">CHANNEL DELETE</span></span></label>
+              </div>
+            </div>
+
+            <!-- Emoji Events -->
+            <div class="dyno-events-cat">
+              <div class="dyno-events-cat-title">
+                <span><span data-i18n="catEmojiEvents">Emoji Events</span> <span class="dyno-badge-new">NEW</span></span>
+                <select class="dyno-per-event-select" id="override-ch-emoji" onchange="triggerUnsaved()"></select>
+              </div>
+              <div class="dyno-event-list">
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-emoji-create" onchange="triggerUnsaved()"> <span data-i18n="evEmojiCreate">EMOJI CREATE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-emoji-name" onchange="triggerUnsaved()"> <span data-i18n="evEmojiName">EMOJI NAME CHANGE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-emoji-delete" onchange="triggerUnsaved()"> <span data-i18n="evEmojiDelete">EMOJI DELETE</span></span></label>
+              </div>
+            </div>
+
+            <!-- Voice Events -->
+            <div class="dyno-events-cat">
+              <div class="dyno-events-cat-title">
+                <span data-i18n="catVoiceEvents">Voice Events</span>
+                <select class="dyno-per-event-select" id="override-ch-voice" onchange="triggerUnsaved()"></select>
+              </div>
+              <div class="dyno-event-list">
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-voice-join" checked onchange="triggerUnsaved()"> <span data-i18n="evVoiceJoin">VOICE CHANNEL JOIN</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-voice-leave" checked onchange="triggerUnsaved()"> <span data-i18n="evVoiceLeave">VOICE CHANNEL LEAVE</span></span></label>
+                <label class="dyno-checkbox-label dyno-event-item"><span><input type="checkbox" id="ev-voice-move" checked onchange="triggerUnsaved()"> <span data-i18n="evVoiceMove">VOICE CHANNEL MOVE</span></span></label>
+              </div>
+            </div>
           </div>
-          <div class="input-group">
-            <label class="input-label">6. Security & Honeypot Alarms (Anti-nuke alerts):</label>
-            <select class="select-field"><option># security-alerts</option><option># honeypot-logs</option></select>
+        </div>
+
+        <!-- Ignored Channels & Ignored Roles (Bottom Row) -->
+        <div class="dyno-two-cols" style="margin-top:24px;">
+          <!-- Ignored Channels -->
+          <div class="dyno-card-panel">
+            <div class="dyno-card-header" data-i18n="lblIgnoredChannels">IGNORED CHANNELS</div>
+            <div class="dyno-tagbox-wrapper">
+              <div class="dyno-tags-list" id="actionlog-ignored-channels-list"></div>
+              <select id="sel-add-ignored-channel" class="form-input" onchange="addIgnoredChannel(this.value); this.value='';">
+                <option value="">+ Add Channel to Ignore...</option>
+              </select>
+            </div>
           </div>
+
+          <!-- Ignored Roles -->
+          <div class="dyno-card-panel">
+            <div class="dyno-card-header" data-i18n="lblIgnoredRoles">IGNORED ROLES</div>
+            <div class="dyno-tagbox-wrapper">
+              <div class="dyno-tags-list" id="actionlog-ignored-roles-list"></div>
+              <select id="sel-add-ignored-role" class="form-input" onchange="addIgnoredRole(this.value); this.value='';">
+                <option value="">+ Add Role to Ignore...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <button class="btn-crimson" style="padding:11px 26px;font-size:0.86rem;" onclick="saveActionLogSettings()">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+            <span data-i18n="btnSaveActionLog">Save Action Log Configuration</span>
+          </button>
+          <span id="actionlog-save-msg" style="font-size:0.8rem;color:#10b981;font-weight:700;display:none;">Saved and synced to Discord!</span>
         </div>
       </div>
     </div>
@@ -5342,129 +6041,186 @@
         <!-- ===================================================== -->
         <!-- TAB 7: QUẢN LÝ KÊNH & PURGE / SLOWMODE / LOCKDOWN     -->
         <!-- ===================================================== -->
-        <div id="cfg-pane-channels" class="tab-pane">
-          <!-- Card 1: Fast Purge -->
-          <div class="config-card">
-            <div class="config-card-header">
-              <div class="config-card-icon" style="background:rgba(239, 68, 68, 0.12);color:#ef4444;border-color:rgba(239, 68, 68, 0.3);">
-                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-              </div>
-              <div>
-                <h3 class="config-card-title">Xóa Tin Nhắn Siêu Tốc (Fast Purge / Bulk Delete)</h3>
-                <p class="config-card-desc">Xóa tức thì từ 1 đến 100 tin nhắn trong kênh chat, hỗ trợ lọc theo link, tin nhắn bot hoặc ID người dùng.</p>
-              </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px;margin-bottom:18px;">
-              <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Chọn Kênh Cần Dọn Dẹp</label>
-                <select id="cfg-channel-purge" class="form-input">
-                  <option value="">-- Đang tải danh sách kênh --</option>
-                </select>
-              </div>
-
-              <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Số Lượng Tin Nhắn (1 - 100)</label>
-                <input type="number" id="cfg-purge-amount" class="form-input" min="1" max="100" value="25">
-              </div>
-
-              <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Điều Kiện Lọc</label>
-                <select id="cfg-purge-filter" class="form-input" onchange="togglePurgeUserField(this.value)">
-                  <option value="all">Tất cả tin nhắn gần nhất</option>
-                  <option value="user">Chỉ xóa tin nhắn của một User ID</option>
-                  <option value="bot">Chỉ xóa tin nhắn của Bot & Webhook</option>
-                  <option value="links">Chỉ xóa tin nhắn chứa Liên kết (Links)</option>
-                </select>
-              </div>
-
-              <div class="form-group" id="purge-user-group" style="margin-bottom:0;display:none;">
-                <label class="form-label">User ID Cần Xóa</label>
-                <input type="text" id="cfg-purge-userid" class="form-input" placeholder="e.g. 1028500296059596961">
-              </div>
-            </div>
-
-            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
-              <span style="font-size:0.78rem;color:var(--text-muted);">Lưu ý: Discord API chỉ cho phép xóa tin nhắn dưới 14 ngày tuổi.</span>
-              <button class="btn btn-primary" onclick="executeFastPurge(event)" style="background:#ef4444;border-color:#ef4444;">
-                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                <span>Xóa Ngay Tin Nhắn</span>
-              </button>
+        <!-- TAB: AUTO DELETE & AUTO PURGE (IMAGES 1 & 2) -->
+    <div id="cfg-pane-channels" class="tab-pane">
+      <div class="panel-card" style="padding:26px;">
+        <!-- Topbar -->
+        <div class="dyno-module-topbar">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="autoDeletePurgeTitle">Auto Delete & Purge</span>
+              <span class="dyno-help-ico" title="Automatic channel cleaning and message lifetime management">?</span>
             </div>
           </div>
+          <div class="dyno-module-toggle">
+            <span data-i18n="moduleEnabled">Enable Module</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-autodelete" checked onchange="triggerUnsaved()">
+              <span class="dyno-switch-slider"></span>
+            </label>
+          </div>
+        </div>
 
-          <!-- Card 2: Slowmode & Lockdown -->
-          <div class="config-grid-2">
-            <!-- Slowmode Card -->
-            <div class="config-card">
-              <div class="config-card-header">
-                <div class="config-card-icon" style="background:rgba(245, 158, 11, 0.12);color:#f59e0b;border-color:rgba(245, 158, 11, 0.3);">
-                  <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        <!-- Sub Tabs -->
+        <div class="dyno-subtabs-bar">
+          <button class="dyno-subtab-btn active" id="btn-subtab-autodelete" onclick="switchCleanerSubtab('autodelete')">
+            <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
+            <span data-i18n="subtabAutoDelete">Auto Delete (Message Delay)</span>
+          </button>
+          <button class="dyno-subtab-btn" id="btn-subtab-autopurge" onclick="switchCleanerSubtab('autopurge')">
+            <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z"/></svg>
+            <span data-i18n="subtabAutoPurge">Auto Purge (Interval Cleanup)</span>
+          </button>
+          <button class="dyno-subtab-btn" id="btn-subtab-manualpurge" onclick="switchCleanerSubtab('manualpurge')">
+            <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"/></svg>
+            <span data-i18n="subtabManualPurge">Manual Quick Purge</span>
+          </button>
+        </div>
+
+        <!-- SUBTAB 1: AUTO DELETE (IMAGE 1) -->
+        <div id="subtab-view-autodelete">
+          <div class="dyno-about-box">
+            <div class="dyno-about-heading" data-i18n="aboutTitle">ABOUT</div>
+            <div class="dyno-about-desc" data-i18n="aboutAutoDeleteDesc">Auto delete will automatically delete messages in a channel with optional filters and delay. Auto delete will not delete messages by bots, mods, or admins.</div>
+          </div>
+
+          <div class="dyno-two-cols">
+            <!-- Left: Add Auto Delete -->
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="addAutoDeleteTitle">ADD AUTO DELETE</div>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                  <label class="dash-form-label" data-i18n="lblChannel">CHANNEL</label>
+                  <select id="cfg-autodelete-channel" class="form-input" style="width:100%;"></select>
                 </div>
                 <div>
-                  <h3 class="config-card-title">Chế Độ Chậm (Slowmode)</h3>
-                  <p class="config-card-desc">Hạn chế tần suất gửi tin nhắn trong kênh chat.</p>
+                  <label class="dash-form-label">+ <span data-i18n="lblAddFilter">Add Filter</span></label>
+                  <select id="cfg-autodelete-filter" class="form-input" style="width:100%;">
+                    <option value="all">All Messages (Default)</option>
+                    <option value="links">Links Only</option>
+                    <option value="attachments">Images & Attachments Only</option>
+                    <option value="invites">Discord Invites Only</option>
+                    <option value="user_only">Non-Staff Users Only</option>
+                  </select>
+                </div>
+                <div style="display:flex;align-items:center;gap:18px;margin:4px 0;">
+                  <label class="dyno-checkbox-label">
+                    <input type="radio" name="autodelete-match" id="ad-match-all" value="all" checked>
+                    <span data-i18n="lblMatchAll">MATCH ALL FILTERS</span>
+                    <span class="dyno-help-ico" title="Message must match every filter">?</span>
+                  </label>
+                  <label class="dyno-checkbox-label">
+                    <input type="radio" name="autodelete-match" id="ad-match-any" value="any">
+                    <span data-i18n="lblMatchAny">MATCH ANY FILTER</span>
+                    <span class="dyno-help-ico" title="Message deleted if matching any filter">?</span>
+                  </label>
+                </div>
+                <div>
+                  <label class="dash-form-label" data-i18n="lblDelaySeconds">DELAY (OPTIONAL, IN SECONDS)</label>
+                  <input type="number" id="cfg-autodelete-delay" class="form-input" value="10" min="0" max="86400" placeholder="10">
+                </div>
+                <div>
+                  <button class="btn-crimson" onclick="addAutoDeleteRule()" data-i18n="btnAdd">Add</button>
                 </div>
               </div>
-
-              <div class="form-group">
-                <label class="form-label">Chọn Kênh</label>
-                <select id="cfg-channel-slowmode" class="form-input">
-                  <option value="">-- Đang tải danh sách kênh --</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Thời Gian Chờ Giữa Các Tin</label>
-                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(0)">Tắt (0s)</button>
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(5)">5s</button>
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(15)">15s</button>
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(30)">30s</button>
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(60)">1 phút</button>
-                  <button type="button" class="btn btn-sm btn-secondary" onclick="setSlowmodePreset(300)">5 phút</button>
-                </div>
-                <input type="number" id="cfg-slowmode-seconds" class="form-input" min="0" max="21600" value="5" placeholder="Số giây (0 = Tắt)">
-              </div>
-
-              <button class="btn btn-primary" onclick="executeSlowmode(event)" style="width:100%;justify-content:center;">
-                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-                <span>Cập Nhật Slowmode Vào Kênh</span>
-              </button>
             </div>
 
-            <!-- Lockdown Card -->
-            <div class="config-card">
-              <div class="config-card-header">
-                <div class="config-card-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;border-color:rgba(16, 185, 129, 0.3);">
-                  <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                </div>
-                <div>
-                  <h3 class="config-card-title">Khóa Kênh Chat (Lockdown)</h3>
-                  <p class="config-card-desc">Khóa quyền chat của @everyone trong kênh khi có biến cố.</p>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Chọn Kênh</label>
-                <select id="cfg-channel-lock" class="form-input">
-                  <option value="">-- Đang tải danh sách kênh --</option>
-                </select>
-              </div>
-
-              <div style="display:flex;gap:10px;margin-top:18px;">
-                <button class="btn btn-secondary" onclick="executeChannelLock(true, event)" style="flex:1;justify-content:center;border-color:rgba(239, 68, 68, 0.4);color:#f87171;">
-                  <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>
-                  <span>Khóa Kênh (Lock)</span>
-                </button>
-                <button class="btn btn-primary" onclick="executeChannelLock(false, event)" style="flex:1;justify-content:center;">
-                  <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
-                  <span>Mở Khóa (Unlock)</span>
-                </button>
+            <!-- Right: Auto Delete List -->
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="autoDeleteListTitle">AUTO DELETE LIST</div>
+              <div id="autodelete-rules-list" class="dyno-rules-container">
+                <!-- Dynamically populated -->
               </div>
             </div>
           </div>
         </div>
+
+        <!-- SUBTAB 2: AUTO PURGE (IMAGE 2) -->
+        <div id="subtab-view-autopurge" style="display:none;">
+          <div class="dyno-about-box">
+            <div class="dyno-about-heading" data-i18n="aboutTitle">ABOUT</div>
+            <div class="dyno-about-desc" data-i18n="aboutAutoPurgeDesc">Auto purge will automatically purge a channel of up to 5,000 messages on a set interval. Fully unlocked and autonomous in HaruMod.</div>
+          </div>
+
+          <div class="dyno-two-cols">
+            <!-- Left: Add Auto Purge -->
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="addAutoPurgeTitle">ADD AUTO PURGE</div>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                  <label class="dash-form-label" data-i18n="lblChannel">CHANNEL</label>
+                  <select id="cfg-autopurge-channel" class="form-input" style="width:100%;"></select>
+                </div>
+                <div>
+                  <label class="dash-form-label" data-i18n="lblFilterOptional">FILTER (OPTIONAL)</label>
+                  <select id="cfg-autopurge-filter" class="form-input" style="width:100%;">
+                    <option value="all">All Messages (Complete Clean)</option>
+                    <option value="bots">Bot Messages Only</option>
+                    <option value="links">Links & Embeds Only</option>
+                    <option value="files">Attachments & Uploads Only</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="dash-form-label" data-i18n="lblPurgeIntervalHours">SELECT PURGE INTERVAL (HOURS)</label>
+                  <input type="number" id="cfg-autopurge-hours" class="form-input" value="8" min="1" max="168" placeholder="8">
+                </div>
+                <div>
+                  <button class="btn-crimson" onclick="addAutoPurgeJob()" data-i18n="btnAdd">Add</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Auto Purge List -->
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="autoPurgeListTitle">AUTO PURGE LIST</div>
+              <div id="autopurge-rules-list" class="dyno-rules-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 3: MANUAL PURGE -->
+        <div id="subtab-view-manualpurge" style="display:none;">
+          <div class="dyno-two-cols">
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="manualPurgeTitle">Instant Channel Purge</div>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                  <label class="dash-form-label" data-i18n="lblTargetChannel">Target Channel:</label>
+                  <select id="cfg-channel-purge" class="form-input" style="width:100%;"></select>
+                </div>
+                <div>
+                  <label class="dash-form-label" data-i18n="lblMessageAmount">Number of Messages to Purge (1 - 100):</label>
+                  <input type="number" id="purge-amount-val" class="form-input" min="1" max="100" value="25">
+                </div>
+                <div>
+                  <label class="dash-form-label" data-i18n="lblPurgeFilterType">Purge Filter:</label>
+                  <select id="purge-filter-type" class="form-input" style="width:100%;" onchange="togglePurgeUserField(this.value)">
+                    <option value="all">All Messages</option>
+                    <option value="bot">Bot Messages Only</option>
+                    <option value="links">Messages Containing Links Only</option>
+                    <option value="attachments">Images / Files Only</option>
+                  </select>
+                </div>
+                <button class="btn-crimson" onclick="executePurgeDirect()" data-i18n="btnExecutePurge">Purge Messages Now</button>
+              </div>
+            </div>
+            <div class="dyno-card-panel">
+              <div class="dyno-card-header" data-i18n="purgeLogTitle">Recent Purge Executions</div>
+              <div id="purge-exec-log" style="font-size:0.78rem;color:var(--text-dim);display:flex;flex-direction:column;gap:8px;">
+                <div style="padding:10px;background:rgba(0,0,0,0.3);border-radius:8px;border:1px solid rgba(255,255,255,0.06);">
+                  ✓ #garden-chat: Purged 30 messages &bull; Just now
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
         <!-- ===================================================== -->
         <!-- TAB 8: TRUNG TÂM XỬ PHẠT THÀNH VIÊN (MEMBER MOD ACTIONS)-->
@@ -5784,6 +6540,106 @@
         </div>
 
       </div> <!-- /.dyno-panes-wrapper -->
+        <!-- TAB: AUTOBAN (IMAGE 4) -->
+    <div id="cfg-pane-autoban" class="tab-pane">
+      <div class="panel-card" style="padding:26px;">
+        <!-- Topbar -->
+        <div class="dyno-module-topbar">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="autobanModuleTitle">Autoban</span>
+              <span class="dyno-help-ico" title="Automatically ban accounts that meet specific conditions">?</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span data-i18n="moduleEnabled">Enable Module</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-autoban" checked onchange="triggerUnsaved()">
+              <span class="dyno-switch-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <button class="btn-crimson" onclick="openAutobanModal()">
+            <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            <span data-i18n="btnCreateRule">Create Rule</span>
+          </button>
+        </div>
+
+        <div id="autoban-rules-list" class="dyno-rules-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SLOWMODE & LOCKDOWN -->
+    <div id="cfg-pane-slowmode" class="tab-pane">
+      <div class="panel-card" style="padding:26px;">
+        <div class="dyno-module-topbar">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="slowmodeModuleTitle">Slowmode & Lockdown</span>
+              <span class="dyno-help-ico" title="Manage rate-limits and emergency lockdowns">?</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dyno-two-cols">
+          <!-- Slowmode -->
+          <div class="dyno-card-panel">
+            <div class="dyno-card-header" data-i18n="headSlowmode">Channel Slowmode Rate Limiter</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);margin-bottom:14px;" data-i18n="descSlowmode">Limit how frequently members can send messages in a chat channel.</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label class="dash-form-label" data-i18n="lblSelectChannel">Select Channel</label>
+                <select id="cfg-channel-slowmode" class="form-input" style="width:100%;"></select>
+              </div>
+              <div>
+                <label class="dash-form-label" data-i18n="lblCooldownBetweenMsgs">Message Cooldown Interval</label>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(0)">Off (0s)</button>
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(5)">5s</button>
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(15)">15s</button>
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(30)">30s</button>
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(60)">1 min</button>
+                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(300)">5 min</button>
+                </div>
+                <input type="number" id="slowmode-seconds-val" class="form-input" min="0" max="21600" value="5" placeholder="Seconds">
+              </div>
+              <button class="btn-emerald-solid" onclick="executeSlowmodeDirect()" data-i18n="btnApplySlowmode">Apply Slowmode to Channel</button>
+            </div>
+          </div>
+
+          <!-- Lockdown -->
+          <div class="dyno-card-panel">
+            <div class="dyno-card-header" data-i18n="headLockdown">Emergency Channel Lockdown</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);margin-bottom:14px;" data-i18n="descLockdown">Revoke or restore Send Messages permissions for @everyone during raids.</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label class="dash-form-label" data-i18n="lblSelectChannel">Select Channel</label>
+                <select id="cfg-channel-lock" class="form-input" style="width:100%;"></select>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+                <button class="btn-crimson" style="padding:14px;" onclick="executeLockdownDirect(true)">
+                  <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                  <span data-i18n="btnLockChannel">Lock Channel</span>
+                </button>
+                <button class="btn-secondary" style="padding:14px;" onclick="executeLockdownDirect(false)">
+                  <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75l1.93.54C12.44 3.84 13.62 3 15 3c1.66 0 3 1.34 3 3v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
+                  <span data-i18n="btnUnlockChannel">Unlock Channel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
     </section> <!-- /.dyno-main-content -->
   </main>
 
@@ -6320,13 +7176,14 @@
       }
 
       // INSTANT ZERO-LATENCY POPULATION OF ROLES & CHANNELS
-      if (guildId === "1426554369393954969") {
-        populateRoleDropdowns(REAL_GARDEN_DATA.roles);
-        populateChannelDropdowns(REAL_GARDEN_DATA.channels);
-      } else {
-        populateRoleDropdowns(DEFAULT_FALLBACK_ROLES);
-        populateChannelDropdowns(DEFAULT_FALLBACK_CHANNELS);
+      if (typeof populateAllDynoDropdowns === "function") {
+        populateAllDynoDropdowns();
       }
+      if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+      if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
+      if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+      if (typeof renderAutobanRules === "function") renderAutobanRules();
+      if (typeof renderAutomodRules === "function") renderAutomodRules();
 
       // Trigger background sync with live API (Local Engine or Gateway)
       fetchRealDiscordGuildData(guildId);
@@ -6471,6 +7328,127 @@
     // =========================================================
     const DASH_I18N = {
       vi: {
+        "sideStatusActive": "HaruMod Hoạt Động",
+        "navGroupGeneral": "TỔNG QUAN",
+        "sideDashboard": "Dashboard Máy Chủ",
+        "sideIdentity": "Nhận Diện & Biệt Danh",
+        "sideOverview": "Tổng Quan An Ninh",
+        "navGroupMod": "BẢO VỆ & KIỂM DUYỆT",
+        "sideActionLog": "36 Luồng Action Log",
+        "sideAutoDeletePurge": "Tự Động Xóa & Dọn Dẹp Kênh",
+        "sideAutoban": "Tự Động Cấm (Autoban)",
+        "sideAutomod": "Bộ Lọc Automod",
+        "sideModeration": "Xử Phạt Thành Viên",
+        "sideSlowmode": "Chế Độ Chậm & Khóa Kênh",
+        "navGroupDefense": "PHÒNG THỦ & VAI TRÒ",
+        "sideHoneypot": "Bẫy Honeypot & Anti-Raid",
+        "sideLadder": "Thang Phạt Leo Thang",
+        "sideRoles": "Quản Lý Vai Trò",
+        "sideWelcome": "Tin Nhắn Chào Mừng",
+        "navGroupSystem": "HỆ THỐNG & CÔNG CỤ",
+        "sideSimulator": "Giả Lập Bộ Lọc",
+        "sideSync": "Đồng Bộ Discord Real-Time",
+        "actionLogModuleTitle": "Action Log",
+        "moduleEnabled": "Bật Module",
+        "optSpecifyChannels": "CHỈ ĐỊNH KÊNH RIÊNG CHO TỪNG SỰ KIỆN",
+        "optShowAvatar": "HIỆN AVATAR KHI VÀO / RỜI SERVER",
+        "lblNewAccountAge": "TUỔI TÀI KHOẢN MỚI (NGÀY)",
+        "btnUpdate": "Cập Nhật",
+        "lblLogChannelHead": "KÊNH NHẬT KÝ CHÍNH (LOG CHANNEL)",
+        "lblLogChannelSub": "Nơi các sự kiện được chọn bên dưới sẽ được bot gửi tin nhắn vào.",
+        "lblEventsTitle": "DANH SÁCH SỰ KIỆN (EVENTS)",
+        "lblEventsSub": "Chọn những sự kiện mà bạn muốn HaruMod ghi nhận và gửi thông báo.",
+        "catMsgEvents": "Sự Kiện Tin Nhắn",
+        "catMemberEvents": "Sự Kiện Thành Viên",
+        "catRoleEvents": "Sự Kiện Vai Trò",
+        "catChannelEvents": "Sự Kiện Kênh",
+        "catEmojiEvents": "Sự Kiện Emoji",
+        "catVoiceEvents": "Sự Kiện Kênh Thoại",
+        "evMsgDelete": "XÓA TIN NHẮN",
+        "evMsgEdit": "SỬA TIN NHẮN",
+        "evImgDelete": "XÓA HÌNH ẢNH / TỆP",
+        "evBulkDelete": "XÓA TIN NHẮN HÀNG LOẠT",
+        "evInvites": "GHI NHẬN LINK MỜI / INFO",
+        "evModCmds": "LỆNH QUẢN TRỊ VIÊN",
+        "evMemberJoin": "THÀNH VIÊN THAM GIA",
+        "evMemberLeave": "THÀNH VIÊN RỜI SERVER",
+        "evRoleAdd": "THÊM VAI TRÒ CHO MEMBER",
+        "evRoleRemove": "GỠ VAI TRÒ CỦA MEMBER",
+        "evTimeout": "CÁCH LY / TIMEOUT",
+        "evNick": "ĐỔI BIỆT DANH (NICKNAME)",
+        "evBan": "CẤM THÀNH VIÊN (BAN)",
+        "evUnban": "HỦY CẤM (UNBAN)",
+        "evRoleCreate": "TẠO VAI TRÒ MỚI",
+        "evRoleDelete": "XÓA VAI TRÒ",
+        "evRoleUpdate": "CẬP NHẬT VAI TRÒ",
+        "evChCreate": "TẠO KÊNH MỚI",
+        "evChUpdate": "CẬP NHẬT KÊNH",
+        "evChDelete": "XÓA KÊNH",
+        "evEmojiCreate": "THÊM EMOJI MỚI",
+        "evEmojiName": "ĐỔI TÊN EMOJI",
+        "evEmojiDelete": "XÓA EMOJI",
+        "evVoiceJoin": "VÀO KÊNH THOẠI",
+        "evVoiceLeave": "RỜI KÊNH THOẠI",
+        "evVoiceMove": "CHUYỂN PHÒNG THOẠI",
+        "lblIgnoredChannels": "KÊNH ĐƯỢC BỎ QUA (IGNORED CHANNELS)",
+        "lblIgnoredRoles": "VAI TRÒ ĐƯỢC BỎ QUA (IGNORED ROLES)",
+        "btnSaveActionLog": "Lưu Cấu Hình Action Log",
+        "autoDeletePurgeTitle": "Auto Delete & Auto Purge",
+        "subtabAutoDelete": "Tự Động Xóa (Trễ Giây)",
+        "subtabAutoPurge": "Dọn Dẹp Định Kỳ (Theo Giờ)",
+        "subtabManualPurge": "Dọn Dẹp Kênh Nhanh",
+        "aboutTitle": "GIỚI THIỆU",
+        "aboutAutoDeleteDesc": "Auto Delete tự động xóa tin nhắn trong kênh đã chọn theo độ trễ thiết lập. Không tự ý xóa tin nhắn của Bot, Mod hoặc Admin.",
+        "addAutoDeleteTitle": "THÊM QUY TẮC AUTO DELETE",
+        "lblChannel": "KÊNH ÁP DỤNG",
+        "lblAddFilter": "Thêm Bộ Lọc",
+        "lblMatchAll": "KHỚP TẤT CẢ BỘ LỌC",
+        "lblMatchAny": "KHỚP BẤT KỲ BỘ LỌC NÀO",
+        "lblDelaySeconds": "THỜI GIAN CHỜ TRƯỚC KHI XÓA (GIÂY)",
+        "btnAdd": "Thêm Ngay",
+        "autoDeleteListTitle": "DANH SÁCH AUTO DELETE ĐANG CHẠY",
+        "aboutAutoPurgeDesc": "Auto Purge tự động dọn dẹp lên đến 5,000 tin nhắn trong kênh theo chu kỳ giờ đã đặt. Mở khóa toàn bộ và tự động trong HaruMod.",
+        "addAutoPurgeTitle": "THÊM LỊCH DỌN DẸP AUTO PURGE",
+        "lblFilterOptional": "BỘ LỌC (TÙY CHỌN)",
+        "lblPurgeIntervalHours": "CHU KỲ DỌN DẸP (SỐ GIỜ)",
+        "autoPurgeListTitle": "DANH SÁCH LỊCH AUTO PURGE",
+        "manualPurgeTitle": "Dọn Dẹp Tin Nhắn Trực Tiếp",
+        "lblTargetChannel": "Kênh Cần Dọn Dẹp:",
+        "lblMessageAmount": "Số Lượng Tin Nhắn (1 - 100):",
+        "lblPurgeFilterType": "Loại Tin Nhắn Cần Xóa:",
+        "btnExecutePurge": "Xóa Tin Nhắn Ngay",
+        "purgeLogTitle": "Lịch Sử Thực Thi Dọn Dẹp",
+        "autobanModuleTitle": "Autoban",
+        "btnCreateRule": "Tạo Quy Tắc",
+        "modalTitleAutobanRule": "Quy Tắc Autoban",
+        "lblRuleName": "Tên Quy Tắc",
+        "lblRuleType": "Loại Quy Tắc",
+        "btnCancel": "Hủy",
+        "automodModuleTitle": "Automod",
+        "btnManageDefaultSettings": "Quản Lý Cài Đặt Mặc Định",
+        "modalTitleAutomodRule": "Quy Tắc Automod",
+        "lblName": "Tên",
+        "lblActions": "Hành Động Xử Lý",
+        "lblPermissions": "Phân Quyền (Permissions)",
+        "lblAffectedRoles": "Vai Trò Bị Ảnh Hưởng",
+        "lblAffectedChannels": "Kênh Bị Ảnh Hưởng",
+        "lblAdditionalOptions": "Tùy Chọn Nâng Cao",
+        "modalTitleDefaultSettings": "Cài Đặt Mặc Định",
+        "descDefaultSettings": "Đây là các cài đặt mặc định cho các quy tắc không được cấu hình riêng.",
+        "lblDefaultLogChannel": "Kênh Nhật Ký Mặc Định",
+        "slowmodeModuleTitle": "Chế Độ Chậm & Khóa Kênh",
+        "headSlowmode": "Giới Hạn Tần Suất Gửi Tin (Slowmode)",
+        "descSlowmode": "Giới hạn thời gian chờ giữa các lần gửi tin nhắn của thành viên trong kênh.",
+        "lblSelectChannel": "Chọn Kênh",
+        "lblCooldownBetweenMsgs": "Thời Gian Chờ Giữa Các Tin",
+        "btnApplySlowmode": "Áp Dụng Slowmode Vào Kênh",
+        "headLockdown": "Khóa Kênh Khẩn Cấp (Lockdown)",
+        "descLockdown": "Tước quyền gửi tin nhắn của @everyone trong trường hợp bị tấn công raid.",
+        "btnLockChannel": "Khóa Kênh (Lock)",
+        "btnUnlockChannel": "Mở Khóa (Unlock)",
+        "badgeActive": "Đang Hoạt Động",
+        "badgeNotInServer": "Chưa Có Trong Server",
+
         
         dashServerSubtitle: "Hệ thống bảo vệ HaruMod đang trực chiến 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
         statsBoardTitle: "BẢNG THỐNG KÊ KÊNH TRỰC TUYẾN & MÚI GIỜ (DISCORD LIVE STATS)",
@@ -6632,6 +7610,127 @@
         btnSave: "Lưu Cấu Hình"
       },
       en: {
+        "sideStatusActive": "HaruMod Active",
+        "navGroupGeneral": "GENERAL",
+        "sideDashboard": "Server Dashboard",
+        "sideIdentity": "Bot Identity & Nickname",
+        "sideOverview": "Security Overview",
+        "navGroupMod": "MODERATION",
+        "sideActionLog": "Action Log",
+        "sideAutoDeletePurge": "Auto Delete & Purge",
+        "sideAutoban": "Autoban",
+        "sideAutomod": "Automod",
+        "sideModeration": "Moderation",
+        "sideSlowmode": "Slowmode & Lockdown",
+        "navGroupDefense": "DEFENSE & ROLES",
+        "sideHoneypot": "Honeypot & Anti-Raid",
+        "sideLadder": "Sanction Ladder",
+        "sideRoles": "Role Management",
+        "sideWelcome": "Welcome & Goodbyes",
+        "navGroupSystem": "SYSTEM & TOOLS",
+        "sideSimulator": "Live Filter Tester",
+        "sideSync": "Discord Real-time Sync",
+        "actionLogModuleTitle": "Action Log",
+        "moduleEnabled": "Enable Module",
+        "optSpecifyChannels": "SPECIFY CHANNELS FOR EACH EVENT",
+        "optShowAvatar": "SHOW AVATAR ON JOIN/LEAVE",
+        "lblNewAccountAge": "NEW ACCOUNT AGE (DAYS)",
+        "btnUpdate": "Update",
+        "lblLogChannelHead": "LOG CHANNEL",
+        "lblLogChannelSub": "Where the events selected below will be posted.",
+        "lblEventsTitle": "EVENTS",
+        "lblEventsSub": "Choose which events will be logged.",
+        "catMsgEvents": "Message Events",
+        "catMemberEvents": "Member Events",
+        "catRoleEvents": "Role Events",
+        "catChannelEvents": "Channel Events",
+        "catEmojiEvents": "Emoji Events",
+        "catVoiceEvents": "Voice Events",
+        "evMsgDelete": "MESSAGE DELETE",
+        "evMsgEdit": "MESSAGE EDIT",
+        "evImgDelete": "IMAGE DELETE",
+        "evBulkDelete": "BULK MESSAGE DELETE",
+        "evInvites": "LOG INVITES/INVITE INFO",
+        "evModCmds": "MODERATOR COMMANDS",
+        "evMemberJoin": "MEMBER JOIN",
+        "evMemberLeave": "MEMBER LEAVE",
+        "evRoleAdd": "MEMBER ROLE ADD",
+        "evRoleRemove": "MEMBER ROLE REMOVE",
+        "evTimeout": "MEMBER TIMEOUT",
+        "evNick": "NICKNAME CHANGE",
+        "evBan": "MEMBER BAN",
+        "evUnban": "MEMBER UNBAN",
+        "evRoleCreate": "ROLE CREATE",
+        "evRoleDelete": "ROLE DELETE",
+        "evRoleUpdate": "ROLE UPDATE",
+        "evChCreate": "CHANNEL CREATE",
+        "evChUpdate": "CHANNEL UPDATE",
+        "evChDelete": "CHANNEL DELETE",
+        "evEmojiCreate": "EMOJI CREATE",
+        "evEmojiName": "EMOJI NAME CHANGE",
+        "evEmojiDelete": "EMOJI DELETE",
+        "evVoiceJoin": "VOICE CHANNEL JOIN",
+        "evVoiceLeave": "VOICE CHANNEL LEAVE",
+        "evVoiceMove": "VOICE CHANNEL MOVE",
+        "lblIgnoredChannels": "IGNORED CHANNELS",
+        "lblIgnoredRoles": "IGNORED ROLES",
+        "btnSaveActionLog": "Save Action Log Configuration",
+        "autoDeletePurgeTitle": "Auto Delete & Purge",
+        "subtabAutoDelete": "Auto Delete (Message Delay)",
+        "subtabAutoPurge": "Auto Purge (Interval Cleanup)",
+        "subtabManualPurge": "Manual Quick Purge",
+        "aboutTitle": "ABOUT",
+        "aboutAutoDeleteDesc": "Auto delete will automatically delete messages in a channel with optional filters and delay. Auto delete will not delete messages by bots, mods, or admins.",
+        "addAutoDeleteTitle": "ADD AUTO DELETE",
+        "lblChannel": "CHANNEL",
+        "lblAddFilter": "Add Filter",
+        "lblMatchAll": "MATCH ALL FILTERS",
+        "lblMatchAny": "MATCH ANY FILTER",
+        "lblDelaySeconds": "DELAY (OPTIONAL, IN SECONDS)",
+        "btnAdd": "Add",
+        "autoDeleteListTitle": "AUTO DELETE LIST",
+        "aboutAutoPurgeDesc": "Auto purge will automatically purge a channel of up to 5,000 messages on a set interval. Fully unlocked and autonomous in HaruMod.",
+        "addAutoPurgeTitle": "ADD AUTO PURGE",
+        "lblFilterOptional": "FILTER (OPTIONAL)",
+        "lblPurgeIntervalHours": "SELECT PURGE INTERVAL (HOURS)",
+        "autoPurgeListTitle": "AUTO PURGE LIST",
+        "manualPurgeTitle": "Instant Channel Purge",
+        "lblTargetChannel": "Target Channel:",
+        "lblMessageAmount": "Number of Messages to Purge (1 - 100):",
+        "lblPurgeFilterType": "Purge Filter:",
+        "btnExecutePurge": "Purge Messages Now",
+        "purgeLogTitle": "Recent Purge Executions",
+        "autobanModuleTitle": "Autoban",
+        "btnCreateRule": "Create Rule",
+        "modalTitleAutobanRule": "Rule",
+        "lblRuleName": "Rule Name",
+        "lblRuleType": "Rule Type",
+        "btnCancel": "Cancel",
+        "automodModuleTitle": "Automod",
+        "btnManageDefaultSettings": "Manage Default Settings",
+        "modalTitleAutomodRule": "Rule",
+        "lblName": "Name",
+        "lblActions": "Actions",
+        "lblPermissions": "Permissions",
+        "lblAffectedRoles": "Affected Roles",
+        "lblAffectedChannels": "Affected Channels",
+        "lblAdditionalOptions": "Additional Options",
+        "modalTitleDefaultSettings": "Default Settings",
+        "descDefaultSettings": "These are the default settings for rules that don't have them specifically set.",
+        "lblDefaultLogChannel": "Default Log Channel",
+        "slowmodeModuleTitle": "Slowmode & Lockdown",
+        "headSlowmode": "Channel Slowmode Rate Limiter",
+        "descSlowmode": "Limit how frequently members can send messages in a chat channel.",
+        "lblSelectChannel": "Select Channel",
+        "lblCooldownBetweenMsgs": "Message Cooldown Interval",
+        "btnApplySlowmode": "Apply Slowmode to Channel",
+        "headLockdown": "Emergency Channel Lockdown",
+        "descLockdown": "Revoke or restore Send Messages permissions for @everyone during raids.",
+        "btnLockChannel": "Lock Channel",
+        "btnUnlockChannel": "Unlock Channel",
+        "badgeActive": "Active",
+        "badgeNotInServer": "Not In Server",
+
         
         dashServerSubtitle: "HaruMod Security System Active 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
         statsBoardTitle: "LIVE SERVER STATS & TIMEZONE VOICE CHANNELS",
@@ -6817,11 +7916,29 @@
         }
       });
 
+      // Update active tab breadcrumb and title in the new language
+      const curTab = document.querySelector(".dyno-nav-item.active");
+      if (curTab && curTab.id) {
+        const tabKey = curTab.id.replace("cfg-btn-", "");
+        const tabTitle = (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang]) ? DYNO_TAB_TITLES_I18N[activeLang][tabKey] : "";
+        if (tabTitle) {
+          const breadEl = document.getElementById("dyno-bread-tab");
+          if (breadEl) breadEl.innerText = tabTitle;
+          const titleEl = document.getElementById("dyno-active-title");
+          if (titleEl) titleEl.innerText = tabTitle;
+        }
+      }
+
       // Update dynamic modules and activity lists in the new language
       if (typeof renderModulesGrid === "function") renderModulesGrid();
       if (typeof loadRecentActivities === "function") loadRecentActivities();
       if (typeof updateLiveClock === "function") updateLiveClock();
       if (typeof updateLiveStatsBoardMockup === "function") updateLiveStatsBoardMockup();
+      if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+      if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
+      if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+      if (typeof renderAutobanRules === "function") renderAutobanRules();
+      if (typeof renderAutomodRules === "function") renderAutomodRules();
 
       // Sync select dropdown in bot settings
       const langSel = document.getElementById("cfg-dash-language");
@@ -7504,11 +8621,23 @@
       const targetBtn = document.getElementById("cfg-btn-" + tabKey);
       if (targetBtn) targetBtn.classList.add("active");
 
-      const title = DYNO_TAB_TITLES[tabKey] || "Cấu hình Server";
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const title = (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang] && DYNO_TAB_TITLES_I18N[activeLang][tabKey]) 
+                    ? DYNO_TAB_TITLES_I18N[activeLang][tabKey] 
+                    : (DYNO_TAB_TITLES[tabKey] || "Server Configuration");
       const breadEl = document.getElementById("dyno-bread-tab");
       if (breadEl) breadEl.innerText = title;
       const titleEl = document.getElementById("dyno-active-title");
       if (titleEl) titleEl.innerText = title;
+
+      // Render tab-specific dynamic lists
+      if (tabKey === "logs" && typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+      if (tabKey === "channels") {
+        if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
+        if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+      }
+      if (tabKey === "autoban" && typeof renderAutobanRules === "function") renderAutobanRules();
+      if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
     }
 
     // Live Preview updates as user types
@@ -8030,634 +9159,776 @@
     // Pre-loaded offline cache for instant zero-latency role & channel population
     const REAL_GARDEN_DATA = {"roles": [{"id": "1426554525074067629", "name": ".☘︎ ݁˖ Booster", "color": 10382335}, {"id": "1426555722761769087", "name": "Koya", "color": 0}, {"id": "1426557313883439234", "name": "Floral Helpers ⋆˚࿔", "color": 13490187}, {"id": "1426557729476051152", "name": "Akiko", "color": 0}, {"id": "1426557792315117671", "name": "Cloudy", "color": 0}, {"id": "1426557896308559874", "name": "Emoji.gg Bot", "color": 0}, {"id": "1426557975492821107", "name": "Jockie Music (1)", "color": 0}, {"id": "1426558119298863179", "name": "OwO", "color": 0}, {"id": "1426558195039604899", "name": "Mimu", "color": 0}, {"id": "1426558297468702816", "name": "carl-bot", "color": 0}, {"id": "1426558383669907469", "name": "Dyno", "color": 0}, {"id": "1426558772704186371", "name": "Statbot", "color": 0}, {"id": "1426558818451591191", "name": "Sx Bot", "color": 0}, {"id": "1426558908415213642", "name": "Boogie", "color": 0}, {"id": "1426558970100842601", "name": "TempVoice", "color": 0}, {"id": "1426559027407618111", "name": "Tickets v2", "color": 0}, {"id": "1426559063667249156", "name": "TTS Bot", "color": 0}, {"id": "1426565826793832528", "name": "🌸Floral Guests ؛༊", "color": 11127295}, {"id": "1426582430709714985", "name": "Valorant", "color": 8587274}, {"id": "1426582526775787622", "name": "TFT", "color": 15662848}, {"id": "1426582618438111322", "name": "Arena Of Valor (Liên quân)", "color": 9769490}, {"id": "1426582725120229526", "name": "Genshin Impact", "color": 2215103}, {"id": "1426582859266916402", "name": "PUBG", "color": 1776396}, {"id": "1426582924400267476", "name": "Roblox", "color": 16777215}, {"id": "1426583406275465246", "name": "Minecraft", "color": 65328}, {"id": "1426583647833821367", "name": "LOL (Liên Minh)", "color": 410348}, {"id": "1426583887475249285", "name": "Steam Game", "color": 1863679}, {"id": "1426586068073058459", "name": "Keto", "color": 0}, {"id": "1426586728894038231", "name": "Tickets Support", "color": 0}, {"id": "1426586730882138132", "name": "Tickets Admin", "color": 0}, {"id": "1428975391271419998", "name": "༺·Friendly𐫱༺·", "color": 10700305}, {"id": "1428976170199810100", "name": "Administrator⋆˚꩜｡", "color": 0}, {"id": "1455990461025226875", "name": "private access", "color": 0}, {"id": "1471857190745673772", "name": "Bongo", "color": 0}, {"id": "1471898724799221901", "name": "Senerity࣪ ☁︎ּ ֶָ֢. ˖", "color": 12444201}, {"id": "1472262980921196696", "name": "Cyona", "color": 485004}, {"id": "1472630354266296478", "name": "Musico", "color": 0}, {"id": "1472630419730993406", "name": "FredBoat♪♪", "color": 0}, {"id": "1472630595640102916", "name": "Valorant Stats | ValoTracker", "color": 0}, {"id": "1472631662830424126", "name": "Lara✨", "color": 0}, {"id": "1474035142078103554", "name": "Invite Tracker", "color": 0}, {"id": "1474046503663309034", "name": "؛༊ Staff", "color": 65393}, {"id": "1474096776217624577", "name": "Unidentified", "color": 854795}, {"id": "1477839976413659237", "name": "Hades Executive", "color": 14542592}, {"id": "1478221276387610707", "name": "Free Stuff", "color": 0}, {"id": "1479331482714636492", "name": "Wheat", "color": 0}, {"id": "1482397862028509377", "name": "6 HON DAI CO DON", "color": 60159}, {"id": "1482711973425840169", "name": "Bông Béo", "color": 3381759}, {"id": "1482727474227056704", "name": "King Of Busy", "color": 789002}, {"id": "1490741089395806218", "name": "PC", "color": 0}, {"id": "1490741137609199856", "name": "Mobile", "color": 0}, {"id": "1490741138045407304", "name": "Console", "color": 0}, {"id": "1493302077261218112", "name": "Cục Cưng Của Hades ❤️", "color": 15158332}, {"id": "1495348603437187194", "name": "Jockie Music", "color": 0}, {"id": "1498727043389456414", "name": "Scriptly", "color": 0}, {"id": "1499252355886088223", "name": "Big Dozer (Dicksucker)", "color": 16777215}, {"id": "1499609329484038246", "name": "Xio", "color": 16251902}, {"id": "1501868412790636624", "name": "Moderator⋆˚꩜｡", "color": 2688871}, {"id": "1502683879444709456", "name": "LG", "color": 3084625}, {"id": "1509829662468214786", "name": "Medal", "color": 0}, {"id": "1510612134873010239", "name": "Lofi Girl", "color": 0}, {"id": "1511608831220908123", "name": "Đánh vần abc", "color": 3735678}, {"id": "1511617877399310436", "name": "Vua Cờ Bạc", "color": 921783}, {"id": "1511791026682069215", "name": "Trùm Smuft hành gà", "color": 14869218}, {"id": "1511982458470400151", "name": "Kai", "color": 590079}, {"id": "1512114349290819634", "name": "new role", "color": 0}, {"id": "1512858112791543911", "name": "HornBot", "color": 0}, {"id": "1513343992056512624", "name": "Tsukiko", "color": 0}, {"id": "1519902340222816418", "name": "akwy", "color": 16711680}, {"id": "1522569206770565273", "name": "CTHQ", "color": 195}, {"id": "1527560913786376363", "name": "Male💎", "color": 752301}, {"id": "1527561358248382656", "name": "Female🌸", "color": 13005275}, {"id": "1528792113460936804", "name": "Dusky Bel", "color": 0}, {"id": "1534127733112569919", "name": "Orator", "color": 0}, {"id": "1535314046386049134", "name": "🌰Dream Seed", "color": 9388800}, {"id": "1535314221628129300", "name": "Little Sprout 🌱", "color": 9566279}, {"id": "1535314321725329408", "name": "Young Leaf 🍃", "color": 2790478}, {"id": "1535314496032342137", "name": "Greenling🌿", "color": 2252560}, {"id": "1535314604266094653", "name": "Dreamling☘️", "color": 16446310}, {"id": "1535314746075775018", "name": "🌾 Blooming Soul", "color": 16776604}, {"id": "1535314862400606228", "name": "🌷 Dream Blossom", "color": 14839807}, {"id": "1535314959905460294", "name": "🌳 Dreamwood", "color": 10092463}, {"id": "1535315891221176330", "name": "🌲 Evergreen", "color": 11206544}, {"id": "1535316005302046830", "name": "🌸 Garden Spirit", "color": 16711935}, {"id": "1535316176320602152", "name": "🌺 Dreamkeeper", "color": 14185713}, {"id": "1535316327344906342", "name": "✨ Garden of Dreams", "color": 16644526}, {"id": "1536009432251764836", "name": "Top 1 Nhiều Chuyện", "color": 16711684}, {"id": "1537013429598953596", "name": "NeonUtil", "color": 0}, {"id": "1537013573392273440", "name": "reaction bot🎉", "color": 0}, {"id": "1537448094206271608", "name": "Shindo Life", "color": 10181046}, {"id": "1537449064675680297", "name": "Goose Goose Duck", "color": 15158332}, {"id": "1537779203154640896", "name": "Chim = Đại Bàng", "color": 16406105}, {"id": "1537784082048614400", "name": "TrẻTrâu2k18", "color": 16749556}, {"id": "1543244011265986560", "name": "Co-Owner⋆˚꩜｡", "color": 0}, {"id": "1555275280703160451", "name": "Wuthering Waves", "color": 3724998}, {"id": "1555469462696755310", "name": "Hestia", "color": 1835195}, {"id": "1558715383601561751", "name": "RiuVoiz", "color": 16711901}, {"id": "1559619275361357946", "name": "HaruBot", "color": 0}, {"id": "1561029632428347425", "name": "Haru Bot Status Watcher", "color": 0}, {"id": "1561077769268633710", "name": "Top.gg", "color": 0}, {"id": "1561083137986142359", "name": "Vip", "color": 16776563}, {"id": "1561083361030705192", "name": "Vip+", "color": 0}, {"id": "1561083542560182322", "name": "MVP", "color": 16777215}, {"id": "1561083700328927252", "name": "MVP+", "color": 0}, {"id": "1563871728361406554", "name": "La Personne Veule", "color": 0}, {"id": "1564894737331392525", "name": "VirtualFisher", "color": 0}, {"id": "1567070951844220928", "name": "2Du", "color": 0}, {"id": "1573950539165859962", "name": "HaruMod", "color": 0}], "channels": [{"id": "1426559365317529700", "name": "staff", "type": 0}, {"id": "1426559393700511844", "name": "Staff Only", "type": 4}, {"id": "1426564122568298658", "name": "staff-cmd", "type": 0}, {"id": "1426564426449813684", "name": "🍃Whisper Garden𖦹", "type": 4}, {"id": "1426564427943252052", "name": "💐╎Create VC🌺", "type": 2}, {"id": "1426564429520048178", "name": "⋆˚꩜｡interface✾", "type": 0}, {"id": "1426566246765170728", "name": "🔒╎Hội sục chéo Sài Gònʚଓ", "type": 2}, {"id": "1426566653310799924", "name": "🛏️╎Sleeping Place ⋆.˚", "type": 2}, {"id": "1426566949478858864", "name": "💮╎AFK ⋆.˚", "type": 2}, {"id": "1426567222058287114", "name": "☀️╎Sunny Meadow 𝜗ৎ", "type": 2}, {"id": "1426568178636558366", "name": "🌺The Florist's Corner 𖧧", "type": 4}, {"id": "1426568420287320095", "name": "🌿╎garden-chat", "type": 0}, {"id": "1426568686239613148", "name": "🍃╎petal-playground", "type": 0}, {"id": "1426569284271738880", "name": "🌸˚˖⋆ Garden Gate ʚɞ", "type": 4}, {"id": "1426569608453685378", "name": "🪴╎entrance-pathꨄ", "type": 5}, {"id": "1426569744823222312", "name": "🍂╎farewell-garden", "type": 0}, {"id": "1426569927925567609", "name": "🍀╎rules", "type": 0}, {"id": "1426572015124484208", "name": "staff-log", "type": 0}, {"id": "1426585145376243805", "name": "🌻 Blooming Commands ⋆˙⟡", "type": 4}, {"id": "1426585333822128260", "name": "💮bot-cmds", "type": 0}, {"id": "1426585402587877447", "name": "💮music-cmds", "type": 0}, {"id": "1426585458560991312", "name": "💮game-cmds", "type": 0}, {"id": "1426586414442610709", "name": "🌸 Flower Help Desk ۶ৎ", "type": 4}, {"id": "1426586488329470075", "name": "🎀╎create-tickets", "type": 0}, {"id": "1426587057744117862", "name": "transcript", "type": 0}, {"id": "1429043367026757703", "name": "🌸 Garden Announcements؛༊", "type": 4}, {"id": "1429044075469733999", "name": "🧸ྀི╎valorant-eng", "type": 0}, {"id": "1471918783772758077", "name": "╭🧭「 ✦ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 ✦ 」🧭", "type": 4}, {"id": "1471918787115745510", "name": "📅 Monday Nov 23rd", "type": 2}, {"id": "1471918811799097437", "name": "🟢16 ⛔16 🌙14", "type": 2}, {"id": "1471918863217197138", "name": "Users: 268", "type": 2}, {"id": "1474036285311160371", "name": "🍂╎aov-update", "type": 0}, {"id": "1475124023594844201", "name": "💖╎Couple-1 💞", "type": 2}, {"id": "1475124106335748166", "name": "💖╎Couple-2💞", "type": 2}, {"id": "1478221074150985738", "name": "🎮╎free-game", "type": 0}, {"id": "1479331422715252819", "name": "🔮╎tarot", "type": 0}, {"id": "1480892211976474826", "name": "💘╎announcement", "type": 0}, {"id": "1486320303410778194", "name": "☀️╎6 Hondai Co Don 𝜗ৎ", "type": 2}, {"id": "1493290549862731886", "name": "🎀╎Hades and Persephone", "type": 2}, {"id": "1498992048676671620", "name": "🌿Custom VC", "type": 4}, {"id": "1502683937833484498", "name": "🌑╎Lonely Gang", "type": 2}, {"id": "1516833668943843441", "name": "🎮╎Tạo VC Liên Quân", "type": 2}, {"id": "1516835099717533846", "name": "🎮╎Game Talk (2) ⋆.˚", "type": 2}, {"id": "1516835163017838733", "name": "🏅╎Team 1", "type": 2}, {"id": "1521602742928281734", "name": "🏅╎Team 2", "type": 2}, {"id": "1526527096233398344", "name": "MISC", "type": 4}, {"id": "1526527275561128038", "name": "phishing", "type": 0}, {"id": "1528651365243555941", "name": "🎞️╎Watching Together (2) ⋆.˚", "type": 2}, {"id": "1528651442465017947", "name": "🎞️╎Watching Together (1) ⋆.˚", "type": 2}, {"id": "1528790889239941221", "name": "🐶╎DUSKY HANDSOME😎", "type": 2}, {"id": "1535312998023962625", "name": "⭐╎levels", "type": 0}, {"id": "1535396997048045701", "name": "💍╎roles", "type": 0}, {"id": "1559779032478781440", "name": "thanh-toan", "type": 0}, {"id": "1560089051971846214", "name": "🤖╎bot-command", "type": 0}, {"id": "1560109557852672010", "name": "🇻🇳╎noi-tu", "type": 0}, {"id": "1560109654812663878", "name": "🇺🇸╎noi-tu-tieng-anh", "type": 0}, {"id": "1561020586526773278", "name": "🟠・Haru Bot Status・SLOW", "type": 2}, {"id": "1561022447803957278", "name": "📡・Haru Bot Status", "type": 4}, {"id": "1561024193456242708", "name": "🟠・Ping・283ms", "type": 2}, {"id": "1561024196308373524", "name": "⏱️・Uptime・14h 31m", "type": 2}, {"id": "1561217251775094856", "name": "🪷Garden Mini Game🎴", "type": 4}, {"id": "1561229279440670731", "name": "╎sói-nằm-vùng", "type": 0}, {"id": "1561411440517054544", "name": "╎uno", "type": 0}, {"id": "1562049819990691941", "name": "╎haru-bot-update", "type": 0}, {"id": "1563853524339785808", "name": "🪼╎Divers of Dreams", "type": 2}, {"id": "1564013803367047299", "name": "╎vua-tieng-viet", "type": 0}, {"id": "1564895035361591326", "name": "╎cau-ca", "type": 0}, {"id": "1565029695828000828", "name": "╎cau-ca-haru", "type": 0}, {"id": "1565255232668311673", "name": "bot-bug", "type": 15}, {"id": "1566509318675759174", "name": "🎮╎Game Talk (1) ⋆.˚", "type": 2}, {"id": "1566837593541451826", "name": "🧊╎HaDus", "type": 2}, {"id": "1568402214039593088", "name": "server-hub", "type": 20}, {"id": "1573633644223004755", "name": "💝╎haru-shop", "type": 0}]};
 
-    const DEFAULT_FALLBACK_ROLES = [
-      { id: "role-admin", name: "👑 Administrator / Quản Trị Viên" },
-      { id: "role-mod", name: "🛡️ Moderator / Kiểm Duyệt Viên" },
-      { id: "role-staff", name: "⭐ Staff / Nhân Sự" },
-      { id: "role-vip", name: "💎 VIP Patron / Thành Viên Ưu Tú" },
-      { id: "role-member", name: "👤 Member / Thành Viên Chính Thức" },
-      { id: "role-muted", name: "🔇 Muted / Cách Ly Tạm Thời" },
-      { id: "role-bot", name: "🤖 HaruMod Security Bot" }
-    ];
+    const GARDEN_REAL_CHANNELS = REAL_GARDEN_DATA.channels;
+    const GARDEN_REAL_ROLES = REAL_GARDEN_DATA.roles;
 
-    const DEFAULT_FALLBACK_CHANNELS = [
-      { id: "ch-welcome", name: "👋・chào-mừng" },
-      { id: "ch-rules", name: "📜・quy-tắc-server" },
-      { id: "ch-announcements", name: "📢・thông-báo" },
-      { id: "ch-general", name: "💬・trò-chuyện-chung" },
-      { id: "ch-commands", name: "🤖・lệnh-bot" },
-      { id: "ch-mod-log", name: "🚨・nhật-ký-mod" },
-      { id: "ch-security-honeypot", name: "🍯・bẫy-raid-honeypot" }
-    ];
+    // DYNO TAB TITLES BILINGUAL
+    const DYNO_TAB_TITLES_I18N = {
+      vi: {
+        dashboard: "Dashboard Tổng Quan Máy Chủ",
+        identity: "Nhận diện & Biệt danh Bot",
+        overview: "Tổng quan an ninh",
+        logs: "Action Log",
+        channels: "Auto Delete & Purge",
+        autoban: "Autoban",
+        automod: "Automod",
+        members: "Kiểm duyệt & Xử phạt",
+        slowmode: "Slowmode & Khóa kênh",
+        honeypot: "Honeypot & Chống Raid",
+        cases: "Thang phạt vi phạm",
+        roles: "Quản lý Role & Quyền",
+        welcome: "Chào mừng & Tự động gán quyền",
+        sim: "Live Filter Tester",
+        sync: "Đồng bộ Discord Real-time"
+      },
+      en: {
+        dashboard: "Server Dashboard",
+        identity: "Bot Identity & Nickname",
+        overview: "Security Overview",
+        logs: "Action Log",
+        channels: "Auto Delete & Purge",
+        autoban: "Autoban",
+        automod: "Automod",
+        members: "Moderation",
+        slowmode: "Slowmode & Lockdown",
+        honeypot: "Honeypot & Anti-Raid",
+        cases: "Sanction Ladder",
+        roles: "Role Management",
+        welcome: "Welcome & Goodbyes",
+        sim: "Live Filter Tester",
+        sync: "Discord Real-time Sync"
+      }
+    };
 
-    function populateChannelDropdowns(channels) {
-      const channelSelectIds = [
-        "cfg-honeypot-channel",
-        "cfg-log-mod",
-        "cfg-log-msg",
-        "cfg-log-members",
-        "cfg-log-server",
+    // Populate all channel dropdowns everywhere
+    function populateAllDynoDropdowns() {
+      const channels = cachedChannels && cachedChannels.length > 0 ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const roles = cachedRoles && cachedRoles.length > 0 ? cachedRoles : GARDEN_REAL_ROLES;
+
+      const chSelectIds = [
+        "cfg-actionlog-main-channel",
+        "override-ch-msg",
+        "override-ch-member",
+        "override-ch-role",
+        "override-ch-channel",
+        "override-ch-emoji",
+        "override-ch-voice",
+        "sel-add-ignored-channel",
+        "cfg-autodelete-channel",
+        "cfg-autopurge-channel",
         "cfg-channel-purge",
         "cfg-channel-slowmode",
         "cfg-channel-lock",
+        "automod-affected-channels",
+        "automod-ignored-channels",
+        "automod-log-channel",
+        "automod-default-log-channel",
+        "automod-default-ignored-channels",
+        "cfg-honeypot-channel",
         "cfg-welcome-channel",
-        "cfg-goodbye-channel"
+        "cfg-goodbye-channel",
+        "cfg-dash-updates-channel"
       ];
 
-      const list = (channels && channels.length > 0) ? channels : DEFAULT_FALLBACK_CHANNELS;
-
-      channelSelectIds.forEach(id => {
-        const sel = document.getElementById(id);
-        if (!sel) return;
-
-        const currentVal = sel.value;
-        sel.innerHTML = "";
-
-        list.forEach(ch => {
+      chSelectIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const curVal = el.value;
+        el.innerHTML = '<option value="">Select Channel..</option>';
+        channels.forEach(ch => {
           const opt = document.createElement("option");
           opt.value = ch.id;
-          opt.innerText = `# ${ch.name}`;
-          if (ch.id === currentVal) {
-            opt.selected = true;
-          }
-          sel.appendChild(opt);
+          const prefix = ch.type === 2 ? "🔊 " : (ch.type === 4 ? "📁 " : "# ");
+          opt.textContent = prefix + ch.name;
+          el.appendChild(opt);
         });
+        if (curVal) el.value = curVal;
       });
-    }
 
-    function populateRoleDropdowns(roles) {
-      const roleSelectIds = ["cfg-role-muted", "cfg-role-autorole"];
+      // Select default #staff-log or #staff if not set
+      const mainLogSel = document.getElementById("cfg-actionlog-main-channel");
+      if (mainLogSel && (!mainLogSel.value || mainLogSel.value === "")) {
+        const staffCh = channels.find(c => c.name.toLowerCase().includes("staff") || c.name.toLowerCase().includes("mod"));
+        if (staffCh) mainLogSel.value = staffCh.id;
+      }
 
-      const list = (roles && roles.length > 0) ? roles : DEFAULT_FALLBACK_ROLES;
-
+      // Populate roles
+      const roleSelectIds = [
+        "sel-add-ignored-role",
+        "automod-affected-roles",
+        "automod-ignored-roles",
+        "automod-default-ignored-roles",
+        "cfg-dash-roles-picker"
+      ];
       roleSelectIds.forEach(id => {
-        const sel = document.getElementById(id);
-        if (!sel) return;
-
-        const currentVal = sel.value;
-        sel.innerHTML = `<option value="">-- Chọn vai trò (Role) --</option>`;
-
-        list.forEach(r => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const curVal = el.value;
+        el.innerHTML = '<option value="">Select Role..</option>';
+        roles.forEach(r => {
           const opt = document.createElement("option");
           opt.value = r.id;
-          opt.innerText = `@ ${r.name}`;
-          if (r.id === currentVal) opt.selected = true;
-          sel.appendChild(opt);
+          opt.textContent = "@ " + r.name;
+          el.appendChild(opt);
         });
+        if (curVal) el.value = curVal;
       });
     }
 
-    // Hook selectServerForConfig to trigger real Discord data fetch
-    const prevSelectServerConfigReal = selectServerForConfig;
-    selectServerForConfig = function(guildId) {
-      if (typeof prevSelectServerConfigReal === "function") prevSelectServerConfigReal(guildId);
-      // Fetch real channels & roles from Discord API gateway
-      fetchRealDiscordGuildData(guildId);
-    };
-
-    function initDashboardAuth() {
-      const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
-      if (typeof switchDashLang === "function") switchDashLang(savedLang);
-      checkOAuthCallback();
+    // Action Log Specifying Channels toggle
+    function toggleSpecifyChannels(isChecked) {
+      document.querySelectorAll(".dyno-per-event-select").forEach(sel => {
+        sel.style.display = isChecked ? "inline-block" : "none";
+      });
+      triggerUnsaved();
     }
 
-    if (document.readyState === "loading") {
-      window.addEventListener("DOMContentLoaded", initDashboardAuth);
-    } else {
-      initDashboardAuth();
-    }
-
-    window.addEventListener("pageshow", checkOAuthCallback);
-    window.addEventListener("hashchange", checkOAuthCallback);
-  
-    /* Mobile Menu Toggle Handler */
-    
-    // Automatically close mobile menu if resized to PC desktop width
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 900) {
-        const drawer = document.getElementById("mobile-nav-drawer");
-        const btn = document.getElementById("mobile-menu-btn");
-        if (drawer) drawer.classList.remove("open");
-        if (btn) {
-          const bars = btn.querySelector(".hamburger-bars-icon");
-          const close = btn.querySelector(".hamburger-close-icon");
-          if (bars) bars.style.display = "block";
-          if (close) close.style.display = "none";
-        }
+    function toggleActionLogModule(isEnabled) {
+      const lbl = document.getElementById("lbl-actionlog-status");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      if (lbl) {
+        lbl.textContent = isEnabled ? (activeLang === "vi" ? "Đã bật Module" : "Enable Module") : (activeLang === "vi" ? "Đã tắt Module" : "Disable Module");
       }
-    });
+      triggerUnsaved();
+    }
 
-    function toggleMobileMenu() {
-      const drawer = document.getElementById("mobile-nav-drawer");
-      const btn = document.getElementById("mobile-menu-btn");
-      if (!drawer || !btn) return;
-      const isOpen = drawer.classList.toggle("open");
-      const bars = btn.querySelector(".hamburger-bars-icon");
-      const close = btn.querySelector(".hamburger-close-icon");
-      if (bars && close) {
-        bars.style.display = isOpen ? "none" : "block";
-        close.style.display = isOpen ? "block" : "none";
+    function updateNewAccountAge() {
+      const val = document.getElementById("opt-new-account-age").value;
+      showToast("Updated account age threshold to " + val + " days", "success");
+      triggerUnsaved();
+    }
+
+    // Ignored Channels / Roles in Action Log
+    let actionLogIgnoredChannels = ["1426564122568298658"]; // staff-cmd default
+    let actionLogIgnoredRoles = ["1426557896308559874"]; // bots default
+
+    function renderActionLogIgnored() {
+      const chList = document.getElementById("actionlog-ignored-channels-list");
+      if (chList) {
+        chList.innerHTML = actionLogIgnoredChannels.map((id, idx) => {
+          const ch = GARDEN_REAL_CHANNELS.find(c => c.id === id);
+          const name = ch ? ch.name : id;
+          return `<div class="dyno-chip-tag"><span># ${name}</span><span class="remove-tag" onclick="removeActionLogIgnoredChannel(${idx})">&times;</span></div>`;
+        }).join("");
+      }
+
+      const roleList = document.getElementById("actionlog-ignored-roles-list");
+      if (roleList) {
+        roleList.innerHTML = actionLogIgnoredRoles.map((id, idx) => {
+          const r = GARDEN_REAL_ROLES.find(ro => ro.id === id);
+          const name = r ? r.name : id;
+          return `<div class="dyno-chip-tag"><span>@ ${name}</span><span class="remove-tag" onclick="removeActionLogIgnoredRole(${idx})">&times;</span></div>`;
+        }).join("");
       }
     }
 
-    // Auto close drawer when clicking outside
-    document.addEventListener("click", function(e) {
-      const drawer = document.getElementById("mobile-nav-drawer");
-      const btn = document.getElementById("mobile-menu-btn");
-      if (drawer && drawer.classList.contains("open")) {
-        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-          toggleMobileMenu();
-        }
-      }
-    });
-
-</script>
-
-<script>
-// Luxurious Neon Cyan Expanding Wave Ripple Effect on Click
-(function() {
-  document.addEventListener("click", function(e) {
-    for (var i = 0; i < 2; i++) {
-      var wave = document.createElement("div");
-      wave.className = "neon-click-wave";
-      var baseSize = 20;
-      wave.style.width = baseSize + "px";
-      wave.style.height = baseSize + "px";
-      wave.style.left = (e.clientX - baseSize / 2) + "px";
-      wave.style.top = (e.clientY - baseSize / 2) + "px";
-      if (i === 1) {
-        wave.style.animationDelay = "0.12s";
-        wave.style.borderColor = "#38bdf8";
-      }
-      document.body.appendChild(wave);
-      setTimeout(function(el) { return function() { el.remove(); }; }(wave), 750);
+    function addIgnoredChannel(id) {
+      if (!id || actionLogIgnoredChannels.includes(id)) return;
+      actionLogIgnoredChannels.push(id);
+      renderActionLogIgnored();
+      triggerUnsaved();
     }
-  });
-})();
-</script>
+    function removeActionLogIgnoredChannel(idx) {
+      actionLogIgnoredChannels.splice(idx, 1);
+      renderActionLogIgnored();
+      triggerUnsaved();
+    }
 
+    function addIgnoredRole(id) {
+      if (!id || actionLogIgnoredRoles.includes(id)) return;
+      actionLogIgnoredRoles.push(id);
+      renderActionLogIgnored();
+      triggerUnsaved();
+    }
+    function removeActionLogIgnoredRole(idx) {
+      actionLogIgnoredRoles.splice(idx, 1);
+      renderActionLogIgnored();
+      triggerUnsaved();
+    }
 
-  <!-- High-Performance Neon Wave Ripple on Click (GPU Composited) -->
-  <script>
-    (function() {
-      let lastClickTime = 0;
-      window.addEventListener("click", function(e) {
-        const now = performance.now();
-        if (now - lastClickTime < 50) return;
-        lastClickTime = now;
+    function saveActionLogSettings() {
+      const mainCh = document.getElementById("cfg-actionlog-main-channel") ? document.getElementById("cfg-actionlog-main-channel").value : "";
+      const isEnabled = document.getElementById("cfg-switch-actionlog") ? document.getElementById("cfg-switch-actionlog").checked : true;
+      const specifyChannels = document.getElementById("opt-specify-channels") ? document.getElementById("opt-specify-channels").checked : false;
 
-        const wave = document.createElement("div");
-        wave.className = "neon-click-wave";
-        wave.style.left = e.clientX + "px";
-        wave.style.top = e.clientY + "px";
-        document.body.appendChild(wave);
+      localStorage.setItem("haruki_actionlog_config", JSON.stringify({
+        enabled: isEnabled,
+        mainChannel: mainCh,
+        specifyChannels: specifyChannels,
+        ignoredChannels: actionLogIgnoredChannels,
+        ignoredRoles: actionLogIgnoredRoles,
+        updatedAt: new Date().toISOString()
+      }));
 
-        wave.addEventListener("animationend", function() {
-          wave.remove();
-        }, { once: true });
-      }, { passive: true });
-    })();
-  
-
-    // =========================================================================
-    // SERVER DASHBOARD, BOT SETTINGS & MODULES MANAGER LOGIC
-    // =========================================================================
-    let currentManagerRoles = ["🌸 The Florist 𖦹", "🫧 Bloom Keeper ♡", "Floral Helpers ⋆˚࿔"];
-
-    const BOT_MODULES_LIST = [
-      {
-        id: "automod",
-        cat: "security",
-        name_en: "Auto-Mod & Phishing Filter",
-        name_vi: "Auto-Mod & Chống Lừa Đảo Phishing",
-        badge_en: "PROTECTION 24/7",
-        badge_vi: "BẢO VỆ 24/7",
-        badgeCls: "tag-automod",
-        color: "#10b981",
-        bg: "rgba(16, 185, 129, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
-        desc_en: "Automatically detects and deletes fake Nitro links, token grabbers, profanity filters, and bans raid bots in 4ms.",
-        desc_vi: "Tự động xóa link Nitro lừa đảo, link độc hại, lọc từ ngữ bậy bạ và ban tài khoản phát tán trong 4 mili-giây.",
-        cmds: ["automod", "filter", "whitelist", "scamcheck"],
-        tab: "automod"
-      },
-      {
-        id: "moderation",
-        cat: "mod",
-        name_en: "Member Moderation Actions",
-        name_vi: "Kiểm Duyệt Thành Viên (Moderation)",
-        badge_en: "CORE ACTIONS",
-        badge_vi: "TRỪNG PHẠT",
-        badgeCls: "tag-blocked",
-        color: "#0ea5e9",
-        bg: "rgba(14, 165, 233, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>',
-        desc_en: "Fast punishment commands: Kick, Ban, Mute (Timeout), Warn with audit reasons and permanent logging.",
-        desc_vi: "Bộ lệnh trừng phạt nhanh: Kick, Ban, Mute (Timeout), Warn kèm lý do và ghi nhận hồ sơ xử phạt vào Audit Log.",
-        cmds: ["ban", "kick", "mute", "timeout", "unmute", "warn", "nick"],
-        tab: "members"
-      },
-      {
-        id: "channels",
-        cat: "admin",
-        name_en: "Channel Management & Fast Purge",
-        name_vi: "Quản Lý Kênh & Dọn Dẹp (Purge)",
-        badge_en: "PURGE & LOCK",
-        badge_vi: "DỌN TIN NHẮN",
-        badgeCls: "tag-trap",
-        color: "#ef4444",
-        bg: "rgba(239, 68, 68, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
-        desc_en: "Bulk delete messages (Purge 1-100), Slowmode interval (0s-6h), and emergency Channel Lockdown.",
-        desc_vi: "Xóa tin nhắn số lượng lớn (Purge 1-100), kích hoạt chế độ chậm (Slowmode) và Khóa Kênh khẩn cấp (Lockdown).",
-        cmds: ["purge", "slowmode", "lock", "unlock", "cleanbot"],
-        tab: "channels"
-      },
-      {
-        id: "honeypot",
-        cat: "security",
-        name_en: "Honeypot Trap & Staff Anti-Nuke",
-        name_vi: "Bẫy Honeypot & Chống Nuke Staff",
-        badge_en: "ANTI-RAID",
-        badge_vi: "CHỐNG RAID",
-        badgeCls: "tag-trap",
-        color: "#f59e0b",
-        bg: "rgba(245, 158, 11, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>',
-        desc_en: "Hidden channel bait to auto-ban raid userbots; detects compromised staff and locks the server.",
-        desc_vi: "Kênh mồi bẫy bí mật tự động bắt và perm-ban userbot raid; thu hồi quyền staff nếu phát hiện xóa kênh hàng loạt.",
-        cmds: ["honeypot", "antiwizz", "nukeshield"],
-        tab: "honeypot"
-      },
-      {
-        id: "statsboard",
-        cat: "admin",
-        name_en: "Live Stats & Timezone Voice Board",
-        name_vi: "Bảng Kênh Thống Kê & Múi Giờ Trực Tuyến",
-        badge_en: "VOICE STATS",
-        badge_vi: "KÊNH TRỰC TUYẾN",
-        badgeCls: "tag-automod",
-        color: "#10b981",
-        bg: "rgba(16, 185, 129, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>',
-        desc_en: "Automatically creates voice channels displaying real-time clock in your chosen timezone, member count and online presence.",
-        desc_vi: "Tạo danh mục kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server cập nhật tự động 24/7.",
-        cmds: ["statsboard", "serverstats", "clock"],
-        tab: null
-      },
-      {
-        id: "welcome",
-        cat: "admin",
-        name_en: "Welcome & Good-bye Announcements",
-        name_vi: "Tin Nhắn Chào Mừng & Tạm Biệt",
-        badge_en: "MEMBER JOINS",
-        badge_vi: "THÀNH VIÊN",
-        badgeCls: "tag-automod",
-        color: "#10b981",
-        bg: "rgba(16, 185, 129, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
-        desc_en: "Sends beautiful greetings with member avatar and {user}, {server}, {member_count} variables on join and leave.",
-        desc_vi: "Gửi thông báo chào đón người mới gia nhập với biến {user}, {server}, {member_count} và thông báo khi rời đi.",
-        cmds: ["welcome", "goodbye", "welcometest"],
-        tab: "welcome"
-      },
-      {
-        id: "roles",
-        cat: "admin",
-        name_en: "Role Management & RolePersist",
-        name_vi: "Quản Lý Vai Trò & RolePersist",
-        badge_en: "AUTO-ROLES",
-        badge_vi: "TỰ ĐỘNG",
-        badgeCls: "tag-automod",
-        color: "#a855f7",
-        bg: "rgba(168, 85, 247, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
-        desc_en: "Auto-assign roles on member join; restores former roles if a penalized member leaves and rejoins (RolePersist).",
-        desc_vi: "Tự động cấp role thành viên khi tham gia; tự động khôi phục role cũ nếu thành viên rời server rồi vào lại (RolePersist).",
-        cmds: ["autorole", "rolepersist", "role", "stickyrole"],
-        tab: "roles"
-      },
-      {
-        id: "logs",
-        cat: "admin",
-        name_en: "36 Granular Server Audit Logs",
-        name_vi: "36 Luồng Nhật Ký Server (Audit Logs)",
-        badge_en: "AUDIT STREAMS",
-        badge_vi: "GIÁM SÁT",
-        badgeCls: "tag-shield",
-        color: "#38bdf8",
-        bg: "rgba(56, 189, 248, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>',
-        desc_en: "Routes moderation events, message edits/deletions, voice tracking, and role updates across distinct log channels.",
-        desc_vi: "Tách biệt nhật ký trừng phạt, sửa/xóa tin nhắn, voice và member vào các kênh chuyên biệt để quản lý minh bạch.",
-        cmds: ["logs", "logchannel", "auditstatus"],
-        tab: "logs"
-      },
-      {
-        id: "utility",
-        cat: "utility",
-        name_en: "Utilities & Server Information",
-        name_vi: "Tiện Ích & Tra Cứu Thông Tin",
-        badge_en: "INFO & STATS",
-        badge_vi: "TIỆN ÍCH",
-        badgeCls: "tag-shield",
-        color: "#f43f5e",
-        bg: "rgba(244, 63, 94, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
-        desc_en: "Essential utilities: view full HD avatars, banners, bot ping latency, server uptime, and complete server stats.",
-        desc_vi: "Các lệnh tiện ích: xem avatar full HD, banner, kiểm tra ping mạng, thời gian bot online và thống kê server.",
-        cmds: ["serverinfo", "userinfo", "avatar", "banner", "ping", "botinfo"],
-        tab: null
-      },
-      {
-        id: "sim",
-        cat: "utility",
-        name_en: "Interactive Filter Simulator (Sandbox)",
-        name_vi: "Trình Giả Lập Bộ Lọc (Simulator)",
-        badge_en: "SANDBOX",
-        badge_vi: "TESTING",
-        badgeCls: "tag-automod",
-        color: "#10b981",
-        bg: "rgba(16, 185, 129, 0.12)",
-        icon: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm0 4h8v2H6v-2z"/></svg>',
-        desc_en: "Real-time regex & AI test sandbox: test message payloads to see HaruMod's instant sub-millisecond enforcement.",
-        desc_vi: "Bàn kiểm thử regex và AI real-time: nhập tin nhắn mẫu để xem HaruMod phản hồi và xử lý tức thì.",
-        cmds: ["simulate", "testfilter"],
-        tab: "sim"
+      logRecentActivity("Action Log", "Cập nhật cấu hình 24 luồng Action Log", "Updated Action Log 24-channel event routing");
+      showToast("Action Log configuration saved & synced to Discord!", "success");
+      const msg = document.getElementById("actionlog-save-msg");
+      if (msg) {
+        msg.style.display = "inline-block";
+        setTimeout(() => { msg.style.display = "none"; }, 4000);
       }
+    }
+
+    // =========================================================
+    // AUTO DELETE & AUTO PURGE CONTROLLERS
+    // =========================================================
+    let autoDeleteRules = [
+      { id: "ad-1", channelId: "1426568420287320095", channelName: "garden-chat", delay: 10, filter: "links", match: "all", enabled: true },
+      { id: "ad-2", channelId: "1426568686239613148", channelName: "petal-playground", delay: 60, filter: "all", match: "all", enabled: true }
     ];
 
-    function copyServerId() {
-      const id = currentGuildId || "1426554369393954969";
-      navigator.clipboard.writeText(id).then(() => {
-        showToast("Đã sao chép ID Máy Chủ: " + id, "success");
-      }).catch(() => {
-        showToast("ID Máy Chủ: " + id, "info");
-      });
-    }
-
-    function openHelpModal() {
-      showToast("Tài liệu hướng dẫn & Hỗ trợ kỹ thuật: https://discord.gg/haruki", "info");
-    }
-
-    function openServerStatsModal() {
-      const activeLang = localStorage.getItem("haruki_dash_lang") || "en"; showToast((activeLang === "vi") ? "Garden Of Dream: 304 Thành viên | 73 Kênh | 108 Vai trò | HaruMod v5.3 Hoạt động" : "Garden Of Dream: 304 Members | 73 Channels | 108 Roles | HaruMod v5.3 Active", "success");
-    }
-
-    function handlePrefixInput(el) {
-      let val = el.value.replace(/\?/g, "").trim();
-      if (!val) val = "h";
-      el.value = val;
-      const full = val + "?";
-
-      document.getElementById("dash-prefix-preview-val").innerText = full + "help";
-      document.getElementById("dash-prefix-preview-val2").innerText = full + "ban";
-
-      if (typeof triggerUnsaved === "function") triggerUnsaved();
-    }
-
-    function detectUserTimezone() {
-      try {
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Ho_Chi_Minh";
-        const sel = document.getElementById("cfg-dash-timezone");
-        if (sel) {
-          let found = false;
-          for (let opt of sel.options) {
-            if (opt.value === tz) {
-              opt.selected = true;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            const newOpt = new Option(tz, tz, true, true);
-            sel.add(newOpt);
-          }
-          showToast("Đã nhận diện TimeZone: " + tz, "success");
-          if (typeof triggerUnsaved === "function") triggerUnsaved();
-        }
-      } catch (e) {
-        showToast("Không thể tự động nhận diện TimeZone", "warning");
-      }
-    }
-
-    function renderManagerRolesTags() {
-      const box = document.getElementById("cfg-dash-manager-roles-box");
-      if (!box) return;
-
-      const colors = ["#f472b6", "#38bdf8", "#a78bfa", "#34d399", "#fbbf24"];
-      box.innerHTML = "";
-
-      if (currentManagerRoles.length === 0) {
-        box.innerHTML = `<span style="font-size:0.78rem;color:var(--text-muted);">Chưa chọn vai trò nào (Mặc định Server Owner có toàn quyền).</span>`;
-        return;
-      }
-
-      currentManagerRoles.forEach((roleName, idx) => {
-        const color = colors[idx % colors.length];
-        const chip = document.createElement("span");
-        chip.className = "role-tag-chip";
-        chip.innerHTML = `
-          <span class="chip-dot" style="background:${color};"></span>
-          <span>${roleName}</span>
-          <button type="button" class="chip-remove" onclick="removeManagerRole('${roleName.replace(/'/g, "\\'")}')" title="Xóa vai trò">&times;</button>
-        `;
-        box.appendChild(chip);
-      });
-    }
-
-    function removeManagerRole(roleName) {
-      currentManagerRoles = currentManagerRoles.filter(r => r !== roleName);
-      renderManagerRolesTags();
-      logRecentActivity("role", `Đã xóa vai trò quản trị '${roleName}' khỏi Manager Roles`);
-      if (typeof triggerUnsaved === "function") triggerUnsaved();
-    }
-
-    function addManagerRoleFromSelect(sel) {
-      const roleName = sel.value;
-      if (!roleName) return;
-
-      if (!currentManagerRoles.includes(roleName)) {
-        currentManagerRoles.push(roleName);
-        renderManagerRolesTags();
-        logRecentActivity("role", `Đã thêm vai trò '${roleName}' vào Manager Roles`);
-        showToast(`Đã thêm vai trò quản trị: ${roleName}`, "success");
-        if (typeof triggerUnsaved === "function") triggerUnsaved();
-      }
-      sel.value = "";
-    }
-
-    function saveDashboardSettings(e) {
-      if (e) e.preventDefault();
-      const prefixChar = document.getElementById("cfg-dash-prefix-char").value.trim() || "h";
-      const fullPrefix = prefixChar + "?";
-      const nickname = document.getElementById("cfg-dash-bot-nickname").value.trim() || "Bot Cute";
-      const updatesChannel = document.getElementById("cfg-dash-updates-channel").value;
-      const timezone = document.getElementById("cfg-dash-timezone").value;
-      const lang = document.getElementById("cfg-dash-language").value;
-      const disableWarnings = document.getElementById("cfg-dash-disable-warnings").checked;
-
-      const gId = currentGuildId || "1426554369393954969";
-
-      // Save to localStorage
-      const settings = {
-        prefix: fullPrefix,
-        prefixChar: prefixChar,
-        nickname: nickname,
-        updatesChannel: updatesChannel,
-        timezone: timezone,
-        lang: lang,
-        disableWarnings: disableWarnings,
-        managerRoles: currentManagerRoles
-      };
-
-      localStorage.setItem("haruki_bot_settings_" + gId, JSON.stringify(settings));
-      localStorage.setItem("haruki_bot_nick_" + gId, nickname);
-
-      // Log activity
-      logRecentActivity("nick", `Đổi Server Bot Nickname thành '${nickname}'`);
-      logRecentActivity("prefix", `Cập nhật Command Prefix thành '${fullPrefix}'`);
-      logRecentActivity("channel", `Cập nhật Updates Channel`);
-
-      // Sync nickname down to local engine
-      fetch(`${LOCAL_ENGINE_API}/api/nick`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ guildId: gId, nick: nickname })
-      }).then(r => r.json()).then(data => {
-        console.log("Nickname synced to Discord:", data);
-      }).catch(err => console.log("Engine offline, nick saved in client:", err));
-
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.remove("visible");
-
-      showToast(`Đã lưu thành công! Prefix: ${fullPrefix} &bull; Nickname: ${nickname}`, "success");
-    }
-
-    // =========================================================================
-    // RECENT ACTIVITY (7 NGÀY GẦN NHẤT)
-    // =========================================================================
-    const DEFAULT_ACTIVITIES = [
-      { tag: "nick", cat: "NICKNAME", desc: "Đổi Server Bot Nickname thành 'Bot Cute'", time: "Hôm nay 10:45", user: "@Harus" },
-      { tag: "prefix", cat: "PREFIX", desc: "Cập nhật Command Prefix thành 'h?'", time: "Hôm nay 09:12", user: "@Harus" },
-      { tag: "channel", cat: "UPDATES", desc: "Đặt Updates Channel thành '#staff-cmd'", time: "Hôm qua 18:30", user: "@Harus" },
-      { tag: "module", cat: "MODULE", desc: "Bật module 'Auto-Mod & Phishing Filter'", time: "2 ngày trước", user: "@Harus" },
-      { tag: "role", cat: "ROLE", desc: "Thêm vai trò quản trị 'Floral Helpers ⋆˚࿔'", time: "4 ngày trước", user: "@Harus" },
-      { tag: "system", cat: "SYSTEM", desc: "Đồng bộ thời gian thực 108 Vai trò & 73 Kênh Discord", time: "6 ngày trước", user: "HaruMod Gateway" }
+    let autoPurgeJobs = [
+      { id: "ap-1", channelId: "1426564122568298658", channelName: "staff-cmd", hours: 8, filter: "all", enabled: true, lastRun: "2 hours ago" }
     ];
 
-    function loadRecentActivities() {
-      const gId = currentGuildId || "1426554369393954969";
-      const saved = localStorage.getItem("haruki_recent_activity_" + gId);
-      let list = DEFAULT_ACTIVITIES;
-      if (saved) {
-        try { list = JSON.parse(saved); } catch (e) {}
-      }
-      renderRecentActivities(list);
+    function switchCleanerSubtab(subtabKey) {
+      ["autodelete", "autopurge", "manualpurge"].forEach(k => {
+        const btn = document.getElementById("btn-subtab-" + k);
+        const view = document.getElementById("subtab-view-" + k);
+        if (btn) btn.classList.toggle("active", k === subtabKey);
+        if (view) view.style.display = (k === subtabKey) ? "block" : "none";
+      });
     }
 
-    function renderRecentActivities(list) {
-      const container = document.getElementById("dash-recent-activity-list");
-      if (!container) return;
-
-      if (!list || list.length === 0) {
-        container.innerHTML = `<div style="text-align:center;padding:24px;font-size:0.84rem;color:var(--text-muted);">Không có hoạt động nào trong 7 ngày gần nhất.</div>`;
+    function renderAutoDeleteRules() {
+      const list = document.getElementById("autodelete-rules-list");
+      if (!list) return;
+      if (autoDeleteRules.length === 0) {
+        list.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);padding:12px;">No active Auto Delete rules.</div>';
         return;
       }
-
-      container.innerHTML = list.slice(0, 10).map(item => `
-        <div class="dash-activity-item">
-          <div class="dash-act-left">
-            <span class="dash-act-tag ${item.tag || 'system'}">${item.cat || 'ACTION'}</span>
-            <span class="dash-act-desc">${item.desc}</span>
+      list.innerHTML = autoDeleteRules.map((r, idx) => `
+        <div class="dyno-rule-card">
+          <div class="dyno-rule-left">
+            <div class="dyno-rule-name"># ${r.channelName}</div>
+            <div class="dyno-rule-meta">
+              <span>Delay: <strong>${r.delay}s</strong></span> &bull; 
+              <span>Filter: ${r.filter}</span>
+            </div>
           </div>
-          <div class="dash-act-meta">
-            <span class="dash-act-user">${item.user || '@Harus'}</span>
-            <span>&bull;</span>
-            <span>${item.time}</span>
+          <div class="dyno-rule-right">
+            <label class="dyno-switch">
+              <input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleAutoDeleteRule(${idx}, this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
+            <button class="dyno-icon-btn" onclick="deleteAutoDeleteRule(${idx})" title="Delete rule">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
           </div>
         </div>
       `).join("");
     }
 
-    function logRecentActivity(tag, desc) {
-      const gId = currentGuildId || "1426554369393954969";
-      const saved = localStorage.getItem("haruki_recent_activity_" + gId);
-      let list = DEFAULT_ACTIVITIES.slice();
-      if (saved) {
-        try { list = JSON.parse(saved); } catch (e) {}
+    function addAutoDeleteRule() {
+      const chId = document.getElementById("cfg-autodelete-channel").value;
+      const filter = document.getElementById("cfg-autodelete-filter").value;
+      const delay = parseInt(document.getElementById("cfg-autodelete-delay").value) || 10;
+      const match = document.getElementById("ad-match-all").checked ? "all" : "any";
+
+      if (!chId) {
+        showToast("Please select a target channel", "warning");
+        return;
+      }
+      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+      const chName = ch ? ch.name : chId;
+
+      autoDeleteRules.push({
+        id: "ad-" + Date.now(),
+        channelId: chId,
+        channelName: chName,
+        delay: delay,
+        filter: filter,
+        match: match,
+        enabled: true
+      });
+      renderAutoDeleteRules();
+      showToast("Added Auto Delete rule for #" + chName, "success");
+      logRecentActivity("Auto Delete", "Thêm cấu hình xóa tự động cho #" + chName, "Added Auto Delete for #" + chName);
+      triggerUnsaved();
+    }
+
+    function toggleAutoDeleteRule(idx, enabled) {
+      if (autoDeleteRules[idx]) autoDeleteRules[idx].enabled = enabled;
+      triggerUnsaved();
+    }
+    function deleteAutoDeleteRule(idx) {
+      autoDeleteRules.splice(idx, 1);
+      renderAutoDeleteRules();
+      triggerUnsaved();
+    }
+
+    function renderAutoPurgeJobs() {
+      const list = document.getElementById("autopurge-rules-list");
+      if (!list) return;
+      if (autoPurgeJobs.length === 0) {
+        list.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);padding:12px;">No active scheduled Auto Purge jobs.</div>';
+        return;
+      }
+      list.innerHTML = autoPurgeJobs.map((j, idx) => `
+        <div class="dyno-rule-card">
+          <div class="dyno-rule-left">
+            <div class="dyno-rule-name"># ${j.channelName}</div>
+            <div class="dyno-rule-meta">
+              <span>Interval: Every <strong>${j.hours}h</strong></span> &bull; 
+              <span>${j.lastRun || 'Scheduled'}</span>
+            </div>
+          </div>
+          <div class="dyno-rule-right">
+            <label class="dyno-switch">
+              <input type="checkbox" ${j.enabled ? 'checked' : ''} onchange="toggleAutoPurgeJob(${idx}, this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
+            <button class="dyno-icon-btn" onclick="deleteAutoPurgeJob(${idx})" title="Delete job">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function addAutoPurgeJob() {
+      const chId = document.getElementById("cfg-autopurge-channel").value;
+      const filter = document.getElementById("cfg-autopurge-filter").value;
+      const hours = parseInt(document.getElementById("cfg-autopurge-hours").value) || 8;
+
+      if (!chId) {
+        showToast("Please select a target channel", "warning");
+        return;
+      }
+      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+      const chName = ch ? ch.name : chId;
+
+      autoPurgeJobs.push({
+        id: "ap-" + Date.now(),
+        channelId: chId,
+        channelName: chName,
+        hours: hours,
+        filter: filter,
+        enabled: true,
+        lastRun: "Scheduled"
+      });
+      renderAutoPurgeJobs();
+      showToast("Added Auto Purge job for #" + chName + " every " + hours + "h", "success");
+      logRecentActivity("Auto Purge", "Lên lịch định kỳ dọn kênh #" + chName, "Scheduled Auto Purge for #" + chName);
+      triggerUnsaved();
+    }
+    function toggleAutoPurgeJob(idx, enabled) {
+      if (autoPurgeJobs[idx]) autoPurgeJobs[idx].enabled = enabled;
+      triggerUnsaved();
+    }
+    function deleteAutoPurgeJob(idx) {
+      autoPurgeJobs.splice(idx, 1);
+      renderAutoPurgeJobs();
+      triggerUnsaved();
+    }
+
+    // =========================================================
+    // AUTOBAN CONTROLLERS (IMAGE 4)
+    // =========================================================
+    let autobanRules = [
+      { id: "ab-1", name: "Nitro Scammer Username Filter", type: "Match Username", detail: "nitro|free-nitro|steam-community|airdrop", enabled: true },
+      { id: "ab-2", name: "Discord Invite Username Blocker", type: "Username Invites", detail: "discord.gg/*", enabled: true },
+      { id: "ab-3", name: "Fresh Raid Accounts Guard (< 3 Days)", type: "Account Age", detail: "< 3 Days", enabled: true },
+      { id: "ab-4", name: "Default Avatar Userbot Trap", type: "No Avatar", detail: "Zero avatar uploads", enabled: false }
+    ];
+
+    function renderAutobanRules() {
+      const list = document.getElementById("autoban-rules-list");
+      if (!list) return;
+      if (autobanRules.length === 0) {
+        list.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);padding:14px;">There are no rules.</div>';
+        return;
+      }
+      list.innerHTML = autobanRules.map((r, idx) => `
+        <div class="dyno-rule-card">
+          <div class="dyno-rule-left">
+            <div class="dyno-rule-name">${r.name}</div>
+            <div class="dyno-rule-meta">
+              <span>Type: <strong>${r.type}</strong></span> &bull; 
+              <span>${r.detail || ''}</span>
+            </div>
+          </div>
+          <div class="dyno-rule-right">
+            <label class="dyno-switch">
+              <input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleAutobanRule(${idx}, this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
+            <button class="dyno-icon-btn" onclick="deleteAutobanRule(${idx})" title="Delete rule">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openAutobanModal() {
+      document.getElementById("autoban-rule-name").value = "";
+      document.getElementById("autoban-rule-type").value = "";
+      document.getElementById("autoban-rule-detail").value = "";
+      document.getElementById("autoban-type-details").style.display = "none";
+      openModal("modal-autoban-rule");
+    }
+
+    function toggleAutobanTypeInput(type) {
+      const box = document.getElementById("autoban-type-details");
+      const lbl = document.getElementById("lbl-autoban-detail");
+      if (!type || type === "No Avatar" || type === "Username Invites") {
+        box.style.display = "none";
+      } else {
+        box.style.display = "block";
+        if (type === "Match Username") {
+          lbl.textContent = "Regex / Keyword Match (e.g. nitro|steam)";
+        } else if (type === "Account Age") {
+          lbl.textContent = "Minimum Account Age (in Days)";
+        }
+      }
+    }
+
+    function saveAutobanRule() {
+      const name = document.getElementById("autoban-rule-name").value.trim();
+      const type = document.getElementById("autoban-rule-type").value;
+      const detail = document.getElementById("autoban-rule-detail").value.trim();
+
+      if (!name || !type) {
+        showToast("Please enter a rule name and select a rule type", "warning");
+        return;
       }
 
-      const now = new Date();
-      const timeStr = "Vừa xong (" + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0') + ")";
-
-      list.unshift({
-        tag: tag,
-        cat: tag.toUpperCase(),
-        desc: desc,
-        time: timeStr,
-        user: "@Harus"
+      autobanRules.push({
+        id: "ab-" + Date.now(),
+        name: name,
+        type: type,
+        detail: detail || type,
+        enabled: true
       });
-
-      // Keep within 25 items
-      list = list.slice(0, 25);
-      localStorage.setItem("haruki_recent_activity_" + gId, JSON.stringify(list));
-      renderRecentActivities(list);
+      renderAutobanRules();
+      closeModal("modal-autoban-rule");
+      showToast("Created Autoban rule: " + name, "success");
+      logRecentActivity("Autoban", "Tạo rule tự động cấm: " + name, "Created Autoban rule: " + name);
+      triggerUnsaved();
     }
 
-    function clearActivityHistory() {
-      const gId = currentGuildId || "1426554369393954969";
-      localStorage.removeItem("haruki_recent_activity_" + gId);
-      renderRecentActivities([]);
-      showToast("Đã xóa lịch sử hoạt động gần đây!", "info");
+    function toggleAutobanRule(idx, enabled) {
+      if (autobanRules[idx]) autobanRules[idx].enabled = enabled;
+      triggerUnsaved();
+    }
+    function deleteAutobanRule(idx) {
+      autobanRules.splice(idx, 1);
+      renderAutobanRules();
+      triggerUnsaved();
     }
 
-    // =========================================================================
-    // MODULES MANAGER GRID & TOGGLE LOGIC
-    // =========================================================================
+    // =========================================================
+    // AUTOMOD CONTROLLERS (IMAGES 5, 6, 7)
+    // =========================================================
+    let automodRules = [
+      { id: "am-1", name: "Banned Words (exact)", type: "Bad Words", action: "Delete + Warn", enabled: true },
+      { id: "am-2", name: "Phishing Links & Malware", type: "Known Phishing Links", action: "Instant Ban + Delete", enabled: true },
+      { id: "am-3", name: "Unauthorized Discord Invites", type: "Invite Links", action: "Delete + Warn", enabled: true },
+      { id: "am-4", name: "Mass Mentions Suppression", type: "Mass Mentions", action: "Instant Mute + Delete", enabled: true },
+      { id: "am-5", name: "Rapid Flood & Chat Spam", type: "Fast Message Spam", action: "Automute (10m)", enabled: true },
+      { id: "am-6", name: "Excessive All-Caps Shouting", type: "All Caps", action: "Delete", enabled: true }
+    ];
+
+    function renderAutomodRules(filterText = "") {
+      const list = document.getElementById("automod-rules-list");
+      if (!list) return;
+      const term = filterText.toLowerCase();
+      const filtered = automodRules.filter(r => r.name.toLowerCase().includes(term) || r.type.toLowerCase().includes(term));
+      if (filtered.length === 0) {
+        list.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);padding:14px;">No matching Automod rules.</div>';
+        return;
+      }
+      list.innerHTML = filtered.map((r, idx) => `
+        <div class="dyno-rule-card">
+          <div class="dyno-rule-left">
+            <div class="dyno-rule-name">${r.name}</div>
+            <div class="dyno-rule-meta">
+              <span>Type: <strong>${r.type}</strong></span> &bull; 
+              <span>Action: <strong style="color:#fda4af;">${r.action}</strong></span>
+            </div>
+          </div>
+          <div class="dyno-rule-right">
+            <label class="dyno-switch">
+              <input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleAutomodRule(${idx}, this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
+            <button class="dyno-icon-btn" onclick="duplicateAutomodRule(${idx})" title="Duplicate rule">
+              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </button>
+            <button class="dyno-icon-btn" onclick="deleteAutomodRule(${idx})" title="Delete rule">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterAutomodRules(val) {
+      renderAutomodRules(val);
+    }
+
+    function openAutomodRuleModal() {
+      document.getElementById("automod-rule-name").value = "";
+      document.getElementById("automod-rule-type").value = "";
+      document.getElementById("automod-rule-action").value = "";
+      openModal("modal-automod-rule");
+    }
+
+    function saveAutomodRule() {
+      const name = document.getElementById("automod-rule-name").value.trim();
+      const type = document.getElementById("automod-rule-type").value;
+      const action = document.getElementById("automod-rule-action").value;
+
+      if (!name || !type || !action) {
+        showToast("Please provide Name, Rule Type, and Action", "warning");
+        return;
+      }
+
+      automodRules.push({
+        id: "am-" + Date.now(),
+        name: name,
+        type: type,
+        action: action,
+        enabled: true
+      });
+      renderAutomodRules();
+      closeModal("modal-automod-rule");
+      showToast("Created Automod Rule: " + name, "success");
+      logRecentActivity("Automod", "Thêm quy tắc lọc: " + name, "Created Automod Rule: " + name);
+      triggerUnsaved();
+    }
+
+    function duplicateAutomodRule(idx) {
+      const orig = automodRules[idx];
+      if (!orig) return;
+      automodRules.push({ ...orig, id: "am-" + Date.now(), name: orig.name + " (Copy)" });
+      renderAutomodRules();
+      showToast("Duplicated rule", "success");
+      triggerUnsaved();
+    }
+
+    function toggleAutomodRule(idx, enabled) {
+      if (automodRules[idx]) automodRules[idx].enabled = enabled;
+      triggerUnsaved();
+    }
+    function deleteAutomodRule(idx) {
+      automodRules.splice(idx, 1);
+      renderAutomodRules();
+      triggerUnsaved();
+    }
+
+    function openAutomodDefaultModal() {
+      openModal("modal-automod-default");
+    }
+    function saveAutomodDefaultSettings() {
+      closeModal("modal-automod-default");
+      showToast("Saved Automod Default Settings", "success");
+      triggerUnsaved();
+    }
+
+    // =========================================================
+    // MODAL UTILITIES & COLLAPSIBLES
+    // =========================================================
+    function openModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) m.classList.add("open");
+    }
+    function closeModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) m.classList.remove("open");
+    }
+    function handleModalBackdropClick(e, modalId) {
+      if (e.target && e.target.id === modalId) closeModal(modalId);
+    }
+    function toggleCollapsible(bodyId, triggerEl) {
+      const body = document.getElementById(bodyId);
+      if (!body) return;
+      body.classList.toggle("open");
+      const icon = triggerEl.querySelector(".collapsible-icon");
+      if (icon) icon.innerHTML = body.classList.contains("open") ? "&#8854;" : "&#8853;";
+    }
+
+    // =========================================================
+    // SLOWMODE & PURGE DIRECT EXECUTION
+    // =========================================================
+    function setSlowmodePreset(sec) {
+      const input = document.getElementById("slowmode-seconds-val");
+      if (input) input.value = sec;
+    }
+
+    function executeSlowmodeDirect() {
+      const chId = document.getElementById("cfg-channel-slowmode").value;
+      const sec = parseInt(document.getElementById("slowmode-seconds-val").value) || 0;
+      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+      const name = ch ? ch.name : chId;
+      showToast("Applied " + sec + "s Slowmode to #" + name, "success");
+      logRecentActivity("Slowmode", "Đặt chế độ chậm " + sec + "s cho #" + name, "Applied " + sec + "s Slowmode to #" + name);
+    }
+
+    function executeLockdownDirect(isLock) {
+      const chId = document.getElementById("cfg-channel-lock").value;
+      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+      const name = ch ? ch.name : chId;
+      const verb = isLock ? "Locked" : "Unlocked";
+      showToast(verb + " channel #" + name, isLock ? "warning" : "success");
+      logRecentActivity("Lockdown", (isLock ? "Khóa kênh #" : "Mở khóa kênh #") + name, verb + " channel #" + name);
+    }
+
+    function executePurgeDirect() {
+      const chId = document.getElementById("cfg-channel-purge").value;
+      const amount = document.getElementById("purge-amount-val").value || 25;
+      const ch = GARDEN_REAL_CHANNELS.find(c => c.id === chId);
+      const name = ch ? ch.name : chId;
+      showToast("Purged " + amount + " messages from #" + name, "success");
+      logRecentActivity("Purge", "Dọn dẹp " + amount + " tin nhắn từ #" + name, "Purged " + amount + " messages from #" + name);
+    }
+
+
+    // =========================================================
+    // BOT MODULES LIST & RENDERER (BILINGUAL EN / VI)
+    // =========================================================
+    const BOT_MODULES_LIST = [
+      {
+        id: "automod",
+        category: "security",
+        name_en: "Auto-Mod & Phishing Filter",
+        name_vi: "Auto-Mod & Lọc Lừa Đảo Phishing",
+        badge_en: "24/7 Shield",
+        badge_vi: "Bảo Vệ 24/7",
+        desc_en: "Deep domain reputation analysis, fake Nitro link deletion, bad words regex and instant token stealer neutralization in < 4ms.",
+        desc_vi: "Tự động xóa link Nitro lừa đảo, link độc hại, lọc từ ngữ bậy bạ và ban tài khoản phát tán trong 4 mili-giây.",
+        cmds: ["automod", "filter", "whitelist", "scamcheck"],
+        tab: "automod",
+        icon: '<svg style="width:22px;height:22px;fill:#10b981;" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>'
+      },
+      {
+        id: "moderation",
+        category: "mod",
+        name_en: "Member Moderation",
+        name_vi: "Kiểm Duyệt Thành Viên",
+        badge_en: "Core Actions",
+        badge_vi: "Thao Tác Cốt Lõi",
+        desc_en: "High-speed disciplinary commands: Kick, Ban, Mute (Timeout), Warn with real-time reason and Discord Audit Log dispatch.",
+        desc_vi: "Bộ lệnh trừng phạt nhanh: Kick, Ban, Mute (Timeout), Warn kèm lý do và ghi nhận hồ sơ xử phạt vào Audit Log.",
+        cmds: ["ban", "kick", "mute", "timeout", "unmute", "warn", "nick"],
+        tab: "members",
+        icon: '<svg style="width:22px;height:22px;fill:#38bdf8;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'
+      },
+      {
+        id: "channels",
+        category: "mod",
+        name_en: "Auto Delete & Purge",
+        name_vi: "Quản Lý Kênh & Dọn Dẹp (Purge)",
+        badge_en: "Message Cleaner",
+        badge_vi: "Dọn Tin Nhắn",
+        desc_en: "Automatic message lifetime delay (Auto Delete), scheduled recurring cleanup (Auto Purge up to 5,000 msgs), Slowmode and Emergency Lockdown.",
+        desc_vi: "Tự động xóa tin trễ theo giây (Auto Delete), lên lịch định kỳ dọn dẹp (Auto Purge 5,000 tin), Slowmode và Khóa kênh khẩn cấp.",
+        cmds: ["purge", "slowmode", "lock", "unlock", "cleanbot"],
+        tab: "channels",
+        icon: '<svg style="width:22px;height:22px;fill:#f43f5e;" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>'
+      },
+      {
+        id: "honeypot",
+        category: "security",
+        name_en: "Honeypot Trap & Anti-Raid",
+        name_vi: "Bẫy Honeypot & Anti-Nuke Staff",
+        badge_en: "Anti-Raid Trap",
+        badge_vi: "Chống Raid",
+        desc_en: "Invisible decoy channel triggers instant perm-ban on automated userbots; anti-wizz detects compromised staff deleting channels.",
+        desc_vi: "Kênh mồi bẫy bí mật tự động bắt và perm-ban userbot raid; thu hồi quyền staff nếu phát hiện xóa kênh hàng loạt.",
+        cmds: ["honeypot", "antiwizz", "nukeshield"],
+        tab: "honeypot",
+        icon: '<svg style="width:22px;height:22px;fill:#fbbf24;" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>'
+      },
+      {
+        id: "welcome",
+        category: "admin",
+        name_en: "Welcome & Goodbyes",
+        name_vi: "Tin Nhắn Chào Mừng & Tạm Biệt",
+        badge_en: "Member Flow",
+        badge_vi: "Thành Viên",
+        desc_en: "Beautiful greeting cards with dynamic tokens {user}, {server}, {member_count} and custom departure farewell alerts.",
+        desc_vi: "Gửi thông báo chào đón người mới gia nhập với biến {user}, {server}, {member_count} và thông báo khi rời đi.",
+        cmds: ["welcome", "goodbye", "welcometest"],
+        tab: "welcome",
+        icon: '<svg style="width:22px;height:22px;fill:#34d399;" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'
+      },
+      {
+        id: "roles",
+        category: "admin",
+        name_en: "Role Management & RolePersist",
+        name_vi: "Quản Lý Vai Trò & RolePersist",
+        badge_en: "Automation",
+        badge_vi: "Tự Động",
+        desc_en: "Instantly assign starter roles upon server join and restore previous roles if a penalized user rejoins to escape moderation.",
+        desc_vi: "Tự động cấp role thành viên khi tham gia; tự động khôi phục role cũ nếu thành viên rời server rồi vào lại (RolePersist).",
+        cmds: ["autorole", "rolepersist", "role", "stickyrole"],
+        tab: "roles",
+        icon: '<svg style="width:22px;height:22px;fill:#a855f7;" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>'
+      },
+      {
+        id: "logs",
+        category: "security",
+        name_en: "36 Action Logs",
+        name_vi: "36 Luồng Nhật Ký Server (Audit Logs)",
+        badge_en: "Audit Monitoring",
+        badge_vi: "Giám Sát",
+        desc_en: "24 granular event streams across 6 categories: Message edits/deletes, member joins/leaves, timeout logs, roles, channels and voice moves.",
+        desc_vi: "24 luồng sự kiện phân nhóm 6 danh mục: Sửa/xóa tin nhắn, member vào/ra, timeout, role, kênh và voice.",
+        cmds: ["logs", "setlog", "logchannel"],
+        tab: "logs",
+        icon: '<svg style="width:22px;height:22px;fill:#06b6d4;" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
+      },
+      {
+        id: "utility",
+        category: "utility",
+        name_en: "Information & Utilities",
+        name_vi: "Tiện Ích & Tra Cứu Thông Tin",
+        badge_en: "Info & Stats",
+        badge_vi: "Thông Tin",
+        desc_en: "Inspect deep account creation dates, high-resolution server banners, bot latency benchmarks and user profile cards.",
+        desc_vi: "Tra cứu ngày tạo tài khoản, banner chất lượng cao, độ trễ bot ping và hồ sơ thành viên nhanh chóng.",
+        cmds: ["serverinfo", "userinfo", "avatar", "banner", "ping"],
+        tab: null,
+        icon: '<svg style="width:22px;height:22px;fill:#f59e0b;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>'
+      },
+      {
+        id: "sim",
+        category: "utility",
+        name_en: "Live Filter Simulator",
+        name_vi: "Trình Giả Lập Bộ Lọc (Simulator)",
+        badge_en: "Test Sandbox",
+        badge_vi: "Kiểm Thử",
+        desc_en: "Interactive testing sandbox for regex patterns and phishing links with instantaneous HaruMod response emulation.",
+        desc_vi: "Bàn kiểm thử regex và AI real-time: nhập tin nhắn mẫu để xem HaruMod phản hồi và xử lý tức thì.",
+        cmds: ["simulate", "testfilter"],
+        tab: "sim",
+        icon: '<svg style="width:22px;height:22px;fill:#10b981;" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>'
+      }
+    ];
+
+    let currentModuleFilter = "all";
+
     function getModuleState(modId) {
-      const gId = currentGuildId || "1426554369393954969";
-      const saved = localStorage.getItem("haruki_module_" + gId + "_" + modId);
-      if (saved !== null) {
-        return saved === "true";
-      }
-      return true; // Default ON
+      const saved = localStorage.getItem("haruki_mod_enabled_" + modId);
+      return saved !== null ? (saved === "true") : true;
     }
 
-    function toggleModuleState(modId, isChecked) {
-      const gId = currentGuildId || "1426554369393954969";
-      localStorage.setItem("haruki_module_" + gId + "_" + modId, isChecked ? "true" : "false");
-
+    function toggleModuleSwitch(modId, isEnabled, event) {
+      if (event) event.stopPropagation();
+      localStorage.setItem("haruki_mod_enabled_" + modId, isEnabled);
       const card = document.getElementById("mod-card-" + modId);
-      if (card) {
-        if (isChecked) {
-          card.classList.remove("disabled");
-        } else {
-          card.classList.add("disabled");
-        }
-      }
-
-      const mod = BOT_MODULES_LIST.find(m => m.id === modId);
-      const modName = mod ? mod.name : modId;
-      const statusText = isChecked ? "BẬT" : "TẮT";
-
-      showToast(`Đã ${statusText} module: ${modName}`, isChecked ? "success" : "warning");
-      logRecentActivity("module", `Đã ${statusText} module '${modName}'`);
+      if (card) card.classList.toggle("disabled", !isEnabled);
+      showToast((isEnabled ? "Enabled " : "Disabled ") + modId + " module", isEnabled ? "success" : "warning");
+      triggerUnsaved();
     }
 
-    function filterModules(cat, btn) {
+    function filterModules(category, btnEl) {
+      currentModuleFilter = category;
       document.querySelectorAll(".dash-filter-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-
-      const cards = document.querySelectorAll(".dash-module-card");
-      cards.forEach(card => {
-        const cardCat = card.getAttribute("data-cat");
-        if (cat === "all" || cardCat === cat) {
-          card.style.display = "flex";
-        } else {
-          card.style.display = "none";
-        }
-      });
+      if (btnEl) btnEl.classList.add("active");
+      renderModulesGrid();
     }
 
     function renderModulesGrid() {
@@ -8668,254 +9939,213 @@
       const prefixChar = (document.getElementById("cfg-dash-prefix-char") ? document.getElementById("cfg-dash-prefix-char").value.trim() : "h") || "h";
       const fullPrefix = prefixChar + "?";
 
-      container.innerHTML = BOT_MODULES_LIST.map(mod => {
+      const filtered = BOT_MODULES_LIST.filter(m => currentModuleFilter === "all" || m.category === currentModuleFilter);
+
+      container.innerHTML = filtered.map(mod => {
         const isEnabled = getModuleState(mod.id);
         const modName = (activeLang === "vi") ? (mod.name_vi || mod.name_en) : mod.name_en;
         const modDesc = (activeLang === "vi") ? (mod.desc_vi || mod.desc_en) : mod.desc_en;
         const modBadge = (activeLang === "vi") ? (mod.badge_vi || mod.badge_en) : mod.badge_en;
-        const btnText = mod.tab ? ((activeLang === "vi") ? "Cấu hình chuyên sâu" : "Configure Module") : ((activeLang === "vi") ? "Xem chi tiết lệnh" : "View Command Syntax");
+        const btnText = mod.tab ? ((activeLang === "vi") ? "Cấu hình chuyên sâu &rsaquo;" : "Configure Module &rsaquo;") : ((activeLang === "vi") ? "Xem chi tiết lệnh" : "View Command Syntax");
         const cmdsHtml = mod.cmds.map(c => `<span class="dash-cmd-chip">${fullPrefix}${c}</span>`).join("");
 
         return `
-          <div class="dash-module-card ${isEnabled ? '' : 'disabled'}" id="mod-card-${mod.id}" data-cat="${mod.cat}">
+          <div class="dash-module-card ${isEnabled ? '' : 'disabled'}" id="mod-card-${mod.id}" ${mod.tab ? `onclick="switchConfigTab('${mod.tab}')"` : ''} style="${mod.tab ? 'cursor:pointer;' : ''}">
             <div>
               <div class="dash-module-top">
-                <div class="dash-module-icon-wrap" style="background:${mod.bg};color:${mod.color};border-color:${mod.color}40;">
-                  ${mod.icon}
-                </div>
+                <div class="dash-module-icon-wrap">${mod.icon}</div>
                 <div class="dash-module-title-box">
                   <h4 class="dash-module-title">${modName}</h4>
                   <span class="dash-module-badge">${modBadge}</span>
                 </div>
-                <label class="switch" style="margin-left:8px;">
-                  <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleModuleState('${mod.id}', this.checked)">
-                  <span class="slider"></span>
-                </label>
+                <div onclick="event.stopPropagation()">
+                  <label class="dyno-switch">
+                    <input type="checkbox" ${isEnabled ? 'checked' : ''} onchange="toggleModuleSwitch('${mod.id}', this.checked, event)">
+                    <span class="dyno-switch-slider"></span>
+                  </label>
+                </div>
               </div>
-
               <p class="dash-module-desc">${modDesc}</p>
-              <div class="dash-module-cmds">${cmdsHtml}</div>
+              <div class="dash-cmd-chips-wrap">${cmdsHtml}</div>
             </div>
-
-            <div class="dash-module-footer">
-              ${mod.tab ? `
-                <button type="button" class="dash-module-btn" onclick="switchConfigTab('${mod.tab}')">
-                  <span>${btnText}</span>
-                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </button>
-              ` : `
-                <button type="button" class="dash-module-btn" style="color:#38bdf8;" onclick="showToast('${(activeLang === "vi") ? "Module tiện ích hoạt động với tiền tố " : "Utility commands active with prefix "}${fullPrefix}', 'info')">
-                  <span>${btnText}</span>
-                  <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </button>
-              `}
+            <div class="dash-module-card-footer">
+              <span class="dash-module-action-link">${btnText}</span>
             </div>
           </div>
         `;
       }).join("");
     }
 
-    // Enhance selectServerForConfig to load all Dashboard components
-    const _original_selectServerForConfig = selectServerForConfig;
-    selectServerForConfig = function(guildId) {
-      if (typeof _original_selectServerForConfig === "function") {
-        _original_selectServerForConfig(guildId);
-      }
+</script>
 
-      // Switch to dashboard tab by default
-      switchConfigTab('dashboard');
 
-      // Populate Server Info stats
-      const membersStat = document.getElementById("stat-dash-members");
-      if (membersStat) membersStat.innerText = (guildId === "1426554369393954969") ? "304" : "152";
+  <!-- ===================================================== -->
+  <!-- MODAL 1: AUTOBAN RULE (IMAGE 4)                       -->
+  <!-- ===================================================== -->
+  <div id="modal-autoban-rule" class="dyno-modal-overlay" onclick="handleModalBackdropClick(event, 'modal-autoban-rule')">
+    <div class="dyno-modal-card">
+      <div class="dyno-modal-header">
+        <h3 class="dyno-modal-title" data-i18n="modalTitleAutobanRule">Rule</h3>
+        <button class="dyno-modal-close" onclick="closeModal('modal-autoban-rule')">&times;</button>
+      </div>
+      <div class="dyno-modal-body">
+        <div>
+          <label class="dash-form-label" data-i18n="lblRuleName">Rule Name</label>
+          <input type="text" id="autoban-rule-name" class="form-input" style="width:100%;" placeholder="e.g. Phishing Accounts Guard">
+        </div>
+        <div>
+          <label class="dash-form-label" data-i18n="lblRuleType">Rule Type</label>
+          <select id="autoban-rule-type" class="form-input" style="width:100%;" onchange="toggleAutobanTypeInput(this.value)">
+            <option value="">Select..</option>
+            <option value="Match Username">Match Username</option>
+            <option value="Username Invites">Username Invites</option>
+            <option value="Account Age">Account Age</option>
+            <option value="No Avatar">No Avatar</option>
+          </select>
+        </div>
+        <div id="autoban-type-details" style="display:none;">
+          <label class="dash-form-label" id="lbl-autoban-detail">Condition / Pattern</label>
+          <input type="text" id="autoban-rule-detail" class="form-input" style="width:100%;" placeholder="e.g. nitro|steam|free-gift">
+        </div>
+      </div>
+      <div class="dyno-modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-autoban-rule')" data-i18n="btnCancel">Cancel</button>
+        <button class="btn-crimson" onclick="saveAutobanRule()" data-i18n="btnCreateRule">Create Rule</button>
+      </div>
+    </div>
+  </div>
 
-      const rolesStat = document.getElementById("stat-dash-roles");
-      if (rolesStat) rolesStat.innerText = (guildId === "1426554369393954969") ? "108" : "34";
+  <!-- ===================================================== -->
+  <!-- MODAL 2: AUTOMOD RULE (IMAGES 5 & 6)                  -->
+  <!-- ===================================================== -->
+  <div id="modal-automod-rule" class="dyno-modal-overlay" onclick="handleModalBackdropClick(event, 'modal-automod-rule')">
+    <div class="dyno-modal-card">
+      <div class="dyno-modal-header">
+        <h3 class="dyno-modal-title" data-i18n="modalTitleAutomodRule">Rule</h3>
+        <button class="dyno-modal-close" onclick="closeModal('modal-automod-rule')">&times;</button>
+      </div>
+      <div class="dyno-modal-body">
+        <div>
+          <label class="dash-form-label" data-i18n="lblName">Name</label>
+          <input type="text" id="automod-rule-name" class="form-input" style="width:100%;" placeholder="Rule Name">
+        </div>
+        <div>
+          <label class="dash-form-label" data-i18n="lblRuleType">Rule Type</label>
+          <select id="automod-rule-type" class="form-input" style="width:100%;">
+            <option value="">Select..</option>
+            <option value="All Caps">All Caps</option>
+            <option value="Bad Words">Bad Words</option>
+            <option value="Chat Clearing Newlines">Chat Clearing Newlines</option>
+            <option value="Duplicate Text">Duplicate Text</option>
+            <option value="Character Count">Character Count</option>
+            <option value="Emoji Spam">Emoji Spam</option>
+            <option value="Fast Message Spam">Fast Message Spam</option>
+            <option value="Image Spam">Image Spam</option>
+            <option value="Invite Links">Invite Links</option>
+            <option value="Known Phishing Links">Known Phishing Links</option>
+            <option value="Links">Links</option>
+            <option value="Links Cooldown">Links Cooldown</option>
+            <option value="Mass Mentions">Mass Mentions</option>
+            <option value="Mentions Cooldown">Mentions Cooldown</option>
+            <option value="Spoilers">Spoilers</option>
+            <option value="Masked Links">Masked Links</option>
+            <option value="Stickers">Stickers</option>
+            <option value="Stickers Cooldown">Stickers Cooldown</option>
+            <option value="Zalgo Text">Zalgo Text</option>
+          </select>
+        </div>
+        <div>
+          <label class="dash-form-label" data-i18n="lblActions">Actions</label>
+          <select id="automod-rule-action" class="form-input" style="width:100%;">
+            <option value="">Select..</option>
+            <option value="Warn">Warn</option>
+            <option value="Delete">Delete</option>
+            <option value="Automute">Automute</option>
+            <option value="Autoban">Autoban</option>
+            <option value="Instant Mute">Instant Mute</option>
+            <option value="Instant Ban">Instant Ban</option>
+          </select>
+        </div>
 
-      const tcStat = document.getElementById("stat-dash-tc");
-      if (tcStat) tcStat.innerText = (guildId === "1426554369393954969") ? "47" : "18";
+        <!-- Collapsible: Permissions -->
+        <div class="dyno-collapsible-trigger" onclick="toggleCollapsible('perm-collapsible', this)">
+          <span class="collapsible-icon">&#8853;</span> <span data-i18n="lblPermissions">Permissions</span>
+        </div>
+        <div id="perm-collapsible" class="dyno-collapsible-body">
+          <div class="dyno-two-cols">
+            <div>
+              <label class="dash-form-label" data-i18n="lblAffectedRoles">Affected Roles</label>
+              <select id="automod-affected-roles" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+            </div>
+            <div>
+              <label class="dash-form-label" data-i18n="lblIgnoredRoles">Ignored Roles</label>
+              <select id="automod-ignored-roles" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+            </div>
+          </div>
+          <div class="dyno-two-cols">
+            <div>
+              <label class="dash-form-label" data-i18n="lblAffectedChannels">Affected Channels</label>
+              <select id="automod-affected-channels" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+            </div>
+            <div>
+              <label class="dash-form-label" data-i18n="lblIgnoredChannels">Ignored Channels</label>
+              <select id="automod-ignored-channels" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+            </div>
+          </div>
+        </div>
 
-      const vcStat = document.getElementById("stat-dash-vc");
-      if (vcStat) vcStat.innerText = (guildId === "1426554369393954969") ? "26" : "8";
+        <!-- Collapsible: Additional Options -->
+        <div class="dyno-collapsible-trigger" onclick="toggleCollapsible('opt-collapsible', this)">
+          <span class="collapsible-icon">&#8853;</span> <span data-i18n="lblAdditionalOptions">Additional Options</span>
+        </div>
+        <div id="opt-collapsible" class="dyno-collapsible-body">
+          <div>
+            <label class="dash-form-label">Log Channel <span class="dyno-badge-new">PREMIUM</span> <span class="dyno-help-ico">?</span></label>
+            <select id="automod-log-channel" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+          </div>
+          <div>
+            <label class="dash-form-label">Custom Response <span class="dyno-badge-new">PREMIUM</span></label>
+            <input type="text" id="automod-custom-response" class="form-input" style="width:100%;" placeholder="Watch your language.">
+          </div>
+        </div>
+      </div>
+      <div class="dyno-modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-automod-rule')" data-i18n="btnCancel">Cancel</button>
+        <button class="btn-crimson" onclick="saveAutomodRule()" data-i18n="btnCreateRule">Create Rule</button>
+      </div>
+    </div>
+  </div>
 
-      const sTitle = document.getElementById("dash-server-title-name");
-      if (sTitle) {
-        sTitle.innerText = (guildId === "1426554369393954969") ? "Garden Of Dream" : "Discord Server";
-      }
-
-      const sIdBadge = document.getElementById("dash-header-server-id");
-      if (sIdBadge) sIdBadge.innerText = guildId;
-
-      // Populate Updates Channel dropdown
-      const chSel = document.getElementById("cfg-dash-updates-channel");
-      if (chSel) {
-        chSel.innerHTML = `<option value="">Select..</option>`;
-        const channels = (guildId === "1426554369393954969" && typeof REAL_GARDEN_DATA !== "undefined") ? REAL_GARDEN_DATA.channels : DEFAULT_FALLBACK_CHANNELS;
-        channels.forEach(c => {
-          const opt = document.createElement("option");
-          opt.value = c.id;
-          opt.innerText = "# " + c.name;
-          if (c.name.includes("cmd") || c.name.includes("update") || c.name.includes("staff")) {
-            opt.selected = true;
-          }
-          chSel.appendChild(opt);
-        });
-      }
-
-      // Populate Role Picker dropdown for Manager Roles
-      const rolePicker = document.getElementById("cfg-dash-role-picker");
-      if (rolePicker) {
-        rolePicker.innerHTML = `<option value="" data-i18n="dashAddRolePrompt">+ Add Manager Role...</option>`;
-        const roles = (guildId === "1426554369393954969" && typeof REAL_GARDEN_DATA !== "undefined") ? REAL_GARDEN_DATA.roles : DEFAULT_FALLBACK_ROLES;
-        roles.forEach(r => {
-          const opt = document.createElement("option");
-          opt.value = r.name;
-          opt.innerText = "@ " + r.name;
-          rolePicker.appendChild(opt);
-        });
-      }
-
-      // Load saved settings
-      const savedSettingsStr = localStorage.getItem("haruki_bot_settings_" + guildId);
-      if (savedSettingsStr) {
-        try {
-          const s = JSON.parse(savedSettingsStr);
-          if (s.prefixChar) {
-            document.getElementById("cfg-dash-prefix-char").value = s.prefixChar;
-            handlePrefixInput(document.getElementById("cfg-dash-prefix-char"));
-          }
-          if (s.nickname) document.getElementById("cfg-dash-bot-nickname").value = s.nickname;
-          if (s.updatesChannel) document.getElementById("cfg-dash-updates-channel").value = s.updatesChannel;
-          if (s.timezone) document.getElementById("cfg-dash-timezone").value = s.timezone;
-          if (s.lang) document.getElementById("cfg-dash-language").value = s.lang;
-          if (s.disableWarnings !== undefined) document.getElementById("cfg-dash-disable-warnings").checked = s.disableWarnings;
-          if (s.managerRoles) currentManagerRoles = s.managerRoles;
-        } catch(e) {}
-      } else {
-        // Defaults
-        document.getElementById("cfg-dash-prefix-char").value = "h";
-        handlePrefixInput(document.getElementById("cfg-dash-prefix-char"));
-        document.getElementById("cfg-dash-bot-nickname").value = "Bot Cute";
-        document.getElementById("cfg-dash-timezone").value = "Asia/Ho_Chi_Minh";
-        document.getElementById("cfg-dash-language").value = "en";
-      }
-
-      renderManagerRolesTags();
-      loadRecentActivities();
-      renderModulesGrid();
-    };
-
-    // Auto render on load
-    document.addEventListener("DOMContentLoaded", () => {
-      renderManagerRolesTags();
-      loadRecentActivities();
-      renderModulesGrid();
-    });
-
-  
-    // =========================================================================
-    // LIVE SERVER CLOCK & DISCORD STATS VOICE CHANNELS LOGIC
-    // =========================================================================
-    function updateLiveClock() {
-      const tzSelect = document.getElementById("cfg-dash-timezone");
-      const tz = tzSelect ? tzSelect.value : (localStorage.getItem("haruki_dash_tz") || "Asia/Saigon");
-
-      const now = new Date();
-      try {
-        const clockDisplay = document.getElementById("dash-live-clock-display");
-        if (clockDisplay) {
-          const options = {
-            timeZone: tz,
-            weekday: "long",
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true
-          };
-          const formatted = new Intl.DateTimeFormat("en-US", options).format(now);
-          clockDisplay.innerText = `${formatted} (${tz})`;
-        }
-      } catch (e) {
-        console.warn("Timezone error:", e);
-      }
-
-      updateLiveStatsBoardMockup();
-    }
-    setInterval(updateLiveClock, 1000);
-
-    function handleTimezoneChange() {
-      const tzSelect = document.getElementById("cfg-dash-timezone");
-      const tz = tzSelect ? tzSelect.value : "Asia/Saigon";
-      localStorage.setItem("haruki_dash_tz", tz);
-      updateLiveClock();
-      updateLiveStatsBoardMockup();
-      if (typeof triggerUnsaved === "function") triggerUnsaved();
-    }
-
-    function updateLiveStatsBoardMockup() {
-      const tzSelect = document.getElementById("cfg-dash-timezone");
-      const tz = tzSelect ? tzSelect.value : (localStorage.getItem("haruki_dash_tz") || "Asia/Saigon");
-
-      const linkedTzEl = document.getElementById("stats-board-linked-tz");
-      if (linkedTzEl) linkedTzEl.innerText = `${tz} (GMT+7)`;
-
-      const fmtSelect = document.getElementById("cfg-stats-clock-format");
-      const fmt = fmtSelect ? fmtSelect.value : "day_date";
-
-      const now = new Date();
-      try {
-        const vcClock = document.getElementById("mock-vc-clock");
-        if (vcClock) {
-          if (fmt === "day_date") {
-            const weekday = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "long" }).format(now);
-            const month = new Intl.DateTimeFormat("en-US", { timeZone: tz, month: "short" }).format(now);
-            const day = new Intl.DateTimeFormat("en-US", { timeZone: tz, day: "numeric" }).format(now);
-            const n = parseInt(day);
-            const suffix = (n === 1 || n === 21 || n === 31) ? "st" : (n === 2 || n === 22) ? "nd" : (n === 3 || n === 23) ? "rd" : "th";
-            vcClock.innerText = `📅 ${weekday} ${month} ${day}${suffix}`;
-          } else if (fmt === "time_ampm") {
-            const timeStr = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
-            vcClock.innerText = `⏰ ${timeStr}`;
-          } else {
-            const fullStr = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
-            vcClock.innerText = `📅 ${fullStr}`;
-          }
-        }
-      } catch (e) {
-        console.warn("Stats board clock error:", e);
-      }
-    }
-
-    function deployStatsBoardToDiscord(event) {
-      if (event) event.preventDefault();
-      const tzSelect = document.getElementById("cfg-dash-timezone");
-      const tz = tzSelect ? tzSelect.value : "Asia/Saigon";
-      const gId = currentGuildId || "1426554369393954969";
-      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
-
-      showToast((activeLang === "vi") ? `Đang tạo Bảng Kênh Thống Kê & Múi Giờ (${tz}) vào Discord...` : `Deploying Stats Board & Clock Channels (${tz}) to Discord...`, "info");
-
-      fetch(`${LOCAL_ENGINE_API}/api/stats-board`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          guildId: gId,
-          timezone: tz,
-          categoryName: "[ ✦ INFORMATION ✦ ]"
-        })
-      }).then(r => r.json()).then(data => {
-        showToast((activeLang === "vi") ? `Đã tạo Bảng Kênh [✦ INFORMATION ✦] vào Discord với Múi giờ ${tz}!` : `Stats Board [✦ INFORMATION ✦] created in Discord with Timezone ${tz}!`, "success");
-        logRecentActivity("system", `Created Discord Voice Stats Board with Timezone '${tz}'`);
-      }).catch(err => {
-        showToast((activeLang === "vi") ? `Đã thiết lập Bảng Kênh Thống Kê [✦ INFORMATION ✦] (${tz})!` : `Stats Board [✦ INFORMATION ✦] configured with Timezone ${tz}!`, "success");
-        logRecentActivity("system", `Configured Discord Voice Stats Board with Timezone '${tz}'`);
-      });
-    }
-
-  </script>
+  <!-- ===================================================== -->
+  <!-- MODAL 3: AUTOMOD DEFAULT SETTINGS (IMAGE 7)           -->
+  <!-- ===================================================== -->
+  <div id="modal-automod-default" class="dyno-modal-overlay" onclick="handleModalBackdropClick(event, 'modal-automod-default')">
+    <div class="dyno-modal-card">
+      <div class="dyno-modal-header">
+        <h3 class="dyno-modal-title" data-i18n="modalTitleDefaultSettings">Default Settings</h3>
+        <button class="dyno-modal-close" onclick="closeModal('modal-automod-default')">&times;</button>
+      </div>
+      <div class="dyno-modal-body">
+        <p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:6px;" data-i18n="descDefaultSettings">These are the default settings for rules that don't have them specifically set.</p>
+        <div>
+          <label class="dash-form-label" data-i18n="lblDefaultLogChannel">Default Log Channel</label>
+          <select id="automod-default-log-channel" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+        </div>
+        <div>
+          <label class="dash-form-label" data-i18n="lblIgnoredChannels">Ignored Channels</label>
+          <select id="automod-default-ignored-channels" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+        </div>
+        <div>
+          <label class="dash-form-label" data-i18n="lblIgnoredRoles">Ignored Roles</label>
+          <select id="automod-default-ignored-roles" class="form-input" style="width:100%;"><option value="">Select..</option></select>
+        </div>
+      </div>
+      <div class="dyno-modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-automod-default')" data-i18n="btnCancel">Cancel</button>
+        <button class="btn-emerald-solid" onclick="saveAutomodDefaultSettings()" data-i18n="btnSave">Save</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
