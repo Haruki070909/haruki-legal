@@ -4732,11 +4732,11 @@
 }
 .stats-board-container {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 24px;
-  align-items: center;
+  grid-template-columns: minmax(300px, 345px) 1fr;
+  gap: 22px;
+  align-items: start;
 }
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .stats-board-container {
     grid-template-columns: 1fr;
   }
@@ -4747,6 +4747,13 @@
   border-radius: 12px;
   padding: 14px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 84px;
+}
+@media (max-width: 960px) {
+  .discord-stats-mockup {
+    position: static;
+  }
 }
 .discord-cat-row {
   display: flex;
@@ -4767,6 +4774,9 @@
 .discord-cat-row .cat-name {
   color: #e2e8f0;
   flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .discord-cat-row .cat-arrow,
 .discord-cat-row .cat-plus {
@@ -4809,6 +4819,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.mock-stats-meta {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
 .dot-online { color: #10b981; font-size: 0.75rem; }
 .dot-dnd { color: #ef4444; font-size: 0.75rem; }
 .dot-idle { color: #f59e0b; font-size: 0.75rem; }
@@ -4817,6 +4838,140 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
+}
+.stats-preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.stats-preset-btn {
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.stats-preset-btn:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #ffffff;
+}
+.stats-inline-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .stats-inline-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.stats-builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stats-ch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.stats-ch-row {
+  display: grid;
+  grid-template-columns: 22px 155px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+.stats-ch-row.is-disabled {
+  opacity: 0.52;
+}
+.stats-ch-row select.form-input,
+.stats-ch-row input.form-input {
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  min-height: 34px;
+}
+.stats-ch-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stats-ch-icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.stats-ch-icon-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.stats-ch-icon-btn.danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fca5a5;
+}
+.stats-ch-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+@media (max-width: 720px) {
+  .stats-ch-row {
+    grid-template-columns: 22px 1fr auto;
+  }
+  .stats-ch-row .stats-ch-template {
+    grid-column: 1 / -1;
+  }
+}
+.stats-var-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.stats-var-chip {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  color: #7dd3fc;
+  font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.stats-var-chip:hover {
+  background: rgba(56, 189, 248, 0.22);
+  color: #ffffff;
+}
+.stats-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-top: 4px;
 }
 .stats-tz-pill {
   display: inline-flex;
@@ -6005,76 +6160,172 @@
         </div>
 
         
-        <!-- SECTION 1.5: DISCORD STATS & TIMEZONE VOICE CHANNELS (REPLICA OF IMAGE 6) -->
+        <!-- SECTION 1.5: DISCORD STATS & TIMEZONE VOICE CHANNELS (CUSTOMIZABLE) -->
         <div class="dash-section-card" style="margin-top:20px;">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
             <div>
-              <div class="dash-card-header-label" style="margin-bottom:4px;" data-i18n="statsBoardTitle">DISCORD STATS & TIMEZONE VOICE CHANNELS (BẢNG THỐNG KÊ KÊNH)</div>
-              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);" data-i18n="statsBoardSub">Tự động tạo danh mục và 3 kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server theo thời gian thực.</p>
+              <div class="dash-card-header-label" style="margin-bottom:4px;" data-i18n="statsBoardTitle">LIVE SERVER STATS & TIMEZONE VOICE CHANNELS</div>
+              <p style="margin:0;font-size:0.78rem;color:var(--text-muted);" data-i18n="statsBoardSub">Tùy biến tự do danh mục và tối đa 8 kênh thống kê thời gian thực: múi giờ, thành viên, online, boost, mục tiêu thành viên và nhiều hơn nữa.</p>
             </div>
-            <div class="dash-stats-cmd-badge">
-              <span data-i18n="lblBotCmd">Bot Command:</span> <code>h?statsboard setup</code>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div class="dash-stats-cmd-badge">
+                <span data-i18n="lblBotCmd">Bot Command:</span> <code>h?statsboard setup</code>
+              </div>
+              <button type="button" class="btn-secondary" style="padding:5px 10px;font-size:0.74rem;" onclick="resetStatsBoardToDefaults(true)" data-i18n="btnResetStats">Reset Default</button>
             </div>
           </div>
 
           <div class="stats-board-container">
-            <!-- Discord UI Mockup matching user screenshot -->
+            <!-- Left: Real-time Discord Preview -->
             <div class="discord-stats-mockup">
               <div class="discord-cat-row">
-                <span class="cat-bracket">╭</span>
-                <svg style="width:14px;height:14px;fill:#cbd5e1;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
-                <span class="cat-name">[ ✦ INFORMATION ✦ ]</span>
-                <svg style="width:14px;height:14px;fill:#cbd5e1;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
                 <span class="cat-arrow">⌵</span>
+                <span class="cat-name" id="mock-stats-cat-name">╭🧭 [ ✦ INFORMATION ✦ ] 🧭</span>
                 <span class="cat-plus">+</span>
               </div>
 
-              <!-- Voice Channel 1: Live Timezone Date -->
-              <div class="discord-vc-row">
-                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                <span class="vc-name" id="mock-vc-clock">📅 Tuesday Nov 24th</span>
-              </div>
+              <div id="mock-stats-channels-list"></div>
 
-              <!-- Voice Channel 2: Presences -->
-              <div class="discord-vc-row">
-                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                <span class="vc-name"><span class="dot-online">●</span> <span id="mock-pres-online">13</span> &nbsp;<span class="dot-dnd">●</span> <span id="mock-pres-dnd">13</span> &nbsp;<span class="dot-idle">●</span> <span id="mock-pres-idle">15</span></span>
-              </div>
-
-              <!-- Voice Channel 3: Users Count -->
-              <div class="discord-vc-row">
-                <svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                <svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                <span class="vc-name" id="mock-vc-users">Users: 304</span>
+              <div class="mock-stats-meta">
+                <span id="mock-stats-preview-tz">🕒 Asia/Saigon</span>
+                <span id="mock-stats-preview-clock">--:--</span>
               </div>
             </div>
 
-            <!-- Controls -->
+            <!-- Right: Full Customizer Controls -->
             <div class="stats-board-controls">
-              <div class="dash-form-item">
-                <label class="dash-form-label" data-i18n="lblStatsClockFmt">Định dạng Kênh Đồng Hồ (Clock Format):</label>
-                <select id="cfg-stats-clock-format" class="form-input" onchange="updateLiveStatsBoardMockup()">
-                  <option value="day_date" selected>📅 Tuesday Nov 24th (Day of Week & Date)</option>
-                  <option value="time_ampm">⏰ 11:15 AM (Time in Timezone)</option>
-                  <option value="full_datetime">📅 Tue 24 Nov • 11:15 AM (Date & Time)</option>
-                </select>
-              </div>
-
-              <div class="dash-form-item">
-                <label class="dash-form-label" data-i18n="lblStatsTimezone">Múi giờ áp dụng (Linked Timezone):</label>
-                <div class="stats-tz-pill">
-                  <span class="status-pulse-dot"></span>
-                  <span id="stats-board-linked-tz">Asia/Saigon (GMT+7)</span>
+              <!-- Quick Style Presets -->
+              <div>
+                <div class="dash-form-label" style="margin-bottom:6px;" data-i18n="lblStatsPresets">Quick Style Presets:</div>
+                <div class="stats-preset-bar">
+                  <button type="button" class="stats-preset-btn" onclick="applyStatsPreset('cyber')">✨ Aesthetic Cyber</button>
+                  <button type="button" class="stats-preset-btn" onclick="applyStatsPreset('minimal')">🧊 Minimal Clean</button>
+                  <button type="button" class="stats-preset-btn" onclick="applyStatsPreset('gaming')">🎮 Gaming Hub</button>
+                  <button type="button" class="stats-preset-btn" onclick="applyStatsPreset('kawaii')">🌸 Kawaii Soft</button>
+                  <button type="button" class="stats-preset-btn" onclick="applyStatsPreset('corporate')">💼 Pro Corporate</button>
                 </div>
               </div>
 
-              <div style="margin-top:auto;padding-top:6px;">
-                <button type="button" class="btn btn-emerald" onclick="deployStatsBoardToDiscord(event)" style="width:100%;justify-content:center;padding:12px 18px;font-weight:800;background:linear-gradient(135deg, #10b981 0%, #059669 100%);box-shadow:0 4px 16px rgba(16,185,129,0.35);">
+              <!-- Inline Category, Timezone & Display Grid -->
+              <div class="stats-inline-grid">
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsCatName">Category Name:</label>
+                  <input type="text" id="cfg-stats-category-name" class="form-input" maxlength="60" value="╭🧭 [ ✦ INFORMATION ✦ ] 🧭" oninput="handleStatsBoardFieldChange()">
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsTimezone">Server Timezone:</label>
+                  <div style="display:flex;gap:8px;">
+                    <select id="cfg-stats-timezone" class="form-input" style="flex:1;" onchange="syncTimezoneSelects('cfg-stats-timezone')">
+                      <option value="Asia/Saigon" selected>Asia/Saigon (GMT+7)</option>
+                      <option value="Asia/Ho_Chi_Minh">Asia/Ho_Chi_Minh (GMT+7)</option>
+                      <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
+                      <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
+                      <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                      <option value="Asia/Seoul">Asia/Seoul (GMT+9)</option>
+                      <option value="Australia/Sydney">Australia/Sydney (GMT+10/11)</option>
+                      <option value="Europe/London">Europe/London (GMT)</option>
+                      <option value="Europe/Paris">Europe/Paris (CET)</option>
+                      <option value="Europe/Berlin">Europe/Berlin (CET)</option>
+                      <option value="America/New_York">America/New_York (EST)</option>
+                      <option value="America/Chicago">America/Chicago (CST)</option>
+                      <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                      <option value="UTC">UTC</option>
+                    </select>
+                    <button type="button" class="btn btn-crimson" onclick="detectUserTimezone()" style="padding:0 12px;font-weight:700;font-size:0.78rem;">Detect</button>
+                  </div>
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsClockFmt">Clock / Date Format:</label>
+                  <select id="cfg-stats-clock-format" class="form-input" onchange="handleStatsBoardFieldChange()">
+                    <option value="day_date" selected>📅 Day &amp; Date (Wednesday, Nov 25)</option>
+                    <option value="date_ddmmyyyy">📆 Short Date (25/11/2026)</option>
+                    <option value="time_24h">🕒 24h Clock (20:45)</option>
+                    <option value="time_ampm">⏰ 12h Clock (08:45 PM)</option>
+                    <option value="full_24h">📅 Date + 24h (25/11 • 20:45)</option>
+                    <option value="full_ampm">📅 Date + AM/PM (Nov 25 • 08:45 PM)</option>
+                    <option value="day_month_vn">🗓️ Tiếng Việt (Thứ Tư, 25 Thg 11)</option>
+                  </select>
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsLocale">Clock Language / Locale:</label>
+                  <select id="cfg-stats-locale" class="form-input" onchange="handleStatsBoardFieldChange()">
+                    <option value="auto" selected>🌐 Auto (Follow Dashboard)</option>
+                    <option value="en-US">🇺🇸 English (US)</option>
+                    <option value="vi-VN">🇻🇳 Tiếng Việt</option>
+                    <option value="ja-JP">🇯🇵 日本語</option>
+                    <option value="ko-KR">🇰🇷 한국어</option>
+                  </select>
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsChType">Channel Type:</label>
+                  <select id="cfg-stats-channel-type" class="form-input" onchange="handleStatsBoardFieldChange()">
+                    <option value="voice" selected>🔊 Voice Channels (Cleanest)</option>
+                    <option value="text">#️⃣ Text Channels (Read-Only)</option>
+                  </select>
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsCatPos">Category Placement:</label>
+                  <select id="cfg-stats-category-pos" class="form-input" onchange="handleStatsBoardFieldChange()">
+                    <option value="top" selected>⬆️ Top of Server Channel List</option>
+                    <option value="keep">📌 Keep Current Position</option>
+                  </select>
+                </div>
+
+                <div class="dash-form-item">
+                  <label class="dash-form-label" data-i18n="lblStatsGoal">Member Goal Target ({goal}):</label>
+                  <input type="number" id="cfg-stats-goal-target" class="form-input" min="10" step="10" value="500" oninput="handleStatsBoardFieldChange()">
+                </div>
+
+                <div class="dash-form-item" style="display:flex;align-items:flex-end;">
+                  <label class="dash-checkbox-label" style="margin:0;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);width:100%;">
+                    <input type="checkbox" id="cfg-stats-lock-channels" checked onchange="handleStatsBoardFieldChange()">
+                    <span data-i18n="lblStatsLock">Auto-lock channels for @everyone</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Dynamic Channel Rows Builder -->
+              <div>
+                <div class="stats-builder-header" style="margin-bottom:8px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span class="dash-form-label" style="margin:0;" data-i18n="lblStatsBuilder">Custom Stat Channels:</span>
+                    <span id="stats-channels-count" class="dash-stats-cmd-badge" style="padding:2px 8px;">3 / 8</span>
+                  </div>
+                  <button type="button" class="btn-secondary" style="padding:5px 11px;font-size:0.76rem;border-color:rgba(16,185,129,0.4);color:#34d399;" onclick="addStatsBoardChannel()" data-i18n="btnAddStatsCh">+ Add Channel</button>
+                </div>
+
+                <div id="stats-channels-builder-list" class="stats-ch-list"></div>
+
+                <div class="stats-var-bar" style="margin-top:8px;">
+                  <span style="font-size:0.72rem;color:var(--text-muted);" data-i18n="lblStatsVarHint">Click placeholder to insert:</span>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{value}')">{value}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{time}')">{time}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{date}')">{date}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{tz}')">{tz}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{online}')">{online}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{total}')">{total}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{boosts}')">{boosts}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{tier}')">{tier}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{roles}')">{roles}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{channels}')">{channels}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{voice}')">{voice}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{goal}')">{goal}</button>
+                  <button type="button" class="stats-var-chip" onclick="insertStatsPlaceholder('{pct}')">{pct}</button>
+                </div>
+              </div>
+
+              <!-- Deploy / Delete Actions -->
+              <div class="stats-actions-row">
+                <button type="button" id="btn-deploy-stats-channels" class="btn btn-emerald" onclick="deployStatsBoardToDiscord(event)" style="flex:1;min-width:220px;justify-content:center;padding:12px 18px;font-weight:800;background:linear-gradient(135deg, #10b981 0%, #059669 100%);box-shadow:0 4px 16px rgba(16,185,129,0.35);">
                   <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                  <span data-i18n="btnDeployStats">Tạo / Đồng Bộ Bảng Kênh Thống Kê Vào Discord</span>
+                  <span data-i18n="btnDeployStats">Deploy / Sync Stats Board to Discord Channels</span>
                 </button>
+                <button type="button" id="btn-delete-stats-channels" class="btn-secondary" onclick="removeStatsBoardFromDiscord(event)" style="padding:12px 14px;border-color:rgba(239,68,68,0.35);color:#fca5a5;" data-i18n="btnDeleteStats">Delete Synced</button>
               </div>
             </div>
           </div>
@@ -6124,15 +6375,20 @@
               <div class="dash-form-item">
                 <label class="dash-form-label" data-i18n="lblTimezone">Timezone</label>
                 <div style="display:flex;gap:10px;">
-                  <select id="cfg-dash-timezone" class="form-input" style="flex:1;" onchange="handleTimezoneChange()">
+                  <select id="cfg-dash-timezone" class="form-input" style="flex:1;" onchange="syncTimezoneSelects('cfg-dash-timezone')">
                     <option value="Asia/Saigon" selected>Asia/Saigon (GMT+7)</option>
                     <option value="Asia/Ho_Chi_Minh">Asia/Ho_Chi_Minh (GMT+7)</option>
                     <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
-                    <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
                     <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
-                    <option value="America/New_York">America/New_York (EST)</option>
-                    <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                    <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                    <option value="Asia/Seoul">Asia/Seoul (GMT+9)</option>
+                    <option value="Australia/Sydney">Australia/Sydney (GMT+10/11)</option>
                     <option value="Europe/London">Europe/London (GMT)</option>
+                    <option value="Europe/Paris">Europe/Paris (CET)</option>
+                    <option value="Europe/Berlin">Europe/Berlin (CET)</option>
+                    <option value="America/New_York">America/New_York (EST)</option>
+                    <option value="America/Chicago">America/Chicago (CST)</option>
+                    <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
                     <option value="UTC">UTC</option>
                   </select>
                   <button type="button" class="btn btn-crimson" onclick="detectUserTimezone()" style="padding:0 20px;font-weight:700;">Detect</button>
@@ -8471,12 +8727,28 @@
 
         
         dashServerSubtitle: "Hệ thống bảo vệ HaruMod đang trực chiến 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
-        statsBoardTitle: "BẢNG THỐNG KÊ KÊNH TRỰC TUYẾN & MÚI GIỜ (DISCORD LIVE STATS)",
-        statsBoardSub: "Tự động tạo danh mục và 3 kênh thoại hiển thị đồng hồ múi giờ, người online và thành viên server theo thời gian thực.",
+        statsBoardTitle: "BẢNG THỐNG KÊ KÊNH TRỰC TUYẾN & MÚI GIỜ (TÙY BIẾN ĐA DẠNG)",
+        statsBoardSub: "Tự do thiết kế tên danh mục, chỉnh múi giờ trực tiếp và tùy chọn tối đa 8 kênh thống kê (giờ, online, thành viên, boost, mục tiêu, role...) theo sở thích.",
         lblBotCmd: "Lệnh Bot:",
-        lblStatsClockFmt: "Định dạng Kênh Đồng Hồ (Clock Format):",
-        lblStatsTimezone: "Múi giờ áp dụng (Linked Timezone):",
-        btnDeployStats: "Tạo / Đồng Bộ Bảng Kênh Thống Kê Vào Discord",
+        lblStatsPresets: "Mẫu giao diện nhanh (Presets):",
+        lblStatsCatName: "Tên Danh Mục (Category Name):",
+        lblStatsClockFmt: "Định dạng Kênh Đồng Hồ / Ngày:",
+        lblStatsTimezone: "Múi giờ áp dụng (Chỉnh trực tiếp):",
+        lblStatsLocale: "Ngôn ngữ đồng hồ:",
+        lblStatsChType: "Loại kênh hiển thị:",
+        lblStatsCatPos: "Vị trí danh mục:",
+        lblStatsGoal: "Mục tiêu thành viên ({goal}):",
+        lblStatsLock: "Tự động khóa quyền @everyone (Chỉ xem)",
+        lblStatsBuilder: "Danh sách kênh tùy chỉnh:",
+        btnAddStatsCh: "+ Thêm kênh",
+        btnResetStats: "Khôi phục mặc định",
+        btnDeleteStats: "Xóa kênh đã đồng bộ",
+        lblStatsVarHint: "Bấm để chèn biến:",
+        btnDeployStats: "Tạo / Đồng Bộ Bảng Thống Kê Vào Discord",
+        btnDeployStatsDeploying: "Đang đồng bộ lên Discord...",
+        btnDeployStatsDone: "Đã đồng bộ xong!",
+        toastStatsSuccess: "Đã tạo & đồng bộ bảng thống kê thật lên Discord!",
+        toastStatsFail: "Đồng bộ thất bại: ",
         lblTimezone: "Múi giờ hệ thống (Timezone)",
         lblLiveClock: "Đồng hồ thời gian thực:",
         dashPrefixHint: "Phần dấu hỏi '?' được cố định. Bạn chỉ cần đổi chữ/ký tự phía trước (ví dụ h &rarr; tiền tố là h?, d &rarr; d?).",
@@ -8778,11 +9050,27 @@
         
         dashServerSubtitle: "HaruMod Security System Active 24/7 &bull; ID: <code id='dash-header-server-id'>1426554369393954969</code>",
         statsBoardTitle: "LIVE SERVER STATS & TIMEZONE VOICE CHANNELS",
-        statsBoardSub: "Automatically creates category and 3 voice channels displaying real-time clock, online presence, and total members.",
+        statsBoardSub: "Freely customize your category, edit timezone inline, pick style presets, and configure up to 8 live stat channels (clock, members, online, boosts, goals, roles & custom templates).",
         lblBotCmd: "Bot Command:",
-        lblStatsClockFmt: "Timezone Clock Channel Format:",
-        lblStatsTimezone: "Linked Server Timezone:",
+        lblStatsPresets: "Quick Style Presets:",
+        lblStatsCatName: "Category Name:",
+        lblStatsClockFmt: "Clock / Date Format:",
+        lblStatsTimezone: "Server Timezone (Inline Edit):",
+        lblStatsLocale: "Clock Language / Locale:",
+        lblStatsChType: "Channel Type:",
+        lblStatsCatPos: "Category Placement:",
+        lblStatsGoal: "Member Goal Target ({goal}):",
+        lblStatsLock: "Auto-lock channels for @everyone",
+        lblStatsBuilder: "Custom Stat Channels:",
+        btnAddStatsCh: "+ Add Channel",
+        btnResetStats: "Reset Default",
+        btnDeleteStats: "Delete Synced",
+        lblStatsVarHint: "Click placeholder to insert:",
         btnDeployStats: "Deploy / Sync Stats Board to Discord Channels",
+        btnDeployStatsDeploying: "Syncing to Discord...",
+        btnDeployStatsDone: "Deployed Successfully!",
+        toastStatsSuccess: "Successfully synced custom stats channels to Discord!",
+        toastStatsFail: "Deploy failed: ",
         lblTimezone: "Server Timezone",
         lblLiveClock: "Live Server Clock:",
         dashPrefixHint: "The question mark '?' is permanently fixed. Only change the prefix letter before it (e.g. h -> prefix is h?).",
@@ -9868,6 +10156,7 @@
         },
         autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
         autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
+        statsBoard: typeof getStatsBoardConfigForSave === "function" ? getStatsBoardConfigForSave() : null,
         savedAt: new Date().toISOString()
       };
     }
@@ -9888,9 +10177,16 @@
         document.getElementById("cfg-dash-prefix-char").value = cfg.prefix.replace("?", "") || "h";
         if (typeof handlePrefixInput === "function") handlePrefixInput(document.getElementById("cfg-dash-prefix-char"), true);
       }
-      if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
+      if (cfg.timezone && typeof syncTimezoneSelects === "function") {
+        const dashTz = document.getElementById("cfg-dash-timezone");
+        if (dashTz) dashTz.value = cfg.timezone;
+        syncTimezoneSelects("cfg-dash-timezone", true);
+      } else if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
         document.getElementById("cfg-dash-timezone").value = cfg.timezone;
         if (typeof updateLiveClock === "function") updateLiveClock();
+      }
+      if (cfg.statsBoard && typeof applyStatsBoardConfig === "function") {
+        applyStatsBoardConfig(cfg.statsBoard);
       }
       if (cfg.updatesChannel && document.getElementById("cfg-dash-updates-channel")) {
         document.getElementById("cfg-dash-updates-channel").value = cfg.updatesChannel;
@@ -10046,6 +10342,17 @@
       hasUnsavedChanges = false;
       const saveBar = document.getElementById("sticky-save-bar");
       if (saveBar) saveBar.classList.remove("visible");
+
+      if (cfg && cfg.timezone && typeof syncTimezoneSelects === "function") {
+        const dashTz = document.getElementById("cfg-dash-timezone");
+        if (dashTz) dashTz.value = cfg.timezone;
+        syncTimezoneSelects("cfg-dash-timezone", true);
+      }
+      if (cfg && cfg.statsBoard && typeof applyStatsBoardConfig === "function") {
+        applyStatsBoardConfig(cfg.statsBoard);
+      } else if (typeof resetStatsBoardToDefaults === "function") {
+        resetStatsBoardToDefaults(false);
+      }
 
       updateLiveBotPreview(false);
     }
@@ -10442,6 +10749,10 @@
       if (diagCr) diagCr.textContent = `✓ ${channels.length} Channels • ${roles.length} Roles Loaded (Live 1-1)`;
       const diagGw = document.getElementById("diag-gateway-name");
       if (diagGw) diagGw.textContent = activeGatewayName;
+
+      if (typeof updateLiveStatsBoardMockup === "function") {
+        updateLiveStatsBoardMockup();
+      }
     }
 
     async function quickUnbanUser(userId, username) {
@@ -11749,91 +12060,670 @@
 
 
     // =========================================================
-    // DISCORD STATS CHANNELS REAL DEPLOYER
+    // DISCORD STATS CHANNELS CUSTOMIZER & 1-1 REAL DEPLOYER
     // =========================================================
+    const STATS_METRIC_DEFAULTS = {
+      clock: { label: "📅 Clock / Date", defaultTpl: "📅 {value}" },
+      time_clock: { label: "🕒 Live Time", defaultTpl: "🕒 {time} ({tz})" },
+      online: { label: "🟢 Online Members", defaultTpl: "🟢 Online: {online}" },
+      members: { label: "👥 Total Members", defaultTpl: "👥 Users: {total}" },
+      boosts: { label: "💎 Server Boosts", defaultTpl: "💎 Boosts: {boosts} (Lv.{tier})" },
+      channels: { label: "📁 Total Channels", defaultTpl: "📁 Channels: {channels}" },
+      voice_channels: { label: "🔊 Voice Channels", defaultTpl: "🔊 Voice: {voice}" },
+      roles: { label: "🏷️ Total Roles", defaultTpl: "🏷️ Roles: {roles}" },
+      member_goal: { label: "🎯 Member Goal", defaultTpl: "🎯 Goal: {total}/{goal} ({pct}%)" },
+      bans: { label: "🚫 Banned Users", defaultTpl: "🚫 Banned: {bans}" },
+      custom: { label: "✨ Custom Static", defaultTpl: "✨ Welcome to {server}" }
+    };
+
+    const STATS_PRESETS = {
+      cyber: {
+        categoryName: "╭🧭 [ ✦ INFORMATION ✦ ] 🧭",
+        clockFormat: "day_date",
+        channelType: "voice",
+        channels: [
+          { metric: "clock", template: "📅 {value}", enabled: true },
+          { metric: "online", template: "🟢 Online: {online}", enabled: true },
+          { metric: "members", template: "👥 Users: {total}", enabled: true },
+          { metric: "boosts", template: "💎 Boosts: {boosts} (Lv.{tier})", enabled: true }
+        ]
+      },
+      minimal: {
+        categoryName: "SERVER STATS",
+        clockFormat: "time_24h",
+        channelType: "voice",
+        channels: [
+          { metric: "time_clock", template: "🕒 {time} ({tz})", enabled: true },
+          { metric: "members", template: "Members: {total}", enabled: true },
+          { metric: "online", template: "Active: {online}", enabled: true }
+        ]
+      },
+      gaming: {
+        categoryName: "⚔️ [ LOBBY & STATS ] ⚔️",
+        clockFormat: "full_24h",
+        channelType: "voice",
+        channels: [
+          { metric: "clock", template: "⏱️ {value}", enabled: true },
+          { metric: "online", template: "🎮 Online: {online}", enabled: true },
+          { metric: "members", template: "👾 Players: {total}", enabled: true },
+          { metric: "voice_channels", template: "🎙️ Voice Channels: {voice}", enabled: true },
+          { metric: "member_goal", template: "🎯 Goal: {total}/{goal} ({pct}%)", enabled: true }
+        ]
+      },
+      kawaii: {
+        categoryName: "🌸 ₊˚・ server stats ・˚₊ 🌸",
+        clockFormat: "day_date",
+        channelType: "voice",
+        channels: [
+          { metric: "clock", template: "🗓️ {value}", enabled: true },
+          { metric: "online", template: "✨ Online: {online}", enabled: true },
+          { metric: "members", template: "🎀 Members: {total}", enabled: true },
+          { metric: "boosts", template: "🍓 Boosts: {boosts}", enabled: true }
+        ]
+      },
+      corporate: {
+        categoryName: "📊 SERVER OVERVIEW",
+        clockFormat: "full_24h",
+        channelType: "text",
+        channels: [
+          { metric: "time_clock", template: "🕒 {time} {tz}", enabled: true },
+          { metric: "members", template: "👥 Total Members: {total}", enabled: true },
+          { metric: "online", template: "🟢 Online Now: {online}", enabled: true },
+          { metric: "channels", template: "📁 Channels: {channels}", enabled: true },
+          { metric: "roles", template: "🏷️ Roles: {roles}", enabled: true }
+        ]
+      }
+    };
+
+    function createDefaultStatsBoardConfig() {
+      return {
+        categoryName: "╭🧭 [ ✦ INFORMATION ✦ ] 🧭",
+        clockFormat: "day_date",
+        locale: "auto",
+        channelType: "voice",
+        categoryPos: "top",
+        lockChannels: true,
+        goalTarget: 500,
+        categoryId: null,
+        channels: [
+          { id: "st_clock", metric: "clock", template: "📅 {value}", enabled: true, channelId: null },
+          { id: "st_online", metric: "online", template: "🟢 Online: {online}", enabled: true, channelId: null },
+          { id: "st_members", metric: "members", template: "👥 Users: {total}", enabled: true, channelId: null }
+        ]
+      };
+    }
+
+    let statsBoardConfig = createDefaultStatsBoardConfig();
+    let statsLastFocusedIdx = 0;
+
+    function normalizeTimeZoneValue(tz) {
+      if (!tz) return "Asia/Ho_Chi_Minh";
+      if (tz === "Asia/Saigon") return "Asia/Ho_Chi_Minh";
+      return tz;
+    }
+
+    function ensureTimezoneOption(selectEl, tz) {
+      if (!selectEl || !tz) return;
+      const hasExact = [...selectEl.options].some(o => o.value === tz);
+      if (!hasExact) {
+        const opt = document.createElement("option");
+        opt.value = tz;
+        opt.textContent = tz;
+        selectEl.appendChild(opt);
+      }
+    }
+
+    function syncTimezoneSelects(sourceId, silent = false) {
+      const dashTz = document.getElementById("cfg-dash-timezone");
+      const statsTz = document.getElementById("cfg-stats-timezone");
+      const src = sourceId === "cfg-stats-timezone" ? statsTz : dashTz;
+      const dst = sourceId === "cfg-stats-timezone" ? dashTz : statsTz;
+      const val = src ? src.value : "Asia/Saigon";
+      if (dst) {
+        ensureTimezoneOption(dst, val);
+        dst.value = val;
+      }
+      updateLiveClock();
+      if (!silent) triggerUnsaved();
+    }
+
+    function getActiveTimezoneRaw() {
+      const statsTz = document.getElementById("cfg-stats-timezone");
+      const dashTz = document.getElementById("cfg-dash-timezone");
+      return (statsTz && statsTz.value) || (dashTz && dashTz.value) || "Asia/Ho_Chi_Minh";
+    }
+
+    function formatStatsClockParts(tzRaw, fmt, localePref) {
+      const tz = normalizeTimeZoneValue(tzRaw);
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const locale = (!localePref || localePref === "auto") ? (activeLang === "vi" ? "vi-VN" : "en-US") : localePref;
+      const now = new Date();
+      let dateStr = "";
+      let timeStr = "";
+      let tzShort = "";
+      let value = "";
+      try {
+        dateStr = new Intl.DateTimeFormat(locale, { timeZone: tz, weekday: "long", month: "short", day: "numeric" }).format(now);
+        timeStr = new Intl.DateTimeFormat(locale, { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: fmt === "time_ampm" || fmt === "full_ampm" }).format(now);
+        const tzParts = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "short" }).formatToParts(now);
+        tzShort = (tzParts.find(p => p.type === "timeZoneName") || {}).value || tz;
+
+        if (fmt === "date_ddmmyyyy") {
+          value = new Intl.DateTimeFormat("en-GB", { timeZone: tz, day: "2-digit", month: "2-digit", year: "numeric" }).format(now);
+        } else if (fmt === "time_24h") {
+          value = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false }).format(now);
+        } else if (fmt === "time_ampm") {
+          value = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
+        } else if (fmt === "full_24h") {
+          const d = new Intl.DateTimeFormat("en-GB", { timeZone: tz, day: "2-digit", month: "2-digit" }).format(now);
+          const t = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false }).format(now);
+          value = `${d} • ${t}`;
+        } else if (fmt === "full_ampm") {
+          const d = new Intl.DateTimeFormat(locale, { timeZone: tz, month: "short", day: "numeric" }).format(now);
+          const t = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: true }).format(now);
+          value = `${d} • ${t}`;
+        } else if (fmt === "day_month_vn") {
+          value = new Intl.DateTimeFormat("vi-VN", { timeZone: tz, weekday: "long", day: "numeric", month: "short" }).format(now);
+        } else {
+          value = dateStr;
+        }
+      } catch (e) {
+        value = now.toDateString();
+        dateStr = value;
+        timeStr = now.toTimeString().slice(0, 5);
+        tzShort = "UTC";
+      }
+      return { dateStr, timeStr, tzShort, value, locale };
+    }
+
+    function getLiveStatsMetrics(overrideSnapshot = null) {
+      const snap = overrideSnapshot || liveGuildSnapshot;
+      const g = snap && snap.guild ? snap.guild : {};
+      const chs = snap && Array.isArray(snap.channels) ? snap.channels : (typeof cachedChannels !== "undefined" && Array.isArray(cachedChannels) ? cachedChannels : []);
+      const roles = snap && Array.isArray(snap.roles) ? snap.roles : (typeof cachedRoles !== "undefined" && Array.isArray(cachedRoles) ? cachedRoles : []);
+      const bans = snap && Array.isArray(snap.bans) ? snap.bans : [];
+
+      const total = Number(g.approximate_member_count || g.member_count || 304);
+      const online = Number(g.approximate_presence_count || 41);
+      const offline = Math.max(0, total - online);
+      const boosts = Number(g.premium_subscription_count || 0);
+      const tier = Number(g.premium_tier || 0);
+      const channels = chs.length || 0;
+      const voice = chs.filter(c => c.type === 2 || c.type === 13).length;
+      const text = chs.filter(c => c.type === 0 || c.type === 5 || c.type === 15).length;
+      const categories = chs.filter(c => c.type === 4).length;
+      const roleCount = roles.length || 0;
+      const banCount = bans.length || 0;
+      const goal = Math.max(10, Number(statsBoardConfig.goalTarget || 500));
+      const pct = Math.min(100, Math.round((total / goal) * 100));
+      const server = g.name || document.getElementById("dash-server-title-name")?.textContent?.trim() || "Server";
+
+      return { total, online, offline, boosts, tier, channels, voice, text, categories, roles: roleCount, bans: banCount, goal, pct, server };
+    }
+
+    function resolveStatsChannelName(item, metrics, clockParts) {
+      let tpl = (item.template || "").trim();
+      if (!tpl) {
+        const meta = STATS_METRIC_DEFAULTS[item.metric] || STATS_METRIC_DEFAULTS.custom;
+        tpl = meta.defaultTpl;
+      }
+
+      let metricValue = clockParts.value;
+      switch (item.metric) {
+        case "time_clock": metricValue = clockParts.timeStr; break;
+        case "online": metricValue = String(metrics.online); break;
+        case "members": metricValue = String(metrics.total); break;
+        case "boosts": metricValue = String(metrics.boosts); break;
+        case "channels": metricValue = String(metrics.channels); break;
+        case "voice_channels": metricValue = String(metrics.voice); break;
+        case "roles": metricValue = String(metrics.roles); break;
+        case "member_goal": metricValue = `${metrics.total}/${metrics.goal}`; break;
+        case "bans": metricValue = String(metrics.bans); break;
+        case "custom": metricValue = metrics.server; break;
+        default: metricValue = clockParts.value; break;
+      }
+
+      const rendered = tpl
+        .replace(/\{value\}/g, metricValue)
+        .replace(/\{date\}/g, clockParts.dateStr)
+        .replace(/\{time\}/g, clockParts.timeStr)
+        .replace(/\{tz\}/g, clockParts.tzShort)
+        .replace(/\{total\}/g, String(metrics.total))
+        .replace(/\{online\}/g, String(metrics.online))
+        .replace(/\{offline\}/g, String(metrics.offline))
+        .replace(/\{boosts\}/g, String(metrics.boosts))
+        .replace(/\{tier\}/g, String(metrics.tier))
+        .replace(/\{channels\}/g, String(metrics.channels))
+        .replace(/\{voice\}/g, String(metrics.voice))
+        .replace(/\{text\}/g, String(metrics.text))
+        .replace(/\{categories\}/g, String(metrics.categories))
+        .replace(/\{roles\}/g, String(metrics.roles))
+        .replace(/\{bans\}/g, String(metrics.bans))
+        .replace(/\{goal\}/g, String(metrics.goal))
+        .replace(/\{pct\}/g, String(metrics.pct))
+        .replace(/\{server\}/g, metrics.server);
+
+      return rendered.slice(0, 100);
+    }
+
+    function readStatsControlsIntoState() {
+      const catEl = document.getElementById("cfg-stats-category-name");
+      const fmtEl = document.getElementById("cfg-stats-clock-format");
+      const locEl = document.getElementById("cfg-stats-locale");
+      const typeEl = document.getElementById("cfg-stats-channel-type");
+      const posEl = document.getElementById("cfg-stats-category-pos");
+      const lockEl = document.getElementById("cfg-stats-lock-channels");
+      const goalEl = document.getElementById("cfg-stats-goal-target");
+
+      if (catEl) statsBoardConfig.categoryName = catEl.value || "╭🧭 [ ✦ INFORMATION ✦ ] 🧭";
+      if (fmtEl) statsBoardConfig.clockFormat = fmtEl.value || "day_date";
+      if (locEl) statsBoardConfig.locale = locEl.value || "auto";
+      if (typeEl) statsBoardConfig.channelType = typeEl.value === "text" ? "text" : "voice";
+      if (posEl) statsBoardConfig.categoryPos = posEl.value === "keep" ? "keep" : "top";
+      if (lockEl) statsBoardConfig.lockChannels = Boolean(lockEl.checked);
+      if (goalEl) statsBoardConfig.goalTarget = Math.max(10, parseInt(goalEl.value || "500", 10) || 500);
+    }
+
+    function writeStatsStateIntoControls() {
+      const catEl = document.getElementById("cfg-stats-category-name");
+      const fmtEl = document.getElementById("cfg-stats-clock-format");
+      const locEl = document.getElementById("cfg-stats-locale");
+      const typeEl = document.getElementById("cfg-stats-channel-type");
+      const posEl = document.getElementById("cfg-stats-category-pos");
+      const lockEl = document.getElementById("cfg-stats-lock-channels");
+      const goalEl = document.getElementById("cfg-stats-goal-target");
+
+      if (catEl) catEl.value = statsBoardConfig.categoryName || "╭🧭 [ ✦ INFORMATION ✦ ] 🧭";
+      if (fmtEl) fmtEl.value = statsBoardConfig.clockFormat || "day_date";
+      if (locEl) locEl.value = statsBoardConfig.locale || "auto";
+      if (typeEl) typeEl.value = statsBoardConfig.channelType === "text" ? "text" : "voice";
+      if (posEl) posEl.value = statsBoardConfig.categoryPos === "keep" ? "keep" : "top";
+      if (lockEl) lockEl.checked = statsBoardConfig.lockChannels !== false;
+      if (goalEl) goalEl.value = String(statsBoardConfig.goalTarget || 500);
+    }
+
+    function getStatsBoardConfigForSave() {
+      readStatsControlsIntoState();
+      return {
+        categoryName: statsBoardConfig.categoryName,
+        clockFormat: statsBoardConfig.clockFormat,
+        locale: statsBoardConfig.locale,
+        channelType: statsBoardConfig.channelType,
+        categoryPos: statsBoardConfig.categoryPos,
+        lockChannels: statsBoardConfig.lockChannels,
+        goalTarget: statsBoardConfig.goalTarget,
+        categoryId: statsBoardConfig.categoryId || null,
+        channels: (statsBoardConfig.channels || []).map(ch => ({
+          id: ch.id,
+          metric: ch.metric,
+          template: ch.template,
+          enabled: ch.enabled !== false,
+          channelId: ch.channelId || null
+        }))
+      };
+    }
+
+    function applyStatsBoardConfig(cfgObj) {
+      const base = createDefaultStatsBoardConfig();
+      if (cfgObj && typeof cfgObj === "object") {
+        statsBoardConfig = {
+          ...base,
+          ...cfgObj,
+          channels: Array.isArray(cfgObj.channels) && cfgObj.channels.length > 0
+            ? cfgObj.channels.map((c, idx) => ({
+                id: c.id || ("st_" + idx),
+                metric: STATS_METRIC_DEFAULTS[c.metric] ? c.metric : "custom",
+                template: typeof c.template === "string" ? c.template : "",
+                enabled: c.enabled !== false,
+                channelId: c.channelId || null
+              }))
+            : base.channels
+        };
+      } else {
+        statsBoardConfig = base;
+      }
+      writeStatsStateIntoControls();
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+    }
+
+    function resetStatsBoardToDefaults(triggerSave = false) {
+      const keptCategoryId = statsBoardConfig.categoryId || null;
+      statsBoardConfig = createDefaultStatsBoardConfig();
+      statsBoardConfig.categoryId = keptCategoryId;
+      writeStatsStateIntoControls();
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      if (triggerSave) {
+        triggerUnsaved();
+        showToast("Stats Board reset to default!");
+      }
+    }
+
+    function applyStatsPreset(presetKey) {
+      const preset = STATS_PRESETS[presetKey];
+      if (!preset) return;
+      const oldChannels = Array.isArray(statsBoardConfig.channels) ? statsBoardConfig.channels : [];
+      statsBoardConfig.categoryName = preset.categoryName;
+      statsBoardConfig.clockFormat = preset.clockFormat;
+      statsBoardConfig.channelType = preset.channelType || "voice";
+      statsBoardConfig.channels = preset.channels.map((p, idx) => ({
+        id: "st_preset_" + idx + "_" + Date.now().toString(36).slice(-4),
+        metric: p.metric,
+        template: p.template,
+        enabled: p.enabled !== false,
+        channelId: (oldChannels[idx] && oldChannels[idx].metric === p.metric) ? (oldChannels[idx].channelId || null) : null
+      }));
+      writeStatsStateIntoControls();
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function handleStatsBoardFieldChange() {
+      readStatsControlsIntoState();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function renderStatsBuilder() {
+      const listEl = document.getElementById("stats-channels-builder-list");
+      const countEl = document.getElementById("stats-channels-count");
+      if (!listEl) return;
+
+      const items = statsBoardConfig.channels || [];
+      if (countEl) countEl.textContent = `${items.length} / 8`;
+
+      const metricOptionsHtml = (selectedMetric) =>
+        Object.entries(STATS_METRIC_DEFAULTS)
+          .map(([k, v]) => `<option value="${k}" ${k === selectedMetric ? "selected" : ""}>${escapeHtml(v.label)}</option>`)
+          .join("");
+
+      listEl.innerHTML = items.map((ch, idx) => `
+        <div class="stats-ch-row ${ch.enabled === false ? "is-disabled" : ""}">
+          <input type="checkbox" ${ch.enabled !== false ? "checked" : ""} onchange="updateStatsChannelField(${idx}, 'enabled', this.checked)" title="Enable/Disable">
+          <select class="form-input" onchange="updateStatsChannelMetric(${idx}, this.value)">
+            ${metricOptionsHtml(ch.metric)}
+          </select>
+          <input type="text" class="form-input stats-ch-template" data-ch-idx="${idx}" value="${escapeHtml(ch.template || "")}" maxlength="100" placeholder="Custom format..." onfocus="statsLastFocusedIdx=${idx}" oninput="updateStatsChannelField(${idx}, 'template', this.value)">
+          <div class="stats-ch-actions">
+            <button type="button" class="stats-ch-icon-btn" onclick="moveStatsChannel(${idx}, -1)" ${idx === 0 ? "disabled" : ""} title="Move Up">↑</button>
+            <button type="button" class="stats-ch-icon-btn" onclick="moveStatsChannel(${idx}, 1)" ${idx === items.length - 1 ? "disabled" : ""} title="Move Down">↓</button>
+            <button type="button" class="stats-ch-icon-btn danger" onclick="removeStatsChannel(${idx})" ${items.length <= 1 ? "disabled" : ""} title="Remove">✕</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function updateStatsChannelMetric(idx, metric) {
+      const ch = statsBoardConfig.channels[idx];
+      if (!ch) return;
+      ch.metric = metric;
+      const meta = STATS_METRIC_DEFAULTS[metric];
+      if (meta) ch.template = meta.defaultTpl;
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function updateStatsChannelField(idx, field, val) {
+      const ch = statsBoardConfig.channels[idx];
+      if (!ch) return;
+      ch[field] = val;
+      if (field === "enabled") renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function moveStatsChannel(idx, dir) {
+      const arr = statsBoardConfig.channels;
+      const target = idx + dir;
+      if (target < 0 || target >= arr.length) return;
+      const tmp = arr[idx];
+      arr[idx] = arr[target];
+      arr[target] = tmp;
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function removeStatsChannel(idx) {
+      if (statsBoardConfig.channels.length <= 1) return;
+      statsBoardConfig.channels.splice(idx, 1);
+      if (statsLastFocusedIdx >= statsBoardConfig.channels.length) {
+        statsLastFocusedIdx = statsBoardConfig.channels.length - 1;
+      }
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function addStatsBoardChannel() {
+      if (statsBoardConfig.channels.length >= 8) {
+        showToast("Maximum 8 stat channels per board!", "warning");
+        return;
+      }
+      const fallbackOrder = ["boosts", "voice_channels", "roles", "member_goal", "channels", "bans", "custom"];
+      const used = new Set(statsBoardConfig.channels.map(c => c.metric));
+      const nextMetric = fallbackOrder.find(m => !used.has(m)) || "custom";
+      const meta = STATS_METRIC_DEFAULTS[nextMetric] || STATS_METRIC_DEFAULTS.custom;
+      statsBoardConfig.channels.push({
+        id: "st_" + Date.now().toString(36),
+        metric: nextMetric,
+        template: meta.defaultTpl,
+        enabled: true,
+        channelId: null
+      });
+      statsLastFocusedIdx = statsBoardConfig.channels.length - 1;
+      renderStatsBuilder();
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
+    function insertStatsPlaceholder(token) {
+      const inputs = document.querySelectorAll(".stats-ch-template");
+      const targetIdx = Math.min(Math.max(0, statsLastFocusedIdx), Math.max(0, statsBoardConfig.channels.length - 1));
+      const inputEl = [...inputs].find(el => Number(el.dataset.chIdx) === targetIdx);
+      const ch = statsBoardConfig.channels[targetIdx];
+      if (!ch) return;
+
+      if (inputEl && typeof inputEl.selectionStart === "number") {
+        const start = inputEl.selectionStart;
+        const end = inputEl.selectionEnd;
+        const cur = inputEl.value;
+        const nextVal = cur.slice(0, start) + token + cur.slice(end);
+        inputEl.value = nextVal.slice(0, 100);
+        ch.template = inputEl.value;
+        inputEl.focus();
+        inputEl.setSelectionRange(start + token.length, start + token.length);
+      } else {
+        ch.template = `${ch.template || ""} ${token}`.trim().slice(0, 100);
+        renderStatsBuilder();
+      }
+      updateLiveStatsBoardMockup();
+      triggerUnsaved();
+    }
+
     async function triggerDeployStatsChannels() {
       const btn = document.getElementById("btn-deploy-stats-channels");
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       const dict = DASH_I18N[activeLang] || DASH_I18N.en;
+      const origBtnHtml = btn ? btn.innerHTML : "";
 
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<span class="spin-loader" style="display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;margin-right:6px;vertical-align:-2px;"></span> ${dict.btnDeployStatsDeploying || "Creating channels on Discord..."}`;
+        btn.innerHTML = `<span class="spin-loader" style="display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;margin-right:6px;vertical-align:-2px;"></span> ${dict.btnDeployStatsDeploying || "Syncing to Discord..."}`;
       }
 
       try {
-        const guildId = currentGuildId || "1426554369393954969";
-        const tzSel = document.getElementById("cfg-dash-timezone");
-        const tz = (tzSel ? tzSel.value : "Asia/Ho_Chi_Minh") || "Asia/Ho_Chi_Minh";
+        if (!currentGuildId) throw new Error(activeLang === "vi" ? "Chưa chọn máy chủ Discord!" : "Select a Discord server first!");
+        readStatsControlsIntoState();
 
-        // Compute localized date string
-        const now = new Date();
-        const dateStr = new Intl.DateTimeFormat((activeLang === "vi" ? "vi-VN" : "en-US"), {
-          timeZone: tz,
-          weekday: "long",
-          month: "short",
-          day: "numeric"
-        }).format(now);
+        const guildId = currentGuildId;
+        const enabledItems = (statsBoardConfig.channels || []).filter(c => c.enabled !== false);
+        if (enabledItems.length === 0) {
+          throw new Error(activeLang === "vi" ? "Cần bật ít nhất 1 kênh thống kê!" : "Enable at least 1 stat channel!");
+        }
 
-        const vc1Name = `📅 ${dateStr}`;
-        const liveMembers = (liveGuildSnapshot && liveGuildSnapshot.guild && liveGuildSnapshot.guild.approximate_member_count) ? liveGuildSnapshot.guild.approximate_member_count : 0;
-        const liveOnline = (liveGuildSnapshot && liveGuildSnapshot.guild && liveGuildSnapshot.guild.approximate_presence_count) ? liveGuildSnapshot.guild.approximate_presence_count : 0;
-        const vc2Name = `🟢 Online: ${liveOnline}`;
-        const vc3Name = (activeLang === "vi") ? `👥 Thành viên: ${liveMembers}` : `👥 Users: ${liveMembers}`;
+        const tz = getActiveTimezoneRaw();
+        const clockParts = formatStatsClockParts(tz, statsBoardConfig.clockFormat, statsBoardConfig.locale);
 
-        // 1. Fetch channels to check if category already exists
-        const chRes = await DiscordAPI.request(`/guilds/${guildId}/channels`, "GET");
+        // Fetch fresh real guild data so counts match Discord 1-1
+        const [gRes, chRes, roleRes] = await Promise.all([
+          DiscordAPI.request(`/guilds/${guildId}?with_counts=true`, "GET"),
+          DiscordAPI.request(`/guilds/${guildId}/channels`, "GET"),
+          DiscordAPI.request(`/guilds/${guildId}/roles`, "GET")
+        ]);
         if (!chRes.ok) throw new Error(chRes.error || "Cannot fetch server channels");
-        const channels = Array.isArray(chRes.data) ? chRes.data : [];
 
-        let cat = channels.find(c => c.type === 4 && (c.name.includes("INFORMATION") || c.name.includes("THÔNG TIN")));
+        const needsBans = enabledItems.some(i => i.metric === "bans" || (i.template || "").includes("{bans}"));
+        let bansList = [];
+        if (needsBans) {
+          const banRes = await DiscordAPI.request(`/guilds/${guildId}/bans?limit=100`, "GET").catch(() => ({ ok: false }));
+          if (banRes && banRes.ok && Array.isArray(banRes.data)) bansList = banRes.data;
+        }
+
+        const liveSnap = {
+          guild: gRes.ok ? gRes.data : (liveGuildSnapshot && liveGuildSnapshot.guild ? liveGuildSnapshot.guild : {}),
+          channels: Array.isArray(chRes.data) ? chRes.data : [],
+          roles: roleRes.ok && Array.isArray(roleRes.data) ? roleRes.data : [],
+          bans: bansList
+        };
+        const metrics = getLiveStatsMetrics(liveSnap);
+        const channels = liveSnap.channels;
+
+        // 1. Find or create Category
+        const catTitle = (statsBoardConfig.categoryName || "╭🧭 [ ✦ INFORMATION ✦ ] 🧭").trim().slice(0, 100);
+        let cat = statsBoardConfig.categoryId
+          ? channels.find(c => c.id === statsBoardConfig.categoryId && c.type === 4)
+          : null;
         if (!cat) {
-          const createCat = await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", {
-            name: "╭🧭 [ ✦ INFORMATION ✦ ] 🧭", type: 4, position: 0
-          });
-          if (createCat.ok) cat = createCat.data;
+          cat = channels.find(c => c.type === 4 && (
+            c.name.trim() === catTitle ||
+            c.name.includes("INFORMATION") ||
+            c.name.includes("THÔNG TIN") ||
+            c.name.includes("SERVER STATS")
+          ));
+        }
+
+        if (cat) {
+          const patchPayload = { name: catTitle };
+          if (statsBoardConfig.categoryPos === "top") patchPayload.position = 0;
+          await DiscordAPI.request(`/channels/${cat.id}`, "PATCH", patchPayload, { "X-Audit-Log-Reason": "HaruMod Live Stats Board Sync" });
+        } else {
+          const createPayload = { name: catTitle, type: 4 };
+          if (statsBoardConfig.categoryPos === "top") createPayload.position = 0;
+          const createCat = await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", createPayload, { "X-Audit-Log-Reason": "HaruMod Live Stats Board Setup" });
+          if (!createCat.ok) throw new Error(createCat.error || "Cannot create category");
+          cat = createCat.data;
         }
 
         const catId = cat ? cat.id : null;
-        const subVCs = channels.filter(c => c.type === 2 && (!catId || c.parent_id === catId));
+        statsBoardConfig.categoryId = catId;
 
-        // Create or update VC 1 (Date)
-        let vcDate = subVCs.find(c => c.name.startsWith("📅") || c.name.toLowerCase().includes("thứ") || c.name.toLowerCase().includes("day"));
-        if (vcDate) {
-          await DiscordAPI.request(`/channels/${vcDate.id}`, "PATCH", { name: vc1Name });
-        } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc1Name, type: 2, parent_id: catId });
+        const discordType = statsBoardConfig.channelType === "text" ? 0 : 2;
+        const overwrites = statsBoardConfig.lockChannels
+          ? [{ id: guildId, type: 0, deny: discordType === 0 ? "2048" : "1048576", allow: "0" }]
+          : [];
+
+        const usedChannelIds = new Set();
+        const subChannels = channels.filter(c => c.type === discordType && (!catId || c.parent_id === catId));
+
+        for (const item of enabledItems) {
+          const targetName = resolveStatsChannelName(item, metrics, clockParts);
+          let match = item.channelId
+            ? channels.find(c => c.id === item.channelId && c.type === discordType && !usedChannelIds.has(c.id))
+            : null;
+
+          if (!match) {
+            if (item.metric === "clock" || item.metric === "time_clock") {
+              match = subChannels.find(c => !usedChannelIds.has(c.id) && (c.name.startsWith("📅") || c.name.startsWith("🕒") || c.name.startsWith("⏰") || c.name.startsWith("⏱️")));
+            } else if (item.metric === "online") {
+              match = subChannels.find(c => !usedChannelIds.has(c.id) && (c.name.includes("🟢") || c.name.toLowerCase().includes("online") || c.name.toLowerCase().includes("active")));
+            } else if (item.metric === "members") {
+              match = subChannels.find(c => !usedChannelIds.has(c.id) && (c.name.toLowerCase().includes("users") || c.name.toLowerCase().includes("members") || c.name.toLowerCase().includes("thành viên")));
+            }
+          }
+
+          if (match) {
+            await DiscordAPI.request(`/channels/${match.id}`, "PATCH", {
+              name: targetName,
+              parent_id: catId,
+              permission_overwrites: overwrites
+            }, { "X-Audit-Log-Reason": "HaruMod Live Stats Sync" });
+            item.channelId = match.id;
+            usedChannelIds.add(match.id);
+          } else {
+            const created = await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", {
+              name: targetName,
+              type: discordType,
+              parent_id: catId,
+              permission_overwrites: overwrites
+            }, { "X-Audit-Log-Reason": "HaruMod Live Stats Create" });
+            if (created.ok && created.data) {
+              item.channelId = created.data.id;
+              usedChannelIds.add(created.data.id);
+            }
+          }
         }
 
-        // Create or update VC 2 (Online)
-        let vcStatus = subVCs.find(c => c.name.includes("🟢") || c.name.includes("🌙"));
-        if (vcStatus) {
-          await DiscordAPI.request(`/channels/${vcStatus.id}`, "PATCH", { name: vc2Name });
-        } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc2Name, type: 2, parent_id: catId });
+        await saveAllServerSettingsAndSync(false);
+        await fetchRealDiscordGuildData(guildId, false);
+        if (typeof logRecentActivity === "function") {
+          logRecentActivity("StatsBoard", `Đồng bộ ${enabledItems.length} kênh thống kê vào danh mục ${catTitle}`, `Synced ${enabledItems.length} stats channels under ${catTitle}`);
         }
 
-        // Create or update VC 3 (Users)
-        let vcUsers = subVCs.find(c => c.name.toLowerCase().includes("users") || c.name.toLowerCase().includes("thành viên"));
-        if (vcUsers) {
-          await DiscordAPI.request(`/channels/${vcUsers.id}`, "PATCH", { name: vc3Name });
-        } else {
-          await DiscordAPI.request(`/guilds/${guildId}/channels`, "POST", { name: vc3Name, type: 2, parent_id: catId });
-        }
-
-        showToast(dict.toastStatsSuccess || "Successfully deployed stats channels to Discord!", "success");
+        showToast(dict.toastStatsSuccess || "Successfully synced custom stats channels to Discord!", "success");
         if (btn) {
           btn.innerHTML = `<svg style="width:14px;height:14px;fill:currentColor;margin-right:6px;" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ${dict.btnDeployStatsDone || "Deployed Successfully!"}`;
         }
       } catch (err) {
-        showToast((dict.toastStatsFail || "Deploy failed: ") + err.message, "danger");
-        if (btn) {
-          btn.innerHTML = `<svg style="width:14px;height:14px;fill:currentColor;margin-right:6px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Deploy Live Stats Channels`;
-        }
+        showToast((dict.toastStatsFail || "Deploy failed: ") + (err && err.message ? err.message : "Unknown error"), "danger");
       } finally {
         setTimeout(() => {
-          if (btn) btn.disabled = false;
-        }, 4000);
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origBtnHtml;
+          }
+        }, 3000);
+      }
+    }
+
+    async function removeStatsBoardFromDiscord(ev) {
+      if (!currentGuildId) return;
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const confirmMsg = activeLang === "vi"
+        ? "Bạn chắc chắn muốn xóa danh mục và các kênh thống kê đã đồng bộ khỏi máy chủ Discord?"
+        : "Delete the synced Stats Board channels and category from your Discord server?";
+      if (!confirm(confirmMsg)) return;
+
+      const btn = ev && ev.currentTarget ? ev.currentTarget : document.getElementById("btn-delete-stats-channels");
+      if (btn) btn.disabled = true;
+
+      try {
+        const chRes = await DiscordAPI.request(`/guilds/${currentGuildId}/channels`, "GET");
+        const channels = chRes.ok && Array.isArray(chRes.data) ? chRes.data : [];
+        const trackedIds = new Set((statsBoardConfig.channels || []).map(c => c.channelId).filter(Boolean));
+        if (statsBoardConfig.categoryId) {
+          channels.filter(c => c.parent_id === statsBoardConfig.categoryId).forEach(c => trackedIds.add(c.id));
+        }
+
+        for (const chId of trackedIds) {
+          await DiscordAPI.request(`/channels/${chId}`, "DELETE", null, { "X-Audit-Log-Reason": "HaruMod Remove Stats Channel" }).catch(() => {});
+        }
+        if (statsBoardConfig.categoryId) {
+          await DiscordAPI.request(`/channels/${statsBoardConfig.categoryId}`, "DELETE", null, { "X-Audit-Log-Reason": "HaruMod Remove Stats Category" }).catch(() => {});
+        }
+
+        statsBoardConfig.categoryId = null;
+        statsBoardConfig.channels.forEach(c => { c.channelId = null; });
+        await saveAllServerSettingsAndSync(false);
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        showToast(activeLang === "vi" ? "Đã xóa bảng kênh thống kê trên Discord!" : "Stats channels removed from Discord!");
+      } catch (err) {
+        showToast("Error: " + (err && err.message ? err.message : "Failed"), "danger");
+      } finally {
+        if (btn) btn.disabled = false;
       }
     }
 
@@ -11880,9 +12770,8 @@
     }
 
     function updateLiveClock() {
-      const tzSel = document.getElementById("cfg-dash-timezone");
-      let tz = (tzSel && tzSel.value) ? tzSel.value : "Asia/Ho_Chi_Minh";
-      if (tz === "Asia/Saigon") tz = "Asia/Ho_Chi_Minh";
+      const rawTz = getActiveTimezoneRaw();
+      const tz = normalizeTimeZoneValue(rawTz);
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       const locale = activeLang === "vi" ? "vi-VN" : "en-US";
       const now = new Date();
@@ -11896,59 +12785,67 @@
       }
       const disp = document.getElementById("dash-live-clock-display");
       if (disp) disp.textContent = clockStr;
-      const tzBadge = document.getElementById("stats-board-linked-tz");
-      if (tzBadge && tzSel && tzSel.selectedIndex >= 0) {
-        tzBadge.textContent = tzSel.options[tzSel.selectedIndex].text;
-      }
       updateLiveStatsBoardMockup();
     }
 
     function updateLiveStatsBoardMockup() {
-      const tzSel = document.getElementById("cfg-dash-timezone");
-      let tz = (tzSel && tzSel.value) ? tzSel.value : "Asia/Ho_Chi_Minh";
-      if (tz === "Asia/Saigon") tz = "Asia/Ho_Chi_Minh";
-      const fmtSel = document.getElementById("cfg-stats-clock-format");
-      const fmt = fmtSel ? fmtSel.value : "day_date";
-      const now = new Date();
-      const mockClock = document.getElementById("mock-vc-clock");
-      if (!mockClock) return;
-      try {
-        if (fmt === "time_ampm") {
-          const t = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit" }).format(now);
-          mockClock.textContent = `⏰ ${t}`;
-        } else if (fmt === "full_datetime") {
-          const dt = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(now);
-          mockClock.textContent = `📅 ${dt}`;
-        } else {
-          const d = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "long", month: "short", day: "numeric" }).format(now);
-          mockClock.textContent = `📅 ${d}`;
-        }
-      } catch (e) {}
+      readStatsControlsIntoState();
+      const rawTz = getActiveTimezoneRaw();
+      const clockParts = formatStatsClockParts(rawTz, statsBoardConfig.clockFormat, statsBoardConfig.locale);
+      const metrics = getLiveStatsMetrics();
+
+      const catEl = document.getElementById("mock-stats-cat-name");
+      if (catEl) catEl.textContent = statsBoardConfig.categoryName || "╭🧭 [ ✦ INFORMATION ✦ ] 🧭";
+
+      const metaTz = document.getElementById("mock-stats-preview-tz");
+      if (metaTz) metaTz.textContent = `🕒 ${rawTz}`;
+      const metaClk = document.getElementById("mock-stats-preview-clock");
+      if (metaClk) metaClk.textContent = `${clockParts.timeStr} (${clockParts.tzShort})`;
+
+      const listEl = document.getElementById("mock-stats-channels-list");
+      if (!listEl) return;
+
+      const enabledItems = (statsBoardConfig.channels || []).filter(c => c.enabled !== false);
+      if (enabledItems.length === 0) {
+        listEl.innerHTML = `<div style="padding:10px;font-size:0.78rem;color:#64748b;text-align:center;">No channels enabled</div>`;
+        return;
+      }
+
+      const isText = statsBoardConfig.channelType === "text";
+      const isLocked = statsBoardConfig.lockChannels !== false;
+      const lockSvg = isLocked
+        ? `<svg class="vc-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>`
+        : "";
+      const iconSvg = isText
+        ? `<svg class="vc-speaker" viewBox="0 0 24 24"><path d="M5.41 21L6.12 17H2.12L2.47 15H6.47L7.53 9H3.53L3.88 7H7.88L8.59 3H10.59L9.88 7H15.88L16.59 3H18.59L17.88 7H21.88L21.53 9H17.53L16.47 15H20.47L20.12 17H16.12L15.41 21H13.41L14.12 17H8.12L7.41 21H5.41ZM8.47 15H14.47L15.53 9H9.53L8.47 15Z"/></svg>`
+        : `<svg class="vc-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+      listEl.innerHTML = enabledItems.map(item => {
+        const chName = resolveStatsChannelName(item, metrics, clockParts);
+        return `
+          <div class="discord-vc-row">
+            ${iconSvg}
+            ${lockSvg}
+            <span class="vc-name">${escapeHtml(chName)}</span>
+          </div>
+        `;
+      }).join("");
     }
 
     function handleTimezoneChange() {
-      updateLiveClock();
-      triggerUnsaved();
+      syncTimezoneSelects("cfg-dash-timezone");
     }
 
     function detectUserTimezone() {
       try {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Ho_Chi_Minh";
-        const sel = document.getElementById("cfg-dash-timezone");
-        if (sel) {
-          let found = [...sel.options].some(o => o.value === tz);
-          if (!found && tz === "Asia/Ho_Chi_Minh" && [...sel.options].some(o => o.value === "Asia/Saigon")) {
-            sel.value = "Asia/Ho_Chi_Minh";
-            found = true;
-          }
-          if (!found) {
-            const opt = document.createElement("option");
-            opt.value = tz;
-            opt.textContent = tz;
-            sel.appendChild(opt);
-          }
+        const dashSel = document.getElementById("cfg-dash-timezone");
+        const statsSel = document.getElementById("cfg-stats-timezone");
+        [dashSel, statsSel].forEach(sel => {
+          if (!sel) return;
+          ensureTimezoneOption(sel, tz);
           sel.value = tz;
-        }
+        });
         updateLiveClock();
         triggerUnsaved();
         showToast("Timezone: " + tz);
@@ -12089,6 +12986,9 @@
       }
       if (typeof renderModulesGrid === "function") {
         renderModulesGrid();
+      }
+      if (typeof renderStatsBuilder === "function") {
+        renderStatsBuilder();
       }
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
