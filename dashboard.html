@@ -4225,6 +4225,9 @@
 .status-pulse-dot {
   width: 8px;
   height: 8px;
+  min-width: 8px;
+  min-height: 8px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: #10b981;
   box-shadow: 0 0 10px #10b981;
@@ -4943,7 +4946,10 @@
     .panel-header > button,
     .panel-header > .sync-pill-tag {
       width: 100% !important;
+      display: inline-flex !important;
+      align-items: center !important;
       justify-content: center !important;
+      text-align: center !important;
       box-sizing: border-box !important;
     }
     .panel-title {
@@ -4956,6 +4962,26 @@
       font-size: 0.84rem !important;
       line-height: 1.45 !important;
       max-width: 100% !important;
+    }
+
+    /* Sidebar Navigation Wrapping (no ellipsis cutoff) */
+    .dyno-nav-item {
+      padding: 8px 8px !important;
+      font-size: 0.74rem !important;
+      gap: 6px !important;
+      align-items: center !important;
+    }
+    .dyno-nav-item svg {
+      width: 15px !important;
+      height: 15px !important;
+      flex-shrink: 0 !important;
+    }
+    .dyno-nav-item span {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      line-height: 1.25 !important;
+      text-align: left !important;
     }
 
     /* Topbar & Header Actions inside #config-suite */
@@ -4974,9 +5000,41 @@
     }
     .dyno-header-actions > *,
     .dyno-top-bar > div:last-child > * {
-      flex: 1 1 auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
       justify-content: center !important;
+      text-align: center !important;
+      gap: 6px !important;
+      padding: 8px 12px !important;
+      line-height: 1.2 !important;
       min-height: 40px !important;
+      flex: 1 1 auto !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Server Hero Subtitle & Pulse Dot Alignment */
+    .dash-server-subtitle {
+      align-items: flex-start !important;
+      gap: 8px !important;
+    }
+    .dash-server-subtitle .status-pulse-dot {
+      margin-top: 5px !important;
+    }
+
+    /* Balanced 2-col SERVER INFO Card + Full-width CTA */
+    .dash-server-info-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 14px 12px !important;
+    }
+    .dash-info-col-right {
+      grid-column: 1 / -1 !important;
+      padding-top: 12px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+      align-items: stretch !important;
+    }
+    .dash-info-col-right .btn {
+      width: 100% !important;
+      justify-content: center !important;
     }
 
     /* Stats Board & Discord Stats Mockup */
