@@ -11709,7 +11709,7 @@
         antiNuke: typeof getAntiNukeConfigForSave === "function" ? getAntiNukeConfigForSave() : { enabled: false, maxActions: 5, windowSeconds: 10, reaction: "strip-roles" },
         sanctionLadder: typeof getSanctionLadderConfigForSave === "function" ? getSanctionLadderConfigForSave() : { enabled: false, stages: [] },
         autoban: {
-          enabled: document.getElementById("cfg-switch-autoban") ? document.getElementById("cfg-switch-autoban").checked : true,
+          enabled: document.getElementById("cfg-switch-autoban") ? document.getElementById("cfg-switch-autoban").checked : false,
           rules: typeof autobanRules !== "undefined" ? autobanRules : []
         },
         actionLog: {
@@ -11730,8 +11730,10 @@
           ignoredChannels: typeof actionLogIgnoredChannels !== "undefined" ? actionLogIgnoredChannels : [],
           ignoredRoles: typeof actionLogIgnoredRoles !== "undefined" ? actionLogIgnoredRoles : []
         },
+        autoDeleteEnabled: document.getElementById("cfg-switch-autodelete") ? document.getElementById("cfg-switch-autodelete").checked : false,
         autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
         autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
+        welcomeEnabled: document.getElementById("cfg-welcome-enable") ? document.getElementById("cfg-welcome-enable").checked : false,
         reactionRoles: typeof getReactionRolesForSave === "function" ? getReactionRolesForSave() : [],
         roleManagement: typeof getRoleManagementConfigForSave === "function" ? getRoleManagementConfigForSave() : null,
         statsBoard: typeof getStatsBoardConfigForSave === "function" ? getStatsBoardConfigForSave() : null,
@@ -11839,6 +11841,12 @@
         if (Array.isArray(cfg.actionLog.ignoredRoles) && typeof actionLogIgnoredRoles !== "undefined") actionLogIgnoredRoles = cfg.actionLog.ignoredRoles;
         if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
       }
+      if (document.getElementById("cfg-switch-autodelete")) {
+        document.getElementById("cfg-switch-autodelete").checked = typeof cfg.autoDeleteEnabled === "boolean" ? cfg.autoDeleteEnabled : false;
+      }
+      if (document.getElementById("cfg-welcome-enable")) {
+        document.getElementById("cfg-welcome-enable").checked = typeof cfg.welcomeEnabled === "boolean" ? cfg.welcomeEnabled : false;
+      }
       if (Array.isArray(cfg.autoDelete) && cfg.autoDelete.length > 0 && typeof autoDeleteRules !== "undefined") {
         autoDeleteRules = cfg.autoDelete;
         if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
@@ -11852,6 +11860,9 @@
       }
       if (typeof applyRoleManagementConfigToUI === "function") {
         applyRoleManagementConfigToUI(cfg.roleManagement);
+      }
+      if (typeof updateSidebarStatusIndicators === "function") {
+        updateSidebarStatusIndicators();
       }
       updateLiveBotPreview(false);
     }
@@ -13063,10 +13074,9 @@
       };
 
       const logsOn = Boolean(document.getElementById("cfg-switch-actionlog")?.checked);
-      const cleanOn = Boolean(document.getElementById("cfg-switch-autodelete")?.checked) || (autoDeleteRules.some(r => r.enabled) || autoPurgeJobs.some(j => j.enabled));
-      const banOn = Boolean(document.getElementById("cfg-switch-autoban")?.checked) && autobanRules.some(r => r.enabled);
-      const amAnyFilter = ["badInvites", "badWords", "badLinks", "mentionSpam", "attachmentSpam", "floodSpam", "caps", "warnThreshold"].some(k => automodConfig[k]?.enabled);
-      const amOn = Boolean(automodConfig.enabled) && amAnyFilter;
+      const cleanOn = Boolean(document.getElementById("cfg-switch-autodelete")?.checked);
+      const banOn = Boolean(document.getElementById("cfg-switch-autoban")?.checked);
+      const amOn = Boolean(automodConfig.enabled);
       const hpOn = Boolean(honeypotConfig.enabled) || Boolean(antiNukeConfig.enabled);
       const ladOn = Boolean(sanctionLadderConfig.enabled);
       const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked);
