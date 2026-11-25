@@ -6326,6 +6326,26 @@
   .h-select-trigger[aria-expanded="true"] {
     border-color: rgba(16, 185, 129, 0.65) !important;
   }
+
+  /* Zero vertical jitter when switching sidebar tabs */
+  html {
+    overflow-y: scroll !important;
+    overflow-anchor: none !important;
+    scroll-behavior: auto !important;
+  }
+  body,
+  #config-suite,
+  .dyno-main-content,
+  .dyno-sidebar {
+    overflow-anchor: none !important;
+  }
+  .dyno-main-content {
+    min-height: 82vh !important;
+  }
+  .tab-pane.active {
+    animation: none !important;
+    transform: none !important;
+  }
 </style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
@@ -8899,7 +8919,7 @@
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                   <h3 class="config-card-title">Thông Báo Thành Viên Rời Máy Chủ (Good-bye)</h3>
                   <label class="switch">
-                    <input type="checkbox" id="cfg-goodbye-enable" checked onchange="triggerUnsaved()">
+                    <input type="checkbox" id="cfg-goodbye-enable" onchange="handleModuleToggleChange()">
                     <span class="slider"></span>
                   </label>
                 </div>
@@ -10854,6 +10874,271 @@
       }
     };
 
+    const VI_TO_EN_MAP = {
+      "Lưu & Đồng bộ ngay": "Save & Sync Now",
+      "Chưa chọn máy chủ": "No Server Selected",
+      "Chưa đồng bộ": "Not Synced",
+      "Kết nối trực tiếp Discord API v10": "Direct Discord API v10 Connection",
+      "Sẵn sàng tải trực tiếp từ Discord": "Ready to load from Discord",
+      "-- Đang tải danh sách kênh --": "-- Loading channels... --",
+      "-- Chọn Role --": "-- Select Role --",
+      "Chọn": "Select",
+      "Chọn Role..": "Select Role..",
+      "Đang kết nối Discord...": "Connecting to Discord...",
+      "Đang đọc dữ liệu bảo mật thật từ Discord...": "Loading live security data from Discord...",
+      "Đang quét Discord Native AutoMod & Ban list...": "Scanning Discord Native AutoMod & Ban list...",
+      "Đang tải nhật ký Audit Log thật từ Discord...": "Loading live Discord Audit Logs...",
+      "Đang tải tin nhắn từ Discord API...": "Loading messages from Discord API...",
+      "Đang tải...": "Loading...",
+      "Đọc lại từ Discord": "Refresh from Discord",
+      "Áp dụng ngay lên Discord": "Apply Now to Discord",
+      "TỨC THÌ": "INSTANT",
+      "Không cần": "Not needed",
+      "Lần": "Strikes",
+      "Xóa bậc": "Remove stage",
+      "Không ghi lý do": "No reason provided",
+      "vd: 1h, 1d": "e.g. 1h, 1d",
+      "Tùy chỉnh từng bậc xử phạt tự động dựa theo số lần cảnh cáo / vi phạm tích lũy.": "Customize each auto-escalation punishment stage based on accumulated warnings/strikes.",
+      "+ Thêm bậc xử phạt": "+ Add Escalation Stage",
+      "Lưu Thang Xử Phạt": "Save Sanction Ladder",
+      "Chưa có bậc xử phạt nào. Bấm \"+ Thêm bậc xử phạt\" để tạo.": "No escalation stages configured. Click \"+ Add Escalation Stage\" to create one.",
+      "Bảng Thực Thi Xử Phạt Trực Tiếp (Member Moderation)": "Direct Moderation Action Panel (Member Moderation)",
+      "Thực hiện các lệnh Kick, Ban, Timeout, Warn hoặc đổi Nickname trực tiếp từ Dashboard xuống Discord API.": "Execute Kick, Ban, Timeout, Warn, or Nickname updates directly from the Dashboard via Discord API.",
+      "User ID Thành Viên Mục Tiêu": "Target Member User ID",
+      "Ví dụ: 1028500296059596961": "Example: 1028500296059596961",
+      "Chọn Hành Động Xử Phạt": "Select Punishment Action",
+      "Thời Gian Timeout": "Timeout Duration",
+      "5 phút": "5 minutes",
+      "10 phút": "10 minutes",
+      "1 giờ": "1 hour",
+      "1 ngày (24 giờ)": "1 day (24 hours)",
+      "1 tuần (7 ngày)": "1 week (7 days)",
+      "Xóa Tin Nhắn Cũ": "Delete Message History",
+      "Không xóa tin nhắn": "Don't delete messages",
+      "Xóa tin nhắn trong 24 giờ qua": "Previous 24 hours",
+      "Xóa tin nhắn trong 7 ngày qua": "Previous 7 days",
+      "Biệt Danh Mới": "New Nickname",
+      "Nhập biệt danh mới...": "Enter new nickname...",
+      "Lý Do Xử Phạt (Ghi Vào Audit Logs Discord)": "Reason (Logged to Discord Audit Logs)",
+      "Ví dụ: Quảng cáo link độc hại, vi phạm quy tắc chung #general...": "Example: Scam link spam, breaking #general rules...",
+      "Lịch Sử Xử Phạt Thật (Discord Moderation Log)": "Live Moderation History (Discord Audit Log)",
+      "Đọc trực tiếp từ Audit Logs & thao tác xử phạt vừa thực thi trên máy chủ này.": "Loaded directly from Discord Audit Logs & recent actions on this server.",
+      "Mã Sự Kiện": "Event ID",
+      "Mục Tiêu": "Target",
+      "Hành Động": "Action",
+      "Lý Do": "Reason",
+      "Người Thực Hiện": "Moderator",
+      "Thời Gian": "Time",
+      "Chưa có lịch sử xử phạt nào được tải (chọn máy chủ hoặc thực thi lệnh để ghi nhận).": "No moderation history loaded yet (select a server or execute an action).",
+      "Chưa có lịch sử Kick/Ban/Timeout nào trong Audit Log gần đây.": "No recent Kick/Ban/Timeout entries found in Discord Audit Logs.",
+      "Tin Nhắn Chào Mừng Thành Viên Mới": "Welcome New Members",
+      "Gửi thông báo lời chào mừng đẹp mắt khi có người mới tham gia vào máy chủ.": "Send a customized welcome message when a new member joins the server.",
+      "Chọn Kênh Chào Mừng": "Welcome Channel",
+      "Nội Dung Tin Nhắn Chào Mừng": "Welcome Message Content",
+      "Biến hỗ trợ:": "Supported variables:",
+      "(Tag thành viên),": "(User mention),",
+      "(Tên máy chủ),": "(Server name),",
+      "(Tổng số người).": "(Total members).",
+      "Thông Báo Thành Viên Rời Máy Chủ (Good-bye)": "Member Leave Notification (Goodbye)",
+      "Gửi thông báo tạm biệt vào kênh log khi có thành viên rời khỏi máy chủ.": "Send a farewell message when a member leaves the server.",
+      "Chọn Kênh Thông Báo Tạm Biệt": "Goodbye Channel",
+      "Nội Dung Thông Báo Tạm Biệt": "Goodbye Message Content",
+      "Tất cả bộ lọc mặc định đều TẮT. Chỉ khi moderator bật từng thẻ và chỉnh hình phạt / ngưỡng xử lý thì bot mới kích hoạt.": "All filters default to OFF. HaruMod only enforces a filter after a moderator enables it and sets its punishments.",
+      "Kênh miễn trừ AutoMod (Ignored Channels)": "AutoMod Ignored Channels",
+      "Vai trò miễn trừ AutoMod (Ignored Roles)": "AutoMod Ignored Roles",
+      "Chưa miễn trừ kênh nào": "No ignored channels",
+      "Chưa miễn trừ vai trò nào": "No ignored roles",
+      "+ Thêm kênh bỏ qua...": "+ Add ignored channel...",
+      "+ Thêm vai trò bỏ qua...": "+ Add ignored role...",
+      "Chặn tự động tin nhắn chứa link mời server Discord khác (discord.gg/...).": "Automatically block messages containing external Discord invite links (discord.gg/...).",
+      "Norole mode (chỉ phạt người chưa có role)": "Norole mode (only punish members with no roles)",
+      "Không phân biệt hoa thường, tự bỏ qua ký tự ngăn cách giữa các từ.": "Case-insensitive, ignores punctuation separators between words.",
+      "Chưa thêm từ cấm nào": "No banned words added",
+      "Chặn tên miền độc hại (Blacklist) hoặc chỉ cho phép tên miền tin cậy (Whitelist).": "Block blacklisted domains or only permit trusted whitelisted domains.",
+      "Blacklist (Chặn tên miền trong danh sách)": "Blacklist (Block listed domains)",
+      "Whitelist (Chỉ cho phép tên miền an toàn)": "Whitelist (Only allow safe domains)",
+      "Chưa thêm domain nào (vd: grabify.link)": "No domains added (e.g. grabify.link)",
+      "Add domain (vd: bit.ly)...": "Add domain (e.g. bit.ly)...",
+      "Ngăn thành viên tag hàng loạt người dùng hoặc role trong khoảng thời gian ngắn.": "Prevent mass user/role mentions within a short time window.",
+      "Kiểm soát gửi nhiều tệp liên tiếp và chặn file thực thi nguy hiểm (.exe, .bat, .scr...).": "Control rapid attachment bursts and block dangerous executables (.exe, .bat, .scr...).",
+      "Chặn tệp thực thi nguy hiểm (.exe, .bat, .cmd...)": "Block dangerous executable files (.exe, .bat, .cmd...)",
+      "Chặn spam tin nhắn dồn dập trong thời gian ngắn.": "Block rapid message flooding within a short interval.",
+      "Xóa hoặc phạt các tin nhắn viết IN HOA quá mức cho phép.": "Delete or punish messages with excessive ALL-CAPS characters.",
+      "Tự động xử phạt khi thành viên đạt đủ số lần vi phạm.": "Automatically escalate punishments when a member reaches the warning threshold.",
+      "Chưa chọn hành động xử phạt": "No punishments selected",
+      "Chưa chọn hình phạt": "No punishments selected",
+      "Chưa chọn kênh bẫy Honeypot nào": "No Honeypot trap channels selected",
+      "Auto-Role, Muted & RolePersist": "Auto-Role, Muted & RolePersist",
+      "Cấu hình vai trò Muted, tự động gán nhiều role cho thành viên hoặc bot mới vào, và giữ role cũ khi rời/vào lại.": "Configure Muted role, assign multiple auto-roles to joining humans or bots, and restore roles on rejoin.",
+      "Auto-Role Delay (Phút, 0 = Tức thì)": "Auto-Role Delay (Minutes, 0 = Instant)",
+      "Human Auto-Roles on Join (Thành viên mới)": "Human Auto-Roles on Join",
+      "Bot Auto-Roles on Join (Bot mới mời vào)": "Bot Auto-Roles on Join",
+      "+ Thêm Role cho Human..": "+ Add Human Role..",
+      "+ Thêm Role cho Bot..": "+ Add Bot Role..",
+      "Chưa chọn role nào": "No roles selected",
+      "Tự động khôi phục lại toàn bộ vai trò cũ (bao gồm Muted) khi thành viên rời server và tham gia lại.": "Automatically restore all previous roles (including Muted) if a member leaves and rejoins the server.",
+      "Tự động gán role vui khi vào phòng Voice, tặng role + lời cảm ơn Booster và tạo danh sách Role tự chọn qua lệnh /rank.": "Grant a fun role while in Voice Channels, reward Server Boosters with a VIP role & thank-you message, and manage self-assignable /rank roles.",
+      "Voice Active Role (Role khi đang ở trong Voice)": "Voice Active Role",
+      "Tự động cấp role khi thành viên vào bất kỳ kênh Voice nào và tự động gỡ khi rời Voice.": "Automatically grants this role when a member joins any Voice Channel and removes it on leave.",
+      "Chọn Voice Active Role..": "Select Voice Active Role..",
+      "Server Booster Perk (Quà & Vinh Danh Booster)": "Server Booster Perk",
+      "Khi thành viên Boost server, HaruMod tự động tặng thêm role VIP và gửi thông báo vinh danh.": "Automatically awards a VIP role and posts a thank-you message when a member boosts the server.",
+      "Chọn Booster Role..": "Select Booster Role..",
+      "Kênh gửi thông báo cảm ơn Booster": "Booster Announcement Channel",
+      "Chọn kênh thông báo..": "Select channel..",
+      "Nội dung hỗ trợ {user}, {server}, {role}": "Supports {user}, {server}, {role}",
+      "Joinable Fun Ranks (Thành viên tự nhận qua lệnh /rank hoặc h?rank)": "Joinable Fun Ranks (Self-assign via /rank or h?rank)",
+      "Tên rank (VD: gamer, artist, nightowl)": "Rank name (e.g. gamer, artist, nightowl)",
+      "+ Thêm Rank": "+ Add Rank",
+      "Chưa có Joinable Rank nào. Thêm ở trên để member gõ": "No Joinable Ranks yet. Add one above so members can use",
+      "/rank <tên>": "/rank <name>",
+      "tự nhận role!": "to claim a role!",
+      "Color Roles Generator (Bộ Role Màu Vui 1-Click)": "Color Roles Generator (1-Click Palette)",
+      "Chọn nhanh bảng màu có sẵn hoặc tự phối màu để tạo hàng loạt Role màu lên Discord, sau đó mở ngay bảng Reaction Role chọn màu.": "Pick a preset palette or add custom colors to batch-create color roles on Discord, then launch a Reaction Role color picker.",
+      "Tên màu thêm...": "Custom color name...",
+      "+ Thêm màu vào bảng": "+ Add Swatch",
+      "Tạo bộ màu này trên Discord (1-Click)": "Create Palette Roles on Discord (1-Click)",
+      "Tạo Reaction Role cho bộ màu này": "Open Reaction Role for Palette",
+      "Live Role Studio (Tạo, Gán Nhanh & Quản Lý Role 1-1)": "Live Role Studio (Create, Quick-Assign & Manage Roles)",
+      "Tạo role mới tức thì, cấp/gỡ role nhanh cho thành viên bằng ID hoặc chỉnh màu / xóa role trực tiếp trên Discord.": "Create roles instantly, add/remove roles by User ID, or recolor and delete existing Discord roles.",
+      "Tên Role mới...": "New Role Name...",
+      "Member User ID (VD: 1028500296059596961)": "Member User ID (e.g. 1028500296059596961)",
+      "+ Cấp Role": "+ Add Role",
+      "Gỡ Role": "Remove Role",
+      "Danh sách Role hiện có trên Server": "Live Server Roles Explorer",
+      "Tìm role theo tên...": "Search roles by name...",
+      "Không tìm thấy role phù hợp.": "No matching roles found.",
+      "Đổi màu role": "Change role color",
+      "Tạo tin nhắn/Embed tự chọn role qua reaction và đồng bộ xử lý trực tiếp bởi HaruMod (normal, unique, verify, drop, reversed, limit, binding, temp).": "Create self-assignable reaction messages/embeds handled live by HaruMod (normal, unique, verify, drop, reversed, limit, binding, temp).",
+      "Chưa có Reaction Role nào. Nhấn": "No Reaction Roles configured yet. Click",
+      "để tạo mới.": "to create one.",
+      "Chưa có emoji nào. Nhấn": "No emojis added yet. Click",
+      "để gắn Emoji → Role.": "to bind Emoji → Role.",
+      "Bật Developer Mode trên Discord → Chuột phải vào tin nhắn → Copy Message ID.": "Enable Developer Mode in Discord → Right-click message → Copy Message ID.",
+      "Embed preview sẽ hiển thị trực tiếp tại đây khi bạn nhập Title, Description hoặc Fields...": "Live Embed preview will render here as you enter Title, Description, or Fields...",
+      "Cấp role khi member thả reaction và tự động gỡ role khi bỏ reaction.": "Hands out roles when members react and removes them when unreacting.",
+      "Mỗi thành viên chỉ giữ được 1 role duy nhất trong tin nhắn này (tự thay thế role cũ).": "Members can hold only 1 role from this message (replaces previous choice).",
+      "Chế độ Xác minh: chỉ cấp role khi nhấn reaction, bỏ reaction sẽ không mất role.": "Verification mode: grants role on react and keeps it even if unreacted.",
+      "Chỉ gỡ role khỏi thành viên khi nhấn reaction (không cấp mới).": "Removes the role on reaction without granting new roles.",
+      "Đảo ngược: nhấn reaction để gỡ role, bỏ reaction để nhận lại role.": "Reversed: reacting removes the role; unreacting adds it back.",
+      "Giới hạn số lượng role tối đa mỗi thành viên có thể nhận trên tin nhắn này.": "Limits the maximum number of roles a member can claim on this message.",
+      "Khóa cố định role đầu tiên đã chọn — thành viên không thể đổi hoặc tự gỡ.": "Locks the first selected role permanently — members cannot swap or unclaim.",
+      "Cấp role tạm thời và tự động thu hồi sau khoảng thời gian đã cài đặt.": "Grants a temporary role and removes it automatically after the set duration.",
+      "Cài Đặt Bảo Mật Discord Trực Tiếp (1-1 Real-Time)": "Live Discord Security Settings (1-1 Real-Time)",
+      "Đọc và chỉnh sửa trực tiếp cấp độ xác minh, bộ lọc nội dung và nhật ký Audit Log thật trên máy chủ Discord của bạn.": "Inspect and edit verification levels, explicit content filters, and live Discord Audit Logs.",
+      "Cấp độ xác minh tài khoản (Discord Verification Level)": "Discord Verification Level",
+      "0 — Không giới hạn (None)": "0 — None (Unrestricted)",
+      "1 — Thấp: Bắt buộc xác minh Email (Low)": "1 — Low (Verified Email)",
+      "2 — Trung bình: Tạo tài khoản trên 5 phút (Medium)": "2 — Medium (Account > 5 min)",
+      "3 — Cao: Ở trong server trên 10 phút (High)": "3 — High (Member > 10 min)",
+      "4 — Rất cao: Bắt buộc xác minh SĐT (Highest)": "4 — Highest (Verified Phone)",
+      "Bộ lọc ảnh / nội dung nhạy cảm (Explicit Content Filter)": "Explicit Content Filter",
+      "0 — Tắt quét ảnh (Disabled)": "0 — Disabled",
+      "1 — Quét thành viên chưa có Role (Members Without Roles)": "1 — Members Without Roles",
+      "2 — Quét toàn bộ thành viên (All Members)": "2 — All Members",
+      "Discord Native AutoMod & Danh sách Ban": "Discord Native AutoMod & Ban List",
+      "Nhật ký Audit Log gần đây": "Recent Discord Audit Logs",
+      "Trung Tâm Đồng Bộ Discord Thời Gian Thật": "Discord Real-Time Sync Center",
+      "Cập nhật và phát trực tiếp các thay đổi an ninh, biệt danh, bộ lọc vào máy chủ Discord.": "Push security policies, nicknames, and filter updates directly to Discord.",
+      "Đồng bộ tự động qua Discord Webhook (Khuyên dùng)": "Auto-Sync via Discord Webhook (Recommended)",
+      "Dán Webhook của kênh #mod-logs hoặc #general. Mỗi khi bạn bấm 'Lưu & Đồng bộ', hệ thống sẽ gửi ngay một thông báo Embed xác nhận cấu hình thời gian thật vào server:": "Paste your #mod-logs or #general Webhook URL. Whenever you Save & Sync, a real-time confirmation embed is sent to your server:",
+      "Gửi Thử Nghiệm Tới Server": "Send Test to Server",
+      "Lệnh Slash Command Đồng Bộ Trực Tiếp": "Direct Slash Command Sync",
+      "Nếu không dùng Webhook, bạn có thể copy lệnh slash này dán vào bất kỳ kênh chat nào để bot tự đổi:": "Alternatively, copy and run this slash command in any channel to update immediately:",
+      "Sao Chép Lệnh": "Copy Command",
+      "Chỉnh sửa hồ sơ máy chủ (Edit Server Profile)": "Edit Server Profile",
+      "Chuột phải vào bot": "Right-click the bot",
+      "Hướng Dẫn Discord": "Discord Guide",
+      "Server Bot Nickname (Tên hiển thị bot trên máy chủ này)": "Server Bot Nickname",
+      "Gợi ý đặt tên nhanh:": "Quick nickname presets:",
+      "Các phương thức đồng bộ tên bot và cấu hình bảo mật trực tiếp vào máy chủ Discord của bạn.": "Methods to synchronize bot identity and security configs directly into Discord.",
+      "Trung Tâm Đồng Bộ Discord (Discord Synchronization Center)": "Discord Synchronization Center",
+      "Cách 1: Sao chép lệnh Slash Command (Áp dụng tức thì)": "Method 1: Copy Slash Command (Instant)",
+      "Chỉ cần dán lệnh này vào bất kỳ kênh nào trong server của bạn để HaruMod tự động đổi tên:": "Run this command in any server channel so HaruMod updates immediately:",
+      "Cách 2: Đồng bộ tự động qua Webhook thông báo máy chủ": "Method 2: Auto-Sync via Server Webhook",
+      "Dán Webhook của kênh #mod-logs hoặc #security-alerts để dashboard tự động gửi báo cáo cấu hình vào server mỗi khi bấm Lưu:": "Paste a #mod-logs or #security-alerts webhook to post configuration updates whenever you save:",
+      "Gửi Test Vào Server": "Send Server Test",
+      "Cách 3: Chỉnh trực tiếp trên Discord Profile": "Method 3: Edit Directly on Discord Profile",
+      "Kênh bot sẽ tự động gửi thông báo cập nhật phiên bản mới": "Channel where HaruMod posts version update announcements",
+      "Xuất File Cấu Hình (.JSON)": "Export Config (.JSON)",
+      "Xuất File JSON": "Export JSON File",
+      "Nhập Cấu Hình": "Import Config",
+      "Sao lưu hồ sơ an ninh của server này ra file JSON hoặc nhập từ bản sao lưu:": "Back up this server's security configuration as JSON or restore from a backup file:",
+      "Bạn có thể sao lưu cấu hình bảo mật của server này hoặc áp dụng sang server khác:": "Back up this server's security profile or apply it to another server:",
+      "Tùy biến tự do danh mục và tối đa 8 kênh thống kê thời gian thực: múi giờ, thành viên, online, boost, mục tiêu thành viên và nhiều hơn nữa.": "Customize your category and up to 8 live stats channels: timezone, members, online count, boosts, member goal, and more.",
+      "Tiếng Việt (Vietnamese)": "Vietnamese",
+      "🇻🇳 Tiếng Việt": "🇻🇳 Vietnamese",
+      "Danh Sách Máy Chủ Chưa Có Bot (Cần Mời HaruMod)": "Servers Without Bot (Invite HaruMod)",
+      "Trò chuyện chung máy chủ Garden Of Dream": "General Chat — Garden Of Dream"
+    };
+
+    function applyGlobalDomTranslation(lang) {
+      const activeLang = (lang === "vi") ? "vi" : "en";
+      const roots = [
+        document.querySelector(".topbar"),
+        document.getElementById("config-suite"),
+        ...document.querySelectorAll(".dyno-modal-overlay")
+      ].filter(Boolean);
+
+      const skipTags = new Set(["SCRIPT", "STYLE", "TEXTAREA", "INPUT", "NOSCRIPT"]);
+      roots.forEach(root => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+          const parentTag = node.parentElement ? node.parentElement.tagName : "";
+          if (skipTags.has(parentTag)) continue;
+          if (node._haruOrigVi === undefined) {
+            node._haruOrigVi = node.nodeValue || "";
+          }
+          const orig = node._haruOrigVi;
+          const norm = orig.trim().replace(/\s+/g, " ");
+          if (!norm) continue;
+          if (activeLang === "en") {
+            const enVal = VI_TO_EN_MAP[norm] || VI_TO_EN_MAP[orig.trim()];
+            if (enVal) {
+              const lead = (orig.match(/^\s*/) || [""])[0];
+              const trail = (orig.match(/\s*$/) || [""])[0];
+              node.nodeValue = lead + enVal + trail;
+            }
+          } else {
+            if (node.nodeValue !== orig) node.nodeValue = orig;
+          }
+        }
+
+        root.querySelectorAll("[placeholder]").forEach(el => {
+          if (el.dataset.haruOrigPh === undefined) {
+            el.dataset.haruOrigPh = el.getAttribute("placeholder") || "";
+          }
+          const origPh = el.dataset.haruOrigPh;
+          const normPh = origPh.trim().replace(/\s+/g, " ");
+          if (activeLang === "en") {
+            const enVal = VI_TO_EN_MAP[normPh] || VI_TO_EN_MAP[origPh];
+            if (enVal) el.setAttribute("placeholder", enVal);
+          } else if (el.getAttribute("placeholder") !== origPh) {
+            el.setAttribute("placeholder", origPh);
+          }
+        });
+
+        root.querySelectorAll("[title]").forEach(el => {
+          if (el.dataset.haruOrigTitle === undefined) {
+            el.dataset.haruOrigTitle = el.getAttribute("title") || "";
+          }
+          const origT = el.dataset.haruOrigTitle;
+          const normT = origT.trim().replace(/\s+/g, " ");
+          if (activeLang === "en") {
+            const enVal = VI_TO_EN_MAP[normT] || VI_TO_EN_MAP[origT];
+            if (enVal) el.setAttribute("title", enVal);
+          } else if (el.getAttribute("title") !== origT) {
+            el.setAttribute("title", origT);
+          }
+        });
+      });
+
+      if (typeof window.syncAllHaruSelectLabels === "function") {
+        window.syncAllHaruSelectLabels();
+      }
+    }
+
     function switchDashLang(lang) {
       const activeLang = (lang === "vi") ? "vi" : "en";
       localStorage.setItem("haruki_dash_lang", activeLang);
@@ -10897,7 +11182,12 @@
       if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
       if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
       if (typeof renderAutobanRules === "function") renderAutobanRules();
-      if (typeof renderAutomodRules === "function") renderAutomodRules();
+      if (typeof renderAutomodCards === "function") renderAutomodCards();
+      if (typeof renderHoneypotUI === "function") renderHoneypotUI();
+      if (typeof renderSanctionLadder === "function") renderSanctionLadder();
+      if (typeof renderReactionRolesTable === "function") renderReactionRolesTable();
+      if (typeof renderRoleManagementUI === "function") renderRoleManagementUI();
+      applyGlobalDomTranslation(activeLang);
 
       // Sync select dropdown in bot settings
       const langSel = document.getElementById("cfg-dash-language");
@@ -11618,22 +11908,20 @@
       if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
       if (tabKey === "roles" && typeof renderRoleManagementUI === "function") renderRoleManagementUI();
       if (tabKey === "reactionroles" && typeof renderReactionRolesTable === "function") renderReactionRolesTable();
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(activeLang);
 
-      // Stabilize viewport with ZERO downward jitter/jump
-      requestAnimationFrame(() => {
-        if (window.innerWidth > 992) {
-          // On Desktop: keep top-aligned or preserve exact Y if already near top (never jump down)
-          const targetY = prevScrollY > 120 ? 0 : prevScrollY;
-          window.scrollTo({ top: targetY, left: 0, behavior: "instant" });
-        } else {
-          // On Mobile: scroll cleanly to main content header so user sees the selected tab cleanly
-          const topBar = document.querySelector("#config-suite .dyno-top-bar");
-          if (topBar) {
-            const topPos = Math.max(0, topBar.getBoundingClientRect().top + window.scrollY - 72);
-            window.scrollTo({ top: topPos, left: 0, behavior: "smooth" });
-          }
+      // Stabilize viewport with ZERO vertical jitter
+      if (window.innerWidth > 992) {
+        if (window.scrollY !== prevScrollY) {
+          window.scrollTo({ top: prevScrollY, left: 0, behavior: "instant" });
         }
-      });
+      } else {
+        const topBar = document.querySelector("#config-suite .dyno-top-bar");
+        if (topBar) {
+          const topPos = Math.max(0, topBar.getBoundingClientRect().top + window.scrollY - 72);
+          window.scrollTo({ top: topPos, left: 0, behavior: "smooth" });
+        }
+      }
     }
 
     // Live Preview updates as user types
@@ -11797,6 +12085,14 @@
         autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
         autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
         welcomeEnabled: document.getElementById("cfg-welcome-enable") ? document.getElementById("cfg-welcome-enable").checked : false,
+        welcome: {
+          welcomeEnabled: document.getElementById("cfg-welcome-enable") ? document.getElementById("cfg-welcome-enable").checked : false,
+          welcomeChannel: document.getElementById("cfg-welcome-channel")?.value || "",
+          welcomeMessage: document.getElementById("cfg-welcome-msg")?.value || "",
+          goodbyeEnabled: document.getElementById("cfg-goodbye-enable") ? document.getElementById("cfg-goodbye-enable").checked : false,
+          goodbyeChannel: document.getElementById("cfg-goodbye-channel")?.value || "",
+          goodbyeMessage: document.getElementById("cfg-goodbye-msg")?.value || ""
+        },
         reactionRoles: typeof getReactionRolesForSave === "function" ? getReactionRolesForSave() : [],
         roleManagement: typeof getRoleManagementConfigForSave === "function" ? getRoleManagementConfigForSave() : null,
         statsBoard: typeof getStatsBoardConfigForSave === "function" ? getStatsBoardConfigForSave() : null,
@@ -11907,8 +12203,25 @@
       if (document.getElementById("cfg-switch-autodelete")) {
         document.getElementById("cfg-switch-autodelete").checked = typeof cfg.autoDeleteEnabled === "boolean" ? cfg.autoDeleteEnabled : false;
       }
+      const wCfg = (cfg.welcome && typeof cfg.welcome === "object") ? cfg.welcome : {};
       if (document.getElementById("cfg-welcome-enable")) {
-        document.getElementById("cfg-welcome-enable").checked = typeof cfg.welcomeEnabled === "boolean" ? cfg.welcomeEnabled : false;
+        const wOn = typeof wCfg.welcomeEnabled === "boolean" ? wCfg.welcomeEnabled : (typeof cfg.welcomeEnabled === "boolean" ? cfg.welcomeEnabled : false);
+        document.getElementById("cfg-welcome-enable").checked = wOn;
+      }
+      if (typeof wCfg.welcomeChannel === "string" && document.getElementById("cfg-welcome-channel")) {
+        document.getElementById("cfg-welcome-channel").value = wCfg.welcomeChannel;
+      }
+      if (typeof wCfg.welcomeMessage === "string" && document.getElementById("cfg-welcome-msg")) {
+        document.getElementById("cfg-welcome-msg").value = wCfg.welcomeMessage;
+      }
+      if (document.getElementById("cfg-goodbye-enable")) {
+        document.getElementById("cfg-goodbye-enable").checked = typeof wCfg.goodbyeEnabled === "boolean" ? wCfg.goodbyeEnabled : false;
+      }
+      if (typeof wCfg.goodbyeChannel === "string" && document.getElementById("cfg-goodbye-channel")) {
+        document.getElementById("cfg-goodbye-channel").value = wCfg.goodbyeChannel;
+      }
+      if (typeof wCfg.goodbyeMessage === "string" && document.getElementById("cfg-goodbye-msg")) {
+        document.getElementById("cfg-goodbye-msg").value = wCfg.goodbyeMessage;
       }
       if (Array.isArray(cfg.autoDelete) && cfg.autoDelete.length > 0 && typeof autoDeleteRules !== "undefined") {
         autoDeleteRules = cfg.autoDelete;
@@ -13142,7 +13455,7 @@
       const amOn = Boolean(automodConfig.enabled);
       const hpOn = Boolean(honeypotConfig.enabled) || Boolean(antiNukeConfig.enabled);
       const ladOn = Boolean(sanctionLadderConfig.enabled);
-      const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked);
+      const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked) || Boolean(document.getElementById("cfg-goodbye-enable")?.checked);
       const rrOn = typeof reactionRolesConfig !== "undefined" && Array.isArray(reactionRolesConfig) && reactionRolesConfig.length > 0;
       const rmOn = typeof roleMgmtConfig !== "undefined" && Boolean(
         roleMgmtConfig.rolePersistEnabled ||
@@ -13227,6 +13540,7 @@
               return `<span class="am-tag-chip">@ ${escapeHtml(r ? r.name : id)} <button type="button" onclick="removeAutomodGlobalIgnore('roles', ${i})">&times;</button></span>`;
             }).join("");
       }
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function addAutomodGlobalIgnore(kind, id) {
@@ -13534,6 +13848,7 @@
       );
 
       grid.innerHTML = [badInvitesHtml, badWordsHtml, badLinksHtml, mentionSpamHtml, attachmentSpamHtml, floodSpamHtml, capsHtml, warnHtml].join("");
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function renderAutomodRules() {
@@ -13684,6 +13999,7 @@
       if (winEl) winEl.value = String(antiNukeConfig.windowSeconds || 10);
       const reactEl = document.getElementById("cfg-wizz-reaction");
       if (reactEl) reactEl.value = antiNukeConfig.reaction || "strip-roles";
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function syncHoneypotEnableToggle(checked) {
@@ -13809,6 +14125,7 @@
           <button type="button" class="stats-ch-icon-btn danger" onclick="removeSanctionStage(${idx})" title="Xóa bậc">✕</button>
         </div>
       `).join("");
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function addSanctionStage() {
@@ -13869,6 +14186,7 @@
       }
       if (entries.length === 0) {
         tbody.innerHTML = `<tr data-empty-row="1"><td colspan="6" style="padding:18px 14px;text-align:center;color:#64748b;">Chưa có lịch sử Kick/Ban/Timeout nào trong Audit Log gần đây.</td></tr>`;
+        if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
         return;
       }
       const actionMap = { 20: "KICK", 22: "BAN", 23: "UNBAN", 24: "TIMEOUT" };
@@ -13886,6 +14204,7 @@
           <td style="padding:11px 14px;color:#64748b;">Audit Log</td>
         </tr>`;
       }).join("");
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     // =========================================================
@@ -15620,6 +15939,7 @@
         fetchGuildEmojisForPicker(currentGuildId);
       }
       if (typeof window.refreshHaruSelects === "function") window.refreshHaruSelects();
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function closeReactionRoleModal() {
@@ -15648,6 +15968,7 @@
       const tempWrap = document.getElementById("rr-temp-wrap");
       if (limitWrap) limitWrap.style.display = t === "limit" ? "block" : "none";
       if (tempWrap) tempWrap.style.display = t === "temp" ? "block" : "none";
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function syncEmbedPanelVisibility() {
@@ -15917,6 +16238,7 @@
       if (!box) return;
       if (rrModalMappings.length === 0) {
         box.innerHTML = `<div style="font-size:0.78rem;color:#64748b;padding:10px 12px;border:1px dashed rgba(255,255,255,0.1);border-radius:8px;text-align:center;">Chưa có emoji nào. Nhấn <strong>+ Add emoji</strong> để gắn Emoji &rarr; Role.</div>`;
+        if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
         return;
       }
       const roles = getAssignableRolesList();
@@ -15944,6 +16266,7 @@
         `;
       }).join("");
       if (typeof window.refreshHaruSelects === "function") window.refreshHaruSelects();
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function addReactionRoleFilterChip(kind, roleId) {
@@ -16128,6 +16451,7 @@
       if (!tbody) return;
       if (!Array.isArray(reactionRolesConfig) || reactionRolesConfig.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:28px 16px;color:#64748b;">Chưa có Reaction Role nào. Nhấn <strong>+ Create new reaction role</strong> để tạo mới.</td></tr>`;
+        if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
         return;
       }
       const channels = (cachedChannels && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
@@ -16298,6 +16622,7 @@
       const bBox = document.getElementById("rm-bot-autoroles-chips");
       if (hBox) hBox.innerHTML = mkChips(roleMgmtConfig.humanAutoRoles || [], "human");
       if (bBox) bBox.innerHTML = mkChips(roleMgmtConfig.botAutoRoles || [], "bot");
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function addJoinableRankItem() {
@@ -16332,6 +16657,7 @@
       const list = roleMgmtConfig.joinableRanks || [];
       if (list.length === 0) {
         box.innerHTML = `<div style="font-size:0.76rem;color:#64748b;padding:8px 10px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px;">Chưa có Joinable Rank nào. Thêm ở trên để member gõ <code>/rank &lt;tên&gt;</code> tự nhận role!</div>`;
+        if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
         return;
       }
       const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
@@ -16532,6 +16858,7 @@
         .filter(r => !q || r.name.toLowerCase().includes(q) || String(r.id).includes(q));
       if (roles.length === 0) {
         box.innerHTML = `<div style="font-size:0.78rem;color:#64748b;padding:14px;text-align:center;">Không tìm thấy role phù hợp.</div>`;
+        if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
         return;
       }
       box.innerHTML = roles.slice(0, 80).map(r => {
@@ -16550,6 +16877,7 @@
           </div>
         `;
       }).join("");
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     function renderRoleManagementUI() {
@@ -16577,16 +16905,17 @@
       renderJoinableRanksList();
       renderPaletteSwatches();
       renderLiveRolesExplorer();
+      if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(localStorage.getItem("haruki_dash_lang") || "en");
     }
 
     // =========================================================
     // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".dyno-nav-item").forEach(btn => {
+        btn.addEventListener("mousedown", e => e.preventDefault());
+      });
       const savedLang = localStorage.getItem("haruki_dash_lang") || "en";
-      if (typeof switchDashLang === "function") {
-        switchDashLang(savedLang);
-      }
       if (typeof renderModulesGrid === "function") {
         renderModulesGrid();
       }
@@ -16610,6 +16939,9 @@
       }
       if (typeof updateSidebarStatusIndicators === "function") {
         updateSidebarStatusIndicators();
+      }
+      if (typeof switchDashLang === "function") {
+        switchDashLang(savedLang);
       }
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
@@ -17317,6 +17649,7 @@
         document.querySelectorAll("select").forEach(enhanceSelect);
       }
       window.refreshHaruSelects = scanAllSelects;
+      window.syncAllHaruSelectLabels = () => document.querySelectorAll("select").forEach(syncTriggerDisplay);
 
       document.addEventListener("mousedown", (e) => {
         if (!portalEl || !portalEl.classList.contains("open")) return;
