@@ -4986,6 +4986,443 @@
   font-weight: 600;
 }
 </style>
+<style id="haru-custom-ui-system">
+  /* 1. Custom Dark Thin Scrollbars Everywhere (Replaces Browser Default White Bars) */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.24);
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.44);
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* 2. Custom Checkboxes & Clean Number Inputs */
+  .dash-checkbox-label input[type="checkbox"],
+  .stats-ch-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
+    border-radius: 5px;
+    border: 1.5px solid rgba(148, 163, 184, 0.34);
+    background: #0b101b;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .dash-checkbox-label input[type="checkbox"]:hover,
+  .stats-ch-row input[type="checkbox"]:hover {
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+  .dash-checkbox-label input[type="checkbox"]:checked,
+  .stats-ch-row input[type="checkbox"]:checked {
+    background: #10b981;
+    border-color: #10b981;
+  }
+  .dash-checkbox-label input[type="checkbox"]:checked::after,
+  .stats-ch-row input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #062118;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* 3. HaruSelect Custom Dropdown Component (Replaces Google/OS Native <select> Menu) */
+  .h-select-host {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    display: block;
+  }
+  .h-select-native {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+  }
+  .h-select-trigger {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 12px;
+    background: #0d121f;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 9px;
+    color: #e2e8f0;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    box-sizing: border-box;
+  }
+  .h-select-host.is-compact .h-select-trigger {
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+  .h-select-trigger:hover:not(:disabled) {
+    background: #111829;
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .h-select-trigger[aria-expanded="true"] {
+    background: #111829;
+    border-color: rgba(16, 185, 129, 0.55);
+  }
+  .h-select-trigger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .h-select-val {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .h-select-val.is-placeholder {
+    color: #64748b;
+  }
+  .h-select-chevron {
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0;
+    color: #94a3b8;
+    fill: none !important;
+    stroke: currentColor !important;
+    transition: transform 0.18s ease;
+  }
+  .h-select-trigger[aria-expanded="true"] .h-select-chevron {
+    transform: rotate(180deg);
+    color: #10b981;
+  }
+  .h-select-portal {
+    position: fixed;
+    z-index: 99999;
+    background: #101522;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.72);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .h-select-portal.open {
+    display: flex;
+  }
+  .h-select-search-wrap {
+    padding: 7px 8px;
+    background: #0b0f1a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .h-select-search {
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #111726;
+    color: #f1f5f9;
+    font-family: inherit;
+    font-size: 0.8rem;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .h-select-search:focus {
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+  .h-select-list {
+    max-height: 256px;
+    overflow-y: auto;
+    padding: 5px;
+  }
+  .h-select-group-label {
+    padding: 7px 10px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+  }
+  .h-select-opt {
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    line-height: 1.3;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .h-select-opt-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .h-select-opt:hover:not(.is-disabled),
+  .h-select-opt.is-focused:not(.is-disabled) {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+  }
+  .h-select-opt.is-selected {
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    font-weight: 600;
+  }
+  .h-select-opt.is-disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+  }
+  .h-select-check {
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0;
+    fill: none !important;
+    stroke: #34d399 !important;
+  }
+  .h-select-empty {
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+
+  /* 4. Basic Clean Layout for Live Discord 1-1 Security Panel */
+  .sec-basic-card {
+    background: #0d111a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+  }
+  .sec-basic-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .sec-basic-title-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 4px;
+  }
+  .sec-basic-icon {
+    width: 16px !important;
+    height: 16px !important;
+    fill: none !important;
+    stroke: #94a3b8 !important;
+    flex-shrink: 0;
+  }
+  .sec-basic-title {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+  .sec-basic-sub {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+  .sec-basic-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 13px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #131926;
+    color: #cbd5e1;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .sec-basic-btn:hover {
+    background: #192132;
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+  .sec-basic-btn.primary {
+    background: #10b981;
+    border-color: #10b981;
+    color: #052e20;
+    font-weight: 700;
+  }
+  .sec-basic-btn.primary:hover {
+    background: #34d399;
+    border-color: #34d399;
+  }
+  .sec-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .sec-feed-box {
+    background: #090d16;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 11px;
+    padding: 14px;
+  }
+  .sec-feed-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .sec-feed-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 224px;
+    overflow-y: auto;
+    padding-right: 4px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+  .sec-feed-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 8px;
+    border-radius: 7px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.12s ease;
+  }
+  .sec-feed-row:last-child {
+    border-bottom: none;
+  }
+  .sec-feed-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .sec-feed-main {
+    min-width: 0;
+    flex: 1;
+    color: #cbd5e1;
+    line-height: 1.4;
+  }
+  .sec-feed-main strong {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+  .sec-feed-actor {
+    color: #34d399;
+    font-weight: 500;
+  }
+  .sec-feed-reason {
+    color: #64748b;
+    font-style: normal;
+  }
+  .sec-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .sec-pill.active {
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+  }
+  .sec-pill.off {
+    background: rgba(148, 163, 184, 0.12);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+  .sec-feed-subhead {
+    padding: 10px 8px 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #94a3b8;
+  }
+  .sec-ban-id {
+    font-size: 0.72rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #64748b;
+    margin-left: 4px;
+  }
+  .sec-unban-btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #141a28;
+    color: #e2e8f0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .sec-unban-btn:hover {
+    background: #1e273b;
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+</style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
     .dash-topbar {
@@ -6677,23 +7114,28 @@
       </div>
 
       <!-- REAL 1-1 DISCORD NATIVE SECURITY SETTINGS PANEL -->
-      <div class="panel-card" style="border-color:rgba(16,185,129,0.28);">
-        <div class="panel-header" style="flex-wrap:wrap;gap:12px;">
+      <div class="panel-card sec-basic-card">
+        <div class="sec-basic-head">
           <div>
-            <h3 class="panel-title">🛡️ Cài Đặt Bảo Mật Discord Trực Tiếp (1-1 Real-Time)</h3>
-            <p class="panel-subtitle">Đọc và chỉnh sửa trực tiếp cấp độ xác minh, bộ lọc nội dung và nhật ký Audit Log thật trên máy chủ Discord của bạn.</p>
+            <div class="sec-basic-title-row">
+              <svg class="sec-basic-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <h3 class="sec-basic-title">Cài Đặt Bảo Mật Discord Trực Tiếp (1-1 Real-Time)</h3>
+            </div>
+            <p class="sec-basic-sub">Đọc và chỉnh sửa trực tiếp cấp độ xác minh, bộ lọc nội dung và nhật ký Audit Log thật trên máy chủ Discord của bạn.</p>
           </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="fetchRealDiscordGuildData(currentGuildId, true)">
-              🔄 Đọc lại từ Discord
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="sec-basic-btn" onclick="fetchRealDiscordGuildData(currentGuildId, true)">
+              <svg style="width:14px;height:14px;fill:none;stroke:currentColor;" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span>Đọc lại từ Discord</span>
             </button>
-            <button type="button" class="btn btn-emerald btn-sm" onclick="applyRealDiscordSecuritySettings(event)">
-              ⚡ Áp dụng ngay lên Discord
+            <button type="button" class="sec-basic-btn primary" onclick="applyRealDiscordSecuritySettings(event)">
+              <svg style="width:14px;height:14px;fill:none;stroke:currentColor;" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Áp dụng ngay lên Discord</span>
             </button>
           </div>
         </div>
 
-        <div class="config-grid-2" style="margin-bottom:18px;">
+        <div class="config-grid-2" style="margin-bottom:16px;">
           <div>
             <label class="dash-form-label" style="display:block;margin-bottom:6px;">Cấp độ xác minh tài khoản (Discord Verification Level)</label>
             <select id="cfg-discord-verification-level" class="form-input" onchange="triggerUnsaved()">
@@ -6714,17 +7156,23 @@
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;">
-          <div style="background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;">
-            <div style="font-size:0.82rem;font-weight:800;color:#34d399;margin-bottom:10px;">📜 Nhật ký Audit Log thật gần đây (Discord)</div>
-            <div id="live-discord-audit-list" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;font-size:0.78rem;color:var(--text-dim);">
-              <div>Đang tải nhật ký Audit Log thật từ Discord...</div>
+        <div class="sec-feed-grid">
+          <div class="sec-feed-box">
+            <div class="sec-feed-header">
+              <svg class="sec-basic-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span>Nhật ký Audit Log gần đây</span>
+            </div>
+            <div id="live-discord-audit-list" class="sec-feed-scroll">
+              <div style="padding:8px;">Đang tải nhật ký Audit Log thật từ Discord...</div>
             </div>
           </div>
-          <div style="background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;">
-            <div style="font-size:0.82rem;font-weight:800;color:#38bdf8;margin-bottom:10px;">🤖 Discord Native AutoMod &amp; Danh sách Ban thật</div>
-            <div id="live-discord-automod-bans" style="display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;font-size:0.78rem;color:var(--text-dim);">
-              <div>Đang quét Discord Native AutoMod &amp; Ban list...</div>
+          <div class="sec-feed-box">
+            <div class="sec-feed-header">
+              <svg class="sec-basic-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+              <span>Discord Native AutoMod &amp; Danh sách Ban</span>
+            </div>
+            <div id="live-discord-automod-bans" class="sec-feed-scroll">
+              <div style="padding:8px;">Đang quét Discord Native AutoMod &amp; Ban list...</div>
             </div>
           </div>
         </div>
@@ -10701,14 +11149,14 @@
           32: "Xóa Role", 72: "Xóa Tin Nhắn", 73: "Purge Hàng Loạt", 140: "Tạo AutoMod Rule", 141: "Sửa AutoMod Rule"
         };
         if (entries.length === 0) {
-          auditBox.innerHTML = `<div style="color:var(--text-muted);">Không có sự kiện Audit Log hoặc Bot cần quyền View Audit Log.</div>`;
+          auditBox.innerHTML = `<div style="padding:8px;color:#64748b;">Không có sự kiện Audit Log hoặc Bot cần quyền View Audit Log.</div>`;
         } else {
           auditBox.innerHTML = entries.slice(0, 12).map(e => {
             const actor = usersMap[e.user_id] || `ID:${e.user_id || "System"}`;
             const actName = actionLabels[e.action_type] || `Action #${e.action_type}`;
-            const reasonTxt = e.reason ? ` — <em>${escapeHtml(e.reason)}</em>` : "";
-            return `<div style="padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
-              <strong style="color:#e2e8f0;">${escapeHtml(actName)}</strong> bởi <span style="color:#34d399;">${escapeHtml(actor)}</span>${reasonTxt}
+            const reasonTxt = e.reason ? ` <span class="sec-feed-reason">— ${escapeHtml(e.reason)}</span>` : "";
+            return `<div class="sec-feed-row">
+              <div class="sec-feed-main"><strong>${escapeHtml(actName)}</strong> · <span class="sec-feed-actor">${escapeHtml(actor)}</span>${reasonTxt}</div>
             </div>`;
           }).join("");
         }
@@ -10720,22 +11168,22 @@
         let html = "";
         if (automodList.length > 0) {
           html += automodList.map(r => `
-            <div style="padding:7px 10px;border-radius:8px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);display:flex;justify-content:space-between;align-items:center;">
-              <span>🛡️ <strong>${escapeHtml(r.name)}</strong></span>
-              <span style="font-size:0.7rem;color:${r.enabled ? '#34d399' : '#f87171'};font-weight:800;">${r.enabled ? 'ACTIVE' : 'OFF'}</span>
+            <div class="sec-feed-row">
+              <span class="sec-feed-main"><strong>${escapeHtml(r.name)}</strong></span>
+              <span class="sec-pill ${r.enabled ? "active" : "off"}">${r.enabled ? "ACTIVE" : "OFF"}</span>
             </div>
           `).join("");
         } else {
-          html += `<div style="padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03);color:var(--text-muted);">Chưa có Discord Native AutoMod Rule nào trên server này.</div>`;
+          html += `<div style="padding:8px;color:#64748b;">Chưa có Discord Native AutoMod Rule nào trên server này.</div>`;
         }
         if (bans.length > 0) {
-          html += `<div style="margin-top:6px;font-weight:700;color:#fca5a5;">🚫 Danh sách Ban gần đây (${bans.length}):</div>`;
+          html += `<div class="sec-feed-subhead">Danh sách Ban gần đây (${bans.length})</div>`;
           html += bans.slice(0, 6).map(b => {
             const uname = b.user ? (b.user.global_name || b.user.username) : "Unknown";
             const uid = b.user ? b.user.id : "";
-            return `<div style="padding:6px 10px;border-radius:8px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);display:flex;justify-content:space-between;align-items:center;gap:8px;">
-              <span>${escapeHtml(uname)} <code style="font-size:0.7rem;">${uid}</code></span>
-              <button type="button" class="btn-secondary" style="padding:3px 8px;font-size:0.68rem;" onclick="quickUnbanUser('${uid}', '${escapeHtml(uname)}')">Unban</button>
+            return `<div class="sec-feed-row">
+              <div class="sec-feed-main"><strong>${escapeHtml(uname)}</strong><span class="sec-ban-id">${uid}</span></div>
+              <button type="button" class="sec-unban-btn" onclick="quickUnbanUser('${uid}', '${escapeHtml(uname)}')">Unban</button>
             </div>`;
           }).join("");
         }
@@ -13247,6 +13695,349 @@
       </div>
     </div>
   </div>
+
+  <script id="haru-custom-select-engine">
+    (function() {
+      const CHEVRON_SVG = `<svg class="h-select-chevron" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+      const CHECK_SVG = `<svg class="h-select-check" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+      let portalEl = null;
+      let activeSelect = null;
+      let activeTrigger = null;
+      let focusedOptIdx = -1;
+
+      function ensurePortal() {
+        if (portalEl) return portalEl;
+        portalEl = document.createElement("div");
+        portalEl.className = "h-select-portal";
+        portalEl.setAttribute("role", "listbox");
+        portalEl.innerHTML = `
+          <div class="h-select-search-wrap" style="display:none;">
+            <input type="text" class="h-select-search" placeholder="Search...">
+          </div>
+          <div class="h-select-list"></div>
+        `;
+        document.body.appendChild(portalEl);
+
+        const searchInput = portalEl.querySelector(".h-select-search");
+        searchInput.addEventListener("input", () => {
+          if (activeSelect) renderPortalOptions(activeSelect, searchInput.value);
+        });
+        searchInput.addEventListener("keydown", handlePortalKeydown);
+        portalEl.addEventListener("mousedown", (e) => {
+          e.stopPropagation();
+        });
+        return portalEl;
+      }
+
+      function syncTriggerDisplay(selectEl) {
+        if (!selectEl || !selectEl._haruTrigger) return;
+        const valSpan = selectEl._haruTrigger.querySelector(".h-select-val");
+        if (!valSpan) return;
+        const selectedOpt = selectEl.options[selectEl.selectedIndex] || selectEl.options[0];
+        const text = selectedOpt ? selectedOpt.textContent.trim() : "";
+        valSpan.textContent = text || "Select...";
+        const isPlaceholder = !selectedOpt || (selectedOpt.value === "" && selectEl.selectedIndex === 0);
+        valSpan.classList.toggle("is-placeholder", Boolean(isPlaceholder));
+        selectEl._haruTrigger.disabled = Boolean(selectEl.disabled);
+      }
+
+      function renderPortalOptions(selectEl, query = "") {
+        const listEl = portalEl.querySelector(".h-select-list");
+        const q = (query || "").trim().toLowerCase();
+        const children = [...selectEl.children];
+        let html = "";
+        let itemIdx = 0;
+        const flatOptions = [];
+
+        const renderOpt = (opt, indent = false) => {
+          const text = opt.textContent.trim();
+          if (q && !text.toLowerCase().includes(q)) return "";
+          const isSelected = opt.value === selectEl.value && opt.index === selectEl.selectedIndex;
+          const isDisabled = Boolean(opt.disabled);
+          const idx = itemIdx++;
+          flatOptions.push(opt);
+          const safeText = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          return `
+            <div class="h-select-opt ${isSelected ? "is-selected" : ""} ${isDisabled ? "is-disabled" : ""}" data-opt-index="${opt.index}" data-flat-idx="${idx}" style="${indent ? "padding-left:18px;" : ""}">
+              <span class="h-select-opt-text">${safeText}</span>
+              ${isSelected ? CHECK_SVG : ""}
+            </div>
+          `;
+        };
+
+        for (const node of children) {
+          if (node.tagName === "OPTGROUP") {
+            const inner = [...node.children].filter(c => c.tagName === "OPTION").map(o => renderOpt(o, true)).join("");
+            if (inner) {
+              const lbl = (node.label || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              html += `<div class="h-select-group-label">${lbl}</div>${inner}`;
+            }
+          } else if (node.tagName === "OPTION") {
+            html += renderOpt(node, false);
+          }
+        }
+
+        if (!html) {
+          listEl.innerHTML = `<div class="h-select-empty">No matching options</div>`;
+          focusedOptIdx = -1;
+          return;
+        }
+
+        listEl.innerHTML = html;
+        const rows = [...listEl.querySelectorAll(".h-select-opt")];
+        rows.forEach((row) => {
+          row.addEventListener("click", () => {
+            if (row.classList.contains("is-disabled")) return;
+            const optIndex = Number(row.dataset.optIndex);
+            selectOptionByIndex(selectEl, optIndex);
+          });
+        });
+
+        const selectedRow = listEl.querySelector(".h-select-opt.is-selected");
+        if (selectedRow) {
+          focusedOptIdx = Number(selectedRow.dataset.flatIdx);
+          if (!q) requestAnimationFrame(() => selectedRow.scrollIntoView({ block: "nearest" }));
+        } else {
+          focusedOptIdx = -1;
+        }
+      }
+
+      function selectOptionByIndex(selectEl, optIndex) {
+        const opt = selectEl.options[optIndex];
+        if (!opt || opt.disabled) return;
+        const changed = selectEl.selectedIndex !== optIndex;
+        selectEl.selectedIndex = optIndex;
+        syncTriggerDisplay(selectEl);
+        closePortal();
+        if (changed) {
+          selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+          selectEl.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      }
+
+      function positionPortal(triggerEl) {
+        const rect = triggerEl.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const width = Math.min(Math.max(rect.width, 200), vw - 16);
+        let left = rect.left;
+        if (left + width > vw - 8) left = Math.max(8, vw - width - 8);
+
+        portalEl.style.width = `${width}px`;
+        portalEl.style.left = `${left}px`;
+
+        const spaceBelow = vh - rect.bottom - 10;
+        const spaceAbove = rect.top - 10;
+        const openUp = spaceBelow < 210 && spaceAbove > spaceBelow;
+        const listEl = portalEl.querySelector(".h-select-list");
+        const maxH = Math.min(280, Math.max(140, (openUp ? spaceAbove : spaceBelow) - 48));
+        listEl.style.maxHeight = `${maxH}px`;
+
+        if (openUp) {
+          portalEl.style.top = "auto";
+          portalEl.style.bottom = `${vh - rect.top + 6}px`;
+        } else {
+          portalEl.style.bottom = "auto";
+          portalEl.style.top = `${rect.bottom + 6}px`;
+        }
+      }
+
+      function openPortal(selectEl, triggerEl) {
+        ensurePortal();
+        if (activeSelect === selectEl && portalEl.classList.contains("open")) {
+          closePortal();
+          return;
+        }
+        closePortal();
+        activeSelect = selectEl;
+        activeTrigger = triggerEl;
+        triggerEl.setAttribute("aria-expanded", "true");
+
+        const searchWrap = portalEl.querySelector(".h-select-search-wrap");
+        const searchInput = portalEl.querySelector(".h-select-search");
+        const showSearch = selectEl.options.length >= 8;
+        searchWrap.style.display = showSearch ? "block" : "none";
+        searchInput.value = "";
+
+        renderPortalOptions(selectEl, "");
+        portalEl.classList.add("open");
+        positionPortal(triggerEl);
+
+        if (showSearch) {
+          setTimeout(() => searchInput.focus(), 10);
+        }
+      }
+
+      function closePortal() {
+        if (!portalEl) return;
+        portalEl.classList.remove("open");
+        if (activeTrigger) {
+          activeTrigger.setAttribute("aria-expanded", "false");
+        }
+        activeSelect = null;
+        activeTrigger = null;
+        focusedOptIdx = -1;
+      }
+
+      function handlePortalKeydown(e) {
+        if (!portalEl || !portalEl.classList.contains("open") || !activeSelect) return;
+        const rows = [...portalEl.querySelectorAll(".h-select-opt:not(.is-disabled)")];
+        if (e.key === "Escape") {
+          e.preventDefault();
+          const trg = activeTrigger;
+          closePortal();
+          if (trg) trg.focus();
+          return;
+        }
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          e.preventDefault();
+          if (rows.length === 0) return;
+          const curIdx = rows.findIndex(r => Number(r.dataset.flatIdx) === focusedOptIdx);
+          const next = e.key === "ArrowDown"
+            ? (curIdx + 1 >= rows.length ? 0 : curIdx + 1)
+            : (curIdx - 1 < 0 ? rows.length - 1 : curIdx - 1);
+          rows.forEach(r => r.classList.remove("is-focused"));
+          rows[next].classList.add("is-focused");
+          focusedOptIdx = Number(rows[next].dataset.flatIdx);
+          rows[next].scrollIntoView({ block: "nearest" });
+          return;
+        }
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const targetRow = rows.find(r => Number(r.dataset.flatIdx) === focusedOptIdx) || rows[0];
+          if (targetRow) selectOptionByIndex(activeSelect, Number(targetRow.dataset.optIndex));
+        }
+      }
+
+      function enhanceSelect(selectEl) {
+        if (!selectEl || selectEl.tagName !== "SELECT") return;
+        if (selectEl.multiple || selectEl.classList.contains("native-select")) return;
+        if (selectEl.dataset.haruSelectInit === "1") {
+          syncTriggerDisplay(selectEl);
+          return;
+        }
+
+        selectEl.dataset.haruSelectInit = "1";
+        const host = document.createElement("div");
+        host.className = "h-select-host";
+        if (selectEl.closest(".stats-ch-row")) host.classList.add("is-compact");
+        if (selectEl.style.flex) host.style.flex = selectEl.style.flex;
+        if (selectEl.style.width && selectEl.style.width !== "100%") host.style.width = selectEl.style.width;
+        if (selectEl.style.minWidth) host.style.minWidth = selectEl.style.minWidth;
+
+        const parent = selectEl.parentNode;
+        if (!parent) return;
+        parent.insertBefore(host, selectEl);
+        host.appendChild(selectEl);
+
+        selectEl.classList.add("h-select-native");
+        selectEl.tabIndex = -1;
+
+        const trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "h-select-trigger";
+        trigger.setAttribute("aria-haspopup", "listbox");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.innerHTML = `<span class="h-select-val"></span>${CHEVRON_SVG}`;
+        host.appendChild(trigger);
+
+        selectEl._haruTrigger = trigger;
+        syncTriggerDisplay(selectEl);
+
+        trigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (selectEl.disabled) return;
+          openPortal(selectEl, trigger);
+        });
+        trigger.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+            e.preventDefault();
+            if (!selectEl.disabled) openPortal(selectEl, trigger);
+          } else if (e.key === "Escape") {
+            closePortal();
+          }
+        });
+        selectEl.addEventListener("change", () => syncTriggerDisplay(selectEl));
+      }
+
+      // Sync trigger labels whenever JS sets select.value = "..." programmatically
+      const nativeValueDesc = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+      if (nativeValueDesc && nativeValueDesc.set && !HTMLSelectElement.prototype._haruPatchedValue) {
+        HTMLSelectElement.prototype._haruPatchedValue = true;
+        Object.defineProperty(HTMLSelectElement.prototype, "value", {
+          configurable: true,
+          enumerable: nativeValueDesc.enumerable,
+          get: function() {
+            return nativeValueDesc.get.call(this);
+          },
+          set: function(v) {
+            nativeValueDesc.set.call(this, v);
+            syncTriggerDisplay(this);
+          }
+        });
+      }
+
+      function scanAllSelects() {
+        document.querySelectorAll("select").forEach(enhanceSelect);
+      }
+      window.refreshHaruSelects = scanAllSelects;
+
+      document.addEventListener("mousedown", (e) => {
+        if (!portalEl || !portalEl.classList.contains("open")) return;
+        if (portalEl.contains(e.target)) return;
+        if (activeTrigger && activeTrigger.contains(e.target)) return;
+        closePortal();
+      });
+      window.addEventListener("resize", closePortal, { passive: true });
+      window.addEventListener("scroll", (e) => {
+        if (portalEl && portalEl.contains(e.target)) return;
+        closePortal();
+      }, true);
+
+      const mo = new MutationObserver((mutations) => {
+        let shouldScan = false;
+        const selectsToSync = new Set();
+
+        for (const m of mutations) {
+          if (m.type === "childList") {
+            const closestSel = m.target && m.target.closest ? m.target.closest("select") : null;
+            if (closestSel) selectsToSync.add(closestSel);
+            m.addedNodes.forEach((n) => {
+              if (n.nodeType !== 1) return;
+              if (n.tagName === "SELECT" || (n.querySelector && n.querySelector("select"))) {
+                shouldScan = true;
+              }
+            });
+          } else if (m.type === "attributes" && m.target && m.target.tagName === "SELECT") {
+            selectsToSync.add(m.target);
+          }
+        }
+
+        if (shouldScan) scanAllSelects();
+        selectsToSync.forEach(syncTriggerDisplay);
+      });
+
+      function bootHaruSelect() {
+        scanAllSelects();
+        mo.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["disabled"]
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", bootHaruSelect);
+      } else {
+        bootHaruSelect();
+      }
+    })();
+  </script>
 
 </body>
 </html>
