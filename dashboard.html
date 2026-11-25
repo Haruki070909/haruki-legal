@@ -2949,12 +2949,154 @@
       fill: currentColor;
     }
     @media (max-width: 992px) {
+      html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+      }
+      #config-suite,
       .dyno-layout {
         flex-direction: column !important;
+        padding: 0 12px !important;
+        margin: 14px auto 84px !important;
+        gap: 14px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
       }
       .dyno-sidebar {
         width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         position: static !important;
+        padding: 14px !important;
+        gap: 10px !important;
+        border-radius: 16px !important;
+        box-sizing: border-box !important;
+      }
+      .dyno-nav-group {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+      }
+      .dyno-nav-heading {
+        grid-column: 1 / -1 !important;
+        padding: 6px 6px 2px !important;
+      }
+      .dyno-nav-item {
+        padding: 9px 10px !important;
+        font-size: 0.77rem !important;
+        gap: 7px !important;
+        min-width: 0 !important;
+      }
+      .dyno-nav-item span {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+      .dyno-main-content,
+      .dyno-panes-wrapper {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+      }
+      .dyno-top-bar {
+        padding: 14px 16px !important;
+        border-radius: 16px !important;
+        margin-bottom: 14px !important;
+        gap: 12px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        box-sizing: border-box !important;
+      }
+      .dyno-top-bar > div:last-child {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .dyno-top-bar .btn {
+        flex: 1 1 auto !important;
+        justify-content: center !important;
+        padding: 9px 14px !important;
+        font-size: 0.82rem !important;
+        white-space: nowrap !important;
+      }
+      .dyno-active-title {
+        font-size: 1.28rem !important;
+        word-break: break-word !important;
+      }
+      .dyno-breadcrumbs {
+        font-size: 0.76rem !important;
+        word-break: break-word !important;
+      }
+      .dash-hero-header {
+        padding: 16px !important;
+        gap: 12px !important;
+        border-radius: 16px !important;
+        flex-wrap: wrap !important;
+        box-sizing: border-box !important;
+      }
+      .dash-server-title-text {
+        min-width: 0 !important;
+        flex: 1 1 180px !important;
+      }
+      .dash-server-title-name {
+        font-size: 1.32rem !important;
+        word-break: break-word !important;
+      }
+      .dash-server-subtitle {
+        font-size: 0.76rem !important;
+        line-height: 1.45 !important;
+        word-break: break-word !important;
+      }
+      .dash-section-card,
+      .panel-card,
+      .dyno-card-panel {
+        padding: 16px !important;
+        border-radius: 16px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .dash-server-info-grid,
+      .dyno-two-cols,
+      .config-grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .dyno-module-topbar,
+      .dyno-chat-top {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+      }
+      .dyno-chat-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+      }
+      #chat-channel-select {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+      }
+      .toast-box {
+        top: auto !important;
+        bottom: 22px !important;
+        left: 50% !important;
+        right: auto !important;
+        width: max-content !important;
+        max-width: calc(100vw - 32px) !important;
+        padding: 9px 18px !important;
+        border-radius: 999px !important;
+        font-size: 0.82rem !important;
+        gap: 8px !important;
+        transform: translate(-50%, 16px) !important;
+        z-index: 9999 !important;
+      }
+      .toast-box.show {
+        transform: translate(-50%, 0) !important;
       }
     }
 
@@ -7096,11 +7238,15 @@
       }[m]));
     }
 
+    let _toastTimer = null;
     function showToast(msg) {
       const toast = document.getElementById("toast-notification");
-      document.getElementById("toast-message").innerText = msg;
+      const msgEl = document.getElementById("toast-message");
+      if (!toast || !msgEl) return;
+      msgEl.innerText = msg;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3500);
+      if (_toastTimer) clearTimeout(_toastTimer);
+      _toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
     }
 
     const LG_GUILD_ID = "879006630241525791";
@@ -9411,7 +9557,7 @@
       const cmdCode = document.getElementById("sync-command-code");
       if (cmdCode) cmdCode.innerText = `/botnick nickname: ${configData.botNickname}`;
 
-      showToast("⏳ Đang lưu lên Cloud DB & đồng bộ 1-1 với Discord...", "info");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
 
       try {
         const res = await fetch(`${CLOUD_GATEWAY_API}/guild/${currentGuildId}/config`, {
@@ -9426,18 +9572,12 @@
         });
         const data = await res.json();
         if (res.ok && data.ok) {
-          const syncedParts = ["Cloud DB"];
-          if (data.discordSync && data.discordSync.nickname && data.discordSync.nickname.ok) syncedParts.push("Biệt danh Bot");
-          if (data.discordSync && data.discordSync.security && data.discordSync.security.ok) syncedParts.push("Bảo mật Discord");
-          showToast(`✓ Đồng bộ 1-1 thành công (${syncedParts.join(" + ")})!`, "success");
-          if (data.discordSync && data.discordSync.security && !data.discordSync.security.ok) {
-            showToast(`⚠️ Đã lưu DB, nhưng Discord từ chối đổi Security Level: ${data.discordSync.security.data?.message || "Thiếu quyền Manage Guild"}`, "warning");
-          }
+          showToast(activeLang === "vi" ? "✓ Đã lưu!" : "✓ Saved!");
         } else {
-          showToast(`⚠️ Đã lưu tạm local — lỗi Cloud Sync: ${data.error || res.status}`, "warning");
+          showToast(activeLang === "vi" ? "⚠️ Lưu lỗi, thử lại!" : "⚠️ Save failed");
         }
       } catch (err) {
-        showToast(`⚠️ Không kết nối được Cloud Gateway: ${err.message}`, "danger");
+        showToast(activeLang === "vi" ? "⚠️ Mất kết nối API" : "⚠️ API offline");
       }
 
       if (configData.webhookUrl && configData.webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
@@ -9746,12 +9886,12 @@
       if (dashNick) dashNick.value = nameVal;
       updateLiveBotPreview();
 
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       if (res.ok) {
-        showToast(`✓ Đã đổi biệt danh bot trên Discord thành "${nameVal}" thành công 100%! (${activeGatewayName})`, "success");
-        // Also persist full config in background
+        showToast(activeLang === "vi" ? "✓ Đã lưu!" : "✓ Saved!");
         saveAllServerSettingsAndSync(false);
       } else {
-        showToast(`❌ Không đổi được biệt danh trên Discord: ${res.error || "Bot thiếu quyền Change Nickname"}`, "danger");
+        showToast(activeLang === "vi" ? "⚠️ Không đổi được biệt danh" : "⚠️ Nickname update failed");
       }
 
       if (saveBtn) {
@@ -9770,9 +9910,29 @@
       const bans = Array.isArray(snapshot.bans) ? snapshot.bans : [];
       const automodList = Array.isArray(snapshot.discordAutomodRules) ? snapshot.discordAutomodRules : [];
 
-      // 1. Update live stat cards
+      // 1. Update live stat cards (Overview + Main Server Info hero)
+      const liveMemberCount = g.approximate_member_count || 0;
+      const liveVoiceCount = channels.filter(c => c.type === 2 || c.type === 13).length;
+      const liveCatCount = channels.filter(c => c.type === 4).length;
+      const liveTextCount = channels.filter(c => c.type === 0 || c.type === 5 || c.type === 15).length;
+
+      const dashMem = document.getElementById("stat-dash-members");
+      if (dashMem && liveMemberCount > 0) dashMem.textContent = liveMemberCount.toLocaleString();
+      const dashVc = document.getElementById("stat-dash-vc");
+      if (dashVc) dashVc.textContent = String(liveVoiceCount);
+      const dashCat = document.getElementById("stat-dash-cat");
+      if (dashCat) dashCat.textContent = String(liveCatCount);
+      const dashRoles = document.getElementById("stat-dash-roles");
+      if (dashRoles) dashRoles.textContent = String(roles.length);
+      const dashTc = document.getElementById("stat-dash-tc");
+      if (dashTc) dashTc.textContent = String(liveTextCount);
+      const heroTitle = document.getElementById("dash-server-title-name");
+      if (heroTitle && g.name) heroTitle.textContent = g.name;
+      const heroId = document.getElementById("dash-header-server-id");
+      if (heroId && g.id) heroId.textContent = g.id;
+
       const memEl = document.getElementById("live-sec-members");
-      if (memEl) memEl.textContent = `${(g.approximate_member_count || 0).toLocaleString()} thành viên`;
+      if (memEl) memEl.textContent = `${liveMemberCount.toLocaleString()} thành viên`;
       const onlEl = document.getElementById("live-sec-online");
       if (onlEl) onlEl.textContent = `🟢 ${(g.approximate_presence_count || 0).toLocaleString()} đang trực tuyến · Boost Lv.${g.premium_tier || 0}`;
 
