@@ -6346,6 +6346,88 @@
     animation: none !important;
     transform: none !important;
   }
+
+  /* Variables & Placeholders Guide Tab */
+  #cfg-pane-variables.active {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .var-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+  .var-cat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .var-cat-pill {
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
+    background: #101624;
+    color: #cbd5e1;
+    font-family: inherit;
+    font-size: 0.77rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease;
+  }
+  .var-cat-pill.active,
+  .var-cat-pill:hover {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.52);
+    color: #34d399;
+  }
+  .var-code-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 7px;
+    background: #111827;
+    border: 1.5px solid rgba(56, 189, 248, 0.36);
+    color: #38bdf8;
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .var-code-chip:hover {
+    background: rgba(56, 189, 248, 0.14);
+    border-color: rgba(56, 189, 248, 0.6);
+  }
+  .var-scope-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.71rem;
+    font-weight: 600;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #cbd5e1;
+    margin: 2px 4px 2px 0;
+    white-space: nowrap;
+  }
+  .var-preview-box {
+    margin-top: 10px;
+    padding: 13px 15px;
+    border-radius: 10px;
+    background: #0a0e16;
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
 </style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
@@ -7473,6 +7555,12 @@
       <!-- GROUP 4: SYSTEM & TOOLS -->
       <div class="dyno-nav-group">
         <div class="dyno-nav-heading" data-i18n="navGroupSystem">SYSTEM &amp; TOOLS</div>
+        <button class="dyno-nav-item" id="cfg-btn-variables" onclick="switchConfigTab('variables')">
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+            <span data-i18n="sideVariables">Variables ({...})</span>
+          </span>
+        </button>
         <button class="dyno-nav-item" id="cfg-btn-sim" onclick="switchConfigTab('sim')">
           <span class="nav-item-main">
             <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
@@ -9145,6 +9233,42 @@
       </div>
     </div>
 
+    <!-- TAB: VARIABLES & PLACEHOLDERS GUIDE -->
+    <div id="cfg-pane-variables" class="tab-pane">
+      <div class="panel-card">
+        <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 class="panel-title" id="var-guide-title">Variables &amp; Placeholders Reference</h3>
+            <p class="panel-subtitle" id="var-guide-sub">Click any variable tag to copy and paste directly into Welcome, Goodbye, Booster Perk, or Live Stats messages.</p>
+          </div>
+          <input type="text" id="var-search-input" class="form-input" placeholder="Search variables (e.g. user, server, random)..." oninput="renderVariablesGuide()" style="max-width:290px;">
+        </div>
+
+        <div class="var-filter-bar">
+          <div class="var-cat-pills" id="var-cat-pills"></div>
+        </div>
+
+        <div class="rr-table-wrap">
+          <table class="rr-table">
+            <thead id="var-table-head"></thead>
+            <tbody id="var-guide-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title" id="var-tester-title">Live Variable Preview Tester</h3>
+            <p class="panel-subtitle" id="var-tester-sub">Try typing a template with variables to preview exact Discord output before saving.</p>
+          </div>
+        </div>
+        <div id="var-quick-inserts" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"></div>
+        <textarea id="var-tester-input" class="form-input" rows="3" oninput="updateVariableLiveTester()">Chào mừng {user} đến với {server}! Thành viên thứ {ord:125} (Tổng: {member_count}) 🎉 Quà ngẫu nhiên: {random: 💎 Kim Cương ~ 🌸 Hoa Anh Đào ~ ⭐ Ngôi Sao}</textarea>
+        <div class="var-preview-box" id="var-tester-output"></div>
+      </div>
+    </div>
+
     <!-- TAB 7: SIMULATOR -->
         <div id="cfg-pane-sim" class="tab-pane">
       <div class="panel-card">
@@ -10270,6 +10394,7 @@
         "sideReactionRoles": "Reaction Roles",
         "sideWelcome": "Tin Nhắn Chào Mừng",
         "navGroupSystem": "HỆ THỐNG & CÔNG CỤ",
+        "sideVariables": "Biến Tự Động ({...})",
         "sideSimulator": "Giả Lập Bộ Lọc",
         "sideSync": "Đồng Bộ Discord Real-Time",
         "actionLogModuleTitle": "Action Log",
@@ -10593,6 +10718,7 @@
         "sideReactionRoles": "Reaction Roles",
         "sideWelcome": "Welcome & Goodbyes",
         "navGroupSystem": "SYSTEM & TOOLS",
+        "sideVariables": "Variables ({...})",
         "sideSimulator": "Live Filter Tester",
         "sideSync": "Discord Real-time Sync",
         "actionLogModuleTitle": "Action Log",
@@ -11187,6 +11313,7 @@
       if (typeof renderSanctionLadder === "function") renderSanctionLadder();
       if (typeof renderReactionRolesTable === "function") renderReactionRolesTable();
       if (typeof renderRoleManagementUI === "function") renderRoleManagementUI();
+      if (typeof renderVariablesGuide === "function") renderVariablesGuide();
       applyGlobalDomTranslation(activeLang);
 
       // Sync select dropdown in bot settings
@@ -11630,6 +11757,7 @@
       roles: "Quản lý Role & Quyền",
       reactionroles: "Reaction Roles",
       logs: "Action Log",
+      variables: "Danh Sách Biến Tự Động ({...})",
       sim: "Live Filter Tester",
       sync: "Đồng bộ Discord Real-time"
     };
@@ -11908,6 +12036,7 @@
       if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
       if (tabKey === "roles" && typeof renderRoleManagementUI === "function") renderRoleManagementUI();
       if (tabKey === "reactionroles" && typeof renderReactionRolesTable === "function") renderReactionRolesTable();
+      if (tabKey === "variables" && typeof renderVariablesGuide === "function") renderVariablesGuide();
       if (typeof applyGlobalDomTranslation === "function") applyGlobalDomTranslation(activeLang);
 
       // Stabilize viewport with ZERO vertical jitter
@@ -12876,6 +13005,7 @@
         roles: "Quản lý Role & Quyền",
         reactionroles: "Reaction Roles",
         welcome: "Chào mừng & Tự động gán quyền",
+        variables: "Danh Sách Biến Tự Động ({...})",
         sim: "Live Filter Tester",
         sync: "Đồng bộ Discord Real-time"
       },
@@ -12894,6 +13024,7 @@
         roles: "Role Management",
         reactionroles: "Reaction Roles",
         welcome: "Welcome & Goodbyes",
+        variables: "Variables & Placeholders ({...})",
         sim: "Live Filter Tester",
         sync: "Discord Real-time Sync"
       }
@@ -16909,6 +17040,341 @@
     }
 
     // =========================================================
+    // VARIABLES & PLACEHOLDERS REFERENCE + LIVE TESTER
+    // =========================================================
+    let activeVarCategory = "all";
+
+    const VARIABLES_CATALOG = [
+      {
+        cat: "member",
+        token: "{user}",
+        descVi: "Tag (mention) thành viên đó trên Discord (@username).",
+        descEn: "Mentions/tags the Discord member (@username).",
+        exVi: "@Haruki",
+        exEn: "@Haruki",
+        scopes: ["Welcome", "Goodbye", "Booster Perk"]
+      },
+      {
+        cat: "member",
+        token: "{mention}",
+        descVi: "Biệt danh alias chuẩn để tag thành viên (@username).",
+        descEn: "Standard alias to ping/mention the member (@username).",
+        exVi: "@Haruki",
+        exEn: "@Haruki",
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "member",
+        token: "{username}",
+        descVi: "Tên tài khoản Discord thuần (không phát thông báo ping).",
+        descEn: "Plain Discord username without pinging the user.",
+        exVi: "haruki_kino",
+        exEn: "haruki_kino",
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "member",
+        token: "{display_name}",
+        descVi: "Tên hiển thị (Nickname trong server hoặc Global Name).",
+        descEn: "Member's server nickname or global display name.",
+        exVi: "It's Haru",
+        exEn: "It's Haru",
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "member",
+        token: "{user(proper)}",
+        descVi: "Tên người dùng đầy đủ (Tag Discord).",
+        descEn: "Full Discord user tag.",
+        exVi: "haruki_kino",
+        exEn: "haruki_kino",
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "member",
+        token: "{user(id)}",
+        descVi: "ID số duy nhất của thành viên (cũng hỗ trợ {user_id}).",
+        descEn: "Numeric Discord User ID (also supports {user_id}).",
+        exVi: "1028500296059596961",
+        exEn: "1028500296059596961",
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "server",
+        token: "{server}",
+        descVi: "Tên máy chủ Discord hiện tại.",
+        descEn: "Current Discord server name.",
+        exFn: () => (document.getElementById("dash-server-title-name")?.textContent?.trim() || "Garden Of Dream"),
+        scopes: ["Welcome", "Goodbye", "Booster Perk", "Triggers"]
+      },
+      {
+        cat: "server",
+        token: "{member_count}",
+        descVi: "Tổng số thành viên trong máy chủ (cũng hỗ trợ {server(members)}).",
+        descEn: "Total server member count (also supports {server(members)}).",
+        exFn: () => (document.getElementById("stat-dash-members")?.textContent?.trim() || "268"),
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "server",
+        token: "{server(id)}",
+        descVi: "ID máy chủ Discord (cũng hỗ trợ {server_id}).",
+        descEn: "Numeric Discord Server ID (also supports {server_id}).",
+        exFn: () => (currentGuildId || "1426554369393954969"),
+        scopes: ["Welcome", "Goodbye", "Triggers"]
+      },
+      {
+        cat: "server",
+        token: "{boost_count}",
+        descVi: "Tổng số lượt Boost của máy chủ hiện tại.",
+        descEn: "Total active Server Boost count.",
+        exVi: "14",
+        exEn: "14",
+        scopes: ["Welcome", "Booster Perk", "Triggers"]
+      },
+      {
+        cat: "server",
+        token: "{boost_level}",
+        descVi: "Cấp độ Boost hiện tại của server (0, 1, 2 hoặc 3).",
+        descEn: "Current server Boost tier level (0, 1, 2, or 3).",
+        exVi: "3",
+        exEn: "3",
+        scopes: ["Welcome", "Booster Perk", "Triggers"]
+      },
+      {
+        cat: "role",
+        token: "{role}",
+        descVi: "Tag vai trò VIP được thưởng cho người Boost server.",
+        descEn: "Mentions the Booster Perk reward role configured in Role Management.",
+        exVi: "@Booster VIP",
+        exEn: "@Booster VIP",
+        scopes: ["Booster Perk"]
+      },
+      {
+        cat: "dynamic",
+        token: "{date}",
+        descVi: "Ngày hiện tại theo múi giờ máy chủ (Việt Nam GMT+7 hoặc múi giờ Stats).",
+        descEn: "Current formatted date in server timezone.",
+        exFn: () => new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }),
+        scopes: ["Welcome", "Goodbye", "Live Stats"]
+      },
+      {
+        cat: "dynamic",
+        token: "{time}",
+        descVi: "Giờ hiện tại (HH:MM).",
+        descEn: "Current clock time (HH:MM).",
+        exFn: () => new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }),
+        scopes: ["Welcome", "Goodbye", "Live Stats"]
+      },
+      {
+        cat: "dynamic",
+        token: "{ord:125}",
+        descVi: "Đổi số bất kỳ thành dạng số thứ tự tiếng Anh (1st, 2nd, 3rd, 125th...).",
+        descEn: "Converts a number to its English ordinal form (1st, 2nd, 3rd, 125th...).",
+        exVi: "125th",
+        exEn: "125th",
+        scopes: ["Welcome", "Triggers"]
+      },
+      {
+        cat: "dynamic",
+        token: "{random: A ~ B ~ C}",
+        descVi: "Chọn ngẫu nhiên 1 mục ngăn cách bằng dấu ~, hoặc số ngẫu nhiên dạng {random: 1 ~ 100}.",
+        descEn: "Picks one random item separated by ~, or a random integer via {random: 1 ~ 100}.",
+        exVi: "🌸 B",
+        exEn: "🌸 B",
+        scopes: ["Welcome", "Triggers"]
+      },
+      {
+        cat: "stats",
+        token: "{count}",
+        descVi: "Tổng số thành viên hiển thị trên tên kênh Live Stats Voice.",
+        descEn: "Total server members for Live Stats voice channel names.",
+        exFn: () => (document.getElementById("stat-dash-members")?.textContent?.trim() || "268"),
+        scopes: ["Live Stats"]
+      },
+      {
+        cat: "stats",
+        token: "{online} / {idle} / {dnd}",
+        descVi: "Số thành viên đang Online, Chờ (Idle) hoặc Không làm phiền (DND).",
+        descEn: "Member counts by presence: Online, Idle, or Do Not Disturb.",
+        exVi: "42 / 14 / 8",
+        exEn: "42 / 14 / 8",
+        scopes: ["Live Stats"]
+      },
+      {
+        cat: "stats",
+        token: "{goal} / {boosts} / {vc} / {channels} / {roles}",
+        descVi: "Mục tiêu thành viên, số Boost, số người đang thoại, tổng kênh và tổng Role.",
+        descEn: "Member goal, boost count, active voice members, total channels, and total roles.",
+        exVi: "300 / 14 / 5 / 48 / 65",
+        exEn: "300 / 14 / 5 / 48 / 65",
+        scopes: ["Live Stats"]
+      }
+    ];
+
+    function filterVariablesCategory(cat) {
+      activeVarCategory = cat;
+      renderVariablesGuide();
+    }
+
+    function copyVariableToken(token) {
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(token).then(() => {
+          showToast(activeLang === "vi" ? `Đã sao chép biến: ${token}` : `Copied variable: ${token}`, "success");
+        }).catch(() => {
+          showToast(token);
+        });
+      } else {
+        showToast(token);
+      }
+    }
+
+    function insertVariableToTester(token) {
+      const inp = document.getElementById("var-tester-input");
+      if (!inp) return;
+      inp.value = (inp.value ? inp.value + " " : "") + token;
+      updateVariableLiveTester();
+      copyVariableToken(token);
+    }
+
+    function updateVariableLiveTester() {
+      const inp = document.getElementById("var-tester-input");
+      const out = document.getElementById("var-tester-output");
+      if (!inp || !out) return;
+
+      const serverName = document.getElementById("dash-server-title-name")?.textContent?.trim() || "Garden Of Dream";
+      const memberCount = document.getElementById("stat-dash-members")?.textContent?.trim() || "268";
+      const guildId = currentGuildId || "1426554369393954969";
+      const userId = (typeof currentUser !== "undefined" && currentUser?.id) ? currentUser.id : "1028500296059596961";
+      const username = (typeof currentUser !== "undefined" && currentUser?.username) ? currentUser.username : "haruki_kino";
+      const displayName = (typeof currentUser !== "undefined" && (currentUser?.global_name || currentUser?.username)) ? (currentUser.global_name || currentUser.username) : "It's Haru";
+
+      let txt = inp.value || "";
+      txt = txt.replace(/\{mention\}/gi, `@${username}`);
+      txt = txt.replace(/\{user\}/gi, `@${username}`);
+      txt = txt.replace(/\{username\}/gi, username);
+      txt = txt.replace(/\{display_name\}/gi, displayName);
+      txt = txt.replace(/\{user\(proper\)\}/gi, username);
+      txt = txt.replace(/\{user\(id\)\}|\{user_id\}/gi, userId);
+      txt = txt.replace(/\{server\}/gi, serverName);
+      txt = txt.replace(/\{server\(id\)\}|\{server_id\}/gi, guildId);
+      txt = txt.replace(/\{member_count\}|\{server\(members\)\}|\{count\}/gi, memberCount);
+      txt = txt.replace(/\{boost_count\}|\{boosts\}/gi, "14");
+      txt = txt.replace(/\{boost_level\}/gi, "3");
+      txt = txt.replace(/\{role\}/gi, "@Booster VIP");
+      txt = txt.replace(/\{date\}/gi, new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }));
+      txt = txt.replace(/\{time\}/gi, new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }));
+      txt = txt.replace(/\{ord:(\d+)\}/gi, (_, nStr) => {
+        const n = parseInt(nStr, 10);
+        const j = n % 10, k = n % 100;
+        if (j === 1 && k !== 11) return `${n}st`;
+        if (j === 2 && k !== 12) return `${n}nd`;
+        if (j === 3 && k !== 13) return `${n}rd`;
+        return `${n}th`;
+      });
+      txt = txt.replace(/\{random:\s*([^}]+)\}/gi, (_, body) => {
+        const parts = body.split("~").map(s => s.trim()).filter(Boolean);
+        if (parts.length >= 2) {
+          const min = parseInt(parts[0], 10);
+          const max = parseInt(parts[1], 10);
+          if (!isNaN(min) && !isNaN(max) && parts.length === 2) {
+            const lo = Math.min(min, max), hi = Math.max(min, max);
+            return String(Math.floor(Math.random() * (hi - lo + 1)) + lo);
+          }
+          return parts[Math.floor(Math.random() * parts.length)];
+        }
+        return body;
+      });
+      out.textContent = txt || "—";
+    }
+
+    function renderVariablesGuide() {
+      const lang = (localStorage.getItem("haruki_dash_lang") === "vi") ? "vi" : "en";
+      const isVi = lang === "vi";
+
+      const titleEl = document.getElementById("var-guide-title");
+      const subEl = document.getElementById("var-guide-sub");
+      const searchEl = document.getElementById("var-search-input");
+      const testerTitle = document.getElementById("var-tester-title");
+      const testerSub = document.getElementById("var-tester-sub");
+      if (titleEl) titleEl.textContent = isVi ? "Bảng Tra Cứu Tất Cả Biến Tự Động ({...})" : "Variables & Placeholders Reference";
+      if (subEl) subEl.textContent = isVi
+        ? "Bấm vào từng thẻ biến để sao chép nhanh rồi dán vào Welcome, Goodbye, Quà Booster hoặc Live Stats."
+        : "Click any variable tag to copy and paste directly into Welcome, Goodbye, Booster Perk, or Live Stats messages.";
+      if (searchEl) searchEl.placeholder = isVi ? "Tìm biến (VD: user, server, random)..." : "Search variables (e.g. user, server, random)...";
+      if (testerTitle) testerTitle.textContent = isVi ? "Thử Nghiệm Ghép Biến Trực Tiếp" : "Live Variable Preview Tester";
+      if (testerSub) testerSub.textContent = isVi
+        ? "Nhập mẫu tin nhắn có chứa biến để xem trước kết quả hiển thị thực tế trước khi lưu."
+        : "Try typing a template with variables to preview exact Discord output before saving.";
+
+      const cats = [
+        { id: "all", vi: "Tất cả", en: "All" },
+        { id: "member", vi: "Thành viên (User)", en: "Member / User" },
+        { id: "server", vi: "Máy chủ (Server)", en: "Server" },
+        { id: "role", vi: "Role & Boost", en: "Role & Boost" },
+        { id: "dynamic", vi: "Thời gian & Ngẫu nhiên", en: "Dynamic & Time" },
+        { id: "stats", vi: "Live Stats (Kênh Thoại)", en: "Live Stats" }
+      ];
+      const pillsBox = document.getElementById("var-cat-pills");
+      if (pillsBox) {
+        pillsBox.innerHTML = cats.map(c =>
+          `<button type="button" class="var-cat-pill ${activeVarCategory === c.id ? "active" : ""}" onclick="filterVariablesCategory('${c.id}')">${isVi ? c.vi : c.en}</button>`
+        ).join("");
+      }
+
+      const thead = document.getElementById("var-table-head");
+      if (thead) {
+        thead.innerHTML = `<tr>
+          <th>${isVi ? "Biến (Bấm để Copy)" : "Variable (Click to Copy)"}</th>
+          <th>${isVi ? "Ý nghĩa & Cách dùng" : "Meaning & Usage"}</th>
+          <th>${isVi ? "Ví dụ kết quả" : "Example Output"}</th>
+          <th>${isVi ? "Dùng ở đâu" : "Supported In"}</th>
+          <th style="text-align:right;">${isVi ? "Thao tác" : "Action"}</th>
+        </tr>`;
+      }
+
+      const q = (searchEl?.value || "").trim().toLowerCase();
+      const filtered = VARIABLES_CATALOG.filter(v => {
+        if (activeVarCategory !== "all" && v.cat !== activeVarCategory) return false;
+        if (!q) return true;
+        return v.token.toLowerCase().includes(q) || v.descVi.toLowerCase().includes(q) || v.descEn.toLowerCase().includes(q) || v.scopes.join(" ").toLowerCase().includes(q);
+      });
+
+      const tbody = document.getElementById("var-guide-tbody");
+      if (tbody) {
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#64748b;">${isVi ? "Không tìm thấy biến phù hợp." : "No matching variables found."}</td></tr>`;
+        } else {
+          tbody.innerHTML = filtered.map(v => {
+            const desc = isVi ? v.descVi : v.descEn;
+            const exVal = v.exFn ? v.exFn() : (isVi ? v.exVi : v.exEn);
+            const badges = v.scopes.map(s => `<span class="var-scope-badge">${escapeHtml(s)}</span>`).join("");
+            const escTok = escapeHtml(v.token).replace(/'/g, "&#39;");
+            return `<tr>
+              <td><button type="button" class="var-code-chip" onclick="copyVariableToken('${escTok}')" title="Copy">${escapeHtml(v.token)}</button></td>
+              <td style="color:#e2e8f0;line-height:1.45;">${escapeHtml(desc)}</td>
+              <td><code style="font-size:0.78rem;color:#34d399;background:rgba(16,185,129,0.1);padding:3px 8px;border-radius:6px;">${escapeHtml(exVal)}</code></td>
+              <td>${badges}</td>
+              <td style="text-align:right;white-space:nowrap;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="copyVariableToken('${escTok}')" style="padding:5px 11px;">${isVi ? "Copy" : "Copy"}</button>
+              </td>
+            </tr>`;
+          }).join("");
+        }
+      }
+
+      const quickBox = document.getElementById("var-quick-inserts");
+      if (quickBox) {
+        const quickList = ["{user}", "{username}", "{server}", "{member_count}", "{role}", "{date}", "{time}", "{ord:100}", "{random: A ~ B}"];
+        quickBox.innerHTML = quickList.map(tk =>
+          `<button type="button" class="var-code-chip" onclick="insertVariableToTester('${escapeHtml(tk)}')">+ ${escapeHtml(tk)}</button>`
+        ).join("");
+      }
+      updateVariableLiveTester();
+    }
+
+    // =========================================================
     // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
@@ -16933,6 +17399,9 @@
       }
       if (typeof renderRoleManagementUI === "function") {
         renderRoleManagementUI();
+      }
+      if (typeof renderVariablesGuide === "function") {
+        renderVariablesGuide();
       }
       if (typeof renderStatsBuilder === "function") {
         renderStatsBuilder();
