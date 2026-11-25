@@ -5423,6 +5423,450 @@
     border-color: rgba(255, 255, 255, 0.24);
   }
 </style>
+<style id="haru-minimal-polish">
+  /* De-AI Clean Minimal Theme & Unified Controls */
+  #cyber-canvas,
+  .ambient-glow,
+  .bg-grid-pattern {
+    display: none !important;
+  }
+  body {
+    background: #090c12 !important;
+  }
+  .panel-card,
+  .config-card,
+  .dash-section-card,
+  .dyno-card-panel,
+  .dyno-rule-card,
+  .dyno-events-cat,
+  .dyno-opts-row,
+  .dyno-sidebar {
+    box-shadow: none !important;
+  }
+  .panel-card,
+  .config-card,
+  .dash-section-card {
+    background: #0d111a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+  }
+  .dyno-sidebar {
+    background: #0b0e16 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+  }
+  .dyno-nav-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    border-radius: 9px !important;
+    padding: 9px 11px !important;
+    font-weight: 500 !important;
+  }
+  .dyno-nav-item.active {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+    box-shadow: none !important;
+  }
+  .nav-item-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+  }
+  .nav-item-main span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nav-status-pill {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+  .nav-status-pill.is-on {
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.28);
+  }
+  .nav-status-pill.is-off {
+    background: rgba(148, 163, 184, 0.08);
+    color: #64748b;
+    border-color: rgba(148, 163, 184, 0.16);
+  }
+
+  /* Fix Square / Misaligned Buttons & Card Headers */
+  .config-card-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    margin-bottom: 18px !important;
+  }
+  .config-card-icon {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-crimson,
+  .btn-emerald,
+  .btn-emerald-solid {
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    line-height: 1.2 !important;
+    font-weight: 600 !important;
+    padding: 9px 15px !important;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+  }
+  .btn-secondary {
+    background: #141a27 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #cbd5e1 !important;
+  }
+  .btn-secondary:hover {
+    background: #1a2232 !important;
+    border-color: rgba(255, 255, 255, 0.24) !important;
+    color: #ffffff !important;
+  }
+  .btn-crimson,
+  .btn-primary {
+    background: #e11d48 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+  }
+  .btn-crimson:hover,
+  .btn-primary:hover {
+    background: #f43f5e !important;
+  }
+  .btn-emerald,
+  .btn-emerald-solid {
+    background: #10b981 !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    color: #042217 !important;
+    font-weight: 700 !important;
+  }
+  .btn-emerald:hover,
+  .btn-emerald-solid:hover {
+    background: #34d399 !important;
+  }
+
+  .slowmode-preset-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+  .slowmode-preset-btn {
+    padding: 6px 13px;
+    border-radius: 8px;
+    background: #121723;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+  }
+  .slowmode-preset-btn:hover {
+    background: #192132;
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+  .slowmode-preset-btn.is-active {
+    background: rgba(16, 185, 129, 0.16);
+    border-color: rgba(16, 185, 129, 0.45);
+    color: #34d399;
+  }
+
+  /* Carl-bot Style Clean Custom Filter Cards (AutoMod, Honeypot, Ladder) */
+  .am-whitelist-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+    padding: 14px;
+    border-radius: 11px;
+    background: #0a0e16;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  @media (max-width: 780px) {
+    .am-whitelist-bar {
+      grid-template-columns: 1fr;
+    }
+  }
+  .am-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .am-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .am-card {
+    background: #0a0e16;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s ease;
+  }
+  .am-card.is-enabled {
+    border-color: rgba(16, 185, 129, 0.28);
+  }
+  .am-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .am-card-head-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+  }
+  .am-card-head-left svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: #94a3b8;
+    flex-shrink: 0;
+  }
+  .am-card-slug {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #94a3b8;
+  }
+  .am-card-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+  .am-card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+  .am-card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .am-card-title {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+  .am-state-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .am-state-pill.on {
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .am-state-pill.off {
+    background: rgba(148, 163, 184, 0.1);
+    color: #64748b;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+  .am-field-desc {
+    margin: 0;
+    font-size: 0.76rem;
+    color: #64748b;
+    line-height: 1.45;
+  }
+  .am-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+  .am-tag-box {
+    background: #0d121f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .am-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .am-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: #172033;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+  .am-tag-chip button {
+    border: none;
+    background: none;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+  }
+  .am-tag-chip button:hover {
+    color: #f87171;
+  }
+  .am-inline-add {
+    display: flex;
+    gap: 7px;
+  }
+  .am-inline-add input {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 7px;
+    background: #090d16;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    color: #f1f5f9;
+    font-size: 0.8rem;
+    outline: none;
+  }
+  .am-inline-add input:focus {
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+  .am-inline-add-btn {
+    padding: 7px 12px;
+    border-radius: 7px;
+    background: #161e2e;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .am-inline-add-btn:hover {
+    background: #1f2a40;
+  }
+  .am-unit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 560px) {
+    .am-unit-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .am-unit-group {
+    display: flex;
+    align-items: stretch;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background: #0d121f;
+  }
+  .am-unit-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    color: #f1f5f9;
+    font-size: 0.84rem;
+    font-weight: 600;
+    outline: none;
+  }
+  .am-unit-suffix {
+    padding: 8px 11px;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    font-size: 0.76rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .am-card-foot {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.015);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .am-save-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    background: #10b981;
+    color: #042217;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.14s ease;
+  }
+  .am-save-btn:hover {
+    background: #34d399;
+  }
+
+  .ladder-stage-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 140px auto;
+    gap: 10px;
+    align-items: center;
+    padding: 11px 14px;
+    border-radius: 10px;
+    background: #0a0e16;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  @media (max-width: 720px) {
+    .ladder-stage-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
     .dash-topbar {
@@ -5887,7 +6331,7 @@
       
       <div class="hero-trust-bar" data-i18n="heroTrust">
         <span class="trust-pill"><span class="trust-dot"></span>Secret Honeypot Traps</span>
-        <span class="trust-pill"><span class="trust-dot"></span>36 Action Logs</span>
+        <span class="trust-pill"><span class="trust-dot"></span>Action Log</span>
         <span class="trust-pill"><span class="trust-dot"></span>Multi-Tier Anti-Phishing</span>
       </div>
 
@@ -5978,7 +6422,7 @@
               </div>
               <div class="mockup-item" id="mockup-tab-logs" onclick="switchMockupTab('logs')">
                 <svg class="mockup-ico ico-logs" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                <span data-i18n="mockTabLogs">36 Action Logs</span>
+                <span data-i18n="mockTabLogs">Action Log</span>
               </div>
               <div class="mockup-item" id="mockup-tab-ladder" onclick="switchMockupTab('ladder')">
                 <svg class="mockup-ico ico-ladder" viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm-4.5 9l-4 7h9l-5-7zm10 0l-5 7h9l-4-7zm-4.5 9h-2v2h2v-2z"/></svg>
@@ -6436,83 +6880,122 @@
       <div class="dyno-nav-group">
         <div class="dyno-nav-heading" data-i18n="navGroupGeneral">GENERAL</div>
         <button class="dyno-nav-item active" id="cfg-btn-dashboard" onclick="switchConfigTab('dashboard')">
-          <svg style="width:17px;height:17px;" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-          <span data-i18n="sideDashboard">Server Dashboard</span>
+          <span class="nav-item-main">
+            <svg style="width:17px;height:17px;" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            <span data-i18n="sideDashboard">Server Dashboard</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-identity" onclick="switchConfigTab('identity')">
-          <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.72V7h2a5 5 0 0 1 5 5v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0V12a3 3 0 0 0-3-3h-2v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V9H8a3 3 0 0 0-3 3v4a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V12a5 5 0 0 1 5-5h2V5.72c-.6-.34-1-.98-1-1.72a2 2 0 0 1 2-2zm-3 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
-          <span data-i18n="sideIdentity">Bot Identity & Nickname</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.72V7h2a5 5 0 0 1 5 5v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0V12a3 3 0 0 0-3-3h-2v2.28c.6.34 1 .98 1 1.72a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V9H8a3 3 0 0 0-3 3v4a2 2 0 1 1-4 0c0-.74.4-1.38 1-1.72V12a5 5 0 0 1 5-5h2V5.72c-.6-.34-1-.98-1-1.72a2 2 0 0 1 2-2zm-3 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
+            <span data-i18n="sideIdentity">Bot Identity &amp; Nickname</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-overview" onclick="switchConfigTab('overview')">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          <span data-i18n="sideOverview">Security Overview</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            <span data-i18n="sideOverview">Security Overview</span>
+          </span>
         </button>
       </div>
 
-      <!-- GROUP 2: MODERATION (MATCHING USER SCREENSHOT media_1795493741656_22d4de5f.png) -->
+      <!-- GROUP 2: MODERATION -->
       <div class="dyno-nav-group">
         <div class="dyno-nav-heading" data-i18n="navGroupMod">MODERATION</div>
         <button class="dyno-nav-item" id="cfg-btn-logs" onclick="switchConfigTab('logs')">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          <span data-i18n="sideActionLog">Action Log</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span data-i18n="sideActionLog">Action Log</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-logs">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-channels" onclick="switchConfigTab('channels')">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-          <span data-i18n="sideAutoDeletePurge">Auto Delete & Purge</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            <span data-i18n="sideAutoDeletePurge">Auto Delete &amp; Purge</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-channels">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-autoban" onclick="switchConfigTab('autoban')">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/></svg>
-          <span data-i18n="sideAutoban">Autoban</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/></svg>
+            <span data-i18n="sideAutoban">Autoban</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-autoban">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-automod" onclick="switchConfigTab('automod')">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-          <span data-i18n="sideAutomod">Automod</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <span data-i18n="sideAutomod">Automod</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-automod">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-members" onclick="switchConfigTab('members')">
-          <svg viewBox="0 0 24 24"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm-4 6c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          <span data-i18n="sideModeration">Moderation</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm-4 6c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span data-i18n="sideModeration">Moderation</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-slowmode" onclick="switchConfigTab('slowmode')">
-          <svg viewBox="0 0 24 24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zM12 11.5l-4-4V4h8v3.5l-4 4z"/></svg>
-          <span data-i18n="sideSlowmode">Slowmode & Lockdown</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zM12 11.5l-4-4V4h8v3.5l-4 4z"/></svg>
+            <span data-i18n="sideSlowmode">Slowmode &amp; Lockdown</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-chat" onclick="switchConfigTab('chat')">
-          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-          <span data-i18n="sideLiveChat">Live Channel Chat</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+            <span data-i18n="sideLiveChat">Live Channel Chat</span>
+          </span>
         </button>
       </div>
 
       <!-- GROUP 3: DEFENSE & ROLES -->
       <div class="dyno-nav-group">
-        <div class="dyno-nav-heading" data-i18n="navGroupDefense">DEFENSE & ROLES</div>
+        <div class="dyno-nav-heading" data-i18n="navGroupDefense">DEFENSE &amp; ROLES</div>
         <button class="dyno-nav-item" id="cfg-btn-honeypot" onclick="switchConfigTab('honeypot')">
-          <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>
-          <span data-i18n="sideHoneypot">Honeypot & Anti-Raid</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>
+            <span data-i18n="sideHoneypot">Honeypot &amp; Anti-Raid</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-honeypot">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-cases" onclick="switchConfigTab('cases')">
-          <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm-4.5 9l-4 7h9l-5-7zm10 0l-5 7h9l-4-7zm-4.5 9h-2v2h2v-2z"/></svg>
-          <span data-i18n="sideLadder">Sanction Ladder</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm-4.5 9l-4 7h9l-5-7zm10 0l-5 7h9l-4-7zm-4.5 9h-2v2h2v-2z"/></svg>
+            <span data-i18n="sideLadder">Sanction Ladder</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-cases">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-roles" onclick="switchConfigTab('roles')">
-          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-          <span data-i18n="sideRoles">Role Management</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <span data-i18n="sideRoles">Role Management</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-welcome" onclick="switchConfigTab('welcome')">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          <span data-i18n="sideWelcome">Welcome & Goodbyes</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <span data-i18n="sideWelcome">Welcome &amp; Goodbyes</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-welcome">OFF</span>
         </button>
       </div>
 
       <!-- GROUP 4: SYSTEM & TOOLS -->
       <div class="dyno-nav-group">
-        <div class="dyno-nav-heading" data-i18n="navGroupSystem">SYSTEM & TOOLS</div>
+        <div class="dyno-nav-heading" data-i18n="navGroupSystem">SYSTEM &amp; TOOLS</div>
         <button class="dyno-nav-item" id="cfg-btn-sim" onclick="switchConfigTab('sim')">
-          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-          <span data-i18n="sideSimulator">Live Filter Tester</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            <span data-i18n="sideSimulator">Live Filter Tester</span>
+          </span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-sync" onclick="switchConfigTab('sync')">
-          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-          <span data-i18n="sideSync">Discord Real-time Sync</span>
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+            <span data-i18n="sideSync">Discord Real-time Sync</span>
+          </span>
         </button>
       </div>
     </aside>
@@ -7191,7 +7674,7 @@
               <div class="switch-title" data-i18n="swAutoModTitle">Auto-Mod Phishing & Scam</div>
               <div class="switch-desc" data-i18n="swAutoModDesc">Auto-deletes fake Nitro links and bans compromised raid accounts</div>
             </div>
-            <input type="checkbox" id="cfg-automod-active" checked onchange="triggerUnsaved()" style="display:none;">
+            <input type="checkbox" id="cfg-automod-active" onchange="handleQuickShieldToggle('automod', this.checked)" style="display:none;">
             <div class="switch-toggle"></div>
           </label>
 
@@ -7200,7 +7683,7 @@
               <div class="switch-title" data-i18n="swHoneypotTitle">Honeypot Bait Channel</div>
               <div class="switch-desc" data-i18n="swHoneypotDesc">Hidden channel trap: raid bots typing here get instantly perm-banned</div>
             </div>
-            <input type="checkbox" id="cfg-honeypot-active" checked onchange="triggerUnsaved()" style="display:none;">
+            <input type="checkbox" id="cfg-honeypot-active" onchange="handleQuickShieldToggle('honeypot', this.checked)" style="display:none;">
             <div class="switch-toggle"></div>
           </label>
 
@@ -7209,7 +7692,7 @@
               <div class="switch-title" data-i18n="swAntiWizzTitle">Staff Anti-Wizz Monitor</div>
               <div class="switch-desc" data-i18n="swAntiWizzDesc">Detects hacked staff deleting channels or performing mass bans</div>
             </div>
-            <input type="checkbox" id="cfg-antiwizz-active" checked onchange="triggerUnsaved()" style="display:none;">
+            <input type="checkbox" id="cfg-antiwizz-active" onchange="handleQuickShieldToggle('antinuke', this.checked)" style="display:none;">
             <div class="switch-toggle"></div>
           </label>
 
@@ -7218,112 +7701,174 @@
               <div class="switch-title" data-i18n="swFileBlockTitle">Dangerous File Blocker (.exe, .bat)</div>
               <div class="switch-desc" data-i18n="swFileBlockDesc">Prevents attachments containing token grabbers and malicious malware</div>
             </div>
-            <input type="checkbox" id="cfg-fileblock-active" checked onchange="triggerUnsaved()" style="display:none;">
+            <input type="checkbox" id="cfg-fileblock-active" onchange="handleQuickShieldToggle('files', this.checked)" style="display:none;">
             <div class="switch-toggle"></div>
           </label>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: AUTOMOD -->
-        <!-- TAB: AUTOMOD (IMAGES 5, 6, 7) -->
+    <!-- TAB 2: AUTOMOD (CARL-BOT CLEAR CARDS - ALL OFF BY DEFAULT) -->
     <div id="cfg-pane-automod" class="tab-pane">
-      <div class="panel-card" style="padding:26px;">
-        <!-- Topbar -->
+      <div class="panel-card" style="padding:24px;">
         <div class="dyno-module-topbar">
           <div class="dyno-module-title-wrap">
             <div class="dyno-module-crumbs">
               <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
               <span class="dyno-module-crumb-slash">/</span>
               <span data-i18n="automodModuleTitle">Automod</span>
-              <span class="dyno-help-ico" title="Deep real-time message filtering, anti-spam and policy enforcement">?</span>
             </div>
           </div>
           <div class="dyno-module-toggle">
             <span data-i18n="moduleEnabled">Enable Module</span>
             <label class="dyno-switch">
-              <input type="checkbox" id="cfg-switch-automod" checked onchange="triggerUnsaved()">
+              <input type="checkbox" id="cfg-switch-automod" onchange="handleModuleToggleChange()">
               <span class="dyno-switch-slider"></span>
             </label>
           </div>
         </div>
 
-        <!-- Action Bar -->
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <button class="btn-crimson" onclick="openAutomodRuleModal()">
-              <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-              <span data-i18n="btnCreateRule">Create Rule</span>
-            </button>
-            <button class="btn-secondary" onclick="openAutomodDefaultModal()">
-              <svg style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-              <span data-i18n="btnManageDefaultSettings">Manage Default Settings</span>
-            </button>
+        <p style="margin:0 0 14px 0;font-size:0.8rem;color:#94a3b8;">Tất cả bộ lọc mặc định đều TẮT. Chỉ khi moderator bật từng thẻ và chỉnh hình phạt / ngưỡng xử lý thì bot mới kích hoạt.</p>
+
+        <!-- Global Automod Whitelist Bar -->
+        <div class="am-whitelist-bar">
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Kênh miễn trừ AutoMod (Ignored Channels)</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap" id="am-global-ignored-channels-tags"></div>
+              <select id="am-global-add-ch" class="form-input" onchange="addAutomodGlobalIgnore('channels', this.value); this.value='';">
+                <option value="">+ Thêm kênh bỏ qua...</option>
+              </select>
+            </div>
           </div>
-          <div style="width:100%;max-width:280px;">
-            <input type="text" class="form-input" id="search-automod-rules" placeholder="Search rules..." oninput="filterAutomodRules(this.value)">
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Vai trò miễn trừ AutoMod (Ignored Roles)</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap" id="am-global-ignored-roles-tags"></div>
+              <select id="am-global-add-role" class="form-input" onchange="addAutomodGlobalIgnore('roles', this.value); this.value='';">
+                <option value="">+ Thêm vai trò bỏ qua...</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <!-- Rules List -->
-        <div id="automod-rules-list" class="dyno-rules-container">
-          <!-- Dynamically populated -->
-        </div>
+        <!-- 8 Detailed Carl-bot style Filter Cards -->
+        <div id="automod-cards-grid" class="am-card-grid"></div>
       </div>
     </div>
 
-    <!-- TAB 3: HONEYPOT -->
+    <!-- TAB 3: HONEYPOT & ANTI-NUKE (SEPARATED CLEANLY, DEFAULT OFF) -->
     <div id="cfg-pane-honeypot" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="honeypotTitle">Honeypot Trap Channel</h3>
-            <p class="panel-subtitle" data-i18n="honeypotSub">A hidden bait channel legitimate users never type in. Any bot or raid account messaging here gets INSTANTLY PERM-BANNED.</p>
+      <!-- Card 1: Dedicated Honeypot Config -->
+      <div class="panel-card" style="padding:24px;margin-bottom:18px;">
+        <div class="dyno-module-topbar" style="margin-bottom:16px;">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span>Honeypot</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span>Enable Honeypot</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-honeypot" onchange="syncHoneypotEnableToggle(this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
           </div>
         </div>
-        <div class="config-grid-2">
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblHoneypotChannel">Select Honeypot Bait Channel:</label>
-            <select class="select-field" id="cfg-honeypot-channel" onchange="triggerUnsaved()">
-              <option value="honeypot-trap"># honeypot-trap (Recommended)</option>
-              <option value="bait-chat"># bait-chat</option>
-              <option value="welcome-bot"># verify-trap</option>
-            </select>
+
+        <h3 style="margin:0 0 6px 0;font-size:1.12rem;font-weight:700;color:#f1f5f9;" data-i18n="honeypotTitle">Honeypot Trap Channels</h3>
+        <p style="margin:0 0 18px 0;font-size:0.8rem;color:#94a3b8;" data-i18n="honeypotSub">Users sending messages in these bait channels will automatically trigger the configured punishments.</p>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;" data-i18n="lblHoneypotChannel">Honeypot Channels</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap" id="hp-channels-tags"></div>
+              <select id="hp-add-channel" class="form-input" onchange="addHoneypotChannel(this.value); this.value='';">
+                <option value="">+ Select a bait channel...</option>
+              </select>
+            </div>
           </div>
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblHoneypotAction">Sanction on Trap Trigger:</label>
-            <select class="select-field" id="cfg-honeypot-action" onchange="triggerUnsaved()">
-              <option value="permban" selected>Permanent Ban + Auto-Purge</option>
-              <option value="quarantine">Assign Quarantine Role</option>
-            </select>
+
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;" data-i18n="lblHoneypotAction">Punishments</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap" id="hp-punishments-tags"></div>
+              <select id="hp-add-punishment" class="form-input" onchange="addHoneypotPunishment(this.value); this.value='';">
+                <option value="">+ Add punishment action...</option>
+                <option value="delete">Delete message</option>
+                <option value="warn">Warn</option>
+                <option value="mute">Timeout / Mute (1h)</option>
+                <option value="kick">Kick</option>
+                <option value="ban">Ban</option>
+                <option value="dm">Send message to offender (DM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="max-width:340px;">
+            <label class="dash-form-label" style="margin-bottom:6px;">Message purge days</label>
+            <div class="am-unit-group">
+              <input type="number" id="hp-purge-days" class="am-unit-input" min="0" max="7" value="1" oninput="updateHoneypotPurgeDays(this.value)">
+              <span class="am-unit-suffix">Days</span>
+            </div>
+          </div>
+
+          <div style="padding-top:4px;">
+            <button type="button" class="am-save-btn" onclick="saveHoneypotModule(event)">Save Honeypot</button>
           </div>
         </div>
       </div>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="antiwizzTitle">Staff Anti-Wizz & Account Takeover Monitor</h3>
-            <p class="panel-subtitle" data-i18n="antiwizzSub">If a staff account is compromised and performs bulk bans, kicks, or channel deletions, HaruMod revokes staff roles and locks the server.</p>
+      <!-- Card 2: Anti-Nuke & Account Takeover Monitor (Separate) -->
+      <div class="panel-card" style="padding:24px;">
+        <div class="dyno-module-topbar" style="margin-bottom:16px;">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span>Anti-Nuke &amp; Anti-Raid</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span>Enable Anti-Nuke</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-antinuke" onchange="syncAntiNukeEnableToggle(this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
           </div>
         </div>
-        <div class="config-grid-2">
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblWizzThreshold">Staff Bulk Action Limit:</label>
-            <select class="select-field" id="cfg-wizz-threshold" onchange="triggerUnsaved()">
-              <option value="3">3 actions / 10s (Strict)</option>
-              <option value="5" selected>5 actions / 10s (Standard)</option>
-              <option value="10">10 actions / 10s</option>
-            </select>
+
+        <h3 style="margin:0 0 6px 0;font-size:1.12rem;font-weight:700;color:#f1f5f9;" data-i18n="antiwizzTitle">Staff Anti-Wizz &amp; Account Takeover Monitor</h3>
+        <p style="margin:0 0 18px 0;font-size:0.8rem;color:#94a3b8;" data-i18n="antiwizzSub">If a staff account is compromised and performs bulk bans, kicks, or channel deletions, HaruMod revokes staff roles and locks the server.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:14px;margin-bottom:16px;">
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;" data-i18n="lblWizzThreshold">Max Staff Bulk Actions</label>
+            <div class="am-unit-group">
+              <input type="number" id="cfg-wizz-threshold" class="am-unit-input" min="2" max="20" value="5" oninput="handleAntiNukeFieldChange()">
+              <span class="am-unit-suffix">Actions</span>
+            </div>
           </div>
-          <div class="input-group">
-            <label class="input-label" data-i18n="lblWizzReaction">Reaction on Nuke Threshold:</label>
-            <select class="select-field" id="cfg-wizz-reaction" onchange="triggerUnsaved()">
-              <option value="strip-roles" selected>Revoke Staff Roles + Quarantine + Alarm</option>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Detection Window</label>
+            <div class="am-unit-group">
+              <input type="number" id="cfg-wizz-window" class="am-unit-input" min="5" max="120" value="10" oninput="handleAntiNukeFieldChange()">
+              <span class="am-unit-suffix">Seconds</span>
+            </div>
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;" data-i18n="lblWizzReaction">Reaction on Nuke Threshold</label>
+            <select class="form-input" id="cfg-wizz-reaction" onchange="handleAntiNukeFieldChange()">
+              <option value="strip-roles" selected>Revoke Staff Roles + Quarantine</option>
               <option value="ban">Immediate Ban</option>
             </select>
           </div>
         </div>
+
+        <button type="button" class="am-save-btn" onclick="saveAntiNukeModule(event)">Save Anti-Nuke</button>
       </div>
     </div>
 
@@ -7512,31 +8057,35 @@
     </div>
 
     <!-- TAB 5: CASES -->
+    <!-- TAB 5: SANCTION LADDER (CUSTOMIZABLE, DEFAULT OFF) -->
     <div id="cfg-pane-cases" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <div>
-            <h3 class="panel-title" data-i18n="casesTitle">Auto Punishment Escalation Ladder</h3>
-            <p class="panel-subtitle" data-i18n="casesSub">Auto-escalating punishment ladder based on prior warnings and chronological sanction history.</p>
+      <div class="panel-card" style="padding:24px;">
+        <div class="dyno-module-topbar" style="margin-bottom:16px;">
+          <div class="dyno-module-title-wrap">
+            <div class="dyno-module-crumbs">
+              <span class="dyno-module-crumb-parent" onclick="switchConfigTab('dashboard')">Modules</span>
+              <span class="dyno-module-crumb-slash">/</span>
+              <span data-i18n="casesTitle">Sanction Ladder</span>
+            </div>
+          </div>
+          <div class="dyno-module-toggle">
+            <span>Enable Ladder</span>
+            <label class="dyno-switch">
+              <input type="checkbox" id="cfg-switch-ladder" onchange="handleModuleToggleChange()">
+              <span class="dyno-switch-slider"></span>
+            </label>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 1:</span>
-            <span style="color:#fbbf24;font-weight:700;">Direct Message Warning (Warn)</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 2:</span>
-            <span style="color:#f59e0b;font-weight:700;">1-Hour Mute Timeout</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 3:</span>
-            <span style="color:#ef4444;font-weight:700;">Kick from Server</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.03);padding:14px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);">
-            <span style="font-weight:800;color:var(--text-dim);width:110px;">Violation 4+:</span>
-            <span style="color:#dc2626;font-weight:900;">Permanent Ban</span>
-          </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <p style="margin:0;font-size:0.8rem;color:#94a3b8;" data-i18n="casesSub">Tùy chỉnh từng bậc xử phạt tự động dựa theo số lần cảnh cáo / vi phạm tích lũy.</p>
+          <button type="button" class="btn-secondary" onclick="addSanctionStage()">+ Thêm bậc xử phạt</button>
+        </div>
+
+        <div id="sanction-ladder-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;"></div>
+
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button type="button" class="am-save-btn" onclick="saveSanctionLadder(event)">Lưu Thang Xử Phạt</button>
         </div>
       </div>
     </div>
@@ -7562,7 +8111,7 @@
           <div class="dyno-module-toggle">
             <span data-i18n="moduleEnabled">Enable Module</span>
             <label class="dyno-switch">
-              <input type="checkbox" id="cfg-switch-autodelete" checked onchange="triggerUnsaved()">
+              <input type="checkbox" id="cfg-switch-autodelete" onchange="handleModuleToggleChange()">
               <span class="dyno-switch-slider"></span>
             </label>
           </div>
@@ -7792,23 +8341,23 @@
               <input type="text" id="cfg-mod-reason" class="form-input" placeholder="Ví dụ: Quảng cáo link độc hại, vi phạm quy tắc chung #general...">
             </div>
 
-            <div style="display:flex;justify-content:flex-end;">
-              <button class="btn btn-primary" onclick="executeMemberModAction(event)">
-                <svg style="width:16px;height:16px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <div style="display:flex;justify-content:flex-end;margin-top:18px;">
+              <button type="button" class="btn-crimson" style="padding:10px 18px;" onclick="executeMemberModAction(event)">
+                <svg style="width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;" viewBox="0 0 24 24" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 <span>Execute Punishment</span>
               </button>
             </div>
           </div>
 
-          <!-- Mod Cases History Card -->
+          <!-- Mod Cases History Card (Real Discord Audit Log Cases) -->
           <div class="config-card">
             <div class="config-card-header">
               <div class="config-card-icon" style="background:rgba(255, 255, 255, 0.05);color:#fff;">
-                <svg style="width:22px;height:22px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <svg style="width:20px;height:20px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
               </div>
               <div>
-                <h3 class="config-card-title">Lịch Sử Xử Phạt & Cảnh Cáo Gần Đây</h3>
-                <p class="config-card-desc">Ghi nhận các case can thiệp mod trên máy chủ này.</p>
+                <h3 class="config-card-title">Lịch Sử Xử Phạt Thật (Discord Moderation Log)</h3>
+                <p class="config-card-desc">Đọc trực tiếp từ Audit Logs &amp; thao tác xử phạt vừa thực thi trên máy chủ này.</p>
               </div>
             </div>
 
@@ -7816,30 +8365,17 @@
               <table style="width:100%;border-collapse:collapse;font-size:0.84rem;text-align:left;">
                 <thead>
                   <tr style="border-bottom:1px solid rgba(255,255,255,0.08);color:var(--text-muted);">
-                    <th style="padding:10px 14px;">Mã Case</th>
-                    <th style="padding:10px 14px;">Người Vi Phạm</th>
+                    <th style="padding:10px 14px;">Mã Sự Kiện</th>
+                    <th style="padding:10px 14px;">Mục Tiêu</th>
                     <th style="padding:10px 14px;">Hành Động</th>
                     <th style="padding:10px 14px;">Lý Do</th>
-                    <th style="padding:10px 14px;">Người Thi Hành</th>
+                    <th style="padding:10px 14px;">Người Thực Hiện</th>
                     <th style="padding:10px 14px;">Thời Gian</th>
                   </tr>
                 </thead>
                 <tbody id="cfg-mod-cases-tbody">
-                  <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                    <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">#CASE-1042</td>
-                    <td style="padding:12px 14px;"><code>8921381293812</code></td>
-                    <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(239,68,68,0.15);color:#ef4444;">BAN</span></td>
-                    <td style="padding:12px 14px;color:var(--text-dim);">Spam token grabber link #general</td>
-                    <td style="padding:12px 14px;">HaruMod Auto-Shield</td>
-                    <td style="padding:12px 14px;color:var(--text-muted);">Hôm nay 01:14</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                    <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">#CASE-1041</td>
-                    <td style="padding:12px 14px;"><code>7812903810293</code></td>
-                    <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(245,158,11,0.15);color:#f59e0b;">TIMEOUT (1h)</span></td>
-                    <td style="padding:12px 14px;color:var(--text-dim);">Mass mention > 5 users</td>
-                    <td style="padding:12px 14px;">HaruMod Security</td>
-                    <td style="padding:12px 14px;color:var(--text-muted);">Hôm qua 23:45</td>
+                  <tr>
+                    <td colspan="6" style="padding:18px 14px;text-align:center;color:#64748b;">Chưa có lịch sử xử phạt nào được tải (chọn máy chủ hoặc thực thi lệnh để ghi nhận).</td>
                   </tr>
                 </tbody>
               </table>
@@ -7861,7 +8397,7 @@
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                   <h3 class="config-card-title">Tin Nhắn Chào Mừng Thành Viên Mới</h3>
                   <label class="switch">
-                    <input type="checkbox" id="cfg-welcome-enable" checked onchange="triggerUnsaved()">
+                    <input type="checkbox" id="cfg-welcome-enable" onchange="handleModuleToggleChange()">
                     <span class="slider"></span>
                   </label>
                 </div>
@@ -8060,7 +8596,7 @@
           <div class="dyno-module-toggle">
             <span data-i18n="moduleEnabled">Enable Module</span>
             <label class="dyno-switch">
-              <input type="checkbox" id="cfg-switch-autoban" checked onchange="triggerUnsaved()">
+              <input type="checkbox" id="cfg-switch-autoban" onchange="handleModuleToggleChange()">
               <span class="dyno-switch-slider"></span>
             </label>
           </div>
@@ -8105,17 +8641,17 @@
               </div>
               <div>
                 <label class="dash-form-label" data-i18n="lblCooldownBetweenMsgs">Message Cooldown Interval</label>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(0)">Off (0s)</button>
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(5)">5s</button>
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(15)">15s</button>
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(30)">30s</button>
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(60)">1 min</button>
-                  <button type="button" class="btn-secondary" style="font-size:0.76rem;padding:6px 12px;" onclick="setSlowmodePreset(300)">5 min</button>
+                <div class="slowmode-preset-group" id="slowmode-preset-btns">
+                  <button type="button" class="slowmode-preset-btn" data-sec="0" onclick="setSlowmodePreset(0, this)">Off (0s)</button>
+                  <button type="button" class="slowmode-preset-btn is-active" data-sec="5" onclick="setSlowmodePreset(5, this)">5s</button>
+                  <button type="button" class="slowmode-preset-btn" data-sec="15" onclick="setSlowmodePreset(15, this)">15s</button>
+                  <button type="button" class="slowmode-preset-btn" data-sec="30" onclick="setSlowmodePreset(30, this)">30s</button>
+                  <button type="button" class="slowmode-preset-btn" data-sec="60" onclick="setSlowmodePreset(60, this)">1 min</button>
+                  <button type="button" class="slowmode-preset-btn" data-sec="300" onclick="setSlowmodePreset(300, this)">5 min</button>
                 </div>
-                <input type="number" id="slowmode-seconds-val" class="form-input" min="0" max="21600" value="5" placeholder="Seconds">
+                <input type="number" id="slowmode-seconds-val" class="form-input" min="0" max="21600" value="5" placeholder="Seconds" oninput="highlightSlowmodePreset(this.value)">
               </div>
-              <button class="btn-emerald-solid" onclick="executeSlowmodeDirect()" data-i18n="btnApplySlowmode">Apply Slowmode to Channel</button>
+              <button type="button" class="btn-emerald-solid" style="padding:11px 16px;" onclick="executeSlowmodeDirect()" data-i18n="btnApplySlowmode">Apply Slowmode to Channel</button>
             </div>
           </div>
 
@@ -8129,12 +8665,12 @@
                 <select id="cfg-channel-lock" class="form-input" style="width:100%;"></select>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
-                <button class="btn-crimson" style="padding:14px;" onclick="executeLockdownDirect(true)">
-                  <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                <button type="button" class="btn-crimson" style="padding:12px 14px;min-height:42px;" onclick="executeLockdownDirect(true)">
+                  <svg style="width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   <span data-i18n="btnLockChannel">Lock Channel</span>
                 </button>
-                <button class="btn-secondary" style="padding:14px;" onclick="executeLockdownDirect(false)">
-                  <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5-2.28 0-4.27 1.54-4.84 3.75l1.93.54C12.44 3.84 13.62 3 15 3c1.66 0 3 1.34 3 3v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg>
+                <button type="button" class="btn-secondary" style="padding:12px 14px;min-height:42px;" onclick="executeLockdownDirect(false)">
+                  <svg style="width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
                   <span data-i18n="btnUnlockChannel">Unlock Channel</span>
                 </button>
               </div>
@@ -9050,7 +9586,7 @@
         sideAutomod: "Bộ Lọc Auto-Mod",
         sideMembers: "Kiểm Duyệt Thành Viên",
         sideSlowmode: "Chế Độ Chậm (Slowmode)",
-        sideLogs: "36 Luồng Action Log",
+        sideLogs: "Action Log",
 
         "sideStatusActive": "HaruMod Hoạt Động",
         "navGroupGeneral": "TỔNG QUAN",
@@ -9058,7 +9594,7 @@
         "sideIdentity": "Nhận Diện & Biệt Danh",
         "sideOverview": "Tổng Quan An Ninh",
         "navGroupMod": "BẢO VỆ & KIỂM DUYỆT",
-        "sideActionLog": "36 Luồng Action Log",
+        "sideActionLog": "Action Log",
         "sideAutoDeletePurge": "Tự Động Xóa & Dọn Dẹp Kênh",
         "sideAutoban": "Tự Động Cấm (Autoban)",
         "sideAutomod": "Bộ Lọc Automod",
@@ -9239,7 +9775,7 @@
         mockTabOverview: "Tổng Quan An Ninh",
         mockTabAutoMod: "Bộ Lọc Auto-Mod",
         mockTabHoneypot: "Bẫy Honeypot Trap",
-        mockTabLogs: "36 Luồng Nhật Ký",
+        mockTabLogs: "Action Log",
         mockTabLadder: "Thang Xử Phạt",
         mockTabRoles: "Quản Lý Vai Trò",
         mockTabSim: "Filter Simulator",
@@ -9261,7 +9797,7 @@
         mockHoneypotHeading: "Kiến Trúc Bẫy Honeypot Ảo",
         mockHoneypotSub: "Kênh mồi bí mật vô hình với thành viên; perm-ban ngay lập tức đối với bot raid tự động.",
         btnSimRaid: `<svg class="btn-svg-ico" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>Giả Lập Đợt Tấn Công Bot Raid`,
-        mockLogsHeading: "36 Luồng Nhật Ký Sự Kiện",
+        mockLogsHeading: "Action Log",
         mockLogsSub: "Phân loại chi tiết #security-alerts, #mod-logs, #message-logs, #member-logs",
         mockLadderHeading: "Thang Xử Phạt Tự Động 4 Cấp Độ",
         mockLadderSub: "Hình phạt tăng tiến với cơ chế tự giảm án theo thời gian",
@@ -9282,8 +9818,8 @@
         loginBtn: "Đăng Nhập Discord",
         heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
-        heroSubtitle: "Hệ thống bảo vệ máy chủ Discord tự động, toàn diện với Dashboard trực quan. Cấu hình Honeypot bẫy nuke, lọc Auto-Mod đa tầng và 36 luồng nhật ký sự kiện chuyên sâu.",
-        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Bẫy Honeypot Bí Mật</span> <span class="trust-pill"><span class="trust-dot"></span>36 Luồng Nhật Ký</span> <span class="trust-pill"><span class="trust-dot"></span>Auto-Mod Đa Tầng</span>`,
+        heroSubtitle: "Hệ thống bảo vệ máy chủ Discord tự động, toàn diện với Dashboard trực quan. Cấu hình Honeypot bẫy nuke, lọc Auto-Mod đa tầng và Action Log chuyên sâu.",
+        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Bẫy Honeypot Bí Mật</span> <span class="trust-pill"><span class="trust-dot"></span>Action Log</span> <span class="trust-pill"><span class="trust-dot"></span>Auto-Mod Đa Tầng</span>`,
         heroAddBtn: "Add to Discord",
         heroManageBtn: "Quản Lý Server",
         hubAuthTitle: "Quản Lý Máy Chủ Discord Của Bạn",
@@ -9302,7 +9838,7 @@
         tabOverview: "Tổng Quan An Ninh",
         tabAutoMod: "Bộ Lọc Auto-Mod",
         tabHoneypot: "Bẫy Honeypot & Nuke",
-        tabLogs: "36 Luồng Nhật Ký",
+        tabLogs: "Action Log",
         tabCases: "Thang Xử Phạt",
         tabRoles: "Quản Lý Vai Trò",
         tabSim: "Trình Giả Lập Lọc",
@@ -9335,7 +9871,7 @@
         antiwizzSub: "Nếu tài khoản quản trị viên bị hack và thực hiện ban/kick/xóa kênh liên tục, HaruMod lập tức thu hồi quyền staff và khóa server.",
         lblWizzThreshold: "Ngưỡng thao tác tối đa:",
         lblWizzReaction: "Phản ứng khi vượt ngưỡng:",
-        logsTitle: "36 Luồng Nhật Ký Sự Kiện Chuyên Sâu",
+        logsTitle: "Nhật Ký Sự Kiện (Action Log)",
         logsSub: "Phân luồng độc lập qua 6 kênh riêng biệt để tránh nghẽn tin nhắn và quản lý minh bạch.",
         casesTitle: "Thang Xử Phạt Leo Thang Tự Động (Ladder System)",
         casesSub: "Tự động tăng mức độ kỷ luật dựa trên số lần cảnh cáo trong quá khứ của thành viên.",
@@ -9372,7 +9908,7 @@
         sideAutomod: "Auto-Mod Filters",
         sideMembers: "Member Moderation",
         sideSlowmode: "Channel Slowmode",
-        sideLogs: "36 Action Logs",
+        sideLogs: "Action Log",
 
         "sideStatusActive": "HaruMod Active",
         "navGroupGeneral": "GENERAL",
@@ -9561,7 +10097,7 @@
         mockTabOverview: "Security Overview",
         mockTabAutoMod: "Auto-Mod Shield",
         mockTabHoneypot: "Honeypot Trap",
-        mockTabLogs: "36 Action Logs",
+        mockTabLogs: "Action Log",
         mockTabLadder: "Sanction Ladder",
         mockTabRoles: "Role Management",
         mockTabSim: "Filter Simulator",
@@ -9605,7 +10141,7 @@
         heroBadge: "HaruMod Security Core V5.3",
         heroHeadline: "The Discord Security Shield that <span>does it all. Automatically</span>",
         heroSubtitle: "A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.",
-        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Secret Honeypot Traps</span> <span class="trust-pill"><span class="trust-dot"></span>36 Action Logs</span> <span class="trust-pill"><span class="trust-dot"></span>Multi-Tier Anti-Phishing</span>`,
+        heroTrust: `<span class="trust-pill"><span class="trust-dot"></span>Secret Honeypot Traps</span> <span class="trust-pill"><span class="trust-dot"></span>Action Log</span> <span class="trust-pill"><span class="trust-dot"></span>Multi-Tier Anti-Phishing</span>`,
         heroAddBtn: "Add to Discord",
         heroManageBtn: "Manage Servers",
         hubAuthTitle: "Manage Your Discord Servers",
@@ -9624,7 +10160,7 @@
         tabOverview: "Security Overview",
         tabAutoMod: "Auto-Mod Filters",
         tabHoneypot: "Honeypot & Anti-Nuke",
-        tabLogs: "36 Action Logs",
+        tabLogs: "Action Log",
         tabCases: "Sanction Ladder",
         tabRoles: "Role Management",
         tabSim: "Live Filter Tester",
@@ -9657,7 +10193,7 @@
         antiwizzSub: "If a staff account is compromised and performs bulk bans, kicks, or channel deletions, HaruMod revokes staff roles and locks the server.",
         lblWizzThreshold: "Staff Bulk Action Limit:",
         lblWizzReaction: "Reaction on Nuke Threshold:",
-        logsTitle: "36 Granular Action Audit Logs",
+        logsTitle: "Action Log & Audit Events",
         logsSub: "Smart multi-stream routing across 6 distinct channels to eliminate log clutter.",
         casesTitle: "Auto Punishment Escalation Ladder",
         casesSub: "Auto-escalating punishment ladder based on prior warnings and chronological sanction history.",
@@ -10157,7 +10693,7 @@
       members: "Trung tâm Xử phạt Thành viên",
       welcome: "Chào mừng & Tự động gán quyền",
       roles: "Quản lý Role & Quyền",
-      logs: "36 Action Logs",
+      logs: "Action Log",
       sim: "Live Filter Tester",
       sync: "Đồng bộ Discord Real-time"
     };
@@ -10364,16 +10900,18 @@
 
         if (res.ok) {
           showToast(`✓ Đã ${actionNames[action]} cho người dùng ${targetUser} trực tiếp trên Discord!`, "success");
-          const tbody = document.getElementById("cfg-mod-cases-tbody");
+            const tbody = document.getElementById("cfg-mod-cases-tbody");
           if (tbody) {
+            const emptyRow = tbody.querySelector("[data-empty-row='1']");
+            if (emptyRow) emptyRow.remove();
             const newRow = document.createElement("tr");
             newRow.style.borderBottom = "1px solid rgba(255,255,255,0.04)";
-            const caseId = "#CASE-" + Math.floor(1000 + Math.random() * 9000);
+            const caseId = "LIVE-" + Date.now().toString().slice(-4);
             newRow.innerHTML = `
-              <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">${caseId}</td>
-              <td style="padding:12px 14px;"><code>${targetUser}</code></td>
-              <td style="padding:12px 14px;"><span class="status-pill status-active" style="background:rgba(16,185,129,0.15);color:#10b981;">${action.toUpperCase()}</span></td>
-              <td style="padding:12px 14px;color:var(--text-dim);">${reason}</td>
+              <td style="padding:12px 14px;color:var(--emerald-light);font-weight:700;">#${caseId}</td>
+              <td style="padding:12px 14px;"><code>${escapeHtml(targetUser)}</code></td>
+              <td style="padding:12px 14px;"><span class="sec-pill active">${action.toUpperCase()}</span></td>
+              <td style="padding:12px 14px;color:var(--text-dim);">${escapeHtml(reason)}</td>
               <td style="padding:12px 14px;">${currentUser ? escapeHtml(currentUser.username) : "Dashboard Staff"}</td>
               <td style="padding:12px 14px;color:var(--text-muted);">Vừa xong</td>
             `;
@@ -10581,16 +11119,10 @@
           verification_level: verSel ? parseInt(verSel.value) : null,
           explicit_content_filter: filterSel ? parseInt(filterSel.value) : null
         },
-        automod: {
-          antiPhish: document.getElementById("cfg-automod-active") ? document.getElementById("cfg-automod-active").checked : true,
-          antiHoneypot: document.getElementById("cfg-honeypot-active") ? document.getElementById("cfg-honeypot-active").checked : true,
-          antiWizz: document.getElementById("cfg-antiwizz-active") ? document.getElementById("cfg-antiwizz-active").checked : true,
-          antiFile: document.getElementById("cfg-fileblock-active") ? document.getElementById("cfg-fileblock-active").checked : true,
-          rules: typeof automodRules !== "undefined" ? automodRules : [],
-          defaultLogChannel: document.getElementById("automod-default-log-channel")?.value || "",
-          defaultIgnoredChannel: document.getElementById("automod-default-ignored-channels")?.value || "",
-          defaultIgnoredRole: document.getElementById("automod-default-ignored-roles")?.value || ""
-        },
+        automod: typeof getAutomodConfigForSave === "function" ? getAutomodConfigForSave() : { enabled: false },
+        honeypot: typeof getHoneypotConfigForSave === "function" ? getHoneypotConfigForSave() : { enabled: false, channels: [], punishments: ["ban"], purgeDays: 1 },
+        antiNuke: typeof getAntiNukeConfigForSave === "function" ? getAntiNukeConfigForSave() : { enabled: false, maxActions: 5, windowSeconds: 10, reaction: "strip-roles" },
+        sanctionLadder: typeof getSanctionLadderConfigForSave === "function" ? getSanctionLadderConfigForSave() : { enabled: false, stages: [] },
         autoban: {
           enabled: document.getElementById("cfg-switch-autoban") ? document.getElementById("cfg-switch-autoban").checked : true,
           rules: typeof autobanRules !== "undefined" ? autobanRules : []
@@ -10660,19 +11192,26 @@
         if (w1) w1.value = cfg.webhookUrl;
         if (w2) w2.value = cfg.webhookUrl;
       }
-      if (cfg.automod) {
-        if (document.getElementById("cfg-automod-active") && typeof cfg.automod.antiPhish === "boolean") document.getElementById("cfg-automod-active").checked = cfg.automod.antiPhish;
-        if (document.getElementById("cfg-honeypot-active") && typeof cfg.automod.antiHoneypot === "boolean") document.getElementById("cfg-honeypot-active").checked = cfg.automod.antiHoneypot;
-        if (document.getElementById("cfg-antiwizz-active") && typeof cfg.automod.antiWizz === "boolean") document.getElementById("cfg-antiwizz-active").checked = cfg.automod.antiWizz;
-        if (document.getElementById("cfg-fileblock-active") && typeof cfg.automod.antiFile === "boolean") document.getElementById("cfg-fileblock-active").checked = cfg.automod.antiFile;
-        if (Array.isArray(cfg.automod.rules) && cfg.automod.rules.length > 0 && typeof automodRules !== "undefined") {
-          automodRules = cfg.automod.rules;
-          if (typeof renderAutomodRules === "function") renderAutomodRules();
-        }
+      if (cfg.automod && typeof applyAutomodConfig === "function") {
+        applyAutomodConfig(cfg.automod);
       }
-      if (cfg.autoban && Array.isArray(cfg.autoban.rules) && cfg.autoban.rules.length > 0 && typeof autobanRules !== "undefined") {
-        autobanRules = cfg.autoban.rules;
-        if (typeof renderAutobanRules === "function") renderAutobanRules();
+      if (cfg.honeypot && typeof applyHoneypotConfig === "function") {
+        applyHoneypotConfig(cfg.honeypot);
+      }
+      if (cfg.antiNuke && typeof applyAntiNukeConfig === "function") {
+        applyAntiNukeConfig(cfg.antiNuke);
+      }
+      if (cfg.sanctionLadder && typeof applySanctionLadderConfig === "function") {
+        applySanctionLadderConfig(cfg.sanctionLadder);
+      }
+      if (cfg.autoban) {
+        if (document.getElementById("cfg-switch-autoban") && typeof cfg.autoban.enabled === "boolean") {
+          document.getElementById("cfg-switch-autoban").checked = cfg.autoban.enabled;
+        }
+        if (Array.isArray(cfg.autoban.rules) && typeof autobanRules !== "undefined") {
+          autobanRules = cfg.autoban.rules;
+          if (typeof renderAutobanRules === "function") renderAutobanRules();
+        }
       }
       if (cfg.actionLog) {
         if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") {
@@ -10822,12 +11361,25 @@
         setBotRoleColor(colorVal);
       }
 
-      // Update Auto-Mod checkboxes if present in cfg
-      if (cfg && cfg.automod) {
-        if (document.getElementById("cfg-automod-active")) document.getElementById("cfg-automod-active").checked = cfg.automod.antiPhish;
-        if (document.getElementById("cfg-honeypot-active")) document.getElementById("cfg-honeypot-active").checked = cfg.automod.antiHoneypot;
-        if (document.getElementById("cfg-antiwizz-active")) document.getElementById("cfg-antiwizz-active").checked = cfg.automod.antiWizz;
-        if (document.getElementById("cfg-fileblock-active")) document.getElementById("cfg-fileblock-active").checked = cfg.automod.antiFile;
+      if (cfg && cfg.automod && typeof applyAutomodConfig === "function") {
+        applyAutomodConfig(cfg.automod);
+      } else if (typeof applyAutomodConfig === "function") {
+        applyAutomodConfig(null);
+      }
+      if (cfg && cfg.honeypot && typeof applyHoneypotConfig === "function") {
+        applyHoneypotConfig(cfg.honeypot);
+      } else if (typeof applyHoneypotConfig === "function") {
+        applyHoneypotConfig(null);
+      }
+      if (cfg && cfg.antiNuke && typeof applyAntiNukeConfig === "function") {
+        applyAntiNukeConfig(cfg.antiNuke);
+      } else if (typeof applyAntiNukeConfig === "function") {
+        applyAntiNukeConfig(null);
+      }
+      if (cfg && cfg.sanctionLadder && typeof applySanctionLadderConfig === "function") {
+        applySanctionLadderConfig(cfg.sanctionLadder);
+      } else if (typeof applySanctionLadderConfig === "function") {
+        applySanctionLadderConfig(null);
       }
 
       hasUnsavedChanges = false;
@@ -10845,6 +11397,7 @@
         resetStatsBoardToDefaults(false);
       }
 
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
       updateLiveBotPreview(false);
     }
 
@@ -11244,6 +11797,9 @@
       if (typeof updateLiveStatsBoardMockup === "function") {
         updateLiveStatsBoardMockup();
       }
+      if (typeof renderRealModCasesTable === "function") {
+        renderRealModCasesTable(snapshot);
+      }
     }
 
     async function quickUnbanUser(userId, username) {
@@ -11386,6 +11942,8 @@
         "automod-default-log-channel",
         "automod-default-ignored-channels",
         "cfg-honeypot-channel",
+        "hp-add-channel",
+        "am-global-add-ch",
         "cfg-welcome-channel",
         "cfg-goodbye-channel",
         "cfg-dash-updates-channel",
@@ -11397,7 +11955,9 @@
         if (!el) return;
         const curVal = el.value;
         el.innerHTML = id === "chat-channel-select" ? "" : '<option value="">Select Channel..</option>';
-        const listForSelect = id === "chat-channel-select" ? channels.filter(c => c.type === 0 || c.type === 5) : channels;
+        const listForSelect = (id === "chat-channel-select" || id === "hp-add-channel" || id === "cfg-honeypot-channel")
+          ? channels.filter(c => c.type === 0 || c.type === 5)
+          : channels;
         listForSelect.forEach(ch => {
           const opt = document.createElement("option");
           opt.value = ch.id;
@@ -11424,6 +11984,7 @@
       // Populate roles
       const roleSelectIds = [
         "sel-add-ignored-role",
+        "am-global-add-role",
         "automod-affected-roles",
         "automod-ignored-roles",
         "automod-default-ignored-roles",
@@ -11507,6 +12068,7 @@
       if (lbl) {
         lbl.textContent = isEnabled ? (activeLang === "vi" ? "Đã bật Module" : "Enable Module") : (activeLang === "vi" ? "Đã tắt Module" : "Disable Module");
       }
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
       if (!silent) triggerUnsaved();
     }
 
@@ -11587,14 +12149,8 @@
     // =========================================================
     // AUTO DELETE & AUTO PURGE CONTROLLERS
     // =========================================================
-    let autoDeleteRules = [
-      { id: "ad-1", channelId: "1426568420287320095", channelName: "garden-chat", delay: 10, filter: "links", match: "all", enabled: true },
-      { id: "ad-2", channelId: "1426568686239613148", channelName: "petal-playground", delay: 60, filter: "all", match: "all", enabled: true }
-    ];
-
-    let autoPurgeJobs = [
-      { id: "ap-1", channelId: "1426564122568298658", channelName: "staff-cmd", hours: 8, filter: "all", enabled: true, lastRun: "2 hours ago" }
-    ];
+    let autoDeleteRules = [];
+    let autoPurgeJobs = [];
 
     function switchCleanerSubtab(subtabKey) {
       ["autodelete", "autopurge", "manualpurge"].forEach(k => {
@@ -11740,12 +12296,7 @@
     // =========================================================
     // AUTOBAN CONTROLLERS (IMAGE 4)
     // =========================================================
-    let autobanRules = [
-      { id: "ab-1", name: "Nitro Scammer Username Filter", type: "Match Username", detail: "nitro|free-nitro|steam-community|airdrop", enabled: true },
-      { id: "ab-2", name: "Discord Invite Username Blocker", type: "Username Invites", detail: "discord.gg/*", enabled: true },
-      { id: "ab-3", name: "Fresh Raid Accounts Guard (< 3 Days)", type: "Account Age", detail: "< 3 Days", enabled: true },
-      { id: "ab-4", name: "Default Avatar Userbot Trap", type: "No Avatar", detail: "Zero avatar uploads", enabled: false }
-    ];
+    let autobanRules = [];
 
     function renderAutobanRules() {
       const list = document.getElementById("autoban-rules-list");
@@ -11834,112 +12385,808 @@
     }
 
     // =========================================================
-    // AUTOMOD CONTROLLERS (IMAGES 5, 6, 7)
+    // SIDEBAR STATUS PILLS, CARL-BOT AUTOMOD (ALL OFF DEFAULT), HONEYPOT, ANTINUKE & LADDER
     // =========================================================
-    let automodRules = [
-      { id: "am-1", name: "Banned Words (exact)", type: "Bad Words", action: "Delete + Warn", enabled: true },
-      { id: "am-2", name: "Phishing Links & Malware", type: "Known Phishing Links", action: "Instant Ban + Delete", enabled: true },
-      { id: "am-3", name: "Unauthorized Discord Invites", type: "Invite Links", action: "Delete + Warn", enabled: true },
-      { id: "am-4", name: "Mass Mentions Suppression", type: "Mass Mentions", action: "Instant Mute + Delete", enabled: true },
-      { id: "am-5", name: "Rapid Flood & Chat Spam", type: "Fast Message Spam", action: "Automute (10m)", enabled: true },
-      { id: "am-6", name: "Excessive All-Caps Shouting", type: "All Caps", action: "Delete", enabled: true }
-    ];
+    const PUNISHMENT_LABELS = {
+      delete: "Delete message",
+      warn: "Warn",
+      mute: "Timeout / Mute",
+      kick: "Kick",
+      ban: "Ban",
+      dm: "Send message to offender",
+      "strip-roles": "Revoke Staff Roles + Quarantine"
+    };
 
-    function renderAutomodRules(filterText = "") {
-      const list = document.getElementById("automod-rules-list");
-      if (!list) return;
-      const term = filterText.toLowerCase();
-      const filtered = automodRules.filter(r => r.name.toLowerCase().includes(term) || r.type.toLowerCase().includes(term));
-      if (filtered.length === 0) {
-        list.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);padding:14px;">No matching Automod rules.</div>';
-        return;
+    function createDefaultAutomodConfig() {
+      return {
+        enabled: false,
+        ignoredChannels: [],
+        ignoredRoles: [],
+        badInvites: { enabled: false, noRoleOnly: false, punishments: ["delete"] },
+        badWords: { enabled: false, words: [], punishments: ["delete"] },
+        badLinks: { enabled: false, mode: "BLACKLIST", domains: [], punishments: ["delete"], count: 1, seconds: 10 },
+        mentionSpam: { enabled: false, punishments: ["delete"], count: 5, seconds: 10 },
+        attachmentSpam: { enabled: false, blockDangerousFiles: false, punishments: ["delete"], count: 3, seconds: 10 },
+        floodSpam: { enabled: false, punishments: ["delete"], count: 5, seconds: 4 },
+        caps: { enabled: false, minLength: 10, percent: 70, punishments: ["delete"] },
+        warnThreshold: { enabled: false, count: 3, punishments: ["mute"], durationMinutes: 60 }
+      };
+    }
+
+    function createDefaultHoneypotConfig() {
+      return { enabled: false, channels: [], punishments: ["ban"], purgeDays: 1 };
+    }
+
+    function createDefaultAntiNukeConfig() {
+      return { enabled: false, maxActions: 5, windowSeconds: 10, reaction: "strip-roles" };
+    }
+
+    function createDefaultSanctionLadderConfig() {
+      return {
+        enabled: false,
+        stages: [
+          { violations: 1, action: "warn", duration: "" },
+          { violations: 2, action: "timeout", duration: "1h" },
+          { violations: 3, action: "kick", duration: "" },
+          { violations: 4, action: "ban", duration: "" }
+        ]
+      };
+    }
+
+    let automodConfig = createDefaultAutomodConfig();
+    let honeypotConfig = createDefaultHoneypotConfig();
+    let antiNukeConfig = createDefaultAntiNukeConfig();
+    let sanctionLadderConfig = createDefaultSanctionLadderConfig();
+
+    function updateSidebarStatusIndicators() {
+      const setPill = (id, isOn) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = isOn ? "ON" : "OFF";
+        el.classList.toggle("is-on", Boolean(isOn));
+        el.classList.toggle("is-off", !isOn);
+      };
+
+      const logsOn = Boolean(document.getElementById("cfg-switch-actionlog")?.checked);
+      const cleanOn = Boolean(document.getElementById("cfg-switch-autodelete")?.checked) || (autoDeleteRules.some(r => r.enabled) || autoPurgeJobs.some(j => j.enabled));
+      const banOn = Boolean(document.getElementById("cfg-switch-autoban")?.checked) && autobanRules.some(r => r.enabled);
+      const amAnyFilter = ["badInvites", "badWords", "badLinks", "mentionSpam", "attachmentSpam", "floodSpam", "caps", "warnThreshold"].some(k => automodConfig[k]?.enabled);
+      const amOn = Boolean(automodConfig.enabled) && amAnyFilter;
+      const hpOn = Boolean(honeypotConfig.enabled) || Boolean(antiNukeConfig.enabled);
+      const ladOn = Boolean(sanctionLadderConfig.enabled);
+      const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked);
+
+      setPill("nav-st-logs", logsOn);
+      setPill("nav-st-channels", cleanOn);
+      setPill("nav-st-autoban", banOn);
+      setPill("nav-st-automod", amOn);
+      setPill("nav-st-honeypot", hpOn);
+      setPill("nav-st-cases", ladOn);
+      setPill("nav-st-welcome", welOn);
+
+      if (document.getElementById("cfg-automod-active")) document.getElementById("cfg-automod-active").checked = amOn;
+      if (document.getElementById("cfg-honeypot-active")) document.getElementById("cfg-honeypot-active").checked = Boolean(honeypotConfig.enabled);
+      if (document.getElementById("cfg-antiwizz-active")) document.getElementById("cfg-antiwizz-active").checked = Boolean(antiNukeConfig.enabled);
+      if (document.getElementById("cfg-fileblock-active")) document.getElementById("cfg-fileblock-active").checked = Boolean(automodConfig.enabled && automodConfig.attachmentSpam.enabled && automodConfig.attachmentSpam.blockDangerousFiles);
+    }
+
+    function handleModuleToggleChange() {
+      const amMaster = document.getElementById("cfg-switch-automod");
+      if (amMaster) automodConfig.enabled = Boolean(amMaster.checked);
+      const ladMaster = document.getElementById("cfg-switch-ladder");
+      if (ladMaster) sanctionLadderConfig.enabled = Boolean(ladMaster.checked);
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function handleQuickShieldToggle(key, isChecked) {
+      if (key === "automod") {
+        automodConfig.enabled = isChecked;
+        const sw = document.getElementById("cfg-switch-automod");
+        if (sw) sw.checked = isChecked;
+        renderAutomodCards();
+      } else if (key === "honeypot") {
+        honeypotConfig.enabled = isChecked;
+        const sw = document.getElementById("cfg-switch-honeypot");
+        if (sw) sw.checked = isChecked;
+      } else if (key === "antinuke") {
+        antiNukeConfig.enabled = isChecked;
+        const sw = document.getElementById("cfg-switch-antinuke");
+        if (sw) sw.checked = isChecked;
+      } else if (key === "files") {
+        if (isChecked) automodConfig.enabled = true;
+        automodConfig.attachmentSpam.enabled = isChecked;
+        automodConfig.attachmentSpam.blockDangerousFiles = isChecked;
+        const sw = document.getElementById("cfg-switch-automod");
+        if (sw && isChecked) sw.checked = true;
+        renderAutomodCards();
       }
-      list.innerHTML = filtered.map((r, idx) => `
-        <div class="dyno-rule-card">
-          <div class="dyno-rule-left">
-            <div class="dyno-rule-name">${r.name}</div>
-            <div class="dyno-rule-meta">
-              <span>Type: <strong>${r.type}</strong></span> &bull; 
-              <span>Action: <strong style="color:#fda4af;">${r.action}</strong></span>
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function renderAutomodGlobalIgnores() {
+      const chPool = (typeof cachedChannels !== "undefined" && cachedChannels.length) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const rolePool = (typeof cachedRoles !== "undefined" && cachedRoles.length) ? cachedRoles : GARDEN_REAL_ROLES;
+
+      const chBox = document.getElementById("am-global-ignored-channels-tags");
+      if (chBox) {
+        chBox.innerHTML = (automodConfig.ignoredChannels || []).length === 0
+          ? `<span style="font-size:0.74rem;color:#64748b;">Chưa miễn trừ kênh nào</span>`
+          : automodConfig.ignoredChannels.map((id, i) => {
+              const ch = chPool.find(c => c.id === id);
+              return `<span class="am-tag-chip"># ${escapeHtml(ch ? ch.name : id)} <button type="button" onclick="removeAutomodGlobalIgnore('channels', ${i})">&times;</button></span>`;
+            }).join("");
+      }
+
+      const roleBox = document.getElementById("am-global-ignored-roles-tags");
+      if (roleBox) {
+        roleBox.innerHTML = (automodConfig.ignoredRoles || []).length === 0
+          ? `<span style="font-size:0.74rem;color:#64748b;">Chưa miễn trừ vai trò nào</span>`
+          : automodConfig.ignoredRoles.map((id, i) => {
+              const r = rolePool.find(x => x.id === id);
+              return `<span class="am-tag-chip">@ ${escapeHtml(r ? r.name : id)} <button type="button" onclick="removeAutomodGlobalIgnore('roles', ${i})">&times;</button></span>`;
+            }).join("");
+      }
+    }
+
+    function addAutomodGlobalIgnore(kind, id) {
+      if (!id) return;
+      const arr = kind === "roles" ? automodConfig.ignoredRoles : automodConfig.ignoredChannels;
+      if (!arr.includes(id)) arr.push(id);
+      renderAutomodGlobalIgnores();
+      triggerUnsaved();
+    }
+    function removeAutomodGlobalIgnore(kind, idx) {
+      const arr = kind === "roles" ? automodConfig.ignoredRoles : automodConfig.ignoredChannels;
+      arr.splice(idx, 1);
+      renderAutomodGlobalIgnores();
+      triggerUnsaved();
+    }
+
+    function renderPunishmentTagBox(filterKey, list) {
+      const arr = Array.isArray(list) ? list : [];
+      const opts = ["delete", "warn", "mute", "kick", "ban", "dm"];
+      return `
+        <div class="am-tag-box">
+          <div class="am-tags-wrap">
+            ${arr.length === 0 ? `<span style="font-size:0.74rem;color:#64748b;">Chưa chọn hành động xử phạt</span>` : arr.map((p, i) => `
+              <span class="am-tag-chip">${escapeHtml(PUNISHMENT_LABELS[p] || p)} <button type="button" onclick="removeAutomodPunishment('${filterKey}', ${i})">&times;</button></span>
+            `).join("")}
+          </div>
+          <select class="form-input" onchange="addAutomodPunishment('${filterKey}', this.value); this.value='';">
+            <option value="">Select punishment option...</option>
+            ${opts.map(o => `<option value="${o}">${escapeHtml(PUNISHMENT_LABELS[o])}</option>`).join("")}
+          </select>
+        </div>
+      `;
+    }
+
+    function renderAutomodCards() {
+      renderAutomodGlobalIgnores();
+      const masterSw = document.getElementById("cfg-switch-automod");
+      if (masterSw) masterSw.checked = Boolean(automodConfig.enabled);
+
+      const grid = document.getElementById("automod-cards-grid");
+      if (!grid) return;
+
+      const c = automodConfig;
+      const cardShell = (key, slug, title, desc, bodyHtml) => {
+        const isOn = Boolean(c[key]?.enabled);
+        return `
+          <div class="am-card ${isOn ? "is-enabled" : ""}">
+            <div class="am-card-head">
+              <div class="am-card-head-left">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="am-card-slug">${slug}</span>
+              </div>
+              <label class="am-card-toggle-wrap">
+                <span>Enable</span>
+                <label class="dyno-switch">
+                  <input type="checkbox" ${isOn ? "checked" : ""} onchange="toggleAutomodCard('${key}', this.checked)">
+                  <span class="dyno-switch-slider"></span>
+                </label>
+              </label>
+            </div>
+            <div class="am-card-body">
+              <div class="am-card-title-row">
+                <h4 class="am-card-title">${title}</h4>
+                <span class="am-state-pill ${isOn ? "on" : "off"}">${isOn ? "ACTIVE" : "DISABLED"}</span>
+              </div>
+              ${desc ? `<p class="am-field-desc">${desc}</p>` : ""}
+              ${bodyHtml}
+            </div>
+            <div class="am-card-foot">
+              <button type="button" class="am-save-btn" onclick="saveAutomodModule(event)">Save</button>
             </div>
           </div>
-          <div class="dyno-rule-right">
+        `;
+      };
+
+      const badInvitesHtml = cardShell(
+        "badInvites",
+        "Invitespam",
+        "Bad Invites",
+        "Chặn tự động tin nhắn chứa link mời server Discord khác (discord.gg/...).",
+        `
+          <div class="am-toggle-row">
+            <span>Norole mode (chỉ phạt người chưa có role)</span>
             <label class="dyno-switch">
-              <input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleAutomodRule(${idx}, this.checked)">
+              <input type="checkbox" ${c.badInvites.noRoleOnly ? "checked" : ""} onchange="updateAutomodField('badInvites', 'noRoleOnly', this.checked)">
               <span class="dyno-switch-slider"></span>
             </label>
-            <button class="dyno-icon-btn" onclick="duplicateAutomodRule(${idx})" title="Duplicate rule">
-              <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-            </button>
-            <button class="dyno-icon-btn" onclick="deleteAutomodRule(${idx})" title="Delete rule">
-              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-            </button>
           </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("badInvites", c.badInvites.punishments)}
+          </div>
+        `
+      );
+
+      const badWordsHtml = cardShell(
+        "badWords",
+        "Bad words",
+        "Bad Words",
+        "Không phân biệt hoa thường, tự bỏ qua ký tự ngăn cách giữa các từ.",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Banned Words (${c.badWords.words.length})</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap">
+                ${c.badWords.words.length === 0 ? `<span style="font-size:0.74rem;color:#64748b;">Chưa thêm từ cấm nào</span>` : c.badWords.words.map((w, i) => `
+                  <span class="am-tag-chip">${escapeHtml(w)} <button type="button" onclick="removeAutomodWord(${i})">&times;</button></span>
+                `).join("")}
+              </div>
+              <div class="am-inline-add">
+                <input type="text" id="am-add-word-input" placeholder="Add word..." onkeydown="if(event.key==='Enter'){event.preventDefault();addAutomodWord();}">
+                <button type="button" class="am-inline-add-btn" onclick="addAutomodWord()">Add</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("badWords", c.badWords.punishments)}
+          </div>
+        `
+      );
+
+      const badLinksHtml = cardShell(
+        "badLinks",
+        "Linkspam",
+        "Bad Links",
+        "Chặn tên miền độc hại (Blacklist) hoặc chỉ cho phép tên miền tin cậy (Whitelist).",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Linkspam mode</label>
+            <select class="form-input" onchange="updateAutomodField('badLinks', 'mode', this.value)">
+              <option value="BLACKLIST" ${c.badLinks.mode === "BLACKLIST" ? "selected" : ""}>Blacklist (Chặn tên miền trong danh sách)</option>
+              <option value="WHITELIST" ${c.badLinks.mode === "WHITELIST" ? "selected" : ""}>Whitelist (Chỉ cho phép tên miền an toàn)</option>
+            </select>
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Domains (${c.badLinks.domains.length})</label>
+            <div class="am-tag-box">
+              <div class="am-tags-wrap">
+                ${c.badLinks.domains.length === 0 ? `<span style="font-size:0.74rem;color:#64748b;">Chưa thêm domain nào (vd: grabify.link)</span>` : c.badLinks.domains.map((d, i) => `
+                  <span class="am-tag-chip">${escapeHtml(d)} <button type="button" onclick="removeAutomodLink(${i})">&times;</button></span>
+                `).join("")}
+              </div>
+              <div class="am-inline-add">
+                <input type="text" id="am-add-link-input" placeholder="Add domain (vd: bit.ly)..." onkeydown="if(event.key==='Enter'){event.preventDefault();addAutomodLink();}">
+                <button type="button" class="am-inline-add-btn" onclick="addAutomodLink()">Add</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("badLinks", c.badLinks.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punish after</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="50" value="${c.badLinks.count}" oninput="updateAutomodField('badLinks', 'count', parseInt(this.value)||1)">
+                <span class="am-unit-suffix">Links in</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="300" value="${c.badLinks.seconds}" oninput="updateAutomodField('badLinks', 'seconds', parseInt(this.value)||10)">
+                <span class="am-unit-suffix">Seconds</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      const mentionSpamHtml = cardShell(
+        "mentionSpam",
+        "Mentionspam",
+        "Mentionspam",
+        "Ngăn thành viên tag hàng loạt người dùng hoặc role trong khoảng thời gian ngắn.",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("mentionSpam", c.mentionSpam.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punish after</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="2" max="50" value="${c.mentionSpam.count}" oninput="updateAutomodField('mentionSpam', 'count', parseInt(this.value)||5)">
+                <span class="am-unit-suffix">Mentions in</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="300" value="${c.mentionSpam.seconds}" oninput="updateAutomodField('mentionSpam', 'seconds', parseInt(this.value)||10)">
+                <span class="am-unit-suffix">Seconds</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      const attachmentSpamHtml = cardShell(
+        "attachmentSpam",
+        "Attachmentspam",
+        "Attachmentspam & Files",
+        "Kiểm soát gửi nhiều tệp liên tiếp và chặn file thực thi nguy hiểm (.exe, .bat, .scr...).",
+        `
+          <div class="am-toggle-row">
+            <span>Chặn tệp thực thi nguy hiểm (.exe, .bat, .cmd...)</span>
+            <label class="dyno-switch">
+              <input type="checkbox" ${c.attachmentSpam.blockDangerousFiles ? "checked" : ""} onchange="updateAutomodField('attachmentSpam', 'blockDangerousFiles', this.checked)">
+              <span class="dyno-switch-slider"></span>
+            </label>
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("attachmentSpam", c.attachmentSpam.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punish after</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="30" value="${c.attachmentSpam.count}" oninput="updateAutomodField('attachmentSpam', 'count', parseInt(this.value)||3)">
+                <span class="am-unit-suffix">Files in</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="300" value="${c.attachmentSpam.seconds}" oninput="updateAutomodField('attachmentSpam', 'seconds', parseInt(this.value)||10)">
+                <span class="am-unit-suffix">Seconds</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      const floodSpamHtml = cardShell(
+        "floodSpam",
+        "Slowmode / Flood",
+        "Spam",
+        "Chặn spam tin nhắn dồn dập trong thời gian ngắn.",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("floodSpam", c.floodSpam.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punish after</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="2" max="40" value="${c.floodSpam.count}" oninput="updateAutomodField('floodSpam', 'count', parseInt(this.value)||5)">
+                <span class="am-unit-suffix">Messages in</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="60" value="${c.floodSpam.seconds}" oninput="updateAutomodField('floodSpam', 'seconds', parseInt(this.value)||4)">
+                <span class="am-unit-suffix">Seconds</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      const capsHtml = cardShell(
+        "caps",
+        "Caps",
+        "Caps threshold",
+        "Xóa hoặc phạt các tin nhắn viết IN HOA quá mức cho phép.",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("caps", c.caps.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Trigger Threshold</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="50" max="100" value="${c.caps.percent}" oninput="updateAutomodField('caps', 'percent', parseInt(this.value)||70)">
+                <span class="am-unit-suffix">% Caps</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="4" max="200" value="${c.caps.minLength}" oninput="updateAutomodField('caps', 'minLength', parseInt(this.value)||10)">
+                <span class="am-unit-suffix">Min Chars</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      const warnHtml = cardShell(
+        "warnThreshold",
+        "Warn",
+        "Warn threshold",
+        "Tự động xử phạt khi thành viên đạt đủ số lần vi phạm.",
+        `
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punishments</label>
+            ${renderPunishmentTagBox("warnThreshold", c.warnThreshold.punishments)}
+          </div>
+          <div>
+            <label class="dash-form-label" style="margin-bottom:6px;">Punish after</label>
+            <div class="am-unit-grid">
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="20" value="${c.warnThreshold.count}" oninput="updateAutomodField('warnThreshold', 'count', parseInt(this.value)||3)">
+                <span class="am-unit-suffix">Warnings</span>
+              </div>
+              <div class="am-unit-group">
+                <input type="number" class="am-unit-input" min="1" max="40320" value="${c.warnThreshold.durationMinutes}" oninput="updateAutomodField('warnThreshold', 'durationMinutes', parseInt(this.value)||60)">
+                <span class="am-unit-suffix">Mute Mins</span>
+              </div>
+            </div>
+          </div>
+        `
+      );
+
+      grid.innerHTML = [badInvitesHtml, badWordsHtml, badLinksHtml, mentionSpamHtml, attachmentSpamHtml, floodSpamHtml, capsHtml, warnHtml].join("");
+    }
+
+    function renderAutomodRules() {
+      renderAutomodCards();
+    }
+
+    function toggleAutomodCard(key, enabled) {
+      if (!automodConfig[key]) return;
+      automodConfig[key].enabled = enabled;
+      if (enabled && !automodConfig.enabled) {
+        automodConfig.enabled = true;
+      }
+      renderAutomodCards();
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function updateAutomodField(key, field, value) {
+      if (!automodConfig[key]) return;
+      automodConfig[key][field] = value;
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function addAutomodWord() {
+      const inp = document.getElementById("am-add-word-input");
+      if (!inp) return;
+      const w = inp.value.trim();
+      if (!w) return;
+      if (!automodConfig.badWords.words.includes(w)) {
+        automodConfig.badWords.words.push(w);
+        renderAutomodCards();
+        triggerUnsaved();
+      }
+      inp.value = "";
+    }
+    function removeAutomodWord(idx) {
+      automodConfig.badWords.words.splice(idx, 1);
+      renderAutomodCards();
+      triggerUnsaved();
+    }
+
+    function addAutomodLink() {
+      const inp = document.getElementById("am-add-link-input");
+      if (!inp) return;
+      const d = inp.value.trim().toLowerCase().replace(/^https?:\/\//, "").split("/")[0];
+      if (!d) return;
+      if (!automodConfig.badLinks.domains.includes(d)) {
+        automodConfig.badLinks.domains.push(d);
+        renderAutomodCards();
+        triggerUnsaved();
+      }
+      inp.value = "";
+    }
+    function removeAutomodLink(idx) {
+      automodConfig.badLinks.domains.splice(idx, 1);
+      renderAutomodCards();
+      triggerUnsaved();
+    }
+
+    function addAutomodPunishment(filterKey, action) {
+      if (!action || !automodConfig[filterKey]) return;
+      const arr = automodConfig[filterKey].punishments || [];
+      if (!arr.includes(action)) arr.push(action);
+      automodConfig[filterKey].punishments = arr;
+      renderAutomodCards();
+      triggerUnsaved();
+    }
+    function removeAutomodPunishment(filterKey, idx) {
+      if (!automodConfig[filterKey]) return;
+      automodConfig[filterKey].punishments.splice(idx, 1);
+      renderAutomodCards();
+      triggerUnsaved();
+    }
+
+    function getAutomodConfigForSave() {
+      return JSON.parse(JSON.stringify(automodConfig));
+    }
+
+    function applyAutomodConfig(cfgObj) {
+      const base = createDefaultAutomodConfig();
+      if (cfgObj && typeof cfgObj === "object" && cfgObj.badInvites) {
+        automodConfig = {
+          ...base,
+          ...cfgObj,
+          ignoredChannels: Array.isArray(cfgObj.ignoredChannels) ? cfgObj.ignoredChannels.slice() : [],
+          ignoredRoles: Array.isArray(cfgObj.ignoredRoles) ? cfgObj.ignoredRoles.slice() : [],
+          badInvites: { ...base.badInvites, ...(cfgObj.badInvites || {}) },
+          badWords: { ...base.badWords, ...(cfgObj.badWords || {}) },
+          badLinks: { ...base.badLinks, ...(cfgObj.badLinks || {}) },
+          mentionSpam: { ...base.mentionSpam, ...(cfgObj.mentionSpam || {}) },
+          attachmentSpam: { ...base.attachmentSpam, ...(cfgObj.attachmentSpam || {}) },
+          floodSpam: { ...base.floodSpam, ...(cfgObj.floodSpam || {}) },
+          caps: { ...base.caps, ...(cfgObj.caps || {}) },
+          warnThreshold: { ...base.warnThreshold, ...(cfgObj.warnThreshold || {}) }
+        };
+      } else {
+        automodConfig = base;
+      }
+      renderAutomodCards();
+      updateSidebarStatusIndicators();
+    }
+
+    async function saveAutomodModule(ev) {
+      const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+      const orig = btn ? btn.textContent : "Save";
+      if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+      try {
+        await saveAllServerSettingsAndSync(false);
+        logRecentActivity("Automod", "Lưu & đồng bộ cài đặt AutoMod lên Bot", "Saved & synced AutoMod filters to Bot");
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+      }
+    }
+
+    // HONEYPOT & ANTI-NUKE CONTROLLERS
+    function renderHoneypotUI() {
+      const chPool = (typeof cachedChannels !== "undefined" && cachedChannels.length) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const hpSw = document.getElementById("cfg-switch-honeypot");
+      if (hpSw) hpSw.checked = Boolean(honeypotConfig.enabled);
+      const purgeInp = document.getElementById("hp-purge-days");
+      if (purgeInp) purgeInp.value = String(honeypotConfig.purgeDays ?? 1);
+
+      const chBox = document.getElementById("hp-channels-tags");
+      if (chBox) {
+        chBox.innerHTML = (honeypotConfig.channels || []).length === 0
+          ? `<span style="font-size:0.76rem;color:#64748b;">Chưa chọn kênh bẫy Honeypot nào</span>`
+          : honeypotConfig.channels.map((id, idx) => {
+              const ch = chPool.find(c => c.id === id);
+              return `<span class="am-tag-chip"># ${escapeHtml(ch ? ch.name : id)} <button type="button" onclick="removeHoneypotChannel(${idx})">&times;</button></span>`;
+            }).join("");
+      }
+
+      const pBox = document.getElementById("hp-punishments-tags");
+      if (pBox) {
+        pBox.innerHTML = (honeypotConfig.punishments || []).length === 0
+          ? `<span style="font-size:0.76rem;color:#64748b;">Chưa chọn hình phạt</span>`
+          : honeypotConfig.punishments.map((p, idx) => `
+              <span class="am-tag-chip">${escapeHtml(PUNISHMENT_LABELS[p] || p)} <button type="button" onclick="removeHoneypotPunishment(${idx})">&times;</button></span>
+            `).join("");
+      }
+
+      const anSw = document.getElementById("cfg-switch-antinuke");
+      if (anSw) anSw.checked = Boolean(antiNukeConfig.enabled);
+      const thEl = document.getElementById("cfg-wizz-threshold");
+      if (thEl) thEl.value = String(antiNukeConfig.maxActions || 5);
+      const winEl = document.getElementById("cfg-wizz-window");
+      if (winEl) winEl.value = String(antiNukeConfig.windowSeconds || 10);
+      const reactEl = document.getElementById("cfg-wizz-reaction");
+      if (reactEl) reactEl.value = antiNukeConfig.reaction || "strip-roles";
+    }
+
+    function syncHoneypotEnableToggle(checked) {
+      honeypotConfig.enabled = Boolean(checked);
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+    function addHoneypotChannel(chId) {
+      if (!chId) return;
+      if (!honeypotConfig.channels.includes(chId)) honeypotConfig.channels.push(chId);
+      renderHoneypotUI();
+      triggerUnsaved();
+    }
+    function removeHoneypotChannel(idx) {
+      honeypotConfig.channels.splice(idx, 1);
+      renderHoneypotUI();
+      triggerUnsaved();
+    }
+    function addHoneypotPunishment(action) {
+      if (!action) return;
+      if (!honeypotConfig.punishments.includes(action)) honeypotConfig.punishments.push(action);
+      renderHoneypotUI();
+      triggerUnsaved();
+    }
+    function removeHoneypotPunishment(idx) {
+      honeypotConfig.punishments.splice(idx, 1);
+      renderHoneypotUI();
+      triggerUnsaved();
+    }
+    function updateHoneypotPurgeDays(val) {
+      honeypotConfig.purgeDays = Math.min(7, Math.max(0, parseInt(val || "1", 10) || 0));
+      triggerUnsaved();
+    }
+    function getHoneypotConfigForSave() {
+      return JSON.parse(JSON.stringify(honeypotConfig));
+    }
+    function applyHoneypotConfig(cfgObj) {
+      const base = createDefaultHoneypotConfig();
+      honeypotConfig = (cfgObj && typeof cfgObj === "object")
+        ? {
+            enabled: Boolean(cfgObj.enabled),
+            channels: Array.isArray(cfgObj.channels) ? cfgObj.channels.slice() : [],
+            punishments: Array.isArray(cfgObj.punishments) && cfgObj.punishments.length ? cfgObj.punishments.slice() : ["ban"],
+            purgeDays: typeof cfgObj.purgeDays === "number" ? cfgObj.purgeDays : 1
+          }
+        : base;
+      renderHoneypotUI();
+      updateSidebarStatusIndicators();
+    }
+    async function saveHoneypotModule(ev) {
+      const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+      const orig = btn ? btn.textContent : "Save Honeypot";
+      if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+      try {
+        await saveAllServerSettingsAndSync(false);
+        logRecentActivity("Honeypot", "Lưu & đồng bộ cấu hình Honeypot lên Bot", "Saved & synced Honeypot config to Bot");
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+      }
+    }
+
+    function syncAntiNukeEnableToggle(checked) {
+      antiNukeConfig.enabled = Boolean(checked);
+      updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+    function handleAntiNukeFieldChange() {
+      antiNukeConfig.maxActions = Math.max(2, parseInt(document.getElementById("cfg-wizz-threshold")?.value || "5", 10) || 5);
+      antiNukeConfig.windowSeconds = Math.max(5, parseInt(document.getElementById("cfg-wizz-window")?.value || "10", 10) || 10);
+      antiNukeConfig.reaction = document.getElementById("cfg-wizz-reaction")?.value || "strip-roles";
+      triggerUnsaved();
+    }
+    function getAntiNukeConfigForSave() {
+      return JSON.parse(JSON.stringify(antiNukeConfig));
+    }
+    function applyAntiNukeConfig(cfgObj) {
+      antiNukeConfig = (cfgObj && typeof cfgObj === "object")
+        ? { ...createDefaultAntiNukeConfig(), ...cfgObj }
+        : createDefaultAntiNukeConfig();
+      renderHoneypotUI();
+      updateSidebarStatusIndicators();
+    }
+    async function saveAntiNukeModule(ev) {
+      handleAntiNukeFieldChange();
+      const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+      const orig = btn ? btn.textContent : "Save Anti-Nuke";
+      if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+      try {
+        await saveAllServerSettingsAndSync(false);
+        logRecentActivity("Anti-Nuke", "Lưu cấu hình Anti-Nuke & Anti-Raid", "Saved Anti-Nuke & Anti-Raid settings");
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+      }
+    }
+
+    // SANCTION LADDER CONTROLLERS
+    function renderSanctionLadder() {
+      const sw = document.getElementById("cfg-switch-ladder");
+      if (sw) sw.checked = Boolean(sanctionLadderConfig.enabled);
+      const list = document.getElementById("sanction-ladder-list");
+      if (!list) return;
+
+      const stages = sanctionLadderConfig.stages || [];
+      if (stages.length === 0) {
+        list.innerHTML = `<div style="padding:14px;color:#64748b;font-size:0.82rem;">Chưa có bậc xử phạt nào. Bấm "+ Thêm bậc xử phạt" để tạo.</div>`;
+        return;
+      }
+
+      list.innerHTML = stages.map((st, idx) => `
+        <div class="ladder-stage-row">
+          <div class="am-unit-group">
+            <input type="number" class="am-unit-input" min="1" max="50" value="${st.violations}" oninput="updateSanctionStage(${idx}, 'violations', parseInt(this.value)||1)">
+            <span class="am-unit-suffix">Lần</span>
+          </div>
+          <select class="form-input" onchange="updateSanctionStage(${idx}, 'action', this.value)">
+            <option value="warn" ${st.action === "warn" ? "selected" : ""}>Direct Message Warning (Warn)</option>
+            <option value="timeout" ${st.action === "timeout" ? "selected" : ""}>Timeout / Mute</option>
+            <option value="kick" ${st.action === "kick" ? "selected" : ""}>Kick from Server</option>
+            <option value="tempban" ${st.action === "tempban" ? "selected" : ""}>Tempban</option>
+            <option value="ban" ${st.action === "ban" ? "selected" : ""}>Permanent Ban</option>
+          </select>
+          <input type="text" class="form-input" value="${escapeHtml(st.duration || "")}" placeholder="${st.action === "timeout" || st.action === "tempban" ? "vd: 1h, 1d" : "Không cần"}" ${st.action === "timeout" || st.action === "tempban" ? "" : "disabled"} oninput="updateSanctionStage(${idx}, 'duration', this.value)">
+          <button type="button" class="stats-ch-icon-btn danger" onclick="removeSanctionStage(${idx})" title="Xóa bậc">✕</button>
         </div>
       `).join("");
     }
 
-    function filterAutomodRules(val) {
-      renderAutomodRules(val);
+    function addSanctionStage() {
+      const nextViolations = sanctionLadderConfig.stages.length > 0
+        ? (Math.max(...sanctionLadderConfig.stages.map(s => Number(s.violations) || 1)) + 1)
+        : 1;
+      sanctionLadderConfig.stages.push({ violations: nextViolations, action: "timeout", duration: "1h" });
+      renderSanctionLadder();
+      triggerUnsaved();
+    }
+    function updateSanctionStage(idx, field, val) {
+      if (!sanctionLadderConfig.stages[idx]) return;
+      sanctionLadderConfig.stages[idx][field] = val;
+      if (field === "action") renderSanctionLadder();
+      triggerUnsaved();
+    }
+    function removeSanctionStage(idx) {
+      sanctionLadderConfig.stages.splice(idx, 1);
+      renderSanctionLadder();
+      triggerUnsaved();
+    }
+    function getSanctionLadderConfigForSave() {
+      return JSON.parse(JSON.stringify(sanctionLadderConfig));
+    }
+    function applySanctionLadderConfig(cfgObj) {
+      const base = createDefaultSanctionLadderConfig();
+      sanctionLadderConfig = (cfgObj && typeof cfgObj === "object")
+        ? {
+            enabled: Boolean(cfgObj.enabled),
+            stages: Array.isArray(cfgObj.stages) ? cfgObj.stages.map(s => ({ ...s })) : base.stages
+          }
+        : base;
+      renderSanctionLadder();
+      updateSidebarStatusIndicators();
+    }
+    async function saveSanctionLadder(ev) {
+      const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+      const orig = btn ? btn.textContent : "Lưu Thang Xử Phạt";
+      if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+      try {
+        await saveAllServerSettingsAndSync(false);
+        logRecentActivity("Ladder", "Lưu thang xử phạt vi phạm", "Saved custom Sanction Ladder");
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+      }
     }
 
-    function openAutomodRuleModal() {
-      document.getElementById("automod-rule-name").value = "";
-      document.getElementById("automod-rule-type").value = "";
-      document.getElementById("automod-rule-action").value = "";
-      openModal("modal-automod-rule");
-    }
-
-    function saveAutomodRule() {
-      const name = document.getElementById("automod-rule-name").value.trim();
-      const type = document.getElementById("automod-rule-type").value;
-      const action = document.getElementById("automod-rule-action").value;
-
-      if (!name || !type || !action) {
-        showToast("Please provide Name, Rule Type, and Action", "warning");
+    // REAL MODERATION LOG TABLE FROM LIVE DISCORD AUDIT LOGS
+    function renderRealModCasesTable(snapshot) {
+      const tbody = document.getElementById("cfg-mod-cases-tbody");
+      if (!tbody) return;
+      const entries = (snapshot && snapshot.auditLogs && Array.isArray(snapshot.auditLogs.audit_log_entries))
+        ? snapshot.auditLogs.audit_log_entries.filter(e => [20, 22, 23, 24].includes(e.action_type))
+        : [];
+      const usersMap = {};
+      if (snapshot && snapshot.auditLogs && Array.isArray(snapshot.auditLogs.users)) {
+        snapshot.auditLogs.users.forEach(u => { usersMap[u.id] = u.global_name || u.username; });
+      }
+      if (entries.length === 0) {
+        tbody.innerHTML = `<tr data-empty-row="1"><td colspan="6" style="padding:18px 14px;text-align:center;color:#64748b;">Chưa có lịch sử Kick/Ban/Timeout nào trong Audit Log gần đây.</td></tr>`;
         return;
       }
-
-      automodRules.push({
-        id: "am-" + Date.now(),
-        name: name,
-        type: type,
-        action: action,
-        enabled: true
-      });
-      renderAutomodRules();
-      closeModal("modal-automod-rule");
-      showToast("Created Automod Rule: " + name, "success");
-      logRecentActivity("Automod", "Thêm quy tắc lọc: " + name, "Created Automod Rule: " + name);
-      triggerUnsaved();
-    }
-
-    function duplicateAutomodRule(idx) {
-      const orig = automodRules[idx];
-      if (!orig) return;
-      automodRules.push({ ...orig, id: "am-" + Date.now(), name: orig.name + " (Copy)" });
-      renderAutomodRules();
-      showToast("Duplicated rule", "success");
-      triggerUnsaved();
-    }
-
-    function toggleAutomodRule(idx, enabled) {
-      if (automodRules[idx]) automodRules[idx].enabled = enabled;
-      triggerUnsaved();
-    }
-    function deleteAutomodRule(idx) {
-      automodRules.splice(idx, 1);
-      renderAutomodRules();
-      triggerUnsaved();
-    }
-
-    function openAutomodDefaultModal() {
-      openModal("modal-automod-default");
-    }
-    function saveAutomodDefaultSettings() {
-      closeModal("modal-automod-default");
-      showToast("Saved Automod Default Settings", "success");
-      triggerUnsaved();
+      const actionMap = { 20: "KICK", 22: "BAN", 23: "UNBAN", 24: "TIMEOUT" };
+      tbody.innerHTML = entries.slice(0, 15).map(e => {
+        const actor = usersMap[e.user_id] || (e.user_id ? `ID:${e.user_id}` : "System");
+        const target = usersMap[e.target_id] || (e.target_id ? `ID:${e.target_id}` : "N/A");
+        const actLabel = actionMap[e.action_type] || `ACT-${e.action_type}`;
+        const pillCls = (e.action_type === 22 || e.action_type === 20) ? "off" : "active";
+        return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+          <td style="padding:11px 14px;color:#94a3b8;font-family:monospace;font-size:0.78rem;">#${escapeHtml(String(e.id || "").slice(-6))}</td>
+          <td style="padding:11px 14px;color:#f1f5f9;">${escapeHtml(target)}</td>
+          <td style="padding:11px 14px;"><span class="sec-pill ${pillCls}">${actLabel}</span></td>
+          <td style="padding:11px 14px;color:#cbd5e1;">${escapeHtml(e.reason || "Không ghi lý do")}</td>
+          <td style="padding:11px 14px;color:#34d399;">${escapeHtml(actor)}</td>
+          <td style="padding:11px 14px;color:#64748b;">Audit Log</td>
+        </tr>`;
+      }).join("");
     }
 
     // =========================================================
@@ -11967,9 +13214,17 @@
     // =========================================================
     // SLOWMODE & PURGE DIRECT EXECUTION
     // =========================================================
-    function setSlowmodePreset(sec) {
+    function setSlowmodePreset(sec, btnEl) {
       const input = document.getElementById("slowmode-seconds-val");
       if (input) input.value = sec;
+      highlightSlowmodePreset(sec);
+    }
+
+    function highlightSlowmodePreset(sec) {
+      const num = parseInt(sec, 10);
+      document.querySelectorAll("#slowmode-preset-btns .slowmode-preset-btn").forEach(btn => {
+        btn.classList.toggle("is-active", Number(btn.dataset.sec) === num);
+      });
     }
 
     async function executeSlowmodeDirect() {
@@ -12122,8 +13377,8 @@
       {
         id: "logs",
         category: "security",
-        name_en: "36 Action Logs",
-        name_vi: "36 Luồng Nhật Ký Server (Audit Logs)",
+        name_en: "Action Log",
+        name_vi: "Action Log (Nhật Ký Sự Kiện)",
         badge_en: "Audit Monitoring",
         badge_vi: "Giám Sát",
         desc_en: "24 granular event streams across 6 categories: Message edits/deletes, member joins/leaves, timeout logs, roles, channels and voice moves.",
@@ -13524,8 +14779,20 @@
       if (typeof renderModulesGrid === "function") {
         renderModulesGrid();
       }
+      if (typeof renderAutomodCards === "function") {
+        renderAutomodCards();
+      }
+      if (typeof renderHoneypotUI === "function") {
+        renderHoneypotUI();
+      }
+      if (typeof renderSanctionLadder === "function") {
+        renderSanctionLadder();
+      }
       if (typeof renderStatsBuilder === "function") {
         renderStatsBuilder();
+      }
+      if (typeof updateSidebarStatusIndicators === "function") {
+        updateSidebarStatusIndicators();
       }
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
