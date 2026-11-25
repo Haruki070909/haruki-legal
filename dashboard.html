@@ -5866,6 +5866,294 @@
       grid-template-columns: 1fr 1fr;
     }
   }
+
+  /* Reaction Roles + Visual Embed Builder */
+  .rr-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0a0e16;
+  }
+  .rr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    text-align: left;
+  }
+  .rr-table th {
+    padding: 11px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0d121d;
+  }
+  .rr-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    vertical-align: middle;
+  }
+  .rr-table tr:last-child td {
+    border-bottom: none;
+  }
+  .rr-type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.71rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+  }
+  .rr-map-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    color: #e2e8f0;
+    margin: 2px 4px 2px 0;
+  }
+  .dyno-modal-card.rr-modal-card {
+    max-width: 820px;
+    background: #0b1019;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.78);
+  }
+  .rr-section-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .rr-hint {
+    font-size: 0.74rem;
+    color: #94a3b8;
+    margin-top: 5px;
+    line-height: 1.45;
+  }
+  .rr-btn-secondary-wide {
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #171e2c;
+    color: #e2e8f0;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease;
+  }
+  .rr-btn-secondary-wide:hover {
+    background: #1e2738;
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .rr-btn-emerald-wide {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    background: #10b981;
+    color: #032116;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.14s ease;
+  }
+  .rr-btn-emerald-wide:hover {
+    background: #34d399;
+  }
+  .rr-embed-panel {
+    background: #0d131f;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    padding: 14px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .rr-embed-panel.open {
+    display: flex;
+  }
+  .rr-embed-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .rr-embed-toolbar-left,
+  .rr-embed-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .rr-color-pick {
+    width: 34px;
+    height: 34px;
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: #111827;
+    cursor: pointer;
+  }
+  .rr-embed-card {
+    background: #111724;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid var(--rr-embed-color, #10b981);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rr-embed-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.1fr;
+    gap: 8px;
+  }
+  .rr-embed-grid-title {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+  }
+  .rr-embed-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .rr-embed-grid-footer {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.3fr;
+    gap: 8px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .rr-embed-grid-3,
+    .rr-embed-grid-title,
+    .rr-embed-grid-2,
+    .rr-embed-grid-footer {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rr-char-count {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+  .rr-field-card {
+    background: #0b101b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .rr-field-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rr-timestamp-wrap {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .rr-timestamp-wrap input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  .rr-ts-clear {
+    padding: 0 12px;
+    border-radius: 0 8px 8px 0;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.16);
+    color: #fca5a5;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .rr-ts-clear:hover {
+    background: rgba(239, 68, 68, 0.28);
+  }
+  .rr-embed-preview {
+    background: #2b2d31;
+    border-left: 4px solid var(--rr-embed-color, #10b981);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    color: #dbdee1;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .rr-embed-preview.open {
+    display: flex;
+  }
+  .rr-map-row {
+    background: #0f1522;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 9px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .rr-map-top {
+    display: grid;
+    grid-template-columns: 165px 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .rr-map-top {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rr-emoji-quickrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+  .rr-emoji-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #141c2b;
+    color: #f8fafc;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+  .rr-emoji-chip:hover {
+    border-color: rgba(16, 185, 129, 0.45);
+    background: #1a2436;
+  }
 </style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
@@ -6972,6 +7260,13 @@
             <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
             <span data-i18n="sideRoles">Role Management</span>
           </span>
+        </button>
+        <button class="dyno-nav-item" id="cfg-btn-reactionroles" onclick="switchConfigTab('reactionroles')">
+          <span class="nav-item-main">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3.5 7.5c.83 0 1.5.67 1.5 1.5S9.33 12.5 8.5 12.5 7 11.83 7 11s.67-1.5 1.5-1.5zm7 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5S14 11.83 14 11s.67-1.5 1.5-1.5zM12 17.5c-2.33 0-4.32-1.45-5.12-3.5h1.67c.69 1.19 1.97 2 3.45 2s2.75-.81 3.45-2h1.67c-.8 2.05-2.79 3.5-5.12 3.5z"/></svg>
+            <span data-i18n="sideReactionRoles">Reaction Roles</span>
+          </span>
+          <span class="nav-status-pill is-off" id="nav-st-reactionroles">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-welcome" onclick="switchConfigTab('welcome')">
           <span class="nav-item-main">
@@ -8482,6 +8777,41 @@
       </div>
     </div>
 
+    <!-- TAB: REACTION ROLES -->
+    <div id="cfg-pane-reactionroles" class="tab-pane">
+      <div class="panel-card">
+        <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 class="panel-title">Reaction Roles</h3>
+            <p class="panel-subtitle">Tạo tin nhắn/Embed tự chọn role qua reaction và đồng bộ xử lý trực tiếp bởi HaruMod (normal, unique, verify, drop, reversed, limit, binding, temp).</p>
+          </div>
+          <button type="button" class="btn btn-emerald btn-sm" onclick="openReactionRoleModal()" style="display:inline-flex;align-items:center;gap:6px;">
+            <span>+ Create new reaction role</span>
+          </button>
+        </div>
+
+        <div class="rr-table-wrap" style="margin-top:16px;">
+          <table class="rr-table">
+            <thead>
+              <tr>
+                <th>Channel</th>
+                <th>Message ID</th>
+                <th>Type</th>
+                <th>Emoji &rarr; Role</th>
+                <th>Restrictions</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="rr-table-body">
+              <tr>
+                <td colspan="6" style="text-align:center;padding:28px 16px;color:#64748b;">Chưa có Reaction Role nào. Nhấn <strong>+ Create new reaction role</strong> để tạo mới.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- TAB 7: SIMULATOR -->
         <div id="cfg-pane-sim" class="tab-pane">
       <div class="panel-card">
@@ -9604,6 +9934,7 @@
         "sideHoneypot": "Bẫy Honeypot & Anti-Raid",
         "sideLadder": "Thang Phạt Leo Thang",
         "sideRoles": "Quản Lý Vai Trò",
+        "sideReactionRoles": "Reaction Roles",
         "sideWelcome": "Tin Nhắn Chào Mừng",
         "navGroupSystem": "HỆ THỐNG & CÔNG CỤ",
         "sideSimulator": "Giả Lập Bộ Lọc",
@@ -9926,6 +10257,7 @@
         "sideHoneypot": "Honeypot & Anti-Raid",
         "sideLadder": "Sanction Ladder",
         "sideRoles": "Role Management",
+        "sideReactionRoles": "Reaction Roles",
         "sideWelcome": "Welcome & Goodbyes",
         "navGroupSystem": "SYSTEM & TOOLS",
         "sideSimulator": "Live Filter Tester",
@@ -10693,6 +11025,7 @@
       members: "Trung tâm Xử phạt Thành viên",
       welcome: "Chào mừng & Tự động gán quyền",
       roles: "Quản lý Role & Quyền",
+      reactionroles: "Reaction Roles",
       logs: "Action Log",
       sim: "Live Filter Tester",
       sync: "Đồng bộ Discord Real-time"
@@ -10970,6 +11303,7 @@
       }
       if (tabKey === "autoban" && typeof renderAutobanRules === "function") renderAutobanRules();
       if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
+      if (tabKey === "reactionroles" && typeof renderReactionRolesTable === "function") renderReactionRolesTable();
 
       // Stabilize viewport with ZERO downward jitter/jump
       requestAnimationFrame(() => {
@@ -11147,6 +11481,7 @@
         },
         autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
         autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
+        reactionRoles: typeof getReactionRolesForSave === "function" ? getReactionRolesForSave() : [],
         statsBoard: typeof getStatsBoardConfigForSave === "function" ? getStatsBoardConfigForSave() : null,
         savedAt: new Date().toISOString()
       };
@@ -11259,6 +11594,9 @@
       if (Array.isArray(cfg.autoPurge) && cfg.autoPurge.length > 0 && typeof autoPurgeJobs !== "undefined") {
         autoPurgeJobs = cfg.autoPurge;
         if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+      }
+      if (typeof applyReactionRolesFromCloud === "function") {
+        applyReactionRolesFromCloud(cfg.reactionRoles);
       }
       updateLiveBotPreview(false);
     }
@@ -11894,6 +12232,7 @@
         honeypot: "Honeypot & Chống Raid",
         cases: "Thang phạt vi phạm",
         roles: "Quản lý Role & Quyền",
+        reactionroles: "Reaction Roles",
         welcome: "Chào mừng & Tự động gán quyền",
         sim: "Live Filter Tester",
         sync: "Đồng bộ Discord Real-time"
@@ -11911,6 +12250,7 @@
         honeypot: "Honeypot & Anti-Raid",
         cases: "Sanction Ladder",
         roles: "Role Management",
+        reactionroles: "Reaction Roles",
         welcome: "Welcome & Goodbyes",
         sim: "Live Filter Tester",
         sync: "Discord Real-time Sync"
@@ -11947,6 +12287,7 @@
         "cfg-welcome-channel",
         "cfg-goodbye-channel",
         "cfg-dash-updates-channel",
+        "rr-channel",
         "chat-channel-select"
       ];
 
@@ -11955,7 +12296,7 @@
         if (!el) return;
         const curVal = el.value;
         el.innerHTML = id === "chat-channel-select" ? "" : '<option value="">Select Channel..</option>';
-        const listForSelect = (id === "chat-channel-select" || id === "hp-add-channel" || id === "cfg-honeypot-channel")
+        const listForSelect = (id === "chat-channel-select" || id === "hp-add-channel" || id === "cfg-honeypot-channel" || id === "rr-channel")
           ? channels.filter(c => c.type === 0 || c.type === 5)
           : channels;
         listForSelect.forEach(ch => {
@@ -11988,7 +12329,9 @@
         "automod-affected-roles",
         "automod-ignored-roles",
         "automod-default-ignored-roles",
-        "cfg-dash-role-picker"
+        "cfg-dash-role-picker",
+        "rr-allow-role-picker",
+        "rr-block-role-picker"
       ];
       roleSelectIds.forEach(id => {
         const el = document.getElementById(id);
@@ -12003,6 +12346,12 @@
         });
         if (curVal) el.value = curVal;
       });
+      if (typeof renderReactionRoleMappings === "function" && document.getElementById("modal-reaction-role")?.classList.contains("open")) {
+        renderReactionRoleMappings();
+      }
+      if (typeof renderReactionRolesTable === "function") {
+        renderReactionRolesTable();
+      }
     }
 
     // Action Log Specifying Channels toggle
@@ -12455,6 +12804,7 @@
       const hpOn = Boolean(honeypotConfig.enabled) || Boolean(antiNukeConfig.enabled);
       const ladOn = Boolean(sanctionLadderConfig.enabled);
       const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked);
+      const rrOn = typeof reactionRolesConfig !== "undefined" && Array.isArray(reactionRolesConfig) && reactionRolesConfig.length > 0;
 
       setPill("nav-st-logs", logsOn);
       setPill("nav-st-channels", cleanOn);
@@ -12462,6 +12812,7 @@
       setPill("nav-st-automod", amOn);
       setPill("nav-st-honeypot", hpOn);
       setPill("nav-st-cases", ladOn);
+      setPill("nav-st-reactionroles", rrOn);
       setPill("nav-st-welcome", welOn);
 
       if (document.getElementById("cfg-automod-active")) document.getElementById("cfg-automod-active").checked = amOn;
@@ -14769,6 +15120,705 @@
     }
 
     // =========================================================
+    // REACTION ROLES & VISUAL EMBED BUILDER (CARL-BOT STYLE)
+    // =========================================================
+    let reactionRolesConfig = [];
+    let rrGuildEmojisCache = [];
+    let rrEditingId = null;
+    let rrModalMappings = [];
+    let rrModalAllowedRoles = [];
+    let rrModalBlacklistedRoles = [];
+    let rrModalEmbedFields = [];
+    let rrEmbedBuilderVisible = false;
+    let rrEmbedPreviewVisible = true;
+
+    const RR_DEFAULT_EMOJIS = ["✅", "🎮", "🔥", "❤️", "⭐", "🔔", "🛡️", "💎", "🎵", "📌"];
+
+    const RR_TYPE_INFO = {
+      normal: "Cấp role khi member thả reaction và tự động gỡ role khi bỏ reaction.",
+      unique: "Mỗi thành viên chỉ giữ được 1 role duy nhất trong tin nhắn này (tự thay thế role cũ).",
+      verify: "Chế độ Xác minh: chỉ cấp role khi nhấn reaction, bỏ reaction sẽ không mất role.",
+      drop: "Chỉ gỡ role khỏi thành viên khi nhấn reaction (không cấp mới).",
+      reversed: "Đảo ngược: nhấn reaction để gỡ role, bỏ reaction để nhận lại role.",
+      limit: "Giới hạn số lượng role tối đa mỗi thành viên có thể nhận trên tin nhắn này.",
+      binding: "Khóa cố định role đầu tiên đã chọn — thành viên không thể đổi hoặc tự gỡ.",
+      temp: "Cấp role tạm thời và tự động thu hồi sau khoảng thời gian đã cài đặt."
+    };
+
+    function getReactionRolesForSave() {
+      return JSON.parse(JSON.stringify(Array.isArray(reactionRolesConfig) ? reactionRolesConfig : []));
+    }
+
+    function applyReactionRolesFromCloud(list) {
+      reactionRolesConfig = Array.isArray(list) ? JSON.parse(JSON.stringify(list)) : [];
+      renderReactionRolesTable();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+    }
+
+    async function fetchGuildEmojisForPicker(guildId) {
+      if (!guildId || typeof DiscordAPI === "undefined") return;
+      try {
+        const res = await DiscordAPI.request(`/guilds/${guildId}/emojis`);
+        if (res.ok && Array.isArray(res.data)) {
+          rrGuildEmojisCache = res.data.map(e => ({
+            id: e.id,
+            name: e.name,
+            animated: Boolean(e.animated),
+            tag: e.animated ? `<a:${e.name}:${e.id}>` : `<:${e.name}:${e.id}>`,
+            url: `https://cdn.discordapp.com/emojis/${e.id}.${e.animated ? "gif" : "png"}?size=32`
+          }));
+          if (document.getElementById("modal-reaction-role")?.classList.contains("open")) {
+            renderReactionRoleMappings();
+          }
+        }
+      } catch (_) {}
+    }
+
+    function formatEmojiForDiscordRest(raw) {
+      const val = String(raw || "").trim();
+      const customMatch = val.match(/^<(a?):([a-zA-Z0-9_]+):(\d+)>$/);
+      if (customMatch) {
+        return encodeURIComponent(customMatch[2]) + ":" + customMatch[3];
+      }
+      const bareMatch = val.match(/^([a-zA-Z0-9_]+):(\d+)$/);
+      if (bareMatch) {
+        return encodeURIComponent(bareMatch[1]) + ":" + bareMatch[2];
+      }
+      return encodeURIComponent(val);
+    }
+
+    function renderEmojiVisualHtml(raw) {
+      const val = String(raw || "").trim();
+      const customMatch = val.match(/^<(a?):([a-zA-Z0-9_]+):(\d+)>$/);
+      if (customMatch) {
+        const ext = customMatch[1] === "a" ? "gif" : "png";
+        return `<img src="https://cdn.discordapp.com/emojis/${customMatch[3]}.${ext}?size=24" alt=":${escapeHtml(customMatch[2])}:" style="width:18px;height:18px;vertical-align:middle;object-fit:contain;">`;
+      }
+      return escapeHtml(val || "⭐");
+    }
+
+    function getAssignableRolesList() {
+      const rawRoles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      return rawRoles.filter(r => r && r.name !== "@everyone" && !r.managed);
+    }
+
+    function openReactionRoleModal(editId = null) {
+      if (typeof populateAllDynoDropdowns === "function") populateAllDynoDropdowns();
+      rrEditingId = editId;
+      const existing = editId ? reactionRolesConfig.find(item => item.id === editId) : null;
+
+      const titleEl = document.getElementById("rr-modal-title");
+      const submitEl = document.getElementById("rr-submit-btn");
+      if (titleEl) titleEl.textContent = existing ? "Edit reaction role" : "Create reaction role";
+      if (submitEl) submitEl.textContent = existing ? "Save Changes" : "Create";
+
+      const modeEl = document.getElementById("rr-mode");
+      const chEl = document.getElementById("rr-channel");
+      const msgIdEl = document.getElementById("rr-message-id");
+      const contentEl = document.getElementById("rr-content");
+      const typeEl = document.getElementById("rr-type");
+      const limitMaxEl = document.getElementById("rr-limit-max");
+      const tempDurEl = document.getElementById("rr-temp-duration");
+      const tempUnitEl = document.getElementById("rr-temp-unit");
+
+      if (existing) {
+        if (modeEl) modeEl.value = existing.mode || "post_embed";
+        if (chEl) chEl.value = existing.channelId || "";
+        if (msgIdEl) msgIdEl.value = existing.messageId || "";
+        if (contentEl) contentEl.value = existing.content || "";
+        if (typeEl) typeEl.value = existing.type || "normal";
+        if (limitMaxEl) limitMaxEl.value = existing.maxRoles || 1;
+        const mins = Number(existing.tempMinutes || 60);
+        if (mins % 1440 === 0 && tempDurEl && tempUnitEl) {
+          tempDurEl.value = Math.max(1, mins / 1440);
+          tempUnitEl.value = "1440";
+        } else if (mins % 60 === 0 && tempDurEl && tempUnitEl) {
+          tempDurEl.value = Math.max(1, mins / 60);
+          tempUnitEl.value = "60";
+        } else if (tempDurEl && tempUnitEl) {
+          tempDurEl.value = Math.max(1, mins);
+          tempUnitEl.value = "1";
+        }
+        rrModalMappings = JSON.parse(JSON.stringify(existing.mappings || []));
+        rrModalAllowedRoles = [...(existing.allowedRoles || [])];
+        rrModalBlacklistedRoles = [...(existing.blacklistedRoles || [])];
+        loadEmbedObjIntoBuilder(existing.embed || null);
+        rrEmbedBuilderVisible = Boolean(existing.embed && Object.keys(existing.embed).length > 0);
+      } else {
+        if (modeEl) modeEl.value = "post_embed";
+        const defCh = (cachedChannels || GARDEN_REAL_CHANNELS).find(c => c.type === 0 && /role|general|chat/i.test(c.name));
+        if (chEl) chEl.value = defCh ? defCh.id : "";
+        if (msgIdEl) msgIdEl.value = "";
+        if (contentEl) contentEl.value = "";
+        if (typeEl) typeEl.value = "normal";
+        if (limitMaxEl) limitMaxEl.value = 1;
+        if (tempDurEl) tempDurEl.value = 60;
+        if (tempUnitEl) tempUnitEl.value = "1";
+        rrModalMappings = [{ emoji: "✅", roleId: "" }];
+        rrModalAllowedRoles = [];
+        rrModalBlacklistedRoles = [];
+        clearReactionRoleEmbed(true);
+        rrEmbedBuilderVisible = false;
+      }
+
+      syncEmbedPanelVisibility();
+      onReactionRoleModeChange();
+      onReactionRoleTypeChange();
+      renderReactionRoleMappings();
+      renderReactionRoleFilterChips();
+      updateReactionRoleEmbedCountersAndPreview();
+      openModal("modal-reaction-role");
+      if (currentGuildId && rrGuildEmojisCache.length === 0) {
+        fetchGuildEmojisForPicker(currentGuildId);
+      }
+      if (typeof window.refreshHaruSelects === "function") window.refreshHaruSelects();
+    }
+
+    function closeReactionRoleModal() {
+      closeModal("modal-reaction-role");
+    }
+
+    function onReactionRoleModeChange() {
+      const mode = document.getElementById("rr-mode")?.value || "post_embed";
+      const isPost = mode === "post_embed";
+      const msgWrap = document.getElementById("rr-msgid-wrap");
+      const contentWrap = document.getElementById("rr-content-wrap");
+      const embToggleBtn = document.getElementById("rr-toggle-embed-btn");
+      const embPanel = document.getElementById("rr-embed-builder-wrap");
+      if (msgWrap) msgWrap.style.display = isPost ? "none" : "block";
+      if (contentWrap) contentWrap.style.display = isPost ? "block" : "none";
+      if (embToggleBtn) embToggleBtn.style.display = isPost ? "block" : "none";
+      if (embPanel && !isPost) embPanel.classList.remove("open");
+      if (embPanel && isPost) embPanel.classList.toggle("open", rrEmbedBuilderVisible);
+    }
+
+    function onReactionRoleTypeChange() {
+      const t = document.getElementById("rr-type")?.value || "normal";
+      const descEl = document.getElementById("rr-type-desc");
+      if (descEl) descEl.textContent = RR_TYPE_INFO[t] || RR_TYPE_INFO.normal;
+      const limitWrap = document.getElementById("rr-limit-wrap");
+      const tempWrap = document.getElementById("rr-temp-wrap");
+      if (limitWrap) limitWrap.style.display = t === "limit" ? "block" : "none";
+      if (tempWrap) tempWrap.style.display = t === "temp" ? "block" : "none";
+    }
+
+    function syncEmbedPanelVisibility() {
+      const panel = document.getElementById("rr-embed-builder-wrap");
+      const btn = document.getElementById("rr-toggle-embed-btn");
+      if (panel) panel.classList.toggle("open", rrEmbedBuilderVisible);
+      if (btn) btn.textContent = rrEmbedBuilderVisible ? "Hide embed builder" : "Show embed builder";
+      const previewEl = document.getElementById("rr-embed-preview");
+      if (previewEl) previewEl.classList.toggle("open", rrEmbedBuilderVisible && rrEmbedPreviewVisible);
+    }
+
+    function toggleReactionRoleEmbedBuilder(forceState) {
+      rrEmbedBuilderVisible = typeof forceState === "boolean" ? forceState : !rrEmbedBuilderVisible;
+      syncEmbedPanelVisibility();
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function toggleReactionRoleEmbedPreview() {
+      rrEmbedPreviewVisible = !rrEmbedPreviewVisible;
+      syncEmbedPanelVisibility();
+    }
+
+    function syncReactionRoleColor(val, fromText = false) {
+      const colorInput = document.getElementById("rr-emb-color");
+      const hexInput = document.getElementById("rr-emb-color-hex");
+      let hex = String(val || "#10b981").trim();
+      if (!hex.startsWith("#")) hex = "#" + hex;
+      if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+        if (colorInput && fromText) colorInput.value = hex;
+        if (hexInput && !fromText) hexInput.value = hex.toUpperCase();
+        const card = document.getElementById("rr-embed-card");
+        const prev = document.getElementById("rr-embed-preview");
+        if (card) card.style.setProperty("--rr-embed-color", hex);
+        if (prev) prev.style.setProperty("--rr-embed-color", hex);
+        updateReactionRoleEmbedCountersAndPreview();
+      }
+    }
+
+    function clearReactionRoleTimestamp() {
+      const tsEl = document.getElementById("rr-emb-timestamp");
+      if (tsEl) tsEl.value = "";
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function loadEmbedObjIntoBuilder(emb) {
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ""; };
+      if (!emb) {
+        clearReactionRoleEmbed(true);
+        return;
+      }
+      const hexColor = typeof emb.color === "number"
+        ? "#" + emb.color.toString(16).padStart(6, "0").toUpperCase()
+        : (emb.colorHex || "#10B981");
+      setVal("rr-emb-color", hexColor);
+      setVal("rr-emb-color-hex", hexColor);
+      syncReactionRoleColor(hexColor, true);
+      setVal("rr-emb-author-icon", emb.author?.icon_url || "");
+      setVal("rr-emb-author-name", emb.author?.name || "");
+      setVal("rr-emb-author-url", emb.author?.url || "");
+      setVal("rr-emb-title", emb.title || "");
+      setVal("rr-emb-title-url", emb.url || "");
+      setVal("rr-emb-desc", emb.description || "");
+      setVal("rr-emb-image", emb.image?.url || "");
+      setVal("rr-emb-thumb", emb.thumbnail?.url || "");
+      setVal("rr-emb-footer", emb.footer?.text || "");
+      setVal("rr-emb-footer-icon", emb.footer?.icon_url || "");
+      if (emb.timestamp) {
+        try {
+          const d = new Date(emb.timestamp);
+          if (!isNaN(d.getTime())) {
+            const localIso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            setVal("rr-emb-timestamp", localIso);
+          } else {
+            setVal("rr-emb-timestamp", "");
+          }
+        } catch (_) { setVal("rr-emb-timestamp", ""); }
+      } else {
+        setVal("rr-emb-timestamp", "");
+      }
+      rrModalEmbedFields = Array.isArray(emb.fields)
+        ? emb.fields.slice(0, 25).map(f => ({ name: f.name || "", value: f.value || "", inline: Boolean(f.inline) }))
+        : [];
+      renderReactionRoleEmbedFields();
+    }
+
+    function clearReactionRoleEmbed(silent = false) {
+      [
+        "rr-emb-author-icon", "rr-emb-author-name", "rr-emb-author-url",
+        "rr-emb-title", "rr-emb-title-url", "rr-emb-desc",
+        "rr-emb-image", "rr-emb-thumb", "rr-emb-footer", "rr-emb-footer-icon", "rr-emb-timestamp"
+      ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const colorInput = document.getElementById("rr-emb-color");
+      const hexInput = document.getElementById("rr-emb-color-hex");
+      if (colorInput) colorInput.value = "#10b981";
+      if (hexInput) hexInput.value = "#10B981";
+      syncReactionRoleColor("#10B981", true);
+      rrModalEmbedFields = [];
+      renderReactionRoleEmbedFields();
+      if (!silent) updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function addReactionRoleEmbedField() {
+      if (rrModalEmbedFields.length >= 25) {
+        showToast("Discord giới hạn tối đa 25 fields mỗi Embed!", "warning");
+        return;
+      }
+      rrModalEmbedFields.push({ name: "", value: "", inline: false });
+      renderReactionRoleEmbedFields();
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function removeReactionRoleEmbedField(idx) {
+      rrModalEmbedFields.splice(idx, 1);
+      renderReactionRoleEmbedFields();
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function updateReactionRoleEmbedField(idx, key, val) {
+      if (!rrModalEmbedFields[idx]) return;
+      rrModalEmbedFields[idx][key] = val;
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    function renderReactionRoleEmbedFields() {
+      const box = document.getElementById("rr-emb-fields-list");
+      const cntEl = document.getElementById("rr-cnt-fields");
+      if (cntEl) cntEl.textContent = `${rrModalEmbedFields.length}/25 fields`;
+      if (!box) return;
+      box.innerHTML = rrModalEmbedFields.map((f, idx) => `
+        <div class="rr-field-card">
+          <div class="rr-field-top">
+            <input type="text" class="form-input" maxlength="256" placeholder="Field name" value="${escapeHtml(f.name)}" oninput="updateReactionRoleEmbedField(${idx}, 'name', this.value)" style="flex:1;">
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.76rem;color:#cbd5e1;white-space:nowrap;cursor:pointer;">
+              <input type="checkbox" ${f.inline ? "checked" : ""} onchange="updateReactionRoleEmbedField(${idx}, 'inline', this.checked)"> Inline
+            </label>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="removeReactionRoleEmbedField(${idx})" style="padding:4px 10px;">&times;</button>
+          </div>
+          <textarea class="form-input" rows="2" maxlength="1024" placeholder="Field value" oninput="updateReactionRoleEmbedField(${idx}, 'value', this.value)">${escapeHtml(f.value)}</textarea>
+        </div>
+      `).join("");
+    }
+
+    function buildDiscordEmbedFromBuilder() {
+      const getVal = (id) => (document.getElementById(id)?.value || "").trim();
+      const authorName = getVal("rr-emb-author-name");
+      const authorIcon = getVal("rr-emb-author-icon");
+      const authorUrl = getVal("rr-emb-author-url");
+      const title = getVal("rr-emb-title");
+      const titleUrl = getVal("rr-emb-title-url");
+      const description = getVal("rr-emb-desc");
+      const imageUrl = getVal("rr-emb-image");
+      const thumbUrl = getVal("rr-emb-thumb");
+      const footerText = getVal("rr-emb-footer");
+      const footerIcon = getVal("rr-emb-footer-icon");
+      const tsRaw = getVal("rr-emb-timestamp");
+      const hex = getVal("rr-emb-color-hex") || getVal("rr-emb-color") || "#10B981";
+      const validFields = rrModalEmbedFields.filter(f => f.name.trim() && f.value.trim()).map(f => ({
+        name: f.name.trim().slice(0, 256),
+        value: f.value.trim().slice(0, 1024),
+        inline: Boolean(f.inline)
+      }));
+
+      const hasContent = Boolean(authorName || title || description || imageUrl || thumbUrl || footerText || tsRaw || validFields.length > 0);
+      if (!hasContent) return null;
+
+      const embed = {
+        color: parseInt(hex.replace("#", ""), 16) || 0x10b981
+      };
+      if (authorName) {
+        embed.author = { name: authorName.slice(0, 256) };
+        if (/^https?:\/\//i.test(authorIcon)) embed.author.icon_url = authorIcon;
+        if (/^https?:\/\//i.test(authorUrl)) embed.author.url = authorUrl;
+      }
+      if (title) {
+        embed.title = title.slice(0, 256);
+        if (/^https?:\/\//i.test(titleUrl)) embed.url = titleUrl;
+      }
+      if (description) embed.description = description.slice(0, 4096);
+      if (validFields.length > 0) embed.fields = validFields;
+      if (/^https?:\/\//i.test(imageUrl)) embed.image = { url: imageUrl };
+      if (/^https?:\/\//i.test(thumbUrl)) embed.thumbnail = { url: thumbUrl };
+      if (footerText) {
+        embed.footer = { text: footerText.slice(0, 2048) };
+        if (/^https?:\/\//i.test(footerIcon)) embed.footer.icon_url = footerIcon;
+      }
+      if (tsRaw) {
+        const d = new Date(tsRaw);
+        if (!isNaN(d.getTime())) embed.timestamp = d.toISOString();
+      }
+      return embed;
+    }
+
+    function updateReactionRoleEmbedCountersAndPreview() {
+      const titleLen = (document.getElementById("rr-emb-title")?.value || "").length;
+      const descLen = (document.getElementById("rr-emb-desc")?.value || "").length;
+      const footerLen = (document.getElementById("rr-emb-footer")?.value || "").length;
+      const tCnt = document.getElementById("rr-cnt-title");
+      const dCnt = document.getElementById("rr-cnt-desc");
+      const fCnt = document.getElementById("rr-cnt-footer");
+      if (tCnt) tCnt.textContent = `${titleLen}/256`;
+      if (dCnt) dCnt.textContent = `${descLen}/4096`;
+      if (fCnt) fCnt.textContent = `${footerLen}/2048`;
+
+      const prevEl = document.getElementById("rr-embed-preview");
+      if (!prevEl) return;
+      const emb = buildDiscordEmbedFromBuilder();
+      if (!emb) {
+        prevEl.innerHTML = `<span style="color:#94a3a6;font-size:0.78rem;">Embed preview sẽ hiển thị trực tiếp tại đây khi bạn nhập Title, Description hoặc Fields...</span>`;
+        return;
+      }
+      let html = "";
+      if (emb.author) {
+        html += `<div style="display:flex;align-items:center;gap:7px;font-size:0.76rem;font-weight:700;color:#fff;">
+          ${emb.author.icon_url ? `<img src="${escapeHtml(emb.author.icon_url)}" style="width:20px;height:20px;border-radius:50%;object-fit:cover;">` : ""}
+          <span>${escapeHtml(emb.author.name)}</span>
+        </div>`;
+      }
+      html += `<div style="display:flex;justify-content:space-between;gap:12px;">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;">
+          ${emb.title ? `<div style="font-size:0.95rem;font-weight:700;color:#fff;word-break:break-word;">${escapeHtml(emb.title)}</div>` : ""}
+          ${emb.description ? `<div style="font-size:0.82rem;color:#dbdee1;white-space:pre-wrap;word-break:break-word;">${escapeHtml(emb.description)}</div>` : ""}
+          ${Array.isArray(emb.fields) && emb.fields.length > 0 ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:4px;">${emb.fields.map(fl => `<div style="${fl.inline ? "" : "grid-column:1/-1;"}"><div style="font-size:0.75rem;font-weight:700;color:#fff;">${escapeHtml(fl.name)}</div><div style="font-size:0.78rem;color:#dbdee1;white-space:pre-wrap;">${escapeHtml(fl.value)}</div></div>`).join("")}</div>` : ""}
+        </div>
+        ${emb.thumbnail?.url ? `<img src="${escapeHtml(emb.thumbnail.url)}" style="width:68px;height:68px;border-radius:6px;object-fit:cover;flex-shrink:0;">` : ""}
+      </div>`;
+      if (emb.image?.url) {
+        html += `<img src="${escapeHtml(emb.image.url)}" style="max-width:100%;max-height:220px;border-radius:6px;object-fit:cover;margin-top:4px;">`;
+      }
+      if (emb.footer || emb.timestamp) {
+        const footerParts = [];
+        if (emb.footer?.text) footerParts.push(escapeHtml(emb.footer.text));
+        if (emb.timestamp) footerParts.push(new Date(emb.timestamp).toLocaleString());
+        html += `<div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:#949ba4;margin-top:2px;">
+          ${emb.footer?.icon_url ? `<img src="${escapeHtml(emb.footer.icon_url)}" style="width:16px;height:16px;border-radius:50%;object-fit:cover;">` : ""}
+          <span>${footerParts.join(" • ")}</span>
+        </div>`;
+      }
+      prevEl.innerHTML = html;
+    }
+
+    function addReactionRoleMappingRow() {
+      rrModalMappings.push({ emoji: "", roleId: "" });
+      renderReactionRoleMappings();
+    }
+
+    function removeReactionRoleMappingRow(idx) {
+      rrModalMappings.splice(idx, 1);
+      renderReactionRoleMappings();
+    }
+
+    function updateReactionRoleMappingRow(idx, key, val) {
+      if (!rrModalMappings[idx]) return;
+      rrModalMappings[idx][key] = val;
+    }
+
+    function pickQuickEmojiForRow(idx, emojiVal) {
+      if (!rrModalMappings[idx]) return;
+      rrModalMappings[idx].emoji = emojiVal;
+      renderReactionRoleMappings();
+    }
+
+    function renderReactionRoleMappings() {
+      const box = document.getElementById("rr-mappings-list");
+      if (!box) return;
+      if (rrModalMappings.length === 0) {
+        box.innerHTML = `<div style="font-size:0.78rem;color:#64748b;padding:10px 12px;border:1px dashed rgba(255,255,255,0.1);border-radius:8px;text-align:center;">Chưa có emoji nào. Nhấn <strong>+ Add emoji</strong> để gắn Emoji &rarr; Role.</div>`;
+        return;
+      }
+      const roles = getAssignableRolesList();
+      const customBtns = rrGuildEmojisCache.slice(0, 12).map(e =>
+        `<button type="button" class="rr-emoji-chip" title=":${escapeHtml(e.name)}:" onclick="pickQuickEmojiForRow(__IDX__, '${escapeHtml(e.tag)}')"><img src="${e.url}" style="width:16px;height:16px;object-fit:contain;"></button>`
+      ).join("");
+      const defaultBtns = RR_DEFAULT_EMOJIS.map(em =>
+        `<button type="button" class="rr-emoji-chip" onclick="pickQuickEmojiForRow(__IDX__, '${em}')">${em}</button>`
+      ).join("");
+
+      box.innerHTML = rrModalMappings.map((m, idx) => {
+        const quickRow = (defaultBtns + customBtns).replace(/__IDX__/g, String(idx));
+        return `
+          <div class="rr-map-row">
+            <div class="rr-map-top">
+              <input type="text" class="form-input" value="${escapeHtml(m.emoji || "")}" placeholder="Emoji (e.g. ✅ or <:name:id>)" oninput="updateReactionRoleMappingRow(${idx}, 'emoji', this.value)">
+              <select class="select-field" onchange="updateReactionRoleMappingRow(${idx}, 'roleId', this.value)">
+                <option value="">-- Chọn Role --</option>
+                ${roles.map(r => `<option value="${r.id}" ${m.roleId === r.id ? "selected" : ""}>@ ${escapeHtml(r.name)}</option>`).join("")}
+              </select>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="removeReactionRoleMappingRow(${idx})" style="padding:8px 12px;">&times;</button>
+            </div>
+            <div class="rr-emoji-quickrow">${quickRow}</div>
+          </div>
+        `;
+      }).join("");
+      if (typeof window.refreshHaruSelects === "function") window.refreshHaruSelects();
+    }
+
+    function addReactionRoleFilterChip(kind, roleId) {
+      if (!roleId) return;
+      const list = kind === "allow" ? rrModalAllowedRoles : rrModalBlacklistedRoles;
+      if (!list.includes(roleId)) list.push(roleId);
+      const pickerId = kind === "allow" ? "rr-allow-role-picker" : "rr-block-role-picker";
+      const picker = document.getElementById(pickerId);
+      if (picker) picker.value = "";
+      renderReactionRoleFilterChips();
+    }
+
+    function removeReactionRoleFilterChip(kind, roleId) {
+      if (kind === "allow") rrModalAllowedRoles = rrModalAllowedRoles.filter(id => id !== roleId);
+      else rrModalBlacklistedRoles = rrModalBlacklistedRoles.filter(id => id !== roleId);
+      renderReactionRoleFilterChips();
+    }
+
+    function renderReactionRoleFilterChips() {
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      const roleMap = new Map(roles.map(r => [r.id, r.name]));
+      const renderChips = (ids, kind) => ids.map(id =>
+        `<span class="am-tag-chip">@ ${escapeHtml(roleMap.get(id) || id)} <button type="button" onclick="removeReactionRoleFilterChip('${kind}', '${id}')">&times;</button></span>`
+      ).join("");
+      const allowBox = document.getElementById("rr-allow-chips");
+      const blockBox = document.getElementById("rr-block-chips");
+      if (allowBox) allowBox.innerHTML = renderChips(rrModalAllowedRoles, "allow");
+      if (blockBox) blockBox.innerHTML = renderChips(rrModalBlacklistedRoles, "block");
+    }
+
+    async function addReactionsToMessage(channelId, messageId, mappings) {
+      const failures = [];
+      for (const m of mappings) {
+        const enc = formatEmojiForDiscordRest(m.emoji);
+        if (!enc) continue;
+        const rRes = await DiscordAPI.request(`/channels/${channelId}/messages/${messageId}/reactions/${enc}/@me`, "PUT");
+        if (!rRes.ok) failures.push(`${m.emoji}: ${rRes.error || "failed"}`);
+        await new Promise(r => setTimeout(r, 350));
+      }
+      return failures;
+    }
+
+    async function submitReactionRoleModal() {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước khi tạo Reaction Role!", "warning");
+        return;
+      }
+      const mode = document.getElementById("rr-mode")?.value || "post_embed";
+      const channelId = document.getElementById("rr-channel")?.value || "";
+      let messageId = (document.getElementById("rr-message-id")?.value || "").trim();
+      const content = (document.getElementById("rr-content")?.value || "").trim();
+      const type = document.getElementById("rr-type")?.value || "normal";
+      const maxRoles = Math.max(1, parseInt(document.getElementById("rr-limit-max")?.value || "1", 10) || 1);
+      const tempDur = Math.max(1, parseInt(document.getElementById("rr-temp-duration")?.value || "60", 10) || 60);
+      const tempMult = Math.max(1, parseInt(document.getElementById("rr-temp-unit")?.value || "1", 10) || 1);
+      const tempMinutes = tempDur * tempMult;
+
+      if (!channelId) {
+        showToast("Vui lòng chọn Channel gửi Reaction Role!", "warning");
+        return;
+      }
+      const cleanMappings = rrModalMappings
+        .map(m => ({ emoji: String(m.emoji || "").trim(), roleId: String(m.roleId || "").trim() }))
+        .filter(m => m.emoji && m.roleId);
+      if (cleanMappings.length === 0) {
+        showToast("Vui lòng thêm ít nhất 1 cặp Emoji và Role hợp lệ!", "warning");
+        return;
+      }
+
+      const embedObj = mode === "post_embed" ? buildDiscordEmbedFromBuilder() : null;
+      if (mode === "post_embed" && !content && !embedObj) {
+        showToast("Vui lòng nhập Content hoặc bật Embed Builder để có nội dung gửi!", "warning");
+        return;
+      }
+      if (mode === "use_id" && !/^\d{17,21}$/.test(messageId)) {
+        showToast("Message ID không hợp lệ (phải là ID tin nhắn Discord)!", "warning");
+        return;
+      }
+
+      const submitBtn = document.getElementById("rr-submit-btn");
+      const oldTxt = submitBtn ? submitBtn.textContent : "Create";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Đang xử lý Discord...";
+      }
+
+      try {
+        const existing = rrEditingId ? reactionRolesConfig.find(x => x.id === rrEditingId) : null;
+        if (mode === "post_embed") {
+          if (existing && existing.messageId && existing.channelId === channelId) {
+            const patchRes = await DiscordAPI.request(`/channels/${channelId}/messages/${existing.messageId}`, "PATCH", {
+              content: content || "",
+              embeds: embedObj ? [embedObj] : []
+            });
+            if (!patchRes.ok) {
+              showToast(`❌ Không cập nhật được tin nhắn Discord: ${patchRes.error || "Lỗi API"}`, "error");
+              return;
+            }
+            messageId = existing.messageId;
+          } else {
+            const postRes = await DiscordAPI.sendMessage(
+              channelId,
+              content || undefined,
+              embedObj ? [embedObj] : undefined
+            );
+            if (!postRes.ok || !postRes.data?.id) {
+              showToast(`❌ Không gửi được tin nhắn Discord: ${postRes.error || "Lỗi API"}`, "error");
+              return;
+            }
+            messageId = postRes.data.id;
+          }
+        }
+
+        const reactFailures = await addReactionsToMessage(channelId, messageId, cleanMappings);
+        const entry = {
+          id: existing ? existing.id : ("rr_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6)),
+          channelId,
+          messageId,
+          mode,
+          type,
+          maxRoles,
+          tempMinutes,
+          content,
+          embed: embedObj,
+          mappings: cleanMappings,
+          allowedRoles: [...rrModalAllowedRoles],
+          blacklistedRoles: [...rrModalBlacklistedRoles],
+          updatedAt: new Date().toISOString()
+        };
+
+        if (existing) {
+          const idx = reactionRolesConfig.findIndex(x => x.id === existing.id);
+          if (idx >= 0) reactionRolesConfig[idx] = entry;
+          else reactionRolesConfig.push(entry);
+        } else {
+          reactionRolesConfig.push(entry);
+        }
+
+        renderReactionRolesTable();
+        if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+        closeReactionRoleModal();
+        await saveAllServerSettingsAndSync(false);
+
+        if (reactFailures.length > 0) {
+          showToast(`⚠️ Đã lưu Reaction Role nhưng một số emoji không react được (${reactFailures.length}).`, "warning");
+        } else {
+          showToast("✅ Đã tạo & đồng bộ Reaction Role xuống HaruMod thành công!", "success");
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = oldTxt;
+        }
+      }
+    }
+
+    async function reReactReactionRole(id) {
+      const item = reactionRolesConfig.find(x => x.id === id);
+      if (!item) return;
+      showToast("Đang gửi lại các reaction lên tin nhắn Discord...", "info");
+      const fails = await addReactionsToMessage(item.channelId, item.messageId, item.mappings || []);
+      if (fails.length === 0) showToast("✅ Đã thả đủ emoji reaction lên tin nhắn!", "success");
+      else showToast(`⚠️ Lỗi một số emoji: ${fails[0]}`, "warning");
+    }
+
+    async function deleteReactionRoleEntry(id) {
+      reactionRolesConfig = reactionRolesConfig.filter(x => x.id !== id);
+      renderReactionRolesTable();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      await saveAllServerSettingsAndSync(false);
+      showToast("🗑️ Đã xóa cấu hình Reaction Role và đồng bộ!", "success");
+    }
+
+    function copyReactionRoleMessageId(msgId) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msgId).then(() => showToast("Copied Message ID: " + msgId)).catch(() => {});
+      }
+    }
+
+    function renderReactionRolesTable() {
+      const tbody = document.getElementById("rr-table-body");
+      if (!tbody) return;
+      if (!Array.isArray(reactionRolesConfig) || reactionRolesConfig.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:28px 16px;color:#64748b;">Chưa có Reaction Role nào. Nhấn <strong>+ Create new reaction role</strong> để tạo mới.</td></tr>`;
+        return;
+      }
+      const channels = (cachedChannels && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      const chMap = new Map(channels.map(c => [c.id, c.name]));
+      const roleMap = new Map(roles.map(r => [r.id, r.name]));
+
+      tbody.innerHTML = reactionRolesConfig.map(rr => {
+        const chName = chMap.get(rr.channelId) || rr.channelId;
+        const mapChips = (rr.mappings || []).map(m =>
+          `<span class="rr-map-chip">${renderEmojiVisualHtml(m.emoji)} &rarr; <strong>@${escapeHtml(roleMap.get(m.roleId) || m.roleId)}</strong></span>`
+        ).join("");
+        const allowCnt = (rr.allowedRoles || []).length;
+        const blockCnt = (rr.blacklistedRoles || []).length;
+        const ruleTxt = (allowCnt === 0 && blockCnt === 0)
+          ? `<span style="color:#64748b;">Everyone</span>`
+          : `<span style="font-size:0.75rem;color:#cbd5e1;">${allowCnt ? `Allow: ${allowCnt} ` : ""}${blockCnt ? `Block: ${blockCnt}` : ""}</span>`;
+        const extraType = rr.type === "limit" ? ` (${rr.maxRoles || 1})` : (rr.type === "temp" ? ` (${rr.tempMinutes || 60}m)` : "");
+
+        return `
+          <tr>
+            <td><strong># ${escapeHtml(chName)}</strong></td>
+            <td>
+              <code style="font-size:0.76rem;color:#93c5fd;background:rgba(59,130,246,0.1);padding:3px 7px;border-radius:6px;cursor:pointer;" onclick="copyReactionRoleMessageId('${escapeHtml(rr.messageId)}')" title="Click to copy">${escapeHtml(rr.messageId)}</code>
+            </td>
+            <td><span class="rr-type-badge">${escapeHtml((rr.type || "normal") + extraType)}</span></td>
+            <td>${mapChips || "-"}</td>
+            <td>${ruleTxt}</td>
+            <td style="text-align:right;white-space:nowrap;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="reReactReactionRole('${escapeHtml(rr.id)}')" style="padding:5px 10px;margin-right:4px;">Re-react</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openReactionRoleModal('${escapeHtml(rr.id)}')" style="padding:5px 10px;margin-right:4px;">Edit</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="deleteReactionRoleEntry('${escapeHtml(rr.id)}')" style="padding:5px 10px;color:#fca5a5;border-color:rgba(239,68,68,0.35);">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // =========================================================
     // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
@@ -14787,6 +15837,9 @@
       }
       if (typeof renderSanctionLadder === "function") {
         renderSanctionLadder();
+      }
+      if (typeof renderReactionRolesTable === "function") {
+        renderReactionRolesTable();
       }
       if (typeof renderStatsBuilder === "function") {
         renderStatsBuilder();
@@ -14984,6 +16037,163 @@
     </div>
   </div>
 
+
+  <!-- ===================================================== -->
+  <!-- MODAL: CREATE / EDIT REACTION ROLE + EMBED BUILDER    -->
+  <!-- ===================================================== -->
+  <div id="modal-reaction-role" class="dyno-modal-overlay" onclick="handleModalBackdropClick(event, 'modal-reaction-role')">
+    <div class="dyno-modal-card rr-modal-card">
+      <div class="dyno-modal-header">
+        <h3 class="dyno-modal-title" id="rr-modal-title">Create reaction role</h3>
+        <button type="button" class="dyno-modal-close" onclick="closeReactionRoleModal()">&times;</button>
+      </div>
+      <div class="dyno-modal-body" style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label class="rr-section-label">Mode</label>
+          <select id="rr-mode" class="select-field" onchange="onReactionRoleModeChange()" style="width:100%;">
+            <option value="post_embed">Post embed</option>
+            <option value="use_id">Use existing Message ID</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="rr-section-label">Channel</label>
+          <select id="rr-channel" class="select-field" style="width:100%;"><option value="">Please select a channel</option></select>
+        </div>
+
+        <div id="rr-msgid-wrap" style="display:none;">
+          <label class="rr-section-label">Message ID</label>
+          <input type="text" id="rr-message-id" class="form-input" placeholder="Paste Discord Message ID...">
+          <div class="rr-hint">Bật Developer Mode trên Discord &rarr; Chuột phải vào tin nhắn &rarr; Copy Message ID.</div>
+        </div>
+
+        <div id="rr-content-wrap">
+          <label class="rr-section-label">Content</label>
+          <textarea id="rr-content" class="form-input" rows="4" placeholder="Enter some content..."></textarea>
+        </div>
+
+        <button type="button" id="rr-toggle-embed-btn" class="rr-btn-secondary-wide" onclick="toggleReactionRoleEmbedBuilder()">Show embed builder</button>
+
+        <!-- EMBED BUILDER (IMAGE 4) -->
+        <div id="rr-embed-builder-wrap" class="rr-embed-panel">
+          <div class="rr-embed-toolbar">
+            <div class="rr-embed-toolbar-left">
+              <label style="font-size:0.78rem;color:#cbd5e1;font-weight:600;">Color</label>
+              <input type="color" id="rr-emb-color" class="rr-color-pick" value="#10b981" oninput="syncReactionRoleColor(this.value, false)">
+              <input type="text" id="rr-emb-color-hex" class="form-input" value="#10B981" maxlength="7" oninput="syncReactionRoleColor(this.value, true)" style="width:94px;font-family:monospace;padding:6px 10px;">
+              <button type="button" class="btn btn-secondary btn-sm" id="rr-toggle-preview-btn" onclick="toggleReactionRoleEmbedPreview()" style="padding:6px 12px;">Live Preview</button>
+            </div>
+            <div class="rr-embed-toolbar-right">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="clearReactionRoleEmbed(false)" style="padding:6px 12px;color:#fca5a5;">Clear</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="toggleReactionRoleEmbedBuilder(false)" style="padding:6px 12px;">Hide</button>
+            </div>
+          </div>
+
+          <div id="rr-embed-card" class="rr-embed-card">
+            <div class="rr-embed-grid-3">
+              <input type="text" id="rr-emb-author-icon" class="form-input" placeholder="Icon url" oninput="updateReactionRoleEmbedCountersAndPreview()">
+              <input type="text" id="rr-emb-author-name" class="form-input" maxlength="256" placeholder="Name" oninput="updateReactionRoleEmbedCountersAndPreview()">
+              <input type="text" id="rr-emb-author-url" class="form-input" placeholder="Name url" oninput="updateReactionRoleEmbedCountersAndPreview()">
+            </div>
+
+            <div class="rr-embed-grid-title">
+              <div>
+                <input type="text" id="rr-emb-title" class="form-input" maxlength="256" placeholder="Title" oninput="updateReactionRoleEmbedCountersAndPreview()">
+                <div class="rr-char-count" id="rr-cnt-title">0/256</div>
+              </div>
+              <input type="text" id="rr-emb-title-url" class="form-input" placeholder="Title url" oninput="updateReactionRoleEmbedCountersAndPreview()" style="align-self:start;">
+            </div>
+
+            <div>
+              <textarea id="rr-emb-desc" class="form-input" rows="4" maxlength="4096" placeholder="Description" oninput="updateReactionRoleEmbedCountersAndPreview()"></textarea>
+              <div class="rr-char-count" id="rr-cnt-desc">0/4096</div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button type="button" class="rr-btn-secondary-wide" onclick="addReactionRoleEmbedField()">Add field</button>
+              <div class="rr-char-count" id="rr-cnt-fields" style="margin-top:0;">0/25 fields</div>
+              <div id="rr-emb-fields-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+            </div>
+
+            <div class="rr-embed-grid-2">
+              <input type="text" id="rr-emb-image" class="form-input" placeholder="Image url (big at the bottom)" oninput="updateReactionRoleEmbedCountersAndPreview()">
+              <input type="text" id="rr-emb-thumb" class="form-input" placeholder="Thumbnail url (small top right)" oninput="updateReactionRoleEmbedCountersAndPreview()">
+            </div>
+
+            <div class="rr-embed-grid-footer">
+              <div>
+                <input type="text" id="rr-emb-footer" class="form-input" maxlength="2048" placeholder="Footer" oninput="updateReactionRoleEmbedCountersAndPreview()">
+                <div class="rr-char-count" id="rr-cnt-footer">0/2048</div>
+              </div>
+              <input type="text" id="rr-emb-footer-icon" class="form-input" placeholder="Footer icon" oninput="updateReactionRoleEmbedCountersAndPreview()">
+              <div class="rr-timestamp-wrap">
+                <input type="datetime-local" id="rr-emb-timestamp" class="form-input" oninput="updateReactionRoleEmbedCountersAndPreview()" style="flex:1;">
+                <button type="button" class="rr-ts-clear" onclick="clearReactionRoleTimestamp()">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="rr-embed-preview" class="rr-embed-preview open"></div>
+        </div>
+
+        <!-- EMOJI -> ROLE MAPPINGS -->
+        <div>
+          <button type="button" class="rr-btn-emerald-wide" onclick="addReactionRoleMappingRow()">Add emoji</button>
+          <div id="rr-mappings-list" style="display:flex;flex-direction:column;gap:8px;margin-top:10px;"></div>
+        </div>
+
+        <!-- MESSAGE TYPE -->
+        <div>
+          <label class="rr-section-label">Message type</label>
+          <select id="rr-type" class="select-field" onchange="onReactionRoleTypeChange()" style="width:100%;">
+            <option value="normal">normal</option>
+            <option value="unique">unique</option>
+            <option value="verify">verify</option>
+            <option value="drop">drop</option>
+            <option value="reversed">reversed</option>
+            <option value="limit">limit</option>
+            <option value="binding">binding</option>
+            <option value="temp">temp</option>
+          </select>
+          <div id="rr-type-desc" class="rr-hint"></div>
+        </div>
+
+        <div id="rr-limit-wrap" style="display:none;">
+          <label class="rr-section-label">Maximum roles per member</label>
+          <input type="number" id="rr-limit-max" class="form-input" min="1" max="20" value="1">
+        </div>
+
+        <div id="rr-temp-wrap" style="display:none;">
+          <label class="rr-section-label">Auto-remove role duration</label>
+          <div style="display:grid;grid-template-columns:1fr 160px;gap:8px;">
+            <input type="number" id="rr-temp-duration" class="form-input" min="1" value="60">
+            <select id="rr-temp-unit" class="select-field">
+              <option value="1">Minutes</option>
+              <option value="60">Hours</option>
+              <option value="1440">Days</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ROLE RESTRICTIONS -->
+        <div>
+          <label class="rr-section-label">Only allow members with any of these roles to pick up roles</label>
+          <div id="rr-allow-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;"></div>
+          <select id="rr-allow-role-picker" class="select-field" onchange="addReactionRoleFilterChip('allow', this.value)" style="width:100%;"><option value="">Select Role..</option></select>
+        </div>
+
+        <div>
+          <label class="rr-section-label">Blacklist members with any of these roles from picking up reaction roles</label>
+          <div id="rr-block-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;"></div>
+          <select id="rr-block-role-picker" class="select-field" onchange="addReactionRoleFilterChip('block', this.value)" style="width:100%;"><option value="">Select Role..</option></select>
+        </div>
+      </div>
+      <div class="dyno-modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeReactionRoleModal()">Cancel</button>
+        <button type="button" id="rr-submit-btn" class="btn btn-emerald btn-sm" onclick="submitReactionRoleModal()">Create</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================================================== -->
   <!-- MODAL: DISCORD API DIAGNOSTICS & CONNECTION           -->
