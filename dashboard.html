@@ -10599,6 +10599,17 @@
           enabled: document.getElementById("cfg-switch-actionlog") ? document.getElementById("cfg-switch-actionlog").checked : true,
           mainChannel: document.getElementById("cfg-actionlog-main-channel")?.value || "",
           specifyChannels: document.getElementById("opt-specify-channels") ? document.getElementById("opt-specify-channels").checked : false,
+          showAvatar: document.getElementById("opt-show-avatar") ? document.getElementById("opt-show-avatar").checked : true,
+          newAccountAgeDays: Math.max(0, parseInt(document.getElementById("opt-new-account-age")?.value || "3", 10) || 0),
+          categoryChannels: {
+            message: document.getElementById("override-ch-msg")?.value || "",
+            member: document.getElementById("override-ch-member")?.value || "",
+            role: document.getElementById("override-ch-role")?.value || "",
+            channel: document.getElementById("override-ch-channel")?.value || "",
+            emoji: document.getElementById("override-ch-emoji")?.value || "",
+            voice: document.getElementById("override-ch-voice")?.value || ""
+          },
+          events: typeof collectActionLogEventsMap === "function" ? collectActionLogEventsMap() : {},
           ignoredChannels: typeof actionLogIgnoredChannels !== "undefined" ? actionLogIgnoredChannels : [],
           ignoredRoles: typeof actionLogIgnoredRoles !== "undefined" ? actionLogIgnoredRoles : []
         },
@@ -10664,8 +10675,40 @@
         if (typeof renderAutobanRules === "function") renderAutobanRules();
       }
       if (cfg.actionLog) {
-        if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") document.getElementById("cfg-switch-actionlog").checked = cfg.actionLog.enabled;
-        if (cfg.actionLog.mainChannel && document.getElementById("cfg-actionlog-main-channel")) document.getElementById("cfg-actionlog-main-channel").value = cfg.actionLog.mainChannel;
+        if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") {
+          document.getElementById("cfg-switch-actionlog").checked = cfg.actionLog.enabled;
+          if (typeof toggleActionLogModule === "function") toggleActionLogModule(cfg.actionLog.enabled, true);
+        }
+        if (document.getElementById("opt-show-avatar") && typeof cfg.actionLog.showAvatar === "boolean") {
+          document.getElementById("opt-show-avatar").checked = cfg.actionLog.showAvatar;
+        }
+        if (document.getElementById("opt-new-account-age") && typeof cfg.actionLog.newAccountAgeDays === "number") {
+          document.getElementById("opt-new-account-age").value = String(cfg.actionLog.newAccountAgeDays);
+        }
+        if (document.getElementById("opt-specify-channels") && typeof cfg.actionLog.specifyChannels === "boolean") {
+          document.getElementById("opt-specify-channels").checked = cfg.actionLog.specifyChannels;
+          if (typeof toggleSpecifyChannels === "function") toggleSpecifyChannels(cfg.actionLog.specifyChannels, true);
+        }
+        if (typeof cfg.actionLog.mainChannel === "string" && document.getElementById("cfg-actionlog-main-channel")) {
+          document.getElementById("cfg-actionlog-main-channel").value = cfg.actionLog.mainChannel;
+        }
+        if (cfg.actionLog.categoryChannels && typeof cfg.actionLog.categoryChannels === "object") {
+          const catMap = {
+            message: "override-ch-msg",
+            member: "override-ch-member",
+            role: "override-ch-role",
+            channel: "override-ch-channel",
+            emoji: "override-ch-emoji",
+            voice: "override-ch-voice"
+          };
+          Object.entries(catMap).forEach(([k, id]) => {
+            const el = document.getElementById(id);
+            if (el && typeof cfg.actionLog.categoryChannels[k] === "string") el.value = cfg.actionLog.categoryChannels[k];
+          });
+        }
+        if (cfg.actionLog.events && typeof applyActionLogEventsMap === "function") {
+          applyActionLogEventsMap(cfg.actionLog.events);
+        }
         if (Array.isArray(cfg.actionLog.ignoredChannels) && typeof actionLogIgnoredChannels !== "undefined") actionLogIgnoredChannels = cfg.actionLog.ignoredChannels;
         if (Array.isArray(cfg.actionLog.ignoredRoles) && typeof actionLogIgnoredRoles !== "undefined") actionLogIgnoredRoles = cfg.actionLog.ignoredRoles;
         if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
@@ -11402,20 +11445,69 @@
     }
 
     // Action Log Specifying Channels toggle
-    function toggleSpecifyChannels(isChecked) {
-      document.querySelectorAll(".dyno-per-event-select").forEach(sel => {
-        sel.style.display = isChecked ? "inline-block" : "none";
+    const ACTION_LOG_EVENT_MAP = {
+      "ev-msg-delete": "MESSAGE_DELETE",
+      "ev-msg-edit": "MESSAGE_UPDATE",
+      "ev-img-delete": "IMAGE_DELETE",
+      "ev-bulk-delete": "BULK_MESSAGE_DELETE",
+      "ev-invites": "INVITES",
+      "ev-mod-cmds": "MOD_COMMANDS",
+      "ev-member-join": "MEMBER_JOIN",
+      "ev-member-leave": "MEMBER_LEAVE",
+      "ev-role-add": "MEMBER_ROLE_ADD",
+      "ev-role-remove": "MEMBER_ROLE_REMOVE",
+      "ev-timeout": "MEMBER_TIMEOUT",
+      "ev-nick": "NICKNAME_UPDATE",
+      "ev-ban": "MEMBER_BAN",
+      "ev-unban": "MEMBER_UNBAN",
+      "ev-role-create": "ROLE_CREATE",
+      "ev-role-delete": "ROLE_DELETE",
+      "ev-role-update": "ROLE_UPDATE",
+      "ev-ch-create": "CHANNEL_CREATE",
+      "ev-ch-update": "CHANNEL_UPDATE",
+      "ev-ch-delete": "CHANNEL_DELETE",
+      "ev-emoji-create": "EMOJI_CREATE",
+      "ev-emoji-name": "EMOJI_UPDATE",
+      "ev-emoji-delete": "EMOJI_DELETE",
+      "ev-voice-join": "VOICE_JOIN",
+      "ev-voice-leave": "VOICE_LEAVE",
+      "ev-voice-move": "VOICE_MOVE"
+    };
+
+    function collectActionLogEventsMap() {
+      const map = {};
+      Object.entries(ACTION_LOG_EVENT_MAP).forEach(([domId, eventKey]) => {
+        const el = document.getElementById(domId);
+        if (el) map[eventKey] = Boolean(el.checked);
       });
-      triggerUnsaved();
+      return map;
     }
 
-    function toggleActionLogModule(isEnabled) {
+    function applyActionLogEventsMap(eventsMap) {
+      if (!eventsMap || typeof eventsMap !== "object") return;
+      Object.entries(ACTION_LOG_EVENT_MAP).forEach(([domId, eventKey]) => {
+        const el = document.getElementById(domId);
+        if (el && typeof eventsMap[eventKey] === "boolean") {
+          el.checked = eventsMap[eventKey];
+        }
+      });
+    }
+
+    function toggleSpecifyChannels(isChecked, silent = false) {
+      document.querySelectorAll(".dyno-per-event-select").forEach(sel => {
+        const host = sel.closest(".h-select-host") || sel;
+        host.style.display = isChecked ? "inline-block" : "none";
+      });
+      if (!silent) triggerUnsaved();
+    }
+
+    function toggleActionLogModule(isEnabled, silent = false) {
       const lbl = document.getElementById("lbl-actionlog-status");
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       if (lbl) {
         lbl.textContent = isEnabled ? (activeLang === "vi" ? "Đã bật Module" : "Enable Module") : (activeLang === "vi" ? "Đã tắt Module" : "Disable Module");
       }
-      triggerUnsaved();
+      if (!silent) triggerUnsaved();
     }
 
     function updateNewAccountAge() {
@@ -11429,21 +11521,24 @@
     let actionLogIgnoredRoles = ["1426557896308559874"]; // bots default
 
     function renderActionLogIgnored() {
+      const channelsPool = (typeof cachedChannels !== "undefined" && Array.isArray(cachedChannels) && cachedChannels.length > 0) ? cachedChannels : GARDEN_REAL_CHANNELS;
+      const rolesPool = (typeof cachedRoles !== "undefined" && Array.isArray(cachedRoles) && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+
       const chList = document.getElementById("actionlog-ignored-channels-list");
       if (chList) {
         chList.innerHTML = actionLogIgnoredChannels.map((id, idx) => {
-          const ch = GARDEN_REAL_CHANNELS.find(c => c.id === id);
+          const ch = channelsPool.find(c => c.id === id);
           const name = ch ? ch.name : id;
-          return `<div class="dyno-chip-tag"><span># ${name}</span><span class="remove-tag" onclick="removeActionLogIgnoredChannel(${idx})">&times;</span></div>`;
+          return `<div class="dyno-chip-tag"><span># ${escapeHtml(name)}</span><span class="remove-tag" onclick="removeActionLogIgnoredChannel(${idx})">&times;</span></div>`;
         }).join("");
       }
 
       const roleList = document.getElementById("actionlog-ignored-roles-list");
       if (roleList) {
         roleList.innerHTML = actionLogIgnoredRoles.map((id, idx) => {
-          const r = GARDEN_REAL_ROLES.find(ro => ro.id === id);
+          const r = rolesPool.find(ro => ro.id === id);
           const name = r ? r.name : id;
-          return `<div class="dyno-chip-tag"><span>@ ${name}</span><span class="remove-tag" onclick="removeActionLogIgnoredRole(${idx})">&times;</span></div>`;
+          return `<div class="dyno-chip-tag"><span>@ ${escapeHtml(name)}</span><span class="remove-tag" onclick="removeActionLogIgnoredRole(${idx})">&times;</span></div>`;
         }).join("");
       }
     }
@@ -11472,22 +11567,16 @@
       triggerUnsaved();
     }
 
-    function saveActionLogSettings() {
-      const mainCh = document.getElementById("cfg-actionlog-main-channel") ? document.getElementById("cfg-actionlog-main-channel").value : "";
-      const isEnabled = document.getElementById("cfg-switch-actionlog") ? document.getElementById("cfg-switch-actionlog").checked : true;
-      const specifyChannels = document.getElementById("opt-specify-channels") ? document.getElementById("opt-specify-channels").checked : false;
-
+    async function saveActionLogSettings() {
+      const fullCfg = collectFullGuildConfig();
       localStorage.setItem("haruki_actionlog_config", JSON.stringify({
-        enabled: isEnabled,
-        mainChannel: mainCh,
-        specifyChannels: specifyChannels,
-        ignoredChannels: actionLogIgnoredChannels,
-        ignoredRoles: actionLogIgnoredRoles,
+        ...fullCfg.actionLog,
         updatedAt: new Date().toISOString()
       }));
 
-      logRecentActivity("Action Log", "Cập nhật cấu hình 24 luồng Action Log", "Updated Action Log 24-channel event routing");
-      showToast("Action Log configuration saved & synced to Discord!", "success");
+      await saveAllServerSettingsAndSync(false);
+
+      logRecentActivity("Action Log", "Lưu & đồng bộ 26 sự kiện Action Log lên Bot", "Saved & synced 26-event Action Log config to Bot");
       const msg = document.getElementById("actionlog-save-msg");
       if (msg) {
         msg.style.display = "inline-block";
@@ -13922,9 +14011,11 @@
         }
 
         selectEl.dataset.haruSelectInit = "1";
+        const wasHidden = getComputedStyle(selectEl).display === "none";
         const host = document.createElement("div");
         host.className = "h-select-host";
-        if (selectEl.closest(".stats-ch-row")) host.classList.add("is-compact");
+        if (selectEl.closest(".stats-ch-row") || selectEl.classList.contains("dyno-per-event-select")) host.classList.add("is-compact");
+        if (wasHidden) host.style.display = "none";
         if (selectEl.style.flex) host.style.flex = selectEl.style.flex;
         if (selectEl.style.width && selectEl.style.width !== "100%") host.style.width = selectEl.style.width;
         if (selectEl.style.minWidth) host.style.minWidth = selectEl.style.minWidth;
