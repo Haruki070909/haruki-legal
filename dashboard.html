@@ -7554,26 +7554,80 @@
       _toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
     }
 
-    const LG_GUILD_ID = "879006630241525791";
-    function getActiveBotGuildIds() {
-      try {
-        let saved = JSON.parse(localStorage.getItem("harumod_bot_guilds") || "[]");
-        // Ensure LG is not falsely marked as having bot
-        saved = saved.filter(id => id !== LG_GUILD_ID);
-        return new Set([...DEFAULT_BOT_SERVERS, ...saved]);
-      } catch (e) {
-        return new Set(DEFAULT_BOT_SERVERS);
+    let liveBotGuildIds = new Set();
+    let hasLiveBotGuildList = false;
+    let lastBotGuildFetchAt = 0;
+
+    async function fetchRealBotGuildIds() {
+      const cloudBase = (typeof CLOUD_GATEWAY_API !== "undefined")
+        ? CLOUD_GATEWAY_API
+        : "https://sepay-webhook-p0o1.onrender.com/api/harumod";
+      const localBase = (typeof LOCAL_ENGINE_API !== "undefined")
+        ? `${LOCAL_ENGINE_API}/api/harumod`
+        : null;
+      const hdrs = (typeof buildGatewayHeaders === "function")
+        ? buildGatewayHeaders()
+        : { "Content-Type": "application/json" };
+
+      const directEndpoints = (typeof isHaruModEngineActive !== "undefined" && isHaruModEngineActive && localBase)
+        ? [`${localBase}/bot/guilds`, `${cloudBase}/bot/guilds`]
+        : [`${cloudBase}/bot/guilds`];
+
+      for (const ep of directEndpoints) {
+        try {
+          const res = await fetch(ep, { method: "GET", headers: hdrs });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.ok && Array.isArray(data.guildIds)) {
+              liveBotGuildIds = new Set(data.guildIds.map(String));
+              hasLiveBotGuildList = true;
+              lastBotGuildFetchAt = Date.now();
+              localStorage.removeItem("harumod_bot_guilds");
+              return liveBotGuildIds;
+            }
+          }
+        } catch (err) {
+          console.warn("[HaruMod] /bot/guilds check failed:", ep, err);
+        }
       }
+
+      // Fallback via /proxy to Discord /users/@me/guilds (works even before Render finishes deploying /bot/guilds)
+      try {
+        const res = await fetch(`${cloudBase}/proxy`, {
+          method: "POST",
+          headers: hdrs,
+          body: JSON.stringify({ path: "/users/@me/guilds?limit=200", method: "GET" })
+        });
+        if (res.ok) {
+          const guilds = await res.json();
+          if (Array.isArray(guilds)) {
+            liveBotGuildIds = new Set(guilds.map(g => g && g.id ? String(g.id) : "").filter(Boolean));
+            hasLiveBotGuildList = true;
+            lastBotGuildFetchAt = Date.now();
+            localStorage.removeItem("harumod_bot_guilds");
+            return liveBotGuildIds;
+          }
+        }
+      } catch (err) {
+        console.warn("[HaruMod] /proxy /users/@me/guilds fallback failed:", err);
+      }
+
+      localStorage.removeItem("harumod_bot_guilds");
+      return liveBotGuildIds;
+    }
+
+    function getActiveBotGuildIds() {
+      localStorage.removeItem("harumod_bot_guilds");
+      if (hasLiveBotGuildList) {
+        return new Set(liveBotGuildIds);
+      }
+      return new Set();
     }
 
     function addGuildToBotActive(guildId) {
-      try {
-        const current = JSON.parse(localStorage.getItem("harumod_bot_guilds") || "[]");
-        if (!current.includes(guildId)) {
-          current.push(guildId);
-          localStorage.setItem("harumod_bot_guilds", JSON.stringify(current));
-        }
-      } catch (e) {}
+      if (guildId) {
+        liveBotGuildIds.add(String(guildId));
+      }
     }
 
     function renderGuildAvatarHtml(g, size = 60) {
@@ -7683,11 +7737,14 @@
         currentUser = await userRes.json();
         renderLoggedInUser(currentUser);
 
-        // Fetch user guilds
+        // Fetch user guilds AND live bot guilds simultaneously (100% real Discord API)
         try {
-          const guildsRes = await fetch("https://discord.com/api/v10/users/@me/guilds", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
+          const [guildsRes] = await Promise.all([
+            fetch("https://discord.com/api/v10/users/@me/guilds", {
+              headers: { Authorization: `Bearer ${token}` }
+            }),
+            fetchRealBotGuildIds()
+          ]);
 
           if (guildsRes.ok) {
             const rawGuilds = await guildsRes.json();
@@ -7970,7 +8027,7 @@
             </div>
 
             <div class="server-card-footer">
-              <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;" style="width:100%;justify-content:center;" onclick="handleInviteClick('${g.id}', '${escapeHtml(g.name)}')">
+              <a href="${inviteUrl}" target="_blank" class="btn btn-discord btn-sm" style="flex:1;width:100%;justify-content:center;" onclick="handleInviteClick('${g.id}', '${escapeHtml(g.name)}')">
                 <svg style="width:15px;height:15px;fill:currentColor;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 <span>Add HaruMod</span>
               </a>
@@ -7990,49 +8047,74 @@
       showToast("Đang mở trang thêm HaruMod... Hệ thống tự động quét mỗi 5s để kích hoạt!", "info");
     }
 
-    // Auto-scan every 5 seconds for bot presence
-    function autoScanGuildsEvery5s() {
-      if (!userGuilds || userGuilds.length === 0) return;
+    // Auto-scan strictly against real Discord API (ZERO fake localStorage activation)
+    let _botScanInFlight = false;
+    async function autoScanGuildsEvery5s(force = false) {
+      if (!userGuilds || userGuilds.length === 0 || _botScanInFlight) return;
 
-      const activeSet = getActiveBotGuildIds();
-      let changed = false;
       const now = Date.now();
-
+      let pendingChanged = false;
       for (const [gid, item] of Object.entries(pendingInvites)) {
-        const inviteTime = typeof item === 'object' ? item.time : item;
-        const gName = (typeof item === 'object' && item.name) ? item.name : "Máy chủ";
-        
-        // After 5s from click, auto-scan detects bot presence
-        if (now - inviteTime >= 5000) {
-          if (!activeSet.has(gid)) {
-            addGuildToBotActive(gid);
-            activeSet.add(gid);
-            changed = true;
-            delete pendingInvites[gid];
-            sessionStorage.setItem("harumod_pending_invites", JSON.stringify(pendingInvites));
-            showToast(`✓ Tự động phát hiện HaruMod đã tham gia "${gName}"! Đã kích hoạt 24/7.`, "success");
-          }
+        const inviteTime = typeof item === "object" ? item.time : item;
+        if (now - inviteTime > 5 * 60 * 1000) {
+          delete pendingInvites[gid];
+          pendingChanged = true;
         }
       }
+      if (pendingChanged) {
+        sessionStorage.setItem("harumod_pending_invites", JSON.stringify(pendingInvites));
+      }
 
-      userGuilds.forEach(g => {
-        if (activeSet.has(g.id) && !g.hasBot) {
-          g.hasBot = true;
-          changed = true;
+      const hasPending = Object.keys(pendingInvites).length > 0;
+      const staleOnHub = (activeStage === "entrance") && (now - lastBotGuildFetchAt >= 30000);
+      if (!force && !hasPending && !staleOnHub) return;
+
+      _botScanInFlight = true;
+      try {
+        await fetchRealBotGuildIds();
+        if (!hasLiveBotGuildList) return;
+
+        let changed = false;
+        userGuilds.forEach(g => {
+          const reallyIn = liveBotGuildIds.has(g.id);
+          if (reallyIn && !g.hasBot) {
+            g.hasBot = true;
+            changed = true;
+            if (pendingInvites[g.id]) {
+              const pName = pendingInvites[g.id].name || g.name;
+              delete pendingInvites[g.id];
+              sessionStorage.setItem("harumod_pending_invites", JSON.stringify(pendingInvites));
+              showToast(`HaruMod đã tham gia "${pName}"! Đã kích hoạt 24/7.`, "success");
+            }
+          } else if (!reallyIn && g.hasBot) {
+            g.hasBot = false;
+            changed = true;
+          }
+        });
+
+        if (changed) {
+          renderGuilds();
         }
-      });
-
-      if (changed) {
-        renderGuilds();
+      } finally {
+        _botScanInFlight = false;
       }
     }
 
-    setInterval(autoScanGuildsEvery5s, 5000);
+    setInterval(() => { autoScanGuildsEvery5s(false); }, 5000);
+    window.addEventListener("focus", () => {
+      if (currentUser && userGuilds.length > 0 && activeStage === "entrance") {
+        autoScanGuildsEvery5s(true);
+      }
+    });
 
     function selectServerForConfig(guildId) {
       if (!currentUser) {
         showToast("Vui lòng đăng nhập Discord để quản lý và chỉnh sửa server!", "info");
         startDiscordLogin();
+        return;
+      }
+      if (hasLiveBotGuildList && !liveBotGuildIds.has(String(guildId))) {
+        showToast("HaruMod chưa có trong máy chủ này! Hãy bấm Add HaruMod trước.", "warning");
         return;
       }
       currentGuildId = guildId;
