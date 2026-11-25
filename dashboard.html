@@ -3089,8 +3089,8 @@
         flex: 1 1 100% !important;
       }
       .toast-box {
-        top: auto !important;
-        bottom: 22px !important;
+        top: 74px !important;
+        bottom: auto !important;
         left: 50% !important;
         right: auto !important;
         width: max-content !important;
@@ -3099,8 +3099,8 @@
         border-radius: 999px !important;
         font-size: 0.82rem !important;
         gap: 8px !important;
-        transform: translate(-50%, 16px) !important;
-        z-index: 9999 !important;
+        transform: translate(-50%, -14px) !important;
+        z-index: 10005 !important;
       }
       .toast-box.show {
         transform: translate(-50%, 0) !important;
@@ -5114,9 +5114,15 @@
     #config-suite .stats-grid,
     #config-suite .overview-stats-grid,
     #config-suite .identity-grid,
+    #config-suite .dash-settings-grid,
     #config-suite .dash-settings-columns {
       grid-template-columns: minmax(0, 1fr) !important;
       gap: 14px !important;
+    }
+    .toast-box {
+      top: 74px !important;
+      bottom: auto !important;
+      z-index: 10005 !important;
     }
     #config-suite .control-row,
     #config-suite .setting-row {
@@ -6155,7 +6161,7 @@
               <!-- Nickname -->
               <div class="dash-form-item">
                 <label class="dash-form-label">Nickname</label>
-                <input type="text" id="cfg-dash-bot-nickname" class="form-input" value="Bot Cute" placeholder="Nhập biệt danh bot..." oninput="triggerUnsaved()">
+                <input type="text" id="cfg-dash-bot-nickname" class="form-input" value="" placeholder="Loading Discord nickname..." oninput="syncBotNicknameInputs(this); triggerUnsaved()">
                 <div class="dash-field-hint" data-i18n="dashNicknameHint">Exclusive server nickname for HaruMod on this server (auto-synced to Discord API).</div>
               </div>
 
@@ -6248,7 +6254,7 @@
             <!-- Nickname Input -->
             <div class="input-group">
               <label class="input-label" data-i18n="labelBotNickname">Server Bot Nickname (Tên hiển thị bot trên máy chủ này)</label>
-              <input type="text" id="cfg-bot-nickname-input" class="form-input" placeholder="e.g. HaruMod Security, Haru Sentinel..." value="HaruMod Security" oninput="updateLiveBotPreview()">
+              <input type="text" id="cfg-bot-nickname-input" class="form-input" placeholder="e.g. HaruMod Security, Haru Sentinel..." value="" oninput="syncBotNicknameInputs(this); updateLiveBotPreview(); triggerUnsaved()">
               
               <!-- Quick Presets -->
               <div style="margin-top:8px;">
@@ -7542,7 +7548,7 @@
       const toast = document.getElementById("toast-notification");
       const msgEl = document.getElementById("toast-message");
       if (!toast || !msgEl) return;
-      msgEl.innerText = msg;
+      msgEl.innerText = String(msg || "").replace(/^[✓✔✅]\s*/u, "");
       toast.classList.add("show");
       if (_toastTimer) clearTimeout(_toastTimer);
       _toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
@@ -9364,7 +9370,7 @@
       if (input) input.value = seconds;
     }
 
-    // 1. Execute Fast Purge
+    // 1. Execute Fast Purge (Real 1-1 Discord API)
     async function executeFastPurge(event) {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước!", "warning");
@@ -9377,7 +9383,7 @@
         return;
       }
 
-      const amount = parseInt(document.getElementById("cfg-purge-amount")?.value) || 20;
+      const amount = Math.min(100, Math.max(1, parseInt(document.getElementById("cfg-purge-amount")?.value) || 20));
       const filter = document.getElementById("cfg-purge-filter")?.value || "all";
       const targetUserId = filter === "user" ? document.getElementById("cfg-purge-userid")?.value.trim() : null;
 
@@ -9390,25 +9396,40 @@
       }
 
       try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "purge",
-            guildId: currentGuildId,
-            channelId: channelId,
-            amount: amount,
-            userId: targetUserId
-          })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          showToast(`✓ Đã xóa thành công ${data.deleted || amount} tin nhắn trong kênh!`, "success");
+        const msgsRes = await DiscordAPI.getMessages(channelId, amount);
+        if (!msgsRes.ok || !Array.isArray(msgsRes.data)) {
+          showToast(`❌ Không đọc được tin nhắn: ${msgsRes.error || "Thiếu quyền Read Message History"}`, "danger");
+          return;
+        }
+        const cutoff = Date.now() - 14 * 86400 * 1000;
+        let candidates = msgsRes.data.filter(m => new Date(m.timestamp).getTime() > cutoff);
+        if (targetUserId) {
+          candidates = candidates.filter(m => m.author && m.author.id === targetUserId);
+        } else if (filter === "bots") {
+          candidates = candidates.filter(m => m.author && m.author.bot);
+        }
+        const ids = candidates.map(m => m.id);
+        if (ids.length === 0) {
+          showToast("⚠️ Không có tin nhắn hợp lệ (< 14 ngày) để xóa!", "warning");
+          return;
+        }
+        let ok = false;
+        let err = "";
+        if (ids.length === 1) {
+          const r1 = await DiscordAPI.deleteMessage(channelId, ids[0]);
+          ok = r1.ok; err = r1.error || "";
         } else {
-          showToast(`Đã gửi lệnh xóa tin nhắn! (Discord API: ${data.message || "OK"})`);
+          const rBulk = await DiscordAPI.bulkDelete(channelId, ids);
+          ok = rBulk.ok; err = rBulk.error || "";
+        }
+        if (ok) {
+          showToast(`✓ Đã xóa thật ${ids.length} tin nhắn trên Discord!`, "success");
+          if (typeof logRecentActivity === "function") logRecentActivity("Purge", `Dọn ${ids.length} tin nhắn`, `Purged ${ids.length} messages`);
+        } else {
+          showToast(`❌ Không thể Purge: ${err || "Thiếu quyền Manage Messages"}`, "danger");
         }
       } catch (e) {
-        showToast(`✓ Đã gửi lệnh dọn dẹp ${amount} tin nhắn tới bot!`, "info");
+        showToast(`❌ Lỗi kết nối Discord: ${e.message}`, "danger");
       } finally {
         if (btn) {
           btn.disabled = false;
@@ -9417,7 +9438,7 @@
       }
     }
 
-    // 2. Execute Slowmode
+    // 2. Execute Slowmode (Real 1-1 Discord API)
     async function executeSlowmode(event) {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước!", "warning");
@@ -9431,24 +9452,12 @@
       }
       const seconds = parseInt(document.getElementById("cfg-slowmode-seconds")?.value) || 0;
 
-      try {
-        const res = await fetch(`${LOCAL_ENGINE_API}/api/mod-action`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "slowmode",
-            guildId: currentGuildId,
-            channelId: channelId,
-            seconds: seconds
-          })
-        });
-        if (res.ok) {
-          showToast(seconds === 0 ? "✓ Đã tắt chế độ chậm cho kênh!" : `✓ Đã bật Slowmode (${seconds}s) cho kênh thành công!`, "success");
-        } else {
-          showToast(`✓ Đã cập nhật chế độ chậm (${seconds}s)!`);
-        }
-      } catch(e) {
-        showToast(`✓ Đã cập nhật Slowmode (${seconds}s)!`);
+      const res = await DiscordAPI.setSlowmode(channelId, seconds);
+      if (res.ok) {
+        showToast(seconds === 0 ? "✓ Đã tắt chế độ chậm cho kênh!" : `✓ Đã bật Slowmode (${seconds}s) trực tiếp trên Discord!`, "success");
+        if (typeof logRecentActivity === "function") logRecentActivity("Slowmode", `Đặt Slowmode ${seconds}s`, `Set Slowmode to ${seconds}s`);
+      } else {
+        showToast(`❌ Lỗi đặt Slowmode: ${res.error || "Thiếu quyền Manage Channels"}`, "danger");
       }
     }
 
@@ -9643,11 +9652,11 @@
 
     function applyBotNicknamePreset(presetName) {
       const input = document.getElementById("cfg-bot-nickname-input");
-      if (input) {
-        input.value = presetName;
-        updateLiveBotPreview();
-        showToast("Preset applied: " + presetName);
-      }
+      const dashInput = document.getElementById("cfg-dash-bot-nickname");
+      if (input) input.value = presetName;
+      if (dashInput) dashInput.value = presetName;
+      updateLiveBotPreview(true);
+      showToast("Preset applied: " + presetName);
     }
 
     function setBotRoleColor(colorHex, el) {
@@ -9730,7 +9739,7 @@
     // Harvest complete 1-1 Guild Config payload across ALL tabs
     function collectFullGuildConfig() {
       const nameInput = document.getElementById("cfg-bot-nickname-input");
-      const dashNickInput = document.getElementById("cfg-dash-bot-name");
+      const dashNickInput = document.getElementById("cfg-dash-bot-nickname");
       const statusInput = document.getElementById("cfg-bot-status-input");
       const webhookInput = document.getElementById("cfg-server-webhook");
       const prefixChar = document.getElementById("cfg-dash-prefix-char")?.value.trim() || "h";
@@ -9738,7 +9747,7 @@
       const verSel = document.getElementById("cfg-discord-verification-level");
       const filterSel = document.getElementById("cfg-discord-content-filter");
 
-      const nick = (nameInput && nameInput.value.trim()) || (dashNickInput && dashNickInput.value.trim()) || "HaruMod";
+      const nick = (dashNickInput && dashNickInput.value.trim()) || (nameInput && nameInput.value.trim()) || "HaruMod";
 
       return {
         guildId: currentGuildId,
@@ -9748,6 +9757,7 @@
         prefix: prefixChar + "?",
         timezone: tzVal,
         updatesChannel: document.getElementById("cfg-dash-updates-channel")?.value || "",
+        managerRoles: typeof currentManagerRoles !== "undefined" ? currentManagerRoles : [],
         webhookUrl: webhookInput ? webhookInput.value.trim() : "",
         discordSecurity: {
           verification_level: verSel ? parseInt(verSel.value) : null,
@@ -9784,7 +9794,7 @@
       if (!cfg || typeof cfg !== "object") return;
       if (cfg.botNickname) {
         const nameInput = document.getElementById("cfg-bot-nickname-input");
-        const dashNick = document.getElementById("cfg-dash-bot-name");
+        const dashNick = document.getElementById("cfg-dash-bot-nickname");
         if (nameInput) nameInput.value = cfg.botNickname;
         if (dashNick) dashNick.value = cfg.botNickname;
       }
@@ -9794,12 +9804,18 @@
       }
       if (cfg.prefix && document.getElementById("cfg-dash-prefix-char")) {
         document.getElementById("cfg-dash-prefix-char").value = cfg.prefix.replace("?", "") || "h";
+        if (typeof handlePrefixInput === "function") handlePrefixInput(document.getElementById("cfg-dash-prefix-char"), true);
       }
       if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
         document.getElementById("cfg-dash-timezone").value = cfg.timezone;
+        if (typeof updateLiveClock === "function") updateLiveClock();
       }
       if (cfg.updatesChannel && document.getElementById("cfg-dash-updates-channel")) {
         document.getElementById("cfg-dash-updates-channel").value = cfg.updatesChannel;
+      }
+      if (Array.isArray(cfg.managerRoles) && typeof renderManagerRoles === "function") {
+        currentManagerRoles = cfg.managerRoles.slice();
+        renderManagerRoles();
       }
       if (cfg.webhookUrl) {
         const w1 = document.getElementById("cfg-server-webhook");
@@ -9836,7 +9852,7 @@
         autoPurgeJobs = cfg.autoPurge;
         if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
       }
-      updateLiveBotPreview();
+      updateLiveBotPreview(false);
     }
 
     // Master 1-1 Save & Sync Function (called by Topbar 'Lưu & Đồng bộ ngay' AND Sticky Save Bar!)
@@ -9912,13 +9928,15 @@
         try { cfg = JSON.parse(raw); } catch(e){}
       }
 
-      const nameVal = cfg ? cfg.botNickname : (localStorage.getItem("haruki_bot_nick_" + guildId) || "HaruMod Security");
-      const statusVal = cfg ? cfg.botStatus : (localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure");
-      const colorVal = cfg ? cfg.botRoleColor : (localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981");
+      const nameVal = (cfg && cfg.botNickname) || localStorage.getItem("haruki_bot_nick_" + guildId) || "";
+      const statusVal = (cfg && cfg.botStatus) || localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure";
+      const colorVal = (cfg && cfg.botRoleColor) || localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981";
       const webhookVal = cfg ? cfg.webhookUrl : "";
 
       const nameInput = document.getElementById("cfg-bot-nickname-input");
-      if (nameInput) nameInput.value = nameVal;
+      const dashNickInput = document.getElementById("cfg-dash-bot-nickname");
+      if (nameInput && nameVal) nameInput.value = nameVal;
+      if (dashNickInput && nameVal) dashNickInput.value = nameVal;
 
       const statusInput = document.getElementById("cfg-bot-status-input");
       if (statusInput) statusInput.value = statusVal;
@@ -9928,7 +9946,7 @@
 
       // Update slash command display
       const cmdCode = document.getElementById("sync-command-code");
-      if (cmdCode) cmdCode.innerText = `/botnick nickname: ${nameVal}`;
+      if (cmdCode && nameVal) cmdCode.innerText = `/botnick nickname: ${nameVal}`;
 
       // Update color
       if (typeof setBotRoleColor === "function") {
@@ -9943,7 +9961,11 @@
         if (document.getElementById("cfg-fileblock-active")) document.getElementById("cfg-fileblock-active").checked = cfg.automod.antiFile;
       }
 
-      updateLiveBotPreview();
+      hasUnsavedChanges = false;
+      const saveBar = document.getElementById("sticky-save-bar");
+      if (saveBar) saveBar.classList.remove("visible");
+
+      updateLiveBotPreview(false);
     }
 
     // Copy slash command to clipboard
@@ -10061,16 +10083,19 @@
 
     // Update live bot preview and slash command code simultaneously
     const prevUpdateLiveBotPreview = updateLiveBotPreview;
-    updateLiveBotPreview = function() {
+    updateLiveBotPreview = function(fromUserInput = false) {
       if (typeof prevUpdateLiveBotPreview === "function") prevUpdateLiveBotPreview();
 
       const nameInput = document.getElementById("cfg-bot-nickname-input");
-      const newName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : "HaruMod Security";
+      const dashInput = document.getElementById("cfg-dash-bot-nickname");
+      const newName = (nameInput && nameInput.value.trim()) || (dashInput && dashInput.value.trim()) || "HaruMod";
 
       const cmdCode = document.getElementById("sync-command-code");
       if (cmdCode) cmdCode.innerText = `/botnick nickname: ${newName}`;
 
-      triggerUnsaved();
+      if (fromUserInput === true) {
+        triggerUnsaved();
+      }
     };
 
     // Hook selectServerForConfig to load full guild configuration
@@ -10181,13 +10206,16 @@
       localStorage.setItem("haruki_bot_nick_" + currentGuildId, nameVal);
       localStorage.setItem("haruki_bot_status_" + currentGuildId, statusVal);
       localStorage.setItem("haruki_bot_color_" + currentGuildId, currentBotRoleColor);
-      const dashNick = document.getElementById("cfg-dash-bot-name");
+      const dashNick = document.getElementById("cfg-dash-bot-nickname");
       if (dashNick) dashNick.value = nameVal;
-      updateLiveBotPreview();
+      hasUnsavedChanges = false;
+      const bar = document.getElementById("sticky-save-bar");
+      if (bar) bar.classList.remove("visible");
+      updateLiveBotPreview(false);
 
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       if (res.ok) {
-        showToast(activeLang === "vi" ? "✓ Đã lưu!" : "✓ Saved!");
+        showToast(activeLang === "vi" ? "Đã lưu!" : "Saved!");
         saveAllServerSettingsAndSync(false);
       } else {
         showToast(activeLang === "vi" ? "⚠️ Không đổi được biệt danh" : "⚠️ Nickname update failed");
@@ -10255,12 +10283,19 @@
       if (filSel && typeof g.explicit_content_filter === "number") filSel.value = String(g.explicit_content_filter);
 
       // 3. Sync real Bot Nickname currently active on Discord
-      const liveNick = (snapshot.botMember && snapshot.botMember.nick) ? snapshot.botMember.nick : "HaruMod";
+      const liveNick = (snapshot.botMember && snapshot.botMember.nick)
+        ? snapshot.botMember.nick
+        : ((snapshot.botMember && snapshot.botMember.user && snapshot.botMember.user.username) ? snapshot.botMember.user.username : "HaruMod");
       const nickInput = document.getElementById("cfg-bot-nickname-input");
-      const dashNick = document.getElementById("cfg-dash-bot-name");
+      const dashNick = document.getElementById("cfg-dash-bot-nickname");
       if (nickInput && !hasUnsavedChanges) nickInput.value = liveNick;
       if (dashNick && !hasUnsavedChanges) dashNick.value = liveNick;
-      updateLiveBotPreview();
+      if (!hasUnsavedChanges && currentGuildId) {
+        localStorage.setItem("haruki_bot_nick_" + currentGuildId, liveNick);
+      }
+      const cmdCode = document.getElementById("sync-command-code");
+      if (cmdCode && !hasUnsavedChanges) cmdCode.innerText = `/botnick nickname: ${liveNick}`;
+      updateLiveBotPreview(false);
 
       // 4. Render Real Audit Logs feed
       const auditBox = document.getElementById("live-discord-audit-list");
@@ -10371,12 +10406,18 @@
           cachedRoles = snapshot.roles.filter(r => r.name !== "@everyone").sort((a, b) => (b.position || 0) - (a.position || 0));
         }
         populateAllDynoDropdowns();
-        renderLiveDiscordSecuritySnapshot(snapshot);
         if (snapshot.savedConfig && Object.keys(snapshot.savedConfig).length > 0) {
           applyCloudGuildConfigToUI(snapshot.savedConfig);
         }
+        renderLiveDiscordSecuritySnapshot(snapshot);
+        if (typeof renderManagerRoles === "function") {
+          renderManagerRoles();
+        }
+        if (typeof updateLiveClock === "function") {
+          updateLiveClock();
+        }
         if (showFeedback) {
-          showToast(`✓ Đã đọc trực tiếp dữ liệu 1-1 từ Discord (${cachedChannels.length} kênh, ${cachedRoles.length} roles)!`, "success");
+          showToast(`Đã đọc trực tiếp dữ liệu 1-1 từ Discord (${cachedChannels.length} kênh, ${cachedRoles.length} roles)!`, "success");
         }
       } else {
         // Ensure dropdowns still populate from fallback cache if bot isn't in server yet
@@ -10502,7 +10543,7 @@
         "automod-affected-roles",
         "automod-ignored-roles",
         "automod-default-ignored-roles",
-        "cfg-dash-roles-picker"
+        "cfg-dash-role-picker"
       ];
       roleSelectIds.forEach(id => {
         const el = document.getElementById(id);
@@ -11716,6 +11757,247 @@
 
 
     // =========================================================
+    // DASHBOARD REAL-TIME SETTINGS, CLOCK, MANAGER ROLES & UTILS
+    // =========================================================
+    let currentManagerRoles = [];
+
+    function syncBotNicknameInputs(srcEl) {
+      const val = srcEl ? srcEl.value : "";
+      const dashInput = document.getElementById("cfg-dash-bot-nickname");
+      const idInput = document.getElementById("cfg-bot-nickname-input");
+      if (dashInput && srcEl !== dashInput) dashInput.value = val;
+      if (idInput && srcEl !== idInput) idInput.value = val;
+      if (typeof updateLiveBotPreview === "function") updateLiveBotPreview(false);
+    }
+
+    async function saveDashboardSettings(ev) {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const dashNick = document.getElementById("cfg-dash-bot-nickname");
+      if (dashNick) syncBotNicknameInputs(dashNick);
+      const btn = (ev && ev.currentTarget) ? ev.currentTarget : null;
+      const origHtml = btn ? btn.innerHTML : "";
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>Syncing...</span>`;
+      }
+      try {
+        await saveAllServerSettingsAndSync(true);
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        if (typeof logRecentActivity === "function") {
+          logRecentActivity("Settings", "Lưu & đồng bộ cài đặt bot lên Discord", "Saved & synced bot settings to Discord");
+        }
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    function updateLiveClock() {
+      const tzSel = document.getElementById("cfg-dash-timezone");
+      let tz = (tzSel && tzSel.value) ? tzSel.value : "Asia/Ho_Chi_Minh";
+      if (tz === "Asia/Saigon") tz = "Asia/Ho_Chi_Minh";
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const locale = activeLang === "vi" ? "vi-VN" : "en-US";
+      const now = new Date();
+      let clockStr = "";
+      try {
+        const datePart = new Intl.DateTimeFormat(locale, { timeZone: tz, weekday: "long", month: "short", day: "numeric" }).format(now);
+        const timePart = new Intl.DateTimeFormat(locale, { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(now);
+        clockStr = `${datePart} • ${timePart}`;
+      } catch (e) {
+        clockStr = now.toLocaleString(locale);
+      }
+      const disp = document.getElementById("dash-live-clock-display");
+      if (disp) disp.textContent = clockStr;
+      const tzBadge = document.getElementById("stats-board-linked-tz");
+      if (tzBadge && tzSel && tzSel.selectedIndex >= 0) {
+        tzBadge.textContent = tzSel.options[tzSel.selectedIndex].text;
+      }
+      updateLiveStatsBoardMockup();
+    }
+
+    function updateLiveStatsBoardMockup() {
+      const tzSel = document.getElementById("cfg-dash-timezone");
+      let tz = (tzSel && tzSel.value) ? tzSel.value : "Asia/Ho_Chi_Minh";
+      if (tz === "Asia/Saigon") tz = "Asia/Ho_Chi_Minh";
+      const fmtSel = document.getElementById("cfg-stats-clock-format");
+      const fmt = fmtSel ? fmtSel.value : "day_date";
+      const now = new Date();
+      const mockClock = document.getElementById("mock-vc-clock");
+      if (!mockClock) return;
+      try {
+        if (fmt === "time_ampm") {
+          const t = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "2-digit", minute: "2-digit" }).format(now);
+          mockClock.textContent = `⏰ ${t}`;
+        } else if (fmt === "full_datetime") {
+          const dt = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(now);
+          mockClock.textContent = `📅 ${dt}`;
+        } else {
+          const d = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "long", month: "short", day: "numeric" }).format(now);
+          mockClock.textContent = `📅 ${d}`;
+        }
+      } catch (e) {}
+    }
+
+    function handleTimezoneChange() {
+      updateLiveClock();
+      triggerUnsaved();
+    }
+
+    function detectUserTimezone() {
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Ho_Chi_Minh";
+        const sel = document.getElementById("cfg-dash-timezone");
+        if (sel) {
+          let found = [...sel.options].some(o => o.value === tz);
+          if (!found && tz === "Asia/Ho_Chi_Minh" && [...sel.options].some(o => o.value === "Asia/Saigon")) {
+            sel.value = "Asia/Ho_Chi_Minh";
+            found = true;
+          }
+          if (!found) {
+            const opt = document.createElement("option");
+            opt.value = tz;
+            opt.textContent = tz;
+            sel.appendChild(opt);
+          }
+          sel.value = tz;
+        }
+        updateLiveClock();
+        triggerUnsaved();
+        showToast("Timezone: " + tz);
+      } catch (e) {
+        showToast("Could not detect timezone");
+      }
+    }
+
+    function handlePrefixInput(inputEl, silent = false) {
+      const ch = (inputEl && inputEl.value.trim()) ? inputEl.value.trim() : "h";
+      const p1 = document.getElementById("dash-prefix-preview-val");
+      const p2 = document.getElementById("dash-prefix-preview-val2");
+      if (p1) p1.textContent = ch + "?help";
+      if (p2) p2.textContent = ch + "?ban";
+      if (typeof renderModulesGrid === "function") renderModulesGrid();
+      if (!silent) triggerUnsaved();
+    }
+
+    function renderManagerRoles() {
+      const box = document.getElementById("cfg-dash-manager-roles-box");
+      if (!box) return;
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      if (!Array.isArray(currentManagerRoles) || currentManagerRoles.length === 0) {
+        const adminRoles = roles.filter(r => {
+          try {
+            return r.permissions && ((BigInt(r.permissions) & 8n) === 8n);
+          } catch (_) {
+            return /admin|owner|mod|staff/i.test(r.name || "");
+          }
+        }).slice(0, 4);
+        if (adminRoles.length > 0) {
+          currentManagerRoles = adminRoles.map(r => r.id);
+        }
+      }
+      if (!currentManagerRoles || currentManagerRoles.length === 0) {
+        box.innerHTML = `<span style="font-size:0.78rem;color:var(--text-muted);">Server Owner &amp; Administrators only</span>`;
+        return;
+      }
+      box.innerHTML = currentManagerRoles.map(rid => {
+        const roleObj = roles.find(r => r.id === rid);
+        const rName = roleObj ? roleObj.name : rid;
+        const hex = (roleObj && roleObj.color) ? ("#" + roleObj.color.toString(16).padStart(6, "0")) : "#34d399";
+        return `<span class="role-tag-chip"><span class="chip-dot" style="background:${hex};"></span><span>${escapeHtml(rName)}</span><button type="button" class="chip-remove" onclick="removeManagerRole('${rid}')" title="Remove">&times;</button></span>`;
+      }).join("");
+    }
+
+    function addManagerRoleFromSelect(selectEl) {
+      if (!selectEl || !selectEl.value) return;
+      const rid = selectEl.value;
+      if (!currentManagerRoles.includes(rid)) {
+        currentManagerRoles.push(rid);
+        renderManagerRoles();
+        triggerUnsaved();
+      }
+      selectEl.value = "";
+    }
+
+    function removeManagerRole(roleId) {
+      currentManagerRoles = currentManagerRoles.filter(id => id !== roleId);
+      renderManagerRoles();
+      triggerUnsaved();
+    }
+
+    function logRecentActivity(tag, msgVi, msgEn) {
+      if (!currentGuildId) return;
+      const key = "harumod_recent_activity_" + currentGuildId;
+      let list = [];
+      try { list = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) {}
+      list.unshift({ tag, msgVi, msgEn, ts: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(list.slice(0, 15)));
+      loadRecentActivities();
+    }
+
+    function loadRecentActivities() {
+      const box = document.getElementById("dash-recent-activity-list");
+      if (!box) return;
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const key = "harumod_recent_activity_" + (currentGuildId || "default");
+      let list = [];
+      try { list = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) {}
+      if (!Array.isArray(list) || list.length === 0) {
+        box.innerHTML = `<div style="padding:12px 14px;color:var(--text-muted);font-size:0.82rem;">${activeLang === "vi" ? "Chưa có hoạt động nào gần đây." : "No recent configuration changes logged yet."}</div>`;
+        return;
+      }
+      box.innerHTML = list.map(item => `
+        <div class="dash-activity-item">
+          <div class="dash-act-left">
+            <span class="dash-act-tag">${escapeHtml(item.tag || "SYNC")}</span>
+            <span style="font-size:0.83rem;color:#e2e8f0;">${escapeHtml(activeLang === "vi" ? (item.msgVi || item.msgEn) : (item.msgEn || item.msgVi))}</span>
+          </div>
+          <span style="font-size:0.74rem;color:var(--text-muted);">${new Date(item.ts).toLocaleTimeString()}</span>
+        </div>
+      `).join("");
+    }
+
+    function clearActivityHistory() {
+      if (currentGuildId) {
+        localStorage.removeItem("harumod_recent_activity_" + currentGuildId);
+      }
+      loadRecentActivities();
+      showToast("Cleared!");
+    }
+
+    function copyServerId() {
+      const gid = currentGuildId || document.getElementById("dash-header-server-id")?.textContent?.trim() || "";
+      if (!gid) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(gid).then(() => showToast("Copied Server ID: " + gid)).catch(() => showToast("ID: " + gid));
+      } else {
+        showToast("Server ID: " + gid);
+      }
+    }
+
+    function openHelpModal() {
+      if (typeof showEngineInfoModal === "function") {
+        showEngineInfoModal();
+      } else if (typeof openModal === "function") {
+        openModal("modal-api-diagnostics");
+      }
+    }
+
+    function openServerStatsModal() {
+      if (currentGuildId) fetchRealDiscordGuildData(currentGuildId, false);
+      if (typeof switchConfigTab === "function") switchConfigTab("overview");
+    }
+
+    function deployStatsBoardToDiscord(ev) {
+      return triggerDeployStatsChannels(ev);
+    }
+
+    // =========================================================
     // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
@@ -11728,7 +12010,10 @@
       }
       if (typeof updateLiveClock === "function") {
         updateLiveClock();
+        setInterval(updateLiveClock, 1000);
       }
+      if (typeof renderManagerRoles === "function") renderManagerRoles();
+      if (typeof loadRecentActivities === "function") loadRecentActivities();
 
       const saveBar = document.getElementById("sticky-save-bar");
       if (saveBar) saveBar.classList.remove("visible");
