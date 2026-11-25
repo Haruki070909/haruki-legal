@@ -5603,7 +5603,7 @@
     padding: 14px;
     border-radius: 11px;
     background: #0a0e16;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1.5px solid rgba(148, 163, 184, 0.28);
   }
   @media (max-width: 780px) {
     .am-whitelist-bar {
@@ -5611,27 +5611,30 @@
     }
   }
   .am-card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-    align-items: start;
+    display: block;
+    column-count: 2;
+    column-gap: 16px;
   }
   @media (max-width: 960px) {
     .am-card-grid {
-      grid-template-columns: 1fr;
+      column-count: 1;
     }
   }
   .am-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 16px;
+    width: 100%;
     background: #0a0e16;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
     border-radius: 12px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: inline-block;
+    vertical-align: top;
     transition: border-color 0.15s ease;
   }
   .am-card.is-enabled {
-    border-color: rgba(16, 185, 129, 0.28);
+    border-color: rgba(16, 185, 129, 0.58);
   }
   .am-card-head {
     display: flex;
@@ -5639,8 +5642,8 @@
     justify-content: space-between;
     gap: 10px;
     padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.025);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.24);
   }
   .am-card-head-left {
     display: flex;
@@ -5721,7 +5724,7 @@
   }
   .am-tag-box {
     background: #0d121f;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
     border-radius: 9px;
     padding: 8px;
     display: flex;
@@ -5740,7 +5743,7 @@
     padding: 4px 9px;
     border-radius: 6px;
     background: #172033;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.36);
     color: #e2e8f0;
     font-size: 0.76rem;
     font-weight: 600;
@@ -5766,19 +5769,19 @@
     padding: 7px 10px;
     border-radius: 7px;
     background: #090d16;
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
     color: #f1f5f9;
     font-size: 0.8rem;
     outline: none;
   }
   .am-inline-add input:focus {
-    border-color: rgba(16, 185, 129, 0.45);
+    border-color: rgba(16, 185, 129, 0.65);
   }
   .am-inline-add-btn {
     padding: 7px 12px;
     border-radius: 7px;
     background: #161e2e;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(148, 163, 184, 0.34);
     color: #e2e8f0;
     font-size: 0.78rem;
     font-weight: 600;
@@ -5802,7 +5805,7 @@
     align-items: stretch;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.11);
+    border: 1.5px solid rgba(148, 163, 184, 0.32);
     background: #0d121f;
   }
   .am-unit-input {
@@ -5818,8 +5821,8 @@
   }
   .am-unit-suffix {
     padding: 8px 11px;
-    background: rgba(255, 255, 255, 0.04);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 1px solid rgba(148, 163, 184, 0.24);
     color: #94a3b8;
     font-size: 0.76rem;
     font-weight: 600;
@@ -5829,8 +5832,8 @@
   }
   .am-card-foot {
     padding: 12px 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.015);
+    border-top: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(255, 255, 255, 0.02);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -5859,7 +5862,7 @@
     padding: 11px 14px;
     border-radius: 10px;
     background: #0a0e16;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(148, 163, 184, 0.3);
   }
   @media (max-width: 720px) {
     .ladder-stage-row {
@@ -6262,6 +6265,37 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  /* Stronger, crisper matte borders for readability */
+  .panel-card,
+  .config-card,
+  .dyno-sidebar,
+  .dyno-top-bar,
+  .rr-table-wrap,
+  .rr-embed-panel,
+  .rm-role-item,
+  .rm-rank-row,
+  .switch-label {
+    border-color: rgba(148, 163, 184, 0.28) !important;
+    border-width: 1.5px !important;
+  }
+  .rr-embed-card {
+    border-top-color: rgba(148, 163, 184, 0.28) !important;
+    border-right-color: rgba(148, 163, 184, 0.28) !important;
+    border-bottom-color: rgba(148, 163, 184, 0.28) !important;
+  }
+  .form-input,
+  .input-field,
+  .select-field,
+  .h-select-trigger,
+  .btn-secondary {
+    border: 1.5px solid rgba(148, 163, 184, 0.34) !important;
+  }
+  .form-input:focus,
+  .input-field:focus,
+  .h-select-trigger[aria-expanded="true"] {
+    border-color: rgba(16, 185, 129, 0.65) !important;
   }
 </style>
 <style id="responsive-master-polish">
