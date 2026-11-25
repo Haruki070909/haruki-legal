@@ -6154,6 +6154,115 @@
     border-color: rgba(16, 185, 129, 0.45);
     background: #1a2436;
   }
+
+  /* Role Management Suite */
+  .rm-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 780px) {
+    .rm-grid-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rm-palette-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .rm-palette-pill {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #111827;
+    color: #cbd5e1;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease;
+  }
+  .rm-palette-pill.active,
+  .rm-palette-pill:hover {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.45);
+    color: #34d399;
+  }
+  .rm-swatch-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .rm-swatch-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: #0d131f;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    font-size: 0.76rem;
+    color: #e2e8f0;
+  }
+  .rm-swatch-pill button {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0 2px;
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+  .rm-role-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .rm-role-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-height: 310px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .rm-role-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: #0a0f18;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    flex-wrap: wrap;
+  }
+  .rm-rank-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #0b101b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.8rem;
+  }
+  .rm-section-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.07);
+    margin: 14px 0;
+  }
+  #cfg-pane-roles.active {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 </style>
 <style id="responsive-master-polish">
   @media (max-width: 1460px) and (min-width: 993px) {
@@ -7260,6 +7369,7 @@
             <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
             <span data-i18n="sideRoles">Role Management</span>
           </span>
+          <span class="nav-status-pill is-off" id="nav-st-roles">OFF</span>
         </button>
         <button class="dyno-nav-item" id="cfg-btn-reactionroles" onclick="switchConfigTab('reactionroles')">
           <span class="nav-item-main">
@@ -8748,32 +8858,172 @@
           </div>
         </div>
 
-        <div id="cfg-pane-roles" class="tab-pane">
+    <div id="cfg-pane-roles" class="tab-pane">
+      <!-- Card 1: Core Automation & Quarantine -->
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3 class="panel-title" data-i18n="rolesTitle">Role Management & RolePersist</h3>
-            <p class="panel-subtitle" data-i18n="rolesSub">Configure Muted quarantine roles, RolePersist (remember roles on rejoin), and new member auto-roles.</p>
+            <h3 class="panel-title" data-i18n="rolesTitle">Auto-Role, Muted &amp; RolePersist</h3>
+            <p class="panel-subtitle" data-i18n="rolesSub">Cấu hình vai trò Muted, tự động gán nhiều role cho thành viên hoặc bot mới vào, và giữ role cũ khi rời/vào lại.</p>
           </div>
         </div>
-        <div class="config-grid-2">
+
+        <div class="rm-grid-2">
           <div class="input-group">
-            <label class="input-label">Muted / Quarantine Role:</label>
-            <select class="select-field" id="cfg-role-muted" onchange="triggerUnsaved()"><option value="">-- Đang tải vai trò Discord... --</option></select>
+            <label class="input-label">Muted / Quarantine Role</label>
+            <select class="select-field" id="cfg-role-muted" onchange="onRoleMgmtFieldChange()"><option value="">Select Role..</option></select>
           </div>
           <div class="input-group">
-            <label class="input-label">Auto-Role Assigned on Join:</label>
-            <select class="select-field" id="cfg-role-autorole" onchange="triggerUnsaved()"><option value="">-- Đang tải vai trò Discord... --</option></select>
+            <label class="input-label">Auto-Role Delay (Phút, 0 = Tức thì)</label>
+            <input type="number" class="form-input" id="rm-autorole-delay" min="0" max="1440" value="0" oninput="onRoleMgmtFieldChange()">
           </div>
         </div>
-        <label class="switch-label" style="margin-top:10px;">
+
+        <div class="rm-grid-2" style="margin-top:12px;">
+          <div class="input-group">
+            <label class="input-label">Human Auto-Roles on Join (Thành viên mới)</label>
+            <div id="rm-human-autoroles-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;"></div>
+            <select class="select-field" id="rm-human-autorole-picker" onchange="addRoleMgmtChip('human', this.value)"><option value="">+ Thêm Role cho Human..</option></select>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Bot Auto-Roles on Join (Bot mới mời vào)</label>
+            <div id="rm-bot-autoroles-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;"></div>
+            <select class="select-field" id="rm-bot-autorole-picker" onchange="addRoleMgmtChip('bot', this.value)"><option value="">+ Thêm Role cho Bot..</option></select>
+          </div>
+        </div>
+
+        <label class="switch-label" style="margin-top:12px;">
           <div class="switch-info">
             <div class="switch-title">Enable RolePersist</div>
-            <div class="switch-desc">If a penalized user leaves and rejoins to bypass a Muted role, HaruMod instantly reassigns the Muted role!</div>
+            <div class="switch-desc">Tự động khôi phục lại toàn bộ vai trò cũ (bao gồm Muted) khi thành viên rời server và tham gia lại.</div>
           </div>
-          <input type="checkbox" checked onchange="triggerUnsaved()" style="display:none;">
+          <input type="checkbox" id="cfg-role-persist" onchange="onRoleMgmtFieldChange()" style="display:none;">
           <div class="switch-toggle"></div>
         </label>
+      </div>
+
+      <!-- Card 2: Fun & Interactive Roles -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title">Fun &amp; Interactive Roles</h3>
+            <p class="panel-subtitle">Tự động gán role vui khi vào phòng Voice, tặng role + lời cảm ơn Booster và tạo danh sách Role tự chọn qua lệnh /rank.</p>
+          </div>
+        </div>
+
+        <label class="switch-label">
+          <div class="switch-info">
+            <div class="switch-title">Voice Active Role (Role khi đang ở trong Voice)</div>
+            <div class="switch-desc">Tự động cấp role khi thành viên vào bất kỳ kênh Voice nào và tự động gỡ khi rời Voice.</div>
+          </div>
+          <input type="checkbox" id="rm-voice-role-enable" onchange="onRoleMgmtFieldChange()" style="display:none;">
+          <div class="switch-toggle"></div>
+        </label>
+        <div style="margin-top:10px;">
+          <select class="select-field" id="rm-voice-role-id" onchange="onRoleMgmtFieldChange()" style="width:100%;"><option value="">Chọn Voice Active Role..</option></select>
+        </div>
+
+        <div class="rm-section-divider"></div>
+
+        <label class="switch-label">
+          <div class="switch-info">
+            <div class="switch-title">Server Booster Perk (Quà &amp; Vinh Danh Booster)</div>
+            <div class="switch-desc">Khi thành viên Boost server, HaruMod tự động tặng thêm role VIP và gửi thông báo vinh danh.</div>
+          </div>
+          <input type="checkbox" id="rm-booster-enable" onchange="onRoleMgmtFieldChange()" style="display:none;">
+          <div class="switch-toggle"></div>
+        </label>
+        <div class="rm-grid-2" style="margin-top:10px;">
+          <div class="input-group">
+            <label class="input-label">Booster Reward Role</label>
+            <select class="select-field" id="rm-booster-role-id" onchange="onRoleMgmtFieldChange()"><option value="">Chọn Booster Role..</option></select>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Kênh gửi thông báo cảm ơn Booster</label>
+            <select class="select-field" id="rm-booster-channel-id" onchange="onRoleMgmtFieldChange()"><option value="">Chọn kênh thông báo..</option></select>
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <input type="text" class="form-input" id="rm-booster-msg" value="🚀 Cảm ơn {user} đã Boost cho **{server}** và nhận danh hiệu {role}!" oninput="onRoleMgmtFieldChange()" placeholder="Nội dung hỗ trợ {user}, {server}, {role}">
+        </div>
+
+        <div class="rm-section-divider"></div>
+
+        <div>
+          <label class="input-label" style="display:block;margin-bottom:8px;">Joinable Fun Ranks (Thành viên tự nhận qua lệnh /rank hoặc h?rank)</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;">
+            <input type="text" class="form-input" id="rm-rank-name" placeholder="Tên rank (VD: gamer, artist, nightowl)">
+            <select class="select-field" id="rm-rank-role-picker"><option value="">Chọn Role..</option></select>
+            <button type="button" class="btn btn-emerald btn-sm" onclick="addJoinableRankItem()" style="white-space:nowrap;">+ Thêm Rank</button>
+          </div>
+          <div id="rm-ranks-list" style="display:flex;flex-direction:column;gap:7px;margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <!-- Card 3: 1-Click Color Palette Roles Generator -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title">Color Roles Generator (Bộ Role Màu Vui 1-Click)</h3>
+            <p class="panel-subtitle">Chọn nhanh bảng màu có sẵn hoặc tự phối màu để tạo hàng loạt Role màu lên Discord, sau đó mở ngay bảng Reaction Role chọn màu.</p>
+          </div>
+        </div>
+
+        <div class="rm-palette-pills" id="rm-palette-pills">
+          <button type="button" class="rm-palette-pill active" onclick="selectColorPalettePreset('pastel', this)">Pastel Aesthetic</button>
+          <button type="button" class="rm-palette-pill" onclick="selectColorPalettePreset('neon', this)">Neon Cyber</button>
+          <button type="button" class="rm-palette-pill" onclick="selectColorPalettePreset('garden', this)">Garden Theme</button>
+          <button type="button" class="rm-palette-pill" onclick="selectColorPalettePreset('mono', this)">Minimal Mono</button>
+        </div>
+
+        <div class="rm-swatch-row" id="rm-palette-swatches"></div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+          <input type="text" class="form-input" id="rm-swatch-custom-name" placeholder="Tên màu thêm..." style="max-width:200px;">
+          <input type="color" id="rm-swatch-custom-color" class="rr-color-pick" value="#a78bfa">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addCustomColorSwatch()">+ Thêm màu vào bảng</button>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" id="rm-btn-generate-palette" class="btn btn-emerald btn-sm" onclick="generateColorPaletteOnDiscord()">Tạo bộ màu này trên Discord (1-Click)</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openReactionRoleFromPalette()">Tạo Reaction Role cho bộ màu này</button>
+        </div>
+      </div>
+
+      <!-- Card 4: Live Role Studio & Quick Tools -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title">Live Role Studio (Tạo, Gán Nhanh &amp; Quản Lý Role 1-1)</h3>
+            <p class="panel-subtitle">Tạo role mới tức thì, cấp/gỡ role nhanh cho thành viên bằng ID hoặc chỉnh màu / xóa role trực tiếp trên Discord.</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr auto 100px auto auto auto;gap:8px;align-items:center;">
+          <input type="text" class="form-input" id="rm-create-name" placeholder="Tên Role mới...">
+          <input type="color" id="rm-create-color" class="rr-color-pick" value="#10b981" oninput="document.getElementById('rm-create-hex').value=this.value.toUpperCase()">
+          <input type="text" class="form-input" id="rm-create-hex" value="#10B981" maxlength="7" oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value))document.getElementById('rm-create-color').value=this.value" style="font-family:monospace;">
+          <label style="display:inline-flex;align-items:center;gap:5px;font-size:0.78rem;color:#cbd5e1;white-space:nowrap;cursor:pointer;"><input type="checkbox" id="rm-create-hoist"> Hoist</label>
+          <label style="display:inline-flex;align-items:center;gap:5px;font-size:0.78rem;color:#cbd5e1;white-space:nowrap;cursor:pointer;"><input type="checkbox" id="rm-create-mention"> Mentionable</label>
+          <button type="button" class="btn btn-emerald btn-sm" onclick="createDiscordRoleLive()" style="white-space:nowrap;">+ Create Role</button>
+        </div>
+
+        <div class="rm-section-divider"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:center;">
+          <input type="text" class="form-input" id="rm-quick-user-id" placeholder="Member User ID (VD: 1028500296059596961)">
+          <select class="select-field" id="rm-quick-role-id"><option value="">Chọn Role..</option></select>
+          <button type="button" class="btn btn-emerald btn-sm" onclick="quickMemberRoleAction('add')" style="white-space:nowrap;">+ Cấp Role</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickMemberRoleAction('remove')" style="white-space:nowrap;color:#fca5a5;">Gỡ Role</button>
+        </div>
+
+        <div class="rm-section-divider"></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+          <strong style="font-size:0.84rem;color:#e2e8f0;">Danh sách Role hiện có trên Server</strong>
+          <input type="text" class="form-input" id="rm-role-search" placeholder="Tìm role theo tên..." oninput="renderLiveRolesExplorer()" style="max-width:250px;">
+        </div>
+        <div class="rm-role-list" id="rm-live-roles-list"></div>
       </div>
     </div>
 
@@ -11303,6 +11553,7 @@
       }
       if (tabKey === "autoban" && typeof renderAutobanRules === "function") renderAutobanRules();
       if (tabKey === "automod" && typeof renderAutomodRules === "function") renderAutomodRules();
+      if (tabKey === "roles" && typeof renderRoleManagementUI === "function") renderRoleManagementUI();
       if (tabKey === "reactionroles" && typeof renderReactionRolesTable === "function") renderReactionRolesTable();
 
       // Stabilize viewport with ZERO downward jitter/jump
@@ -11482,6 +11733,7 @@
         autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
         autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
         reactionRoles: typeof getReactionRolesForSave === "function" ? getReactionRolesForSave() : [],
+        roleManagement: typeof getRoleManagementConfigForSave === "function" ? getRoleManagementConfigForSave() : null,
         statsBoard: typeof getStatsBoardConfigForSave === "function" ? getStatsBoardConfigForSave() : null,
         savedAt: new Date().toISOString()
       };
@@ -11597,6 +11849,9 @@
       }
       if (typeof applyReactionRolesFromCloud === "function") {
         applyReactionRolesFromCloud(cfg.reactionRoles);
+      }
+      if (typeof applyRoleManagementConfigToUI === "function") {
+        applyRoleManagementConfigToUI(cfg.roleManagement);
       }
       updateLiveBotPreview(false);
     }
@@ -12287,6 +12542,7 @@
         "cfg-welcome-channel",
         "cfg-goodbye-channel",
         "cfg-dash-updates-channel",
+        "rm-booster-channel-id",
         "rr-channel",
         "chat-channel-select"
       ];
@@ -12296,7 +12552,7 @@
         if (!el) return;
         const curVal = el.value;
         el.innerHTML = id === "chat-channel-select" ? "" : '<option value="">Select Channel..</option>';
-        const listForSelect = (id === "chat-channel-select" || id === "hp-add-channel" || id === "cfg-honeypot-channel" || id === "rr-channel")
+        const listForSelect = (id === "chat-channel-select" || id === "hp-add-channel" || id === "cfg-honeypot-channel" || id === "rr-channel" || id === "rm-booster-channel-id")
           ? channels.filter(c => c.type === 0 || c.type === 5)
           : channels;
         listForSelect.forEach(ch => {
@@ -12331,7 +12587,14 @@
         "automod-default-ignored-roles",
         "cfg-dash-role-picker",
         "rr-allow-role-picker",
-        "rr-block-role-picker"
+        "rr-block-role-picker",
+        "cfg-role-muted",
+        "rm-human-autorole-picker",
+        "rm-bot-autorole-picker",
+        "rm-voice-role-id",
+        "rm-booster-role-id",
+        "rm-rank-role-picker",
+        "rm-quick-role-id"
       ];
       roleSelectIds.forEach(id => {
         const el = document.getElementById(id);
@@ -12351,6 +12614,9 @@
       }
       if (typeof renderReactionRolesTable === "function") {
         renderReactionRolesTable();
+      }
+      if (typeof renderRoleManagementUI === "function") {
+        renderRoleManagementUI();
       }
     }
 
@@ -12805,6 +13071,14 @@
       const ladOn = Boolean(sanctionLadderConfig.enabled);
       const welOn = Boolean(document.getElementById("cfg-welcome-enable")?.checked);
       const rrOn = typeof reactionRolesConfig !== "undefined" && Array.isArray(reactionRolesConfig) && reactionRolesConfig.length > 0;
+      const rmOn = typeof roleMgmtConfig !== "undefined" && Boolean(
+        roleMgmtConfig.rolePersistEnabled ||
+        (roleMgmtConfig.humanAutoRoles && roleMgmtConfig.humanAutoRoles.length > 0) ||
+        (roleMgmtConfig.botAutoRoles && roleMgmtConfig.botAutoRoles.length > 0) ||
+        (roleMgmtConfig.voiceRoleEnabled && roleMgmtConfig.voiceRoleId) ||
+        (roleMgmtConfig.boosterRewardEnabled && (roleMgmtConfig.boosterRoleId || roleMgmtConfig.boosterChannelId)) ||
+        (roleMgmtConfig.joinableRanks && roleMgmtConfig.joinableRanks.length > 0)
+      );
 
       setPill("nav-st-logs", logsOn);
       setPill("nav-st-channels", cleanOn);
@@ -12812,6 +13086,7 @@
       setPill("nav-st-automod", amOn);
       setPill("nav-st-honeypot", hpOn);
       setPill("nav-st-cases", ladOn);
+      setPill("nav-st-roles", rmOn);
       setPill("nav-st-reactionroles", rrOn);
       setPill("nav-st-welcome", welOn);
 
@@ -15819,6 +16094,419 @@
     }
 
     // =========================================================
+    // ROLE MANAGEMENT SUITE (CORE + FUN + PALETTES + LIVE STUDIO)
+    // =========================================================
+    function createDefaultRoleMgmtConfig() {
+      return {
+        mutedRoleId: "",
+        rolePersistEnabled: false,
+        humanAutoRoles: [],
+        botAutoRoles: [],
+        autoRoleDelayMinutes: 0,
+        voiceRoleEnabled: false,
+        voiceRoleId: "",
+        boosterRewardEnabled: false,
+        boosterRoleId: "",
+        boosterChannelId: "",
+        boosterMessage: "🚀 Cảm ơn {user} đã Boost cho **{server}** và nhận danh hiệu {role}!",
+        joinableRanks: []
+      };
+    }
+
+    let roleMgmtConfig = createDefaultRoleMgmtConfig();
+    let activePalettePreset = "pastel";
+
+    const COLOR_PALETTE_PRESETS = {
+      pastel: [
+        { name: "Sakura Pink", hex: "#FFB7C5", emoji: "🩷" },
+        { name: "Sky Blue", hex: "#93C5FD", emoji: "🩵" },
+        { name: "Mint Leaf", hex: "#86EFAC", emoji: "💚" },
+        { name: "Lavender", hex: "#C4B5FD", emoji: "💜" },
+        { name: "Peach Cream", hex: "#FDBA74", emoji: "🧡" },
+        { name: "Lemon Glow", hex: "#FDE047", emoji: "💛" }
+      ],
+      neon: [
+        { name: "Cyber Cyan", hex: "#06B6D4", emoji: "🩵" },
+        { name: "Electric Magenta", hex: "#EC4899", emoji: "🩷" },
+        { name: "Neon Lime", hex: "#22C55E", emoji: "💚" },
+        { name: "Laser Red", hex: "#EF4444", emoji: "❤️" },
+        { name: "Solar Gold", hex: "#F59E0B", emoji: "💛" }
+      ],
+      garden: [
+        { name: "Emerald Bloom", hex: "#10B981", emoji: "💚" },
+        { name: "Rose Petal", hex: "#F43F5E", emoji: "❤️" },
+        { name: "Ocean Mist", hex: "#38BDF8", emoji: "🩵" },
+        { name: "Sunbeam", hex: "#FACC15", emoji: "💛" },
+        { name: "Lilac Wine", hex: "#A855F7", emoji: "💜" }
+      ],
+      mono: [
+        { name: "Obsidian Dark", hex: "#1E293B", emoji: "🖤" },
+        { name: "Slate Ash", hex: "#64748B", emoji: "🩶" },
+        { name: "Silver Mist", hex: "#CBD5E1", emoji: "🤍" },
+        { name: "Pure Snow", hex: "#F8FAFC", emoji: "❄️" }
+      ]
+    };
+
+    let customPaletteSwatches = JSON.parse(JSON.stringify(COLOR_PALETTE_PRESETS.pastel));
+
+    function getRoleManagementConfigForSave() {
+      onRoleMgmtFieldChange(true);
+      return JSON.parse(JSON.stringify(roleMgmtConfig));
+    }
+
+    function applyRoleManagementConfigToUI(cfg) {
+      const def = createDefaultRoleMgmtConfig();
+      roleMgmtConfig = (cfg && typeof cfg === "object")
+        ? {
+            ...def,
+            ...cfg,
+            humanAutoRoles: Array.isArray(cfg.humanAutoRoles) ? [...cfg.humanAutoRoles] : [],
+            botAutoRoles: Array.isArray(cfg.botAutoRoles) ? [...cfg.botAutoRoles] : [],
+            joinableRanks: Array.isArray(cfg.joinableRanks) ? JSON.parse(JSON.stringify(cfg.joinableRanks)) : []
+          }
+        : def;
+      renderRoleManagementUI();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+    }
+
+    function onRoleMgmtFieldChange(silent = false) {
+      const mutedEl = document.getElementById("cfg-role-muted");
+      const delayEl = document.getElementById("rm-autorole-delay");
+      const persistEl = document.getElementById("cfg-role-persist");
+      const voiceEnEl = document.getElementById("rm-voice-role-enable");
+      const voiceRoleEl = document.getElementById("rm-voice-role-id");
+      const boostEnEl = document.getElementById("rm-booster-enable");
+      const boostRoleEl = document.getElementById("rm-booster-role-id");
+      const boostChEl = document.getElementById("rm-booster-channel-id");
+      const boostMsgEl = document.getElementById("rm-booster-msg");
+
+      if (mutedEl) roleMgmtConfig.mutedRoleId = mutedEl.value || "";
+      if (delayEl) roleMgmtConfig.autoRoleDelayMinutes = Math.max(0, parseInt(delayEl.value || "0", 10) || 0);
+      if (persistEl) roleMgmtConfig.rolePersistEnabled = Boolean(persistEl.checked);
+      if (voiceEnEl) roleMgmtConfig.voiceRoleEnabled = Boolean(voiceEnEl.checked);
+      if (voiceRoleEl) roleMgmtConfig.voiceRoleId = voiceRoleEl.value || "";
+      if (boostEnEl) roleMgmtConfig.boosterRewardEnabled = Boolean(boostEnEl.checked);
+      if (boostRoleEl) roleMgmtConfig.boosterRoleId = boostRoleEl.value || "";
+      if (boostChEl) roleMgmtConfig.boosterChannelId = boostChEl.value || "";
+      if (boostMsgEl) roleMgmtConfig.boosterMessage = boostMsgEl.value || createDefaultRoleMgmtConfig().boosterMessage;
+
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      if (!silent) triggerUnsaved();
+    }
+
+    function addRoleMgmtChip(kind, roleId) {
+      if (!roleId) return;
+      const list = kind === "bot" ? roleMgmtConfig.botAutoRoles : roleMgmtConfig.humanAutoRoles;
+      if (!list.includes(roleId)) list.push(roleId);
+      const pickerId = kind === "bot" ? "rm-bot-autorole-picker" : "rm-human-autorole-picker";
+      const picker = document.getElementById(pickerId);
+      if (picker) picker.value = "";
+      renderRoleMgmtChips();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function removeRoleMgmtChip(kind, roleId) {
+      if (kind === "bot") roleMgmtConfig.botAutoRoles = roleMgmtConfig.botAutoRoles.filter(id => id !== roleId);
+      else roleMgmtConfig.humanAutoRoles = roleMgmtConfig.humanAutoRoles.filter(id => id !== roleId);
+      renderRoleMgmtChips();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function renderRoleMgmtChips() {
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      const rMap = new Map(roles.map(r => [r.id, r.name]));
+      const mkChips = (ids, kind) => ids.length === 0
+        ? `<span style="font-size:0.75rem;color:#64748b;">Chưa chọn role nào</span>`
+        : ids.map(id => `<span class="am-tag-chip">@ ${escapeHtml(rMap.get(id) || id)} <button type="button" onclick="removeRoleMgmtChip('${kind}', '${id}')">&times;</button></span>`).join("");
+
+      const hBox = document.getElementById("rm-human-autoroles-chips");
+      const bBox = document.getElementById("rm-bot-autoroles-chips");
+      if (hBox) hBox.innerHTML = mkChips(roleMgmtConfig.humanAutoRoles || [], "human");
+      if (bBox) bBox.innerHTML = mkChips(roleMgmtConfig.botAutoRoles || [], "bot");
+    }
+
+    function addJoinableRankItem() {
+      const nameInput = document.getElementById("rm-rank-name");
+      const rolePicker = document.getElementById("rm-rank-role-picker");
+      const rankName = (nameInput?.value || "").trim().toLowerCase();
+      const roleId = rolePicker?.value || "";
+      if (!rankName || !roleId) {
+        showToast("Nhập tên rank và chọn Role tương ứng!", "warning");
+        return;
+      }
+      const existingIdx = roleMgmtConfig.joinableRanks.findIndex(r => r.name === rankName);
+      if (existingIdx >= 0) roleMgmtConfig.joinableRanks[existingIdx].roleId = roleId;
+      else roleMgmtConfig.joinableRanks.push({ name: rankName, roleId });
+      if (nameInput) nameInput.value = "";
+      if (rolePicker) rolePicker.value = "";
+      renderJoinableRanksList();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function removeJoinableRankItem(idx) {
+      roleMgmtConfig.joinableRanks.splice(idx, 1);
+      renderJoinableRanksList();
+      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+      triggerUnsaved();
+    }
+
+    function renderJoinableRanksList() {
+      const box = document.getElementById("rm-ranks-list");
+      if (!box) return;
+      const list = roleMgmtConfig.joinableRanks || [];
+      if (list.length === 0) {
+        box.innerHTML = `<div style="font-size:0.76rem;color:#64748b;padding:8px 10px;border:1px dashed rgba(255,255,255,0.08);border-radius:8px;">Chưa có Joinable Rank nào. Thêm ở trên để member gõ <code>/rank &lt;tên&gt;</code> tự nhận role!</div>`;
+        return;
+      }
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      const rMap = new Map(roles.map(r => [r.id, r.name]));
+      box.innerHTML = list.map((rk, i) => `
+        <div class="rm-rank-row">
+          <div><code>h?rank ${escapeHtml(rk.name)}</code> &rarr; <strong style="color:#34d399;">@${escapeHtml(rMap.get(rk.roleId) || rk.roleId)}</strong></div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="removeJoinableRankItem(${i})" style="padding:3px 9px;color:#fca5a5;">&times;</button>
+        </div>
+      `).join("");
+    }
+
+    function selectColorPalettePreset(presetKey, btnEl) {
+      activePalettePreset = presetKey;
+      customPaletteSwatches = JSON.parse(JSON.stringify(COLOR_PALETTE_PRESETS[presetKey] || COLOR_PALETTE_PRESETS.pastel));
+      document.querySelectorAll("#rm-palette-pills .rm-palette-pill").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      renderPaletteSwatches();
+    }
+
+    function addCustomColorSwatch() {
+      const nameEl = document.getElementById("rm-swatch-custom-name");
+      const colorEl = document.getElementById("rm-swatch-custom-color");
+      const name = (nameEl?.value || "").trim();
+      const hex = (colorEl?.value || "#A78BFA").toUpperCase();
+      if (!name) {
+        showToast("Nhập tên màu muốn thêm!", "warning");
+        return;
+      }
+      customPaletteSwatches.push({ name, hex, emoji: "🎨" });
+      if (nameEl) nameEl.value = "";
+      renderPaletteSwatches();
+    }
+
+    function removePaletteSwatch(idx) {
+      customPaletteSwatches.splice(idx, 1);
+      renderPaletteSwatches();
+    }
+
+    function renderPaletteSwatches() {
+      const box = document.getElementById("rm-palette-swatches");
+      if (!box) return;
+      box.innerHTML = customPaletteSwatches.map((sw, i) => `
+        <span class="rm-swatch-pill">
+          <span class="rm-role-dot" style="background:${escapeHtml(sw.hex)};"></span>
+          <span>${escapeHtml(sw.name)}</span>
+          <code style="font-size:0.7rem;color:#94a3b8;">${escapeHtml(sw.hex)}</code>
+          <button type="button" onclick="removePaletteSwatch(${i})">&times;</button>
+        </span>
+      `).join("");
+    }
+
+    async function generateColorPaletteOnDiscord() {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      if (!customPaletteSwatches.length) {
+        showToast("Bảng màu đang trống!", "warning");
+        return;
+      }
+      const btn = document.getElementById("rm-btn-generate-palette");
+      const oldTxt = btn ? btn.textContent : "";
+      if (btn) { btn.disabled = true; btn.textContent = "Đang tạo role trên Discord..."; }
+
+      const existingRoles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : [];
+      let created = 0, skipped = 0;
+      try {
+        for (const sw of customPaletteSwatches) {
+          const dup = existingRoles.find(r => r.name.toLowerCase() === sw.name.toLowerCase());
+          if (dup) { skipped++; continue; }
+          const colorInt = parseInt(sw.hex.replace("#", ""), 16) || 0;
+          const res = await DiscordAPI.request(`/guilds/${currentGuildId}/roles`, "POST", {
+            name: sw.name,
+            color: colorInt,
+            hoist: false,
+            mentionable: false
+          });
+          if (res.ok) created++;
+          await new Promise(r => setTimeout(r, 320));
+        }
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        showToast(`🎨 Đã tạo ${created} role màu mới (bỏ qua ${skipped} role đã tồn tại)!`, "success");
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = oldTxt; }
+      }
+    }
+
+    function openReactionRoleFromPalette() {
+      const roles = (cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES;
+      const mappings = [];
+      const descLines = ["Thả reaction bên dưới để chọn màu tên yêu thích cho bạn!\n"];
+      for (const sw of customPaletteSwatches) {
+        const found = roles.find(r => r.name.toLowerCase() === sw.name.toLowerCase());
+        const em = sw.emoji || "🎨";
+        if (found) {
+          mappings.push({ emoji: em, roleId: found.id });
+          descLines.push(`${em} — <@&${found.id}>`);
+        }
+      }
+      if (mappings.length === 0) {
+        showToast("Chưa tìm thấy các role màu trên Discord — hãy bấm 'Tạo bộ màu này trên Discord (1-Click)' trước nhé!", "warning");
+        return;
+      }
+      switchConfigTab("reactionroles");
+      openReactionRoleModal(null);
+      const embToggle = true;
+      rrEmbedBuilderVisible = embToggle;
+      loadEmbedObjIntoBuilder({
+        title: "🎨 Chọn Màu Tên Yêu Thích",
+        description: descLines.join("\n"),
+        color: parseInt((customPaletteSwatches[0]?.hex || "#10B981").replace("#", ""), 16)
+      });
+      rrModalMappings = mappings;
+      const typeEl = document.getElementById("rr-type");
+      if (typeEl) { typeEl.value = "unique"; onReactionRoleTypeChange(); }
+      syncEmbedPanelVisibility();
+      renderReactionRoleMappings();
+      updateReactionRoleEmbedCountersAndPreview();
+    }
+
+    async function createDiscordRoleLive() {
+      if (!currentGuildId) {
+        showToast("Vui lòng chọn máy chủ trước!", "warning");
+        return;
+      }
+      const name = (document.getElementById("rm-create-name")?.value || "").trim();
+      const hex = (document.getElementById("rm-create-hex")?.value || "#10B981").trim();
+      const hoist = Boolean(document.getElementById("rm-create-hoist")?.checked);
+      const mentionable = Boolean(document.getElementById("rm-create-mention")?.checked);
+      if (!name) {
+        showToast("Nhập tên Role cần tạo!", "warning");
+        return;
+      }
+      const res = await DiscordAPI.request(`/guilds/${currentGuildId}/roles`, "POST", {
+        name,
+        color: parseInt(hex.replace("#", ""), 16) || 0,
+        hoist,
+        mentionable
+      });
+      if (res.ok) {
+        if (document.getElementById("rm-create-name")) document.getElementById("rm-create-name").value = "";
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        showToast(`✅ Đã tạo Role @${name} lên Discord!`, "success");
+      } else {
+        showToast(`❌ Không thể tạo Role: ${res.error || "Thiếu quyền Manage Roles"}`, "error");
+      }
+    }
+
+    async function quickMemberRoleAction(mode) {
+      if (!currentGuildId) return showToast("Vui lòng chọn máy chủ trước!", "warning");
+      const userId = (document.getElementById("rm-quick-user-id")?.value || "").trim();
+      const roleId = document.getElementById("rm-quick-role-id")?.value || "";
+      if (!/^\d{15,22}$/.test(userId) || !roleId) {
+        showToast("Nhập User ID hợp lệ và chọn Role!", "warning");
+        return;
+      }
+      const method = mode === "remove" ? "DELETE" : "PUT";
+      const res = await DiscordAPI.request(`/guilds/${currentGuildId}/members/${userId}/roles/${roleId}`, method);
+      if (res.ok) {
+        showToast(mode === "remove" ? "✅ Đã gỡ role khỏi thành viên!" : "✅ Đã cấp role cho thành viên!", "success");
+      } else {
+        showToast(`❌ Lỗi thực thi: ${res.error || "Role cao hơn bot hoặc thiếu quyền"}`, "error");
+      }
+    }
+
+    async function updateDiscordRoleColorLive(roleId, newHex) {
+      if (!currentGuildId || !/^#[0-9a-fA-F]{6}$/.test(newHex)) return;
+      const res = await DiscordAPI.request(`/guilds/${currentGuildId}/roles/${roleId}`, "PATCH", {
+        color: parseInt(newHex.replace("#", ""), 16) || 0
+      });
+      if (res.ok) {
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        showToast(`🎨 Đã đổi màu role sang ${newHex.toUpperCase()}!`, "success");
+      } else {
+        showToast(`❌ Không đổi được màu role: ${res.error || "Thiếu quyền"}`, "error");
+      }
+    }
+
+    async function deleteDiscordRoleLive(roleId, roleName) {
+      if (!currentGuildId) return;
+      if (!confirm(`Xóa vĩnh viễn role @${roleName} trên Discord?`)) return;
+      const res = await DiscordAPI.request(`/guilds/${currentGuildId}/roles/${roleId}`, "DELETE");
+      if (res.ok) {
+        await fetchRealDiscordGuildData(currentGuildId, false);
+        showToast(`🗑️ Đã xóa role @${roleName} khỏi Discord!`, "success");
+      } else {
+        showToast(`❌ Không thể xóa role: ${res.error || "Role cao hơn bot hoặc managed"}`, "error");
+      }
+    }
+
+    function renderLiveRolesExplorer() {
+      const box = document.getElementById("rm-live-roles-list");
+      if (!box) return;
+      const q = (document.getElementById("rm-role-search")?.value || "").trim().toLowerCase();
+      const roles = ((cachedRoles && cachedRoles.length > 0) ? cachedRoles : GARDEN_REAL_ROLES)
+        .filter(r => r && r.name !== "@everyone")
+        .filter(r => !q || r.name.toLowerCase().includes(q) || String(r.id).includes(q));
+      if (roles.length === 0) {
+        box.innerHTML = `<div style="font-size:0.78rem;color:#64748b;padding:14px;text-align:center;">Không tìm thấy role phù hợp.</div>`;
+        return;
+      }
+      box.innerHTML = roles.slice(0, 80).map(r => {
+        const hex = r.color ? ("#" + Number(r.color).toString(16).padStart(6, "0").toUpperCase()) : "#94A3B8";
+        return `
+          <div class="rm-role-item">
+            <div style="display:flex;align-items:center;gap:9px;min-width:0;">
+              <span class="rm-role-dot" style="background:${hex};"></span>
+              <strong style="font-size:0.82rem;color:#f1f5f9;">@${escapeHtml(r.name)}</strong>
+              <code style="font-size:0.7rem;color:#64748b;cursor:pointer;" onclick="navigator.clipboard?.writeText('${r.id}').then(()=>showToast('Copied Role ID: ${r.id}'))">${r.id}</code>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="color" value="${hex}" title="Đổi màu role" onchange="updateDiscordRoleColorLive('${r.id}', this.value)" style="width:26px;height:26px;padding:1px;border-radius:6px;border:1px solid rgba(255,255,255,0.14);background:#111827;cursor:pointer;">
+              ${r.managed ? `<span style="font-size:0.7rem;color:#64748b;padding:2px 6px;">Managed</span>` : `<button type="button" class="btn btn-secondary btn-sm" onclick="deleteDiscordRoleLive('${r.id}', '${escapeHtml(r.name).replace(/'/g, "\\'")}')" style="padding:3px 9px;color:#fca5a5;">Delete</button>`}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderRoleManagementUI() {
+      const mutedEl = document.getElementById("cfg-role-muted");
+      const delayEl = document.getElementById("rm-autorole-delay");
+      const persistEl = document.getElementById("cfg-role-persist");
+      const voiceEnEl = document.getElementById("rm-voice-role-enable");
+      const voiceRoleEl = document.getElementById("rm-voice-role-id");
+      const boostEnEl = document.getElementById("rm-booster-enable");
+      const boostRoleEl = document.getElementById("rm-booster-role-id");
+      const boostChEl = document.getElementById("rm-booster-channel-id");
+      const boostMsgEl = document.getElementById("rm-booster-msg");
+
+      if (mutedEl) mutedEl.value = roleMgmtConfig.mutedRoleId || "";
+      if (delayEl) delayEl.value = String(roleMgmtConfig.autoRoleDelayMinutes || 0);
+      if (persistEl) persistEl.checked = Boolean(roleMgmtConfig.rolePersistEnabled);
+      if (voiceEnEl) voiceEnEl.checked = Boolean(roleMgmtConfig.voiceRoleEnabled);
+      if (voiceRoleEl) voiceRoleEl.value = roleMgmtConfig.voiceRoleId || "";
+      if (boostEnEl) boostEnEl.checked = Boolean(roleMgmtConfig.boosterRewardEnabled);
+      if (boostRoleEl) boostRoleEl.value = roleMgmtConfig.boosterRoleId || "";
+      if (boostChEl) boostChEl.value = roleMgmtConfig.boosterChannelId || "";
+      if (boostMsgEl && roleMgmtConfig.boosterMessage) boostMsgEl.value = roleMgmtConfig.boosterMessage;
+
+      renderRoleMgmtChips();
+      renderJoinableRanksList();
+      renderPaletteSwatches();
+      renderLiveRolesExplorer();
+    }
+
+    // =========================================================
     // ENSURE STRICT BILINGUAL & AUTH INITIALIZATION ON LOAD
     // =========================================================
     window.addEventListener("DOMContentLoaded", function() {
@@ -15840,6 +16528,9 @@
       }
       if (typeof renderReactionRolesTable === "function") {
         renderReactionRolesTable();
+      }
+      if (typeof renderRoleManagementUI === "function") {
+        renderRoleManagementUI();
       }
       if (typeof renderStatsBuilder === "function") {
         renderStatsBuilder();
