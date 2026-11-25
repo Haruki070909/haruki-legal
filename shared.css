@@ -1171,6 +1171,14 @@ svg[fill="none"] {
   fill: #ffffff !important;
 }
 
+.btn svg.svg-solid,
+.btn-secondary svg.svg-solid,
+.dev-btn svg.svg-solid,
+svg.svg-solid {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
 /* ========================================================
    HIGH-END BUTTERY-SMOOTH CYBERPUNK EFFECTS (ZERO JITTER, NO TEXT OVERLAP)
    ======================================================== */
