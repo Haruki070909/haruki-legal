@@ -21,7 +21,14 @@
     (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")
   ) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {});
+      navigator.serviceWorker
+        .register("./sw.js", { scope: "./" })
+        .then((reg) => {
+          if (reg && typeof reg.update === "function") {
+            reg.update().catch(() => {});
+          }
+        })
+        .catch(() => {});
     });
   }
 
@@ -70,22 +77,27 @@
     const style = document.createElement("style");
     style.id = "haru-pwa-styles";
     style.textContent = `
-      @view-transition {
-        navigation: auto;
+      @keyframes haruFastPageFade {
+        from { opacity: 0.92; }
+        to { opacity: 1; }
       }
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-        animation-duration: 0.14s;
-        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      ::view-transition-group(haru-app-dock) {
-        animation: none;
+      main, .hero-portal, #config-suite {
+        animation: haruFastPageFade 0.11s ease-out;
       }
 
+      /* Standalone Safe-Area Top Header Clearance */
       .haru-pwa-standalone .navbar,
       .haru-pwa-standalone .dash-topbar {
-        padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
-        height: auto !important;
+        padding-top: env(safe-area-inset-top, 0px) !important;
+        padding-bottom: 0 !important;
+        height: calc(60px + env(safe-area-inset-top, 0px)) !important;
+        min-height: calc(60px + env(safe-area-inset-top, 0px)) !important;
+        background: #070913 !important;
+        box-sizing: border-box !important;
+      }
+      .haru-pwa-standalone .portal-mobile-drawer {
+        top: calc(60px + env(safe-area-inset-top, 0px)) !important;
+        background: #0b0f19 !important;
       }
 
       .haru-install-btn {
@@ -147,7 +159,7 @@
       #haru-pwa-install-modal {
         position: fixed;
         inset: 0;
-        background: rgba(3, 6, 14, 0.82);
+        background: rgba(3, 6, 14, 0.84);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         z-index: 10050;
@@ -287,7 +299,62 @@
         background: #7dd3fc;
       }
 
-      /* Mobile App Bottom Dock - GPU pinned solid surface, zero backdrop repaint stutter */
+      /* Mobile 120FPS Optimization & Universal Safe-Area Header Clearance */
+      @media (max-width: 900px) {
+        html {
+          -webkit-tap-highlight-color: transparent;
+        }
+        a, button {
+          touch-action: manipulation;
+        }
+        html body *,
+        html body *::before,
+        html body *::after,
+        html body .bot-card,
+        html body .panel-card,
+        html body .config-card,
+        html body .server-card,
+        html body .dash-section-card,
+        html body .glass,
+        html body .glass-card {
+          -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+        }
+        #cyber-canvas,
+        .glow,
+        .bg-orb,
+        .ambient-orb,
+        .hero-glow {
+          display: none !important;
+        }
+        #haru-pwa-install-modal,
+        .dyno-modal-overlay {
+          background: rgba(3, 6, 14, 0.90) !important;
+        }
+        main > section,
+        .bot-card,
+        .panel-card {
+          content-visibility: auto;
+          contain-intrinsic-size: auto 420px;
+        }
+        html body .navbar,
+        html body .dash-topbar {
+          -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+          padding-top: env(safe-area-inset-top, 0px) !important;
+          padding-bottom: 0 !important;
+          height: calc(60px + env(safe-area-inset-top, 0px)) !important;
+          min-height: calc(60px + env(safe-area-inset-top, 0px)) !important;
+          background: #070913 !important;
+          box-sizing: border-box !important;
+        }
+        html body .portal-mobile-drawer {
+          top: calc(60px + env(safe-area-inset-top, 0px)) !important;
+          background: #0b0f19 !important;
+        }
+      }
+
+      /* Mobile App Bottom Dock */
       #haru-app-dock {
         display: none;
       }
@@ -310,7 +377,6 @@
           bottom: 0;
           z-index: 950;
           background: #0b0f19;
-          view-transition-name: haru-app-dock;
           transform: translate3d(0, 0, 0);
           will-change: transform;
           border-top: 1.5px solid #263147;
@@ -630,8 +696,19 @@
     }
   }
 
+  function disableHeavyMobileCanvas() {
+    if (window.innerWidth <= 900) {
+      const c = document.getElementById("cyber-canvas");
+      if (c) {
+        c.width = 0;
+        c.height = 0;
+      }
+    }
+  }
+
   function init() {
     injectPwaStyles();
+    disableHeavyMobileCanvas();
     ensureNavProgressBar();
     renderMobileAppDock();
     window.addEventListener("pageshow", resetNavProgressAndDock);

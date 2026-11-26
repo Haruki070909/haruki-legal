@@ -1,4 +1,4 @@
-const CACHE_NAME = "haru-ecosystem-v2";
+const CACHE_NAME = "haru-ecosystem-v4";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -9,7 +9,7 @@ const CORE_SHELL_ASSETS = [
   "./index-D1Nckd2P.js",
   "./index-Vs_wrV2D.css",
   "./manifest.webmanifest",
-  "./pwa-app.js",
+  "./pwa-app.js?v=4",
   "./haru-avatar.webp",
   "./harumod-avatar.png",
   "./icons/haru-app-icon-192.png",
