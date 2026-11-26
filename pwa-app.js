@@ -301,8 +301,14 @@
 
       /* Mobile 120FPS Optimization & Universal Safe-Area Header Clearance */
       @media (max-width: 900px) {
+        html, body {
+          overflow-x: clip !important;
+        }
         html {
           -webkit-tap-highlight-color: transparent;
+        }
+        body {
+          padding-top: calc(60px + env(safe-area-inset-top, 0px)) !important;
         }
         a, button {
           touch-action: manipulation;
@@ -339,6 +345,12 @@
         }
         html body .navbar,
         html body .dash-topbar {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          z-index: 1000 !important;
           -webkit-backdrop-filter: none !important;
           backdrop-filter: none !important;
           padding-top: env(safe-area-inset-top, 0px) !important;
@@ -347,6 +359,10 @@
           min-height: calc(60px + env(safe-area-inset-top, 0px)) !important;
           background: #070913 !important;
           box-sizing: border-box !important;
+        }
+        html body .navbar .navbar-content {
+          height: 60px !important;
+          align-items: center !important;
         }
         html body .portal-mobile-drawer {
           top: calc(60px + env(safe-area-inset-top, 0px)) !important;
