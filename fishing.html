@@ -815,11 +815,21 @@
       render();
     }
 
+    async function fetchWithTimeout(url, opts, timeoutMs) {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), timeoutMs || 8000);
+      try {
+        return await fetch(url, Object.assign({}, opts || {}, { signal: ctrl.signal }));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
     async function checkBridgeHealth() {
       const pill = document.getElementById("bridge-pill");
       const lbl = document.getElementById("bridge-label");
       try {
-        const res = await fetch(`${GATEWAY_URL}/api/harubot/fish/health`, { cache: "no-store" });
+        const res = await fetchWithTimeout(`${GATEWAY_URL}/api/harubot/fish/health`, { cache: "no-store" }, 7000);
         const data = await res.json();
         APP.bridgeOnline = Boolean(data && data.bridge_online);
         pill.className = "sync-pill " + (APP.bridgeOnline ? "online" : "offline");
@@ -832,33 +842,58 @@
     }
 
     async function fishRpc(action, payload) {
-      const res = await fetch(`${GATEWAY_URL}/api/harubot/fish/rpc`, {
+      const reqPayload = Object.assign(APP.guildId ? { guild_id: APP.guildId } : {}, payload || {});
+      const enqRes = await fetchWithTimeout(`${GATEWAY_URL}/api/harubot/fish/enqueue`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${APP.token}`
         },
-        body: JSON.stringify({
-          action,
-          payload: Object.assign(APP.guildId ? { guild_id: APP.guildId } : {}, payload || {})
-        })
-      });
-      if (res.status === 401) {
+        body: JSON.stringify({ action, payload: reqPayload })
+      }, 8000);
+
+      if (enqRes.status === 401) {
         logoutDiscord();
         throw new Error(APP.lang === "en" ? "Discord session expired. Please sign in again." : "Phiên Discord hết hạn. Vui lòng đăng nhập lại.");
       }
-      const data = await res.json().catch(() => ({ ok: false, error: `HTTP ${res.status}` }));
-      if (!res.ok && !data.error) {
-        data.error = `HTTP ${res.status}`;
+
+      const enq = await enqRes.json().catch(() => ({ ok: false, error: `HTTP ${enqRes.status}` }));
+      if (!enqRes.ok || !enq.ok || !enq.job_id) {
+        throw new Error(enq.error || `Gateway error (HTTP ${enqRes.status})`);
       }
-      if (data && data.state) {
-        applyState(data.state);
+
+      const maxMs = enq.bridge_online ? 15000 : 5000;
+      const started = Date.now();
+      while (Date.now() - started < maxMs) {
+        await new Promise(r => setTimeout(r, 160));
+        const resRes = await fetchWithTimeout(`${GATEWAY_URL}/api/harubot/fish/result/${encodeURIComponent(enq.job_id)}`, {
+          headers: { Authorization: `Bearer ${APP.token}` },
+          cache: "no-store"
+        }, 7000);
+        if (resRes.status === 401) {
+          logoutDiscord();
+          throw new Error(APP.lang === "en" ? "Discord session expired. Please sign in again." : "Phiên Discord hết hạn. Vui lòng đăng nhập lại.");
+        }
+        const poll = await resRes.json().catch(() => null);
+        if (poll && (poll.status === "done" || poll.status === "error")) {
+          const data = poll.result || { ok: false, error: "Empty response" };
+          if (data && data.state) {
+            applyState(data.state);
+          }
+          return data;
+        }
       }
-      return data;
+      return {
+        ok: false,
+        error: APP.lang === "en"
+          ? "HaruBot bridge offline or timed out waiting for bot reply."
+          : "HaruBot Bridge đang ngoại tuyến hoặc phản hồi quá thời gian."
+      };
     }
 
     function applyState(st) {
       APP.state = st;
+      APP.lastError = "";
       if (st && st.context && st.context.guild_id) {
         APP.guildId = st.context.guild_id;
         localStorage.setItem("harubot_fish_guild_id", APP.guildId);
@@ -877,37 +912,60 @@
       checkBridgeHealth();
       setInterval(checkBridgeHealth, 25000);
 
+      // Handle direct OAuth hash if redirected here
+      if (window.location.hash && window.location.hash.includes("access_token=")) {
+        const hp = new URLSearchParams(window.location.hash.substring(1));
+        const htok = hp.get("access_token");
+        if (htok) {
+          localStorage.setItem("discord_access_token", htok);
+          APP.token = htok;
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+
       if (!APP.token) {
         render();
         return;
       }
 
-      renderLoading("Đang xác thực Discord & đồng bộ dữ liệu câu cá thật...");
+      renderLoading(APP.lang === "en" ? "Verifying Discord & syncing your real Fishing data..." : "Đang xác thực Discord & đồng bộ dữ liệu câu cá thật...");
       try {
-        const uRes = await fetch("https://discord.com/api/v10/users/@me", {
+        const uRes = await fetchWithTimeout("https://discord.com/api/v10/users/@me", {
           headers: { Authorization: `Bearer ${APP.token}` }
-        });
+        }, 8000);
         if (!uRes.ok) {
           logoutDiscord();
           return;
         }
         APP.discordUser = await uRes.json();
+        renderNavAuth();
         await loadState();
       } catch (e) {
-        toast(e.message || "Lỗi kết nối", "err");
+        APP.lastError = (e && e.name === "AbortError")
+          ? (APP.lang === "en" ? "Connection timed out while contacting Discord/Gateway." : "Quá thời gian kết nối Discord hoặc Gateway.")
+          : (e.message || "Lỗi kết nối");
+        toast(APP.lastError, "err");
         render();
       }
     }
 
     async function loadState() {
-      const data = await fishRpc("get_state", {});
-      if (!data.ok) {
-        toast(data.error || "Không tải được dữ liệu từ HaruBot", "err");
-      } else {
-        applyState(data);
-        APP.bridgeOnline = true;
-        document.getElementById("bridge-pill").className = "sync-pill online";
-        document.getElementById("bridge-label").textContent = t("bridgeOnline");
+      try {
+        const data = await fishRpc("get_state", {});
+        if (!data.ok) {
+          APP.lastError = data.error || "Không tải được dữ liệu từ HaruBot";
+          toast(APP.lastError, "err");
+        } else {
+          applyState(data);
+          APP.bridgeOnline = true;
+          document.getElementById("bridge-pill").className = "sync-pill online";
+          document.getElementById("bridge-label").textContent = t("bridgeOnline");
+        }
+      } catch (e) {
+        APP.lastError = (e && e.name === "AbortError")
+          ? (APP.lang === "en" ? "Gateway request timed out." : "Kết nối tới Gateway bị quá thời gian.")
+          : (e.message || "Không kết nối được tới HaruBot Bridge");
+        toast(APP.lastError, "err");
       }
       render();
     }
@@ -1337,9 +1395,13 @@
       if (!APP.state) {
         root.innerHTML = `
           <div class="auth-gate">
-            <h3 style="margin:0 0 8px;">Không kết nối được tới HaruBot Bridge</h3>
-            <p class="muted" style="font-size:13.5px;">Hãy chắc chắn HaruBot trên VibeHost đang Online và thử tải lại.</p>
-            <button class="btn btn-primary" onclick="loadState()">↻ Thử kết nối lại</button>
+            <div style="font-size:34px;margin-bottom:10px;">⚠️</div>
+            <h3 style="margin:0 0 8px;">${APP.lang === "en" ? "Could not sync with HaruBot Bridge" : "Chưa đồng bộ được với HaruBot Bridge"}</h3>
+            <p class="muted" style="font-size:13.5px;line-height:1.55;">${esc(APP.lastError || (APP.lang === "en" ? "Please check that HaruBot on VibeHost is Online and retry." : "Hãy chắc chắn HaruBot trên VibeHost đang Online rồi bấm thử lại."))}</p>
+            <div class="wrap-row" style="justify-content:center;margin-top:16px;">
+              <button class="btn btn-primary" onclick="renderLoading('Đang thử kết nối lại...');loadState()">↻ ${t("refresh")}</button>
+              <button class="btn btn-ghost" onclick="logoutDiscord();loginWithDiscord();">${APP.lang === "en" ? "Re-login Discord" : "Đăng nhập lại Discord"}</button>
+            </div>
           </div>`;
         return;
       }
