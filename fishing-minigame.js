@@ -1,4 +1,4 @@
-/* Haru Fishing RPG - 4-Lane 16-Bit Pixel Piano Rhythm Challenge Engine (v2) */
+/* Haru Fishing RPG - 4-Lane 16-Bit Pixel Piano Rhythm Challenge Engine (v6 · Easy Groove + backing music) */
 (function () {
   "use strict";
 
@@ -21,80 +21,92 @@
     virtuoso: [277.18, 329.63, 415.30, 523.25]    // C#4 E4 G#4 C5
   };
 
+  // v6 — "Easy Groove": slower BPM, wide hit windows, notes locked to the beat of a backing track.
   const RARITY_PROFILES = {
     common: {
       rank: 1, stars: 1, labelVi: "THÔNG THƯỜNG", labelEn: "COMMON",
-      bpm: 96, notes: 7, scroll: 130, doubleProb: 0.0, holdProb: 0.0,
-      perfectPx: 26, goodPx: 42, maxMiss: 4, scaleKey: "folk",
+      bpm: 70, notes: 6, scroll: 105, doubleProb: 0.0, holdProb: 0.0,
+      perfectPx: 32, goodPx: 52, maxMiss: 6, scaleKey: "folk",
       songVi: "Khúc Dạo Biển", songEn: "Gentle Harbor"
     },
     uncommon: {
       rank: 2, stars: 2, labelVi: "KHÔNG PHỔ BIẾN", labelEn: "UNCOMMON",
-      bpm: 108, notes: 10, scroll: 148, doubleProb: 0.0, holdProb: 0.15,
-      perfectPx: 24, goodPx: 39, maxMiss: 4, scaleKey: "folk",
+      bpm: 72, notes: 7, scroll: 108, doubleProb: 0.0, holdProb: 0.08,
+      perfectPx: 32, goodPx: 52, maxMiss: 6, scaleKey: "folk",
       songVi: "Sóng Nhẹ", songEn: "Sea Breeze"
     },
     rare: {
       rank: 3, stars: 3, labelVi: "HIẾM", labelEn: "RARE",
-      bpm: 122, notes: 14, scroll: 168, doubleProb: 0.12, holdProb: 0.20,
-      perfectPx: 22, goodPx: 36, maxMiss: 4, scaleKey: "hero",
+      bpm: 74, notes: 8, scroll: 110, doubleProb: 0.0, holdProb: 0.10,
+      perfectPx: 31, goodPx: 50, maxMiss: 6, scaleKey: "hero",
       songVi: "Vũ Điệu San Hô", songEn: "Coral Waltz"
     },
     epic: {
       rank: 4, stars: 4, labelVi: "SỬ THI", labelEn: "EPIC",
-      bpm: 136, notes: 18, scroll: 188, doubleProb: 0.20, holdProb: 0.22,
-      perfectPx: 20, goodPx: 33, maxMiss: 3, scaleKey: "hero",
+      bpm: 76, notes: 9, scroll: 112, doubleProb: 0.0, holdProb: 0.10,
+      perfectPx: 30, goodPx: 50, maxMiss: 6, scaleKey: "hero",
       songVi: "Khúc Biển Động", songEn: "Riptide Sonata"
     },
     legendary: {
       rank: 5, stars: 5, labelVi: "HUYỀN THOẠI", labelEn: "LEGENDARY",
-      bpm: 132, notes: 16, scroll: 178, doubleProb: 0.16, holdProb: 0.20,
-      perfectPx: 22, goodPx: 36, maxMiss: 4, scaleKey: "dramatic",
+      bpm: 76, notes: 10, scroll: 112, doubleProb: 0.0, holdProb: 0.10,
+      perfectPx: 30, goodPx: 50, maxMiss: 6, scaleKey: "dramatic",
       songVi: "Giao Hưởng Vàng", songEn: "Golden Symphony"
     },
     mythic: {
       rank: 6, stars: 6, labelVi: "THẦN THOẠI", labelEn: "MYTHIC",
-      bpm: 146, notes: 20, scroll: 196, doubleProb: 0.24, holdProb: 0.22,
-      perfectPx: 20, goodPx: 33, maxMiss: 4, scaleKey: "dramatic",
+      bpm: 80, notes: 12, scroll: 116, doubleProb: 0.05, holdProb: 0.12,
+      perfectPx: 30, goodPx: 49, maxMiss: 6, scaleKey: "dramatic",
       songVi: "Độc Tấu Thần Thoại", songEn: "Mythic Toccata"
     },
     ancient: {
       rank: 7, stars: 7, labelVi: "CỔ ĐẠI", labelEn: "ANCIENT",
-      bpm: 160, notes: 24, scroll: 214, doubleProb: 0.30, holdProb: 0.22,
-      perfectPx: 19, goodPx: 31, maxMiss: 3, scaleKey: "boss",
+      bpm: 86, notes: 14, scroll: 122, doubleProb: 0.08, holdProb: 0.12,
+      perfectPx: 29, goodPx: 48, maxMiss: 5, scaleKey: "boss",
       songVi: "Hồi Chuông Cổ Đại", songEn: "Ancient Requiem"
     },
     transcendent: {
       rank: 8, stars: 8, labelVi: "SIÊU VIỆT", labelEn: "TRANSCENDENT",
-      bpm: 172, notes: 28, scroll: 230, doubleProb: 0.35, holdProb: 0.24,
-      perfectPx: 18, goodPx: 29, maxMiss: 3, scaleKey: "boss",
+      bpm: 90, notes: 16, scroll: 126, doubleProb: 0.10, holdProb: 0.12,
+      perfectPx: 28, goodPx: 47, maxMiss: 5, scaleKey: "boss",
       songVi: "Siêu Việt Liên Hoàn", songEn: "Transcendent Etude"
     },
     eternity: {
       rank: 9, stars: 9, labelVi: "VĨNH HẰNG", labelEn: "ETERNITY",
-      bpm: 184, notes: 32, scroll: 246, doubleProb: 0.40, holdProb: 0.24,
-      perfectPx: 17, goodPx: 27, maxMiss: 3, scaleKey: "virtuoso",
+      bpm: 96, notes: 18, scroll: 132, doubleProb: 0.12, holdProb: 0.12,
+      perfectPx: 27, goodPx: 46, maxMiss: 5, scaleKey: "virtuoso",
       songVi: "Khúc Vĩnh Hằng", songEn: "Eternity Nocturne"
     },
     infinity: {
       rank: 10, stars: 10, labelVi: "VÔ CỰC", labelEn: "INFINITY",
-      bpm: 196, notes: 36, scroll: 260, doubleProb: 0.44, holdProb: 0.24,
-      perfectPx: 16, goodPx: 26, maxMiss: 3, scaleKey: "virtuoso",
+      bpm: 100, notes: 20, scroll: 136, doubleProb: 0.14, holdProb: 0.12,
+      perfectPx: 26, goodPx: 45, maxMiss: 5, scaleKey: "virtuoso",
       songVi: "Vô Cực Concerto", songEn: "Infinity Concerto"
     },
     genesis: {
       rank: 11, stars: 11, labelVi: "KHỞI NGUYÊN", labelEn: "GENESIS",
-      bpm: 208, notes: 40, scroll: 274, doubleProb: 0.48, holdProb: 0.22,
-      perfectPx: 15, goodPx: 25, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 106, notes: 22, scroll: 142, doubleProb: 0.15, holdProb: 0.12,
+      perfectPx: 25, goodPx: 44, maxMiss: 4, scaleKey: "virtuoso",
       songVi: "Khởi Nguyên Boss", songEn: "Genesis Fugue"
     },
     omega: {
       rank: 12, stars: 12, labelVi: "OMEGA", labelEn: "OMEGA",
-      bpm: 220, notes: 44, scroll: 288, doubleProb: 0.52, holdProb: 0.22,
-      perfectPx: 14, goodPx: 24, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 112, notes: 24, scroll: 148, doubleProb: 0.16, holdProb: 0.12,
+      perfectPx: 24, goodPx: 42, maxMiss: 4, scaleKey: "virtuoso",
       songVi: "OMEGA FINALE", songEn: "OMEGA FINALE"
     }
   };
+
+  // Backing-track chord progressions (4 bars loop) per scale. Each chord = pad triad; bass = root / 2.
+  const PROGRESSIONS = {
+    folk: [[261.63, 329.63, 392.00], [196.00, 246.94, 293.66], [220.00, 261.63, 329.63], [174.61, 220.00, 261.63]],
+    hero: [[220.00, 261.63, 329.63], [174.61, 220.00, 261.63], [261.63, 329.63, 392.00], [196.00, 246.94, 293.66]],
+    dramatic: [[293.66, 349.23, 440.00], [233.08, 293.66, 349.23], [174.61, 220.00, 261.63], [261.63, 329.63, 392.00]],
+    boss: [[164.81, 196.00, 246.94], [130.81, 164.81, 196.00], [146.83, 185.00, 220.00], [123.47, 155.56, 185.00]],
+    virtuoso: [[138.59, 164.81, 207.65], [110.00, 138.59, 164.81], [164.81, 207.65, 246.94], [207.65, 261.63, 311.13]]
+  };
+
+  const LEAD_IN_BEATS = 4;
 
   function getProfile(rarityId) {
     const k = String(rarityId || "common").toLowerCase();
@@ -111,32 +123,24 @@
 
     let speedMul = 1.0;
     let extraNotes = 0;
-    let extraDouble = 0;
-    let tightenPx = 0;
     const badges = [];
 
     if (hasMutation) {
-      speedMul += 0.08;
-      extraNotes += 3;
-      extraDouble += 0.06;
-      tightenPx += 1;
-      badges.push(isVi ? "ĐỘT BIẾN +8%" : "MUTATED +8%");
-    }
-    if (val >= 500000) {
-      speedMul += 0.09;
-      extraNotes += 4;
-      tightenPx += 1;
-      badges.push(isVi ? "CÁ CỰC PHẨM" : "PRIZE VALUE");
-    } else if (val >= 100000) {
-      speedMul += 0.06;
-      extraNotes += 2;
-      badges.push(isVi ? "CÁ XỊN" : "HIGH VALUE");
-    } else if (val >= 25000) {
       speedMul += 0.03;
       extraNotes += 1;
+      badges.push(isVi ? "ĐỘT BIẾN +3%" : "MUTATED +3%");
+    }
+    if (val >= 500000) {
+      speedMul += 0.04;
+      extraNotes += 2;
+      badges.push(isVi ? "CÁ CỰC PHẨM" : "PRIZE VALUE");
+    } else if (val >= 100000) {
+      speedMul += 0.02;
+      extraNotes += 1;
+      badges.push(isVi ? "CÁ XỊN" : "HIGH VALUE");
     }
 
-    const cappedMul = Math.min(1.18, speedMul);
+    const cappedMul = Math.min(1.06, speedMul);
     return {
       rarityId,
       rank: base.rank,
@@ -146,13 +150,13 @@
       songVi: base.songVi,
       songEn: base.songEn,
       scaleKey: base.scaleKey,
-      bpm: Math.min(248, Math.round(base.bpm * cappedMul)),
+      bpm: Math.min(120, Math.round(base.bpm * cappedMul)),
       notes: base.notes + extraNotes,
-      scroll: Math.min(315, Math.round(base.scroll * cappedMul)),
-      doubleProb: Math.min(0.68, base.doubleProb + extraDouble),
+      scroll: Math.min(158, Math.round(base.scroll * cappedMul)),
+      doubleProb: Math.min(0.18, base.doubleProb),
       holdProb: base.holdProb,
-      perfectPx: Math.max(12, base.perfectPx - tightenPx),
-      goodPx: Math.max(21, base.goodPx - tightenPx),
+      perfectPx: base.perfectPx,
+      goodPx: base.goodPx,
       maxMiss: base.maxMiss,
       badges
     };
@@ -320,119 +324,263 @@
     }
   };
 
+  // Backing track synthesizer (drums + bass + pad) scheduled on the Web Audio clock.
+  const BackingMusic = {
+    noiseBuf: null,
+
+    noise(ctx) {
+      if (!this.noiseBuf || this.noiseBuf.sampleRate !== ctx.sampleRate) {
+        const len = Math.floor(ctx.sampleRate * 0.3);
+        const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        this.noiseBuf = buf;
+      }
+      return this.noiseBuf;
+    },
+
+    kick(ctx, out, t) {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(150, t);
+      o.frequency.exponentialRampToValueAtTime(45, t + 0.13);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(0.26, t + 0.005);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      o.connect(g); g.connect(out);
+      o.start(t); o.stop(t + 0.22);
+    },
+
+    snare(ctx, out, t) {
+      const src = ctx.createBufferSource();
+      src.buffer = this.noise(ctx);
+      const hp = ctx.createBiquadFilter();
+      hp.type = "highpass";
+      hp.frequency.setValueAtTime(1300, t);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.075, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+      src.connect(hp); hp.connect(g); g.connect(out);
+      src.start(t); src.stop(t + 0.16);
+      const o = ctx.createOscillator();
+      const g2 = ctx.createGain();
+      o.type = "triangle";
+      o.frequency.setValueAtTime(190, t);
+      g2.gain.setValueAtTime(0.05, t);
+      g2.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      o.connect(g2); g2.connect(out);
+      o.start(t); o.stop(t + 0.1);
+    },
+
+    hat(ctx, out, t, vol) {
+      const src = ctx.createBufferSource();
+      src.buffer = this.noise(ctx);
+      const hp = ctx.createBiquadFilter();
+      hp.type = "highpass";
+      hp.frequency.setValueAtTime(7200, t);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(vol || 0.03, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+      src.connect(hp); hp.connect(g); g.connect(out);
+      src.start(t); src.stop(t + 0.05);
+    },
+
+    click(ctx, out, t, accent) {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "square";
+      o.frequency.setValueAtTime(accent ? 1320 : 990, t);
+      g.gain.setValueAtTime(accent ? 0.06 : 0.04, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+      o.connect(g); g.connect(out);
+      o.start(t); o.stop(t + 0.06);
+    },
+
+    bass(ctx, out, t, freq, dur) {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "triangle";
+      o.frequency.setValueAtTime(Math.max(55, freq), t);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(0.11, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.002, t + dur);
+      o.connect(g); g.connect(out);
+      o.start(t); o.stop(t + dur + 0.03);
+    },
+
+    pad(ctx, out, t, freqs, dur) {
+      freqs.forEach((f) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.setValueAtTime(f, t);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.022, t + 0.08);
+        g.gain.setValueAtTime(0.022, t + Math.max(0.1, dur - 0.25));
+        g.gain.exponentialRampToValueAtTime(0.0008, t + dur);
+        o.connect(g); g.connect(out);
+        o.start(t); o.stop(t + dur + 0.03);
+      });
+    },
+
+    scheduleBeat(m, beatIdx, t) {
+      const ctx = m.ctx;
+      const out = m.out;
+      const bs = m.beatSec;
+      const inBar = beatIdx % 4;
+      const bar = Math.floor(beatIdx / 4);
+      const chord = m.prog[bar % m.prog.length];
+      try {
+        if (beatIdx < LEAD_IN_BEATS) {
+          // Count-in bar: clicks + kick so players lock onto the tempo before the first note.
+          this.click(ctx, out, t, inBar === 0);
+          if (inBar === 0 || inBar === 2) this.kick(ctx, out, t);
+          this.hat(ctx, out, t + bs / 2, 0.02);
+          if (inBar === 0) this.pad(ctx, out, t, chord, bs * 4);
+          return;
+        }
+        if (inBar === 0 || inBar === 2) this.kick(ctx, out, t);
+        else this.snare(ctx, out, t);
+        this.hat(ctx, out, t, 0.028);
+        this.hat(ctx, out, t + bs / 2, 0.018);
+        if (inBar === 0) {
+          this.pad(ctx, out, t, chord, bs * 4);
+          this.bass(ctx, out, t, chord[0] / 2, bs * 0.9);
+        } else if (inBar === 2) {
+          this.bass(ctx, out, t, chord[2] / 2, bs * 0.9);
+        } else {
+          this.bass(ctx, out, t, chord[0] / 2, bs * 0.45);
+        }
+      } catch (_) {}
+    }
+  };
+
+  function startBackingMusic() {
+    if (!session) return;
+    const ctx = PianoAudio.getCtx();
+    if (!ctx) return;
+    try {
+      const out = ctx.createGain();
+      out.gain.setValueAtTime(session.musicOn ? 0.9 : 0.0001, ctx.currentTime);
+      out.connect(ctx.destination);
+      const beatSec = 60 / session.diff.bpm;
+      session.music = {
+        ctx,
+        out,
+        beatSec,
+        t0: ctx.currentTime + 0.08,
+        nextBeat: 0,
+        totalBeats: Math.ceil(session.chartDuration / beatSec) + 2,
+        prog: PROGRESSIONS[session.diff.scaleKey] || PROGRESSIONS.folk,
+        clockOk: ctx.state === "running"
+      };
+    } catch (_) {
+      session.music = null;
+    }
+  }
+
+  function scheduleBackingMusic() {
+    const m = session && session.music;
+    if (!m) return;
+    const horizon = m.ctx.currentTime + 0.3;
+    while (m.nextBeat <= m.totalBeats && m.t0 + m.nextBeat * m.beatSec < horizon) {
+      const t = m.t0 + m.nextBeat * m.beatSec;
+      if (t >= m.ctx.currentTime - 0.02) BackingMusic.scheduleBeat(m, m.nextBeat, t);
+      m.nextBeat += 1;
+    }
+  }
+
+  function stopBackingMusic() {
+    const m = session && session.music;
+    if (!m) return;
+    session.music = null;
+    try {
+      const now = m.ctx.currentTime;
+      m.out.gain.cancelScheduledValues(now);
+      m.out.gain.setValueAtTime(Math.max(0.0001, m.out.gain.value || 0.5), now);
+      m.out.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+      setTimeout(() => { try { m.out.disconnect(); } catch (_) {} }, 400);
+    } catch (_) {}
+  }
+
+  function setMusicEnabled(on) {
+    if (!session) return;
+    session.musicOn = Boolean(on);
+    try { localStorage.setItem("haru_mg_music", session.musicOn ? "1" : "0"); } catch (_) {}
+    const m = session.music;
+    if (m) {
+      try {
+        const now = m.ctx.currentTime;
+        m.out.gain.cancelScheduledValues(now);
+        m.out.gain.setValueAtTime(session.musicOn ? 0.9 : 0.0001, now);
+      } catch (_) {}
+    }
+    const btn = document.getElementById("mg-music-btn");
+    if (btn) {
+      const isVi = session.lang !== "en";
+      btn.textContent = session.musicOn ? (isVi ? "♪ NHẠC: BẬT" : "♪ MUSIC: ON") : (isVi ? "♪ NHẠC: TẮT" : "♪ MUSIC: OFF");
+      btn.style.color = session.musicOn ? "var(--px-mint)" : "var(--px-coral, #f45b69)";
+    }
+  }
+
   function generateChart(diff) {
     const scale = SCALES[diff.scaleKey] || SCALES.folk;
     const beatSec = 60 / diff.bpm;
-    const baseStepSec = diff.rank >= 8
-      ? Math.max(0.22, beatSec * 0.92)
-      : (diff.rank >= 4 ? Math.max(0.26, beatSec * 0.95) : beatSec);
-
-    const laneBusyUntil = [0, 0, 0, 0];
     const notes = [];
-    let curTime = 1.25;
-    let chordGroupSeq = 1;
     let noteIdSeq = 1;
+    let chordGroupSeq = 1;
     let prevLane = Math.floor(Math.random() * LANE_COUNT);
     let dir = Math.random() < 0.5 ? 1 : -1;
     let stepIdx = 0;
+    let beat = LEAD_IN_BEATS;
+    let lastEnd = 0;
 
     while (notes.length < diff.notes) {
-      if (stepIdx > 0 && stepIdx % 4 === 0 && Math.random() < 0.35) {
+      if (stepIdx > 0 && stepIdx % 4 === 0 && Math.random() < 0.35) dir = -dir;
+      let lane = prevLane + dir;
+      if (lane < 0 || lane >= LANE_COUNT) {
         dir = -dir;
+        lane = Math.max(0, Math.min(LANE_COUNT - 1, prevLane + dir));
       }
-      let candLane = prevLane + dir;
-      if (candLane < 0 || candLane >= LANE_COUNT) {
-        dir = -dir;
-        candLane = Math.max(0, Math.min(LANE_COUNT - 1, prevLane + dir));
-      }
-      if (stepIdx % 5 === 3) {
-        candLane = (prevLane + 2) % LANE_COUNT;
-      }
+      // Occasionally repeat the same key — easy and musical.
+      if (stepIdx % 6 === 5) lane = prevLane;
 
-      if (curTime < laneBusyUntil[candLane] + 0.16) {
-        let free = -1;
-        for (let k = 0; k < LANE_COUNT; k++) {
-          const check = (candLane + k) % LANE_COUNT;
-          if (curTime >= laneBusyUntil[check] + 0.16) {
-            free = check;
-            break;
-          }
-        }
-        if (free === -1) {
-          curTime = Math.min(...laneBusyUntil) + 0.17;
-          continue;
-        }
-        candLane = free;
-      }
-
-      const canDouble = diff.doubleProb > 0 && notes.length + 1 < diff.notes;
+      const hitTime = beat * beatSec;
       let lane2 = -1;
-      if (canDouble && Math.random() < diff.doubleProb) {
-        const pref2 = candLane < 2 ? 2 + (candLane % 2) : candLane % 2;
-        if (pref2 !== candLane && curTime >= laneBusyUntil[pref2] + 0.16) {
-          lane2 = pref2;
-        } else {
-          for (let k = 0; k < LANE_COUNT; k++) {
-            if (k !== candLane && curTime >= laneBusyUntil[k] + 0.16) {
-              lane2 = k;
-              break;
-            }
-          }
-        }
+      if (diff.doubleProb > 0 && notes.length + 1 < diff.notes && stepIdx > 2 && Math.random() < diff.doubleProb) {
+        // Chords always use one key per hand (left: D/F, right: J/K).
+        lane2 = lane < 2 ? 2 + (lane % 2) : lane % 2;
       }
 
       let holdDur = 0;
-      if (lane2 === -1 && diff.holdProb > 0 && notes.length < diff.notes - 1 && Math.random() < diff.holdProb) {
-        holdDur = Math.max(0.35, Math.min(0.75, beatSec * (diff.rank >= 7 ? 1.35 : 1.65)));
+      if (lane2 === -1 && diff.holdProb > 0 && notes.length < diff.notes - 1 && stepIdx > 1 && Math.random() < diff.holdProb) {
+        holdDur = Math.max(0.45, Math.min(0.9, beatSec * 1.0));
       }
 
-      const accentHi = stepIdx % 4 === 2 && diff.rank >= 5 ? 2 : 1;
       const groupId = lane2 !== -1 ? chordGroupSeq++ : 0;
-
-      const n1Id = noteIdSeq++;
       notes.push({
-        id: n1Id,
-        lane: candLane,
-        hitTime: curTime,
-        holdDur,
-        chordGroupId: groupId,
-        freq: scale[candLane] * accentHi,
-        y: -40,
-        tailY: -40,
-        hit: false,
-        holding: false,
-        completed: false,
-        missed: false
+        id: noteIdSeq++, lane, hitTime, holdDur, chordGroupId: groupId, freq: scale[lane],
+        y: -40, tailY: -40, hit: false, holding: false, completed: false, missed: false
       });
-      laneBusyUntil[candLane] = curTime + holdDur + 0.16;
-
       if (lane2 !== -1 && notes.length < diff.notes) {
-        const n2Id = noteIdSeq++;
         notes.push({
-          id: n2Id,
-          lane: lane2,
-          hitTime: curTime,
-          holdDur: 0,
-          chordGroupId: groupId,
-          freq: scale[lane2] * accentHi,
-          y: -40,
-          tailY: -40,
-          hit: false,
-          holding: false,
-          completed: false,
-          missed: false
+          id: noteIdSeq++, lane: lane2, hitTime, holdDur: 0, chordGroupId: groupId, freq: scale[lane2],
+          y: -40, tailY: -40, hit: false, holding: false, completed: false, missed: false
         });
-        laneBusyUntil[lane2] = curTime + 0.16;
       }
+      lastEnd = hitTime + holdDur;
 
-      prevLane = candLane;
+      prevLane = lane;
       stepIdx += 1;
-      const quickFlourish = diff.rank >= 5 && holdDur === 0 && lane2 === -1 && baseStepSec >= 0.34 && Math.random() < 0.25;
-      const delta = holdDur > 0 ? Math.max(baseStepSec, holdDur * 0.88 + 0.14) : (quickFlourish ? baseStepSec * 0.62 : baseStepSec);
-      curTime += delta;
+      // One note per beat; holds/chords get an extra beat of rest; a breather every 4 notes on lower tiers.
+      let adv = 1;
+      if (holdDur > 0 || lane2 !== -1) adv += 1;
+      if (diff.rank <= 8 && stepIdx % 4 === 0) adv += 1;
+      beat += adv;
     }
 
-    return { notes, totalDuration: curTime + 1.0 };
+    return { notes, totalDuration: lastEnd + beatSec * 2 };
   }
 
   let session = null;
@@ -464,6 +612,7 @@
     if (!session || session.finished) return;
     session.finished = true;
     PianoAudio.stopAllHolds();
+    stopBackingMusic();
     const { accuracy, grade } = computeAccuracyAndGrade(session);
     if (won) PianoAudio.playChordWin();
     else PianoAudio.playMiss();
@@ -596,26 +745,9 @@
       return;
     }
 
-    // Empty tap feedback + boss anti-spam protection on Mythic+
+    // Empty tap: soft feedback only (v6 removed the anti-spam penalty to keep the game relaxed).
     const scale = SCALES[diff.scaleKey] || SCALES.folk;
     PianoAudio.playMutedTap(scale[lane]);
-    if (diff.rank >= 6) {
-      const nearNote = best && bestDist <= 95;
-      if (!nearNote) {
-        session.ghostTaps[lane] += 1;
-        if (session.ghostTaps[lane] >= 2) {
-          session.ghostTaps[lane] = 0;
-          session.misses += 1;
-          session.combo = 0;
-          session.missFlash = 0.28;
-          setJudge("SPAM!", "#f45b69");
-          PianoAudio.playMiss();
-          if (session.misses > diff.maxMiss) {
-            finishSong(false, "piano_spam_fail");
-          }
-        }
-      }
-    }
   }
 
   function releaseLaneHoldCheck(lane) {
@@ -630,7 +762,7 @@
     PianoAudio.stopHold(`h_${lane}_${hn.id}`);
 
     const remain = (hn.hitTime + hn.holdDur) - session.elapsed;
-    const grace = Math.max(0.14, hn.holdDur * 0.22);
+    const grace = Math.max(0.28, hn.holdDur * 0.45);
     if (remain <= grace) {
       hn.completed = true;
       session.clearedNotes += 1;
@@ -677,12 +809,21 @@
       if (session.countdown <= 0) {
         session.stagePhase = "playing";
         session.elapsed = 0;
-        PianoAudio.playNote(880.0, 0.28, 0.08);
+        startBackingMusic();
       }
       return;
     }
 
-    session.elapsed += dt;
+    // Keep notes locked to the music: drive time from the audio clock whenever it is running.
+    const m = session.music;
+    if (m && m.clockOk && m.ctx.state === "running") {
+      const lat = Math.min(0.2, Math.max(0, m.ctx.outputLatency || m.ctx.baseLatency || 0));
+      session.elapsed = m.ctx.currentTime - m.t0 - lat;
+      scheduleBackingMusic();
+    } else {
+      session.elapsed += dt;
+      if (m) scheduleBackingMusic();
+    }
     if (session.missFlash > 0) session.missFlash = Math.max(0, session.missFlash - dt);
     if (session.judgeTimer > 0) session.judgeTimer = Math.max(0, session.judgeTimer - dt);
 
@@ -787,11 +928,16 @@
     ctx.fillStyle = "#060e1a";
     ctx.fillRect(0, 0, CW, CH);
 
-    // Subtle 16px beat grid
-    ctx.fillStyle = "#0a1728";
-    const gridOffset = Math.round((session.elapsed * diff.scroll) % 28);
-    for (let gy = gridOffset; gy < HIT_Y; gy += 28) {
-      ctx.fillRect(START_X, gy, LANE_W * LANE_COUNT, 1);
+    // Beat grid locked to the music (bright line = start of a bar)
+    const beatSecR = 60 / diff.bpm;
+    if (session.stagePhase === "playing") {
+      const firstBeat = Math.floor(session.elapsed / beatSecR);
+      for (let b = firstBeat; b < firstBeat + 12; b++) {
+        const gy = Math.round(HIT_Y - (b * beatSecR - session.elapsed) * diff.scroll);
+        if (gy < 8 || gy > HIT_Y) continue;
+        ctx.fillStyle = b % 4 === 0 ? "#16304d" : "#0d1d32";
+        ctx.fillRect(START_X, gy, LANE_W * LANE_COUNT, b % 4 === 0 ? 2 : 1);
+      }
     }
 
     // 4 Vertical piano lanes
@@ -825,9 +971,14 @@
       ctx.fillText(KEY_LABELS[l], lx + LANE_W / 2, HIT_Y + 3);
     }
 
-    // Golden horizontal strike line
-    ctx.fillStyle = "#ecc570";
-    ctx.fillRect(START_X, HIT_Y - 1, LANE_W * LANE_COUNT, 2);
+    // Golden horizontal strike line (pulses on every beat of the backing track)
+    let beatPulse = 0;
+    if (session.stagePhase === "playing" && session.elapsed > 0) {
+      const ph = (session.elapsed / beatSecR) % 1;
+      beatPulse = ph < 0.16 ? 1 - ph / 0.16 : 0;
+    }
+    ctx.fillStyle = beatPulse > 0 ? "#fff3c4" : "#ecc570";
+    ctx.fillRect(START_X, HIT_Y - 1 - Math.round(beatPulse), LANE_W * LANE_COUNT, 2 + Math.round(beatPulse * 2));
 
     // Draw golden chord connector lines between simultaneous notes
     const visibleChords = new Map();
@@ -879,10 +1030,10 @@
       const drawY = n.holding ? HIT_Y : Math.round(n.y);
       if (drawY < -18 || drawY > CH + 18) continue;
 
-      const tileX = lx + 7;
-      const tileW = LANE_W - 14;
-      const tileH = 14;
-      const tileTop = drawY - 7;
+      const tileX = lx + 6;
+      const tileW = LANE_W - 12;
+      const tileH = 18;
+      const tileTop = drawY - 9;
 
       // Crisp 16-bit Piano Tile block
       ctx.fillStyle = "#040811";
@@ -1060,11 +1211,12 @@
           <span id="mg-hud-hp" style="font-weight:700;color:#6fdbbf;">${isVi ? `Mạng: ${diff.maxMiss + 1}/${diff.maxMiss + 1}` : `Lives: ${diff.maxMiss + 1}/${diff.maxMiss + 1}`}</span>
           <span id="mg-hud-combo" style="font-weight:700;color:#7ec8d9;">COMBO ×0</span>
           <span id="mg-hud-prog" style="font-weight:700;color:var(--px-gold);">0/${session.notes.length}</span>
+          <button type="button" id="mg-music-btn" class="tab-badge" style="cursor:pointer;background:transparent;font:inherit;font-weight:700;color:${session.musicOn ? "var(--px-mint)" : "#f45b69"};">${session.musicOn ? (isVi ? "♪ NHẠC: BẬT" : "♪ MUSIC: ON") : (isVi ? "♪ NHẠC: TẮT" : "♪ MUSIC: OFF")}</button>
         </div>
         <div class="muted" style="font-size:11px;margin-top:5px;">
           ${isVi
-            ? "Chạm 4 phím đàn hoặc bấm D - F - J - K đúng lúc nốt rơi chạm vạch vàng (giữ nốt dài!)."
-            : "Tap 4 piano keys or press D - F - J - K on the gold line (hold long notes!)."}
+            ? "Nghe nhạc nền: mỗi nốt rơi chạm vạch vàng đúng 1 nhịp trống. Bấm D - F - J - K hoặc chạm phím đàn (giữ nốt dài!)."
+            : "Follow the beat: every note lands on the gold line on a drum beat. Press D - F - J - K or tap the keys (hold long notes!)."}
         </div>
         <div class="mg-canvas-box">
           <canvas id="mg-canvas" width="${CW}" height="${CH}"></canvas>
@@ -1076,7 +1228,9 @@
             <div class="mg-briefing-rules">
               <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#38bdf8;"></span><span>${isVi ? "<strong>Nốt đơn:</strong> Bấm 4 phím dưới (hoặc <strong>D · F · J · K</strong>) khi nốt chạm <strong>vạch vàng</strong>." : "<strong>Single:</strong> Tap 4 keys below (or <strong>D · F · J · K</strong>) at the <strong>gold line</strong>."}</span></div>
               <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#ecc570;"></span><span>${isVi ? "<strong>Hợp âm đôi:</strong> Nốt nối thanh vàng → chạm <strong>cùng lúc 2 phím</strong> (hỗ trợ đa điểm)." : "<strong>Chord:</strong> Gold-linked notes → tap <strong>2 keys together</strong>."}</span></div>
-              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#6fdbbf;"></span><span>${isVi ? "<strong>Nốt giữ dài:</strong> Có đuôi sáng → <strong>nhấn giữ</strong> đến hết đuôi mới thả." : "<strong>Hold:</strong> Bright tail → <strong>hold</strong> until end."}</span></div>
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#6fdbbf;"></span><span>${isVi ? "<strong>Nốt giữ dài:</strong> Có đuôi sáng → <strong>nhấn giữ</strong> đến gần hết đuôi mới thả." : "<strong>Hold:</strong> Bright tail → <strong>hold</strong> until near the end."}</span></div>
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#e879f9;"></span><span>${isVi ? "<strong>Có nhạc nền:</strong> 4 tiếng \"tích\" đếm nhịp trước, sau đó mỗi nốt rơi đúng <strong>1 nhịp trống</strong>. Vạch vàng nháy theo nhịp — cứ bấm theo nhạc!" : "<strong>Backing music:</strong> 4 count-in clicks, then each note lands <strong>on a drum beat</strong>. The gold line flashes on the beat."}</span></div>
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#7ec8d9;"></span><span>${isVi ? `Khung chấm rộng, <strong>${diff.maxMiss + 1} mạng</strong>, bấm hụt vào khoảng trống <strong>không bị trừ mạng</strong>.` : `Wide timing window, <strong>${diff.maxMiss + 1} lives</strong>, empty taps are <strong>not penalized</strong>.`}</span></div>
             </div>
             <div style="font-size:10.5px;color:var(--px-mint);">${isVi ? "Bấm thử 4 phím đàn bên dưới để thử tiếng trước khi bắt đầu!" : "Tap any of the 4 keys below to warm up first!"}</div>
             <button type="button" class="btn btn-emerald" id="mg-start-btn" style="width:100%;padding:9px 10px;font-size:12.5px;">
@@ -1095,6 +1249,14 @@
     session.keyEls = [0, 1, 2, 3].map(l => document.getElementById(`mg-pkey-${l}`));
 
     const startBtn = document.getElementById("mg-start-btn");
+    const musicBtn = document.getElementById("mg-music-btn");
+    if (musicBtn) {
+      musicBtn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        setMusicEnabled(!session.musicOn);
+      });
+    }
     if (startBtn) {
       startBtn.addEventListener("click", (ev) => {
         ev.preventDefault();
@@ -1119,6 +1281,7 @@
     if (!session) return;
     if (session.rafId) cancelAnimationFrame(session.rafId);
     PianoAudio.stopAllHolds();
+    stopBackingMusic();
     window.removeEventListener("keydown", onKeyDown);
     window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("pointerup", onWindowPointerUp);
@@ -1148,6 +1311,9 @@
         rarityColor: preview.rarity_color || "#6fdbbf",
         diff,
         notes: chart.notes,
+        chartDuration: chart.totalDuration,
+        music: null,
+        musicOn: (() => { try { return localStorage.getItem("haru_mg_music") !== "0"; } catch (_) { return true; } })(),
         stagePhase: "briefing",
         countdown: 0,
         lastCountBeat: 4,
