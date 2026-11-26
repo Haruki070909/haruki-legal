@@ -443,44 +443,91 @@
     .waters-stage[data-island="volcanic_island"] { border-color: #f97316; background: #1c0c12; }
     .waters-stage[data-island="astral_island"] { border-color: #c6a4e2; background: #100b22; }
 
-    .px-ocean-horizon {
+    .px-stage-wrap {
       position: relative;
-      height: 58px;
       border: 2px solid var(--px-border);
-      background: linear-gradient(180deg, rgba(16, 40, 68, 0.7) 0%, rgba(11, 29, 49, 0.95) 55%, #0e3a59 55%, #0c2e47 100%);
+      background: #06101e;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      line-height: 0;
+      box-shadow: inset 0 0 0 1px rgba(126, 200, 217, 0.14);
     }
-    .px-stars {
+    #px-ocean-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 320 / 140;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    #px-stage-flash {
       position: absolute;
-      top: 6px;
-      left: 12px;
-      right: 12px;
-      height: 14px;
-      background-image:
-        radial-gradient(#ecc570 1.5px, transparent 1.5px),
-        radial-gradient(#7ec8d9 1.5px, transparent 1.5px);
-      background-size: 64px 14px, 44px 14px;
-      background-position: 8px 2px, 28px 8px;
-      opacity: 0.75;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
     }
-    .px-bobber {
-      width: 14px;
-      height: 14px;
-      background: linear-gradient(180deg, #f45b69 50%, #f8fafc 50%);
-      border: 2px solid #040811;
-      box-shadow: 0 -8px 0 -5px #cbd5e1;
-      animation: pxBob 1.2s steps(2, end) infinite;
-      margin-top: 10px;
+    @keyframes stageShakeSm {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-3px, 2px); }
+      50% { transform: translate(3px, -2px); }
+      75% { transform: translate(-2px, -1px); }
     }
-    .px-bobber.fast {
-      animation: pxBob 0.25s steps(2, end) infinite;
+    @keyframes stageShakeLg {
+      0%, 100% { transform: translate(0, 0); }
+      15% { transform: translate(-5px, 3px); }
+      30% { transform: translate(5px, -4px); }
+      45% { transform: translate(-4px, -2px); }
+      60% { transform: translate(4px, 3px); }
+      75% { transform: translate(-3px, 2px); }
     }
-    @keyframes pxBob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
+    .stage-shake-sm { animation: stageShakeSm 0.34s steps(2); }
+    .stage-shake-lg { animation: stageShakeLg 0.52s steps(2); }
+
+    /* Mini-Game Challenge UI */
+    .mg-shell {
+      width: 100%;
+      max-width: 500px;
+      background: #0a1728;
+      border: 3px solid var(--px-gold);
+      box-shadow: 5px 5px 0 var(--px-shadow);
+      padding: 12px;
+      text-align: left;
+    }
+    .mg-canvas-box {
+      margin: 10px 0;
+      border: 2px solid var(--px-border);
+      background: #050c17;
+      line-height: 0;
+    }
+    #mg-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 300 / 156;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .mg-pad {
+      width: 100%;
+      padding: 13px 12px;
+      font-size: 13px;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .mg-lanes-pads {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .mg-lane-btn {
+      padding: 12px 4px;
+      font-size: 12px;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .island-banner {
@@ -536,7 +583,27 @@
       box-shadow: 4px 4px 0 var(--px-shadow);
       padding: 14px;
       text-align: left;
+      position: relative;
     }
+    .catch-card.tier-common { border-color: #64748b; }
+    .catch-card.tier-uncommon { border-color: #22c55e; box-shadow: 4px 4px 0 var(--px-shadow), 0 0 12px rgba(34, 197, 94, 0.14); }
+    .catch-card.tier-rare { border-color: #38bdf8; box-shadow: 4px 4px 0 var(--px-shadow), 0 0 16px rgba(56, 189, 248, 0.22); }
+    .catch-card.tier-epic { border-color: #a855f7; background: linear-gradient(160deg, #1b1633 0%, #14273d 100%); box-shadow: 4px 4px 0 var(--px-shadow), 0 0 22px rgba(168, 85, 247, 0.28); }
+    .catch-card.tier-legendary { border: 3px solid #ecc570; background: linear-gradient(160deg, #2b210d 0%, #14273d 100%); box-shadow: 5px 5px 0 var(--px-shadow), 0 0 26px rgba(236, 197, 112, 0.34); }
+    .catch-card.tier-mythic { border: 3px solid #f45b69; background: linear-gradient(160deg, #2e111b 0%, #142238 100%); box-shadow: 5px 5px 0 var(--px-shadow), 0 0 28px rgba(244, 91, 105, 0.38); }
+    @keyframes cosmicBorder {
+      0%, 100% { border-color: #6fdbbf; box-shadow: 5px 5px 0 var(--px-shadow), 0 0 24px rgba(111, 219, 191, 0.45); }
+      33% { border-color: #c6a4e2; box-shadow: 5px 5px 0 var(--px-shadow), 0 0 28px rgba(198, 164, 226, 0.52); }
+      66% { border-color: #ecc570; box-shadow: 5px 5px 0 var(--px-shadow), 0 0 26px rgba(236, 197, 112, 0.48); }
+    }
+    .catch-card.tier-cosmic {
+      border: 3px solid #6fdbbf;
+      background: linear-gradient(155deg, #1c1238 0%, #0e2438 60%, #1a2e2e 100%);
+      animation: cosmicBorder 2.4s linear infinite;
+    }
+    .value-badge-hot { color: #7ec8d9 !important; border-color: #7ec8d9 !important; }
+    .value-badge-gold { color: #ecc570 !important; border-color: #ecc570 !important; background: #261b08 !important; }
+    .value-badge-jackpot { color: #fff4b8 !important; border-color: #f45b69 !important; background: #4a121f !important; }
     .catch-top {
       display: flex;
       align-items: center;
@@ -906,6 +973,8 @@
   <div id="toast-wrap"></div>
 
   <script src="./fishing-pixel-icons.js?v=1"></script>
+  <script src="./fishing-stage-engine.js?v=1"></script>
+  <script src="./fishing-minigame.js?v=1"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -998,8 +1067,55 @@
       forge() {
         this.tone(440, 0.07, "triangle", 0, 0.06);
         this.tone(880, 0.14, "square", 0.07, 0.05);
+      },
+      bite() {
+        this.tone(587, 0.06, "square", 0, 0.05);
+        this.tone(880, 0.08, "square", 0.05, 0.06);
+        this.tone(1174, 0.11, "square", 0.11, 0.05);
+      },
+      hit(combo) {
+        const base = 540 + Math.min(8, Number(combo || 1)) * 75;
+        this.tone(base, 0.06, "square", 0, 0.05);
+        this.tone(base * 1.25, 0.09, "square", 0.045, 0.05);
+      },
+      tick() {
+        this.tone(360, 0.035, "triangle", 0, 0.03);
+      },
+      phaseClear() {
+        this.tone(523, 0.07, "square", 0, 0.05);
+        this.tone(659, 0.07, "square", 0.07, 0.05);
+        this.tone(784, 0.07, "square", 0.14, 0.05);
+        this.tone(1046, 0.18, "square", 0.21, 0.06);
+      },
+      snap() {
+        this.tone(310, 0.1, "sawtooth", 0, 0.06);
+        this.tone(220, 0.12, "sawtooth", 0.09, 0.06);
+        this.tone(140, 0.24, "sawtooth", 0.19, 0.06);
+      },
+      rarityFanfare(rank, value) {
+        const r = Number(rank || 1);
+        const val = Number(value || 0);
+        if (r <= 2) {
+          this.tone(523, 0.07, "square", 0, 0.04);
+          this.tone(659, 0.11, "square", 0.06, 0.04);
+        } else if (r === 3) {
+          [523, 659, 784].forEach((f, i) => this.tone(f, 0.09, "square", i * 0.07, 0.05));
+        } else if (r === 4) {
+          [523, 622, 784, 932].forEach((f, i) => this.tone(f, 0.1, "square", i * 0.065, 0.055));
+        } else if (r === 5) {
+          [523, 659, 784, 1046, 1318].forEach((f, i) => this.tone(f, 0.12, "square", i * 0.065, 0.06));
+        } else if (r <= 7) {
+          [440, 523, 659, 880, 1046, 1318].forEach((f, i) => this.tone(f, 0.13, "sawtooth", i * 0.06, 0.055));
+        } else {
+          [523, 659, 784, 988, 1046, 1318, 1568, 2093].forEach((f, i) => this.tone(f, 0.15, "square", i * 0.055, 0.06));
+        }
+        if (val >= 50000) {
+          this.tone(1568, 0.08, "triangle", 0.35, 0.05);
+          this.tone(2093, 0.18, "triangle", 0.42, 0.06);
+        }
       }
     };
+    window.SFX = SFX;
 
     function toggleSfx() {
       SFX.enabled = !SFX.enabled;
@@ -1091,6 +1207,8 @@
       bagRarityFilter: "all",
       shopFilter: "all",
       selectedGearItemId: "",
+      activeChallenge: null,
+      _scrolledChallengeId: null,
       lastCastResult: null,
       lastError: "",
       busyCast: false,
@@ -1323,6 +1441,29 @@
       };
     }
 
+    const RARITY_RANKS = {
+      common: 1, uncommon: 2, rare: 3, epic: 4, legendary: 5,
+      mythic: 6, ancient: 7, transcendent: 8, eternity: 9,
+      infinity: 10, genesis: 11, omega: 12
+    };
+    function rarityRankOf(rid) {
+      return RARITY_RANKS[String(rid || "").toLowerCase()] || 1;
+    }
+    function rarityTierClass(rid) {
+      const k = String(rid || "common").toLowerCase();
+      const rk = rarityRankOf(k);
+      if (rk >= 8) return "tier-cosmic";
+      if (rk >= 6) return "tier-mythic";
+      return "tier-" + k;
+    }
+    function valueBadgeHtml(val) {
+      const v = Number(val || 0);
+      if (v >= 500000) return `<span class="rarity-pill value-badge-jackpot">${pxIcon("crown", 12)} SIÊU JACKPOT</span>`;
+      if (v >= 50000) return `<span class="rarity-pill value-badge-gold">${pxIcon("gem", 12)} ĐẠI GIA</span>`;
+      if (v >= 5000) return `<span class="rarity-pill value-badge-hot">${pxIcon("coin", 12)} CÁ XỊN</span>`;
+      return "";
+    }
+
     function applyState(st) {
       APP.state = st;
       APP.lastError = "";
@@ -1336,6 +1477,28 @@
       }
       if (st && st.weather) {
         APP.weatherExpiresMs = Date.now() + Number(st.weather.remaining_seconds || 0) * 1000;
+      }
+      if (st && st.pending_catch && !APP.activeChallenge && !APP.busyAction) {
+        const p = st.pending_catch;
+        APP.activeChallenge = {
+          pending_id: p.pending_id,
+          expected_move: p.expected_move,
+          bonus_count: p.bonus_count || 0,
+          legacyTension: false,
+          catch_preview: {
+            fish_id: p.fish_id,
+            fish_name: p.fish_name,
+            rarity_id: p.rarity_id,
+            rarity_name: p.rarity_name,
+            rarity_color: p.rarity_color,
+            weight: p.weight,
+            value: p.value,
+            image_path: p.image_path,
+            mutation_name: p.mutation_name
+          }
+        };
+      } else if (st && !st.pending_catch && APP.activeChallenge && !HaruMiniGame.isActive() && !APP.busyAction) {
+        APP.activeChallenge = null;
       }
     }
 
@@ -1479,12 +1642,15 @@
     }
 
     async function doCast() {
-      if (APP.busyCast || (APP.cooldownUntilMs > Date.now())) return;
+      if (APP.busyCast || APP.busyAction || APP.activeChallenge || (APP.cooldownUntilMs > Date.now())) return;
       SFX.cast();
       APP.busyCast = true;
+      APP.lastCastResult = null;
+      if (window.HaruOceanStage) HaruOceanStage.setMode("casting");
       render();
+      let pendingBurst = null;
       try {
-        const res = await fishRpc("cast", {});
+        const res = await fishRpc("cast", { web_challenge: true });
         if (!res.ok) {
           SFX.miss();
           if (res.code === "cooldown" && res.remaining_seconds) {
@@ -1493,15 +1659,38 @@
           toast(res.error || "Không thả cần được", "err");
           return;
         }
-        APP.lastCastResult = res;
         APP.inventory = null;
-        if (res.mode === "caught") {
-          const rid = (res.catch && res.catch.rarity_id) || "";
-          SFX.catch(["legendary", "mythic", "ancient", "transcendent", "eternity", "infinity", "genesis", "omega"].includes(rid));
+        if (res.mode === "web_challenge" || res.mode === "tension") {
+          const prev = res.catch_preview || {};
+          APP.activeChallenge = {
+            pending_id: res.pending_id,
+            catch_preview: prev,
+            bonus_count: res.bonus_count || 0,
+            expected_move: res.expected_move,
+            legacyTension: res.mode === "tension"
+          };
+          SFX.bite();
+          if (window.HaruOceanStage) {
+            HaruOceanStage.setMode("hooked", {
+              rarityColor: prev.rarity_color || "#6fdbbf",
+              rarityRank: rarityRankOf(prev.rarity_id)
+            });
+          }
+          return;
+        }
+
+        APP.lastCastResult = res;
+        if (res.mode === "caught" && res.catch) {
+          const c = res.catch;
+          const totalVal = Number(c.value || 0) + (res.bonus_catches || []).reduce((s, b) => s + Number(b.value || 0), 0);
+          const rk = rarityRankOf(c.rarity_id);
+          SFX.rarityFanfare(rk, totalVal);
+          pendingBurst = [c.rarity_id, rk, c.rarity_color, totalVal, Boolean(c.mutation_name)];
         } else if (res.mode === "chest" || res.mode === "direct_reward") {
-          SFX.catch(true);
+          SFX.rarityFanfare(5, 25000);
+          pendingBurst = ["legendary", 5, "#ecc570", 25000, false];
         } else if (res.mode === "line_snapped") {
-          SFX.miss();
+          SFX.snap();
         }
         if (res.level_up) toast(`LEVEL UP! Đạt cấp ${res.level}!`, "ok", "party");
       } catch (e) {
@@ -1510,47 +1699,73 @@
       } finally {
         APP.busyCast = false;
         render();
+        if (pendingBurst && window.HaruOceanStage) {
+          HaruOceanStage.triggerCatchBurst(...pendingBurst);
+        }
       }
     }
 
-    async function doTensionMove(pendingId, move) {
-      if (APP.busyAction) return;
-      APP.busyAction = true; render();
+    async function finishWebChallenge(result) {
+      const ch = APP.activeChallenge;
+      if (!ch || APP.busyAction) return;
+      APP.activeChallenge = null;
+      APP.busyAction = true;
+      render();
+      let pendingBurst = null;
       try {
-        const res = await fishRpc("tension_step", { pending_id: pendingId, move });
-        if (!res.ok) { toast(res.error || "Lỗi kéo cá", "err"); return; }
-        APP.inventory = null;
-        if (res.done) {
-          if (res.won) {
-            SFX.catch(true);
-            APP.lastCastResult = {
-              mode: "caught",
-              catch: {
-                fish_id: res.fish_id, fish_name: res.fish_name,
-                rarity_id: res.rarity_id, rarity_name: res.rarity_name,
-                rarity_color: res.rarity_color, weight: res.weight, value: res.value,
-                mutation_name: res.mutation_name, mutation_multiplier: res.mutation_multiplier,
-                image_path: res.image_path, emoji: res.emoji, serial_number: res.serial_number
-              },
-              bonus_catches: res.bonus_catches || [],
-              gained_xp: res.xp || 0,
-              level_up: res.level_up,
-              bonus_material: res.bonus_material || null
-            };
-            toast(`Kéo thành công ${res.fish_name}! (+${fmt(res.xp)} XP)`, "ok", "party");
+        let res = await fishRpc("resolve_challenge", {
+          pending_id: ch.pending_id,
+          won: Boolean(result && result.won),
+          score: (result && result.score) || 0
+        });
+        if (!res.ok && String(res.error || "").includes("Unknown action")) {
+          if (result && result.won && ch.expected_move) {
+            res = await fishRpc("tension_step", { pending_id: ch.pending_id, move: ch.expected_move });
           } else {
-            SFX.miss();
-            APP.lastCastResult = { mode: "tension_lost" };
-            toast("Cá đã tuột khỏi dây!", "err", "puff");
+            await fishRpc("abandon_pending", { pending_id: ch.pending_id });
+            res = { ok: true, mode: "challenge_lost", lost_fish: ch.catch_preview || {} };
           }
-        } else {
-          res.correct ? SFX.coin() : SFX.miss();
-          toast(res.correct ? "Chuẩn! Tiếp tục lượt tiếp theo" : "Trượt nhịp, cẩn thận ở lượt sau!", res.correct ? "ok" : "err", res.correct ? "check" : "warn");
         }
-      } finally { APP.busyAction = false; render(); }
+        if (!res.ok) {
+          SFX.miss();
+          toast(res.error || "Không chốt được kết quả thử thách", "err");
+          return;
+        }
+        APP.inventory = null;
+        APP.lastCastResult = res;
+
+        if (res.mode === "caught" && res.catch) {
+          const c = res.catch;
+          const totalVal = Number(c.value || 0) + (res.bonus_catches || []).reduce((s, b) => s + Number(b.value || 0), 0);
+          const rk = rarityRankOf(c.rarity_id);
+          SFX.rarityFanfare(rk, totalVal);
+          pendingBurst = [c.rarity_id, rk, c.rarity_color, totalVal, Boolean(c.mutation_name)];
+          toast(`${c.fish_name} (+${fmt(res.gained_xp)} XP)`, "ok", rk >= 5 ? "trophy" : "fish");
+          if (res.level_up) toast(`LEVEL UP! Đạt cấp ${res.level}!`, "ok", "party");
+        } else if (res.mode === "challenge_lost" || res.mode === "tension_lost") {
+          SFX.snap();
+          const lf = res.lost_fish || {};
+          toast(
+            lf.fish_name ? `${lf.fish_name} đã giật đứt dây thoát mất!` : "Cá đã giật đứt dây thoát mất!",
+            "err",
+            "puff"
+          );
+        }
+      } catch (e) {
+        SFX.miss();
+        toast(e.message || "Lỗi đồng bộ kết quả thử thách", "err");
+      } finally {
+        APP.busyAction = false;
+        render();
+        if (pendingBurst && window.HaruOceanStage) {
+          HaruOceanStage.triggerCatchBurst(...pendingBurst);
+        }
+      }
     }
 
     async function doAbandonPending(pendingId) {
+      if (window.HaruMiniGame) HaruMiniGame.stop();
+      APP.activeChallenge = null;
       await fishRpc("abandon_pending", { pending_id: pendingId });
       render();
     }
@@ -1994,6 +2209,44 @@
       else content = renderCodexTab();
 
       root.innerHTML = hud + tabs + content;
+
+      if (APP.activeTab === "fish") {
+        if (window.HaruOceanStage) {
+          const ch = APP.activeChallenge;
+          const cfg = {
+            islandId: isl.id,
+            islandName: isl.name,
+            weather: st.weather,
+            mode: ch ? "challenge" : (APP.busyCast ? "casting" : undefined),
+            rarityColor: ch && ch.catch_preview ? ch.catch_preview.rarity_color : undefined,
+            rarityRank: ch && ch.catch_preview ? rarityRankOf(ch.catch_preview.rarity_id) : undefined
+          };
+          HaruOceanStage.mount("px-ocean-canvas", "px-stage-flash", "px-stage-wrap", cfg);
+        }
+        const mgRoot = document.getElementById("mg-mount-root");
+        if (APP.activeChallenge && mgRoot && window.HaruMiniGame) {
+          HaruMiniGame.start(mgRoot, {
+            lang: APP.lang,
+            catchPreview: APP.activeChallenge.catch_preview,
+            onComplete: finishWebChallenge
+          });
+          if (APP._scrolledChallengeId !== APP.activeChallenge.pending_id) {
+            APP._scrolledChallengeId = APP.activeChallenge.pending_id;
+            if (window.innerWidth < 768) {
+              requestAnimationFrame(() => {
+                const stg = document.querySelector(".waters-stage");
+                if (stg) stg.scrollIntoView({ behavior: "smooth", block: "start" });
+              });
+            }
+          }
+        } else if (!APP.activeChallenge && window.HaruMiniGame) {
+          APP._scrolledChallengeId = null;
+          HaruMiniGame.stop();
+        }
+      } else {
+        if (window.HaruMiniGame) HaruMiniGame.stop();
+        if (window.HaruOceanStage) HaruOceanStage.unmount();
+      }
     }
 
     function renderFishTab() {
@@ -2001,46 +2254,46 @@
       const eq = st.equipment;
       const isl = st.islands.find(i => i.id === st.current_island_id) || st.islands[0];
       const remMs = Math.max(0, APP.cooldownUntilMs - Date.now());
-      const pending = st.pending_catch;
+      const ch = APP.activeChallenge;
 
       let centerHtml = "";
-      if (pending) {
-        const moveText = {
-          pull: `${pxIcon("wave", 15)} Cá đang lao mạnh — hãy bấm KÉO MẠNH!`,
-          hold: `${pxIcon("scale", 15)} Dây đang căng vừa — hãy bấm GIỮ DÂY!`,
-          loosen: `${pxIcon("potion", 15)} Cá đang vùng xuống sâu — hãy bấm NỚI DÂY!`
-        }[pending.expected_move] || "Chọn thao tác!";
+      if (ch) {
+        const pv = ch.catch_preview || {};
         centerHtml = `
-          <div class="tension-box">
-            <div class="wrap-row" style="justify-content:center;margin-bottom:10px;">
-              ${spriteHtml(pending.image_path, "fish", false)}
-              <div style="text-align:left;">
-                <span class="rarity-pill" style="color:${esc(pending.rarity_color)};">${esc(pending.rarity_name)}</span>
-                <div style="font-size:17px;font-weight:700;margin-top:4px;">${esc(pending.fish_name)}</div>
-                <div class="muted inline-ico" style="font-size:12px;">${pxIcon("scale", 13)} ${pending.weight} kg · ${pxIcon("coin", 13)} ${fmt(pending.value)} RC ${pending.bonus_count ? `· +${pending.bonus_count} cá kèm` : ""}</div>
+          <div style="width:100%;max-width:500px;" class="stack">
+            <div class="sub-card" style="padding:10px;border-color:${esc(pv.rarity_color || "#ecc570")};display:flex;align-items:center;justify-content:space-between;gap:10px;">
+              <div class="wrap-row" style="gap:10px;">
+                ${spriteHtml(pv.image_path, "fish", true)}
+                <div style="text-align:left;">
+                  <div class="inline-ico">
+                    <span class="rarity-pill" style="color:${esc(pv.rarity_color || "#ecc570")};">${esc(pv.rarity_name || pv.rarity_id || "FISH")}</span>
+                    ${ch.bonus_count ? `<span class="tab-badge">+${ch.bonus_count} cá kèm</span>` : ""}
+                  </div>
+                  <div style="font-size:14.5px;font-weight:700;margin-top:3px;">${esc(pv.fish_name || "Cá Bí Ẩn cắn câu!")}</div>
+                  <div class="muted inline-ico" style="font-size:11.5px;">${pxIcon("scale", 12)} ${pv.weight || "?"} kg · ${pxIcon("coin", 12)} ~${fmt(pv.value || 0)} RC</div>
+                </div>
               </div>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="doAbandonPending('${esc(ch.pending_id)}')">Bỏ lượt</button>
             </div>
-            <div class="inline-ico" style="justify-content:center;font-size:13.5px;font-weight:700;color:var(--px-gold);">${moveText}</div>
-            <div class="muted" style="font-size:12px;margin-top:4px;">Lượt ${pending.turn}/${pending.max_turns} · Đúng ${pending.progress}/2 để giữ cá</div>
-            <div class="tension-moves">
-              <button class="move-btn ${pending.expected_move === "pull" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','pull')">${pxIcon("hook", 16)} Kéo mạnh</button>
-              <button class="move-btn ${pending.expected_move === "hold" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','hold')">${pxIcon("hand", 16)} Giữ dây</button>
-              <button class="move-btn ${pending.expected_move === "loosen" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','loosen')">${pxIcon("rope", 16)} Nới dây</button>
-            </div>
-            <button class="btn btn-ghost btn-sm" style="margin-top:12px;" onclick="doAbandonPending('${esc(pending.pending_id)}')">Bỏ qua cá này</button>
+            <div id="mg-mount-root" style="width:100%;display:flex;justify-content:center;"></div>
           </div>`;
+      } else if (APP.busyAction) {
+        centerHtml = `<div class="sub-card inline-ico" style="padding:14px 20px;border-color:var(--px-mint);">${pxIcon("hourglass", 18)} <strong>Đang kéo cá lên & lưu vào Discord...</strong></div>`;
       } else if (APP.lastCastResult) {
         const r = APP.lastCastResult;
         if (r.mode === "caught" && r.catch) {
           const c = r.catch;
+          const totalVal = Number(c.value || 0) + (r.bonus_catches || []).reduce((s, b) => s + Number(b.value || 0), 0);
+          const tierCls = rarityTierClass(c.rarity_id);
           const bList = (r.bonus_catches || []).map(b => `<span class="feature-chip" style="margin:0;">+ ${esc(b.fish_name)} (${fmt(b.value)} RC)</span>`).join("");
           centerHtml = `
-            <div class="catch-card" style="border-color:${esc(c.rarity_color || "#7ec8d9")};">
+            <div class="catch-card ${tierCls}" style="border-color:${esc(c.rarity_color || "#7ec8d9")};">
               <div class="catch-top">
                 ${spriteHtml(c.image_path, c.emoji, false)}
                 <div style="flex:1;min-width:0;">
                   <div class="wrap-row" style="gap:5px;">
                     <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
+                    ${valueBadgeHtml(totalVal)}
                     ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("sparkle", 12)} ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
                     ${c.serial_number ? `<span class="rarity-pill" style="color:var(--px-gold);">#${String(c.serial_number).padStart(6, "0")}</span>` : ""}
                   </div>
@@ -2055,6 +2308,7 @@
                 </div>
               </div>
               ${bList ? `<div class="wrap-row" style="margin-top:10px;">${bList}</div>` : ""}
+              ${(r.bonus_catches && r.bonus_catches.length) ? `<div class="muted inline-ico" style="margin-top:8px;font-size:12px;">${pxIcon("moneybag", 13)} Tổng mẻ lưới: <strong style="color:var(--px-gold);">${fmt(totalVal)} RC</strong></div>` : ""}
               ${r.bonus_material ? `<div class="sub-card inline-ico" style="margin-top:10px;padding:7px 10px;font-size:12px;">${pxIcon("rock", 14)} Nhặt thêm nguyên liệu: <strong>${esc(r.bonus_material.name)}</strong></div>` : ""}
               ${c.catch_id ? `<div class="wrap-row" style="margin-top:10px;">
                 <button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}');APP.lastCastResult=null;">${pxIcon("moneybag", 13)} Bán (+${fmt(c.value)})</button>
@@ -2063,7 +2317,7 @@
             </div>`;
         } else if (r.mode === "chest" && r.chest) {
           centerHtml = `
-            <div class="catch-card" style="border-color:var(--px-gold);">
+            <div class="catch-card tier-legendary" style="border-color:var(--px-gold);">
               <div class="catch-top">
                 ${spriteHtml(r.chest.image_path, r.chest.emoji, false)}
                 <div>
@@ -2075,7 +2329,7 @@
             </div>`;
         } else if (r.mode === "direct_reward" && r.reward) {
           centerHtml = `
-            <div class="catch-card" style="border-color:var(--px-mint);">
+            <div class="catch-card tier-rare" style="border-color:var(--px-mint);">
               <div class="catch-top">
                 ${spriteHtml(r.reward.image_path, r.reward.emoji, false)}
                 <div>
@@ -2087,15 +2341,16 @@
             </div>`;
         } else if (r.mode === "line_snapped") {
           centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div class="inline-ico" style="font-weight:700;color:#fda4af;">${pxIcon("splash", 16)} Cá quá nặng (${r.fish_weight} kg) làm tuột dây!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Cần chịu tối đa ${fmt(r.max_rod_weight)} kg. Hãy nâng cấp cần hoặc kỹ năng Sức mạnh cần!</div></div>`;
-        } else if (r.mode === "tension_lost") {
-          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div class="inline-ico" style="font-weight:700;color:#fda4af;">${pxIcon("puff", 16)} Cá hiếm đã thoát mất!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Hãy thả cần tiếp để phục thù.</div></div>`;
+        } else if (r.mode === "tension_lost" || r.mode === "challenge_lost") {
+          const lf = r.lost_fish || {};
+          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div class="inline-ico" style="font-weight:700;color:#fda4af;">${pxIcon("puff", 16)} ${lf.fish_name ? `${esc(lf.fish_name)} (${esc(lf.rarity_name || "")}) đã giật đứt dây!` : "Cá đã giật đứt dây thoát mất!"}</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Thử thách thất bại — hãy bấm Thả Cần để phục thù!</div></div>`;
         }
       } else {
-        centerHtml = `<div class="muted" style="font-size:13px;max-width:420px;">Thả cần xuống vùng biển <strong style="color:var(--px-text);">${esc(isl ? isl.name : "")}</strong> để săn cá hiếm, đột biến, trang bị & rương báu.</div>`;
+        centerHtml = `<div class="muted" style="font-size:13px;max-width:420px;">Thả cần xuống vùng biển <strong style="color:var(--px-text);">${esc(isl ? isl.name : "")}</strong> — mỗi độ hiếm sẽ kích hoạt thử thách kỹ năng & hiệu ứng riêng!</div>`;
       }
 
-      const castBtn = !pending ? `
-        <button id="cast-btn-live" class="cast-btn-main" ${APP.busyCast || remMs > 0 ? "disabled" : ""} onclick="doCast()">
+      const castBtn = !ch ? `
+        <button id="cast-btn-live" class="cast-btn-main" ${APP.busyCast || APP.busyAction || remMs > 0 ? "disabled" : ""} onclick="doCast()">
           ${APP.busyCast ? `${pxIcon("hourglass", 20)} ${t("casting")}` : (remMs > 0 ? `${pxIcon("clock", 20)} ${(remMs / 1000).toFixed(1)}S` : `${pxIcon("rod", 22)} ${t("castBtn")}`)}
         </button>` : "";
 
@@ -2130,9 +2385,9 @@
                 <button class="btn btn-ghost btn-sm" onclick="switchTab('gear')">Đổi đảo</button>
               </div>
             </div>
-            <div class="px-ocean-horizon" aria-hidden="true">
-              <div class="px-stars"></div>
-              <div class="px-bobber ${APP.busyCast || pending ? "fast" : ""}"></div>
+            <div id="px-stage-wrap" class="px-stage-wrap">
+              <canvas id="px-ocean-canvas" width="320" height="140"></canvas>
+              <div id="px-stage-flash"></div>
             </div>
             <div class="stage-center">
               ${centerHtml}
@@ -2623,7 +2878,7 @@
     }, 150);
 
     document.addEventListener("keydown", (ev) => {
-      if (ev.code === "Space" && APP.activeTab === "fish" && APP.state && APP.state.user.tos_accepted && !APP.state.pending_catch) {
+      if (ev.code === "Space" && APP.activeTab === "fish" && APP.state && APP.state.user.tos_accepted && !APP.activeChallenge && !APP.state.pending_catch && !(window.HaruMiniGame && HaruMiniGame.isActive())) {
         const tag = (document.activeElement && document.activeElement.tagName) || "";
         if (!["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag)) {
           ev.preventDefault();

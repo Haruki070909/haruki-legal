@@ -1,10 +1,12 @@
-const CACHE_NAME = "haru-ecosystem-v10";
+const CACHE_NAME = "haru-ecosystem-v11";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
   "./harubot.html",
   "./fishing.html",
   "./fishing-pixel-icons.js?v=1",
+  "./fishing-stage-engine.js?v=1",
+  "./fishing-minigame.js?v=1",
   "./harumod.html",
   "./dashboard.html",
   "./shared.css",
