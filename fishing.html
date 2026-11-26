@@ -1578,7 +1578,7 @@
         <a href="./harubot.html" class="brand-back" data-hide-standalone title="HaruBot"><span id="ico-back-slot"></span><span data-t="backBot">HaruBot</span></a>
         <div class="brand-title">
           <img src="./icons/fishing-app-icon-192.png" class="px-icon" alt="Haru Fishing" />
-          <span class="px-logo-text">HARU FISHING<span class="hide-xs"> RPG</span><span style="font-size:10px;color:var(--px-mint);opacity:.85;margin-left:5px;letter-spacing:0;">v18</span></span>
+          <span class="px-logo-text">HARU FISHING<span class="hide-xs"> RPG</span><span style="font-size:10px;color:var(--px-mint);opacity:.85;margin-left:5px;letter-spacing:0;">v19</span></span>
         </div>
       </div>
       <div class="nav-controls">
@@ -1612,7 +1612,7 @@
 
   <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
-  <script src="./fishing-minigame.js?v=5"></script>
+  <script src="./fishing-minigame.js?v=6"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -2732,14 +2732,14 @@
     }
 
     const CHALLENGE_LADDER = [
-      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "132 BPM · 16 nốt · 5 mạng · Hợp âm đôi nhẹ" },
-      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "146 BPM · 20 nốt · 5 mạng · Chặn bấm bừa" },
-      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "160 BPM · 24 nốt · 4 mạng · Hợp âm dồn dập" },
-      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "172 BPM · 28 nốt · 4 mạng · Siêu tốc" },
-      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "184 BPM · 32 nốt · 4 mạng · Độc tấu" },
-      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "196 BPM · 36 nốt · 4 mạng · Hợp âm 44%" },
-      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "208 BPM · 40 nốt · 3 mạng · Boss Cổ" },
-      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "220 BPM · 44 nốt · 3 mạng · Trùm Cuối" }
+      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "76 BPM · 10 nốt · 7 mạng · Nhạc nền dễ bấm" },
+      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "80 BPM · 12 nốt · 7 mạng · Hợp âm đôi rất ít" },
+      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "86 BPM · 14 nốt · 6 mạng · Nhịp đều rõ trống" },
+      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "90 BPM · 16 nốt · 6 mạng · Giữ nốt dài nhẹ" },
+      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "96 BPM · 18 nốt · 6 mạng · Hợp âm 2 tay" },
+      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "100 BPM · 20 nốt · 6 mạng · Nhịp vừa tay" },
+      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "106 BPM · 22 nốt · 5 mạng · Boss Cổ" },
+      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "112 BPM · 24 nốt · 5 mạng · Trùm Cuối" }
     ];
 
     function startPracticeChallenge(rarityId) {
@@ -3176,6 +3176,15 @@
         res.outcome === "success" ? "anvil" : "puff"
       );
       await refreshWorkshop();
+    }
+
+    async function doUseMutationPotion(qty) {
+      const res = await fishRpc("use_mutation_potion", { quantity: qty || 1 });
+      if (!res.ok) { toast(res.error || "Không dùng được Lọ Mutation", "err"); return; }
+      SFX.catch(true);
+      APP.inventory = null;
+      toast(res.message || "Đã kích hoạt Lọ Mutation (5 phút)!", "ok", "potion");
+      if (APP.activeTab === "bag") await refreshInventory(); else render();
     }
 
     async function doUpgradeSkill(skillId, amount) {
@@ -3792,14 +3801,18 @@
               </div>
             </div>`;
         } else if (r.mode === "direct_reward" && r.reward) {
+          const isGear = r.loot_class === "gear" || ["gear", "hook", "reel"].includes(r.reward.type);
+          const rarLbl = isGear
+            ? `${esc(r.reward.rarity_name || "Common")}${r.reward.forge_rank_name ? " · Rank " + esc(r.reward.forge_rank_name) : ""}`
+            : "NGUYÊN LIỆU";
           centerHtml = `
             <div class="catch-card tier-rare" style="border-color:var(--px-mint);">
               <div class="catch-top">
                 ${spriteHtml(r.reward.image_path, r.reward.emoji, false)}
                 <div>
-                  <span class="rarity-pill" style="color:var(--px-mint);">${r.loot_class === "gear" ? "TRANG BỊ HIẾM" : "NGUYÊN LIỆU"}</span>
+                  <span class="rarity-pill" style="color:var(--px-mint);">${isGear ? "TRANG BỊ · " + rarLbl : rarLbl}</span>
                   <div style="font-size:17px;font-weight:700;margin-top:5px;">${esc(r.reward.name)} ×${r.reward.quantity}</div>
-                  <div class="muted" style="font-size:12.5px;margin-top:3px;">Đã tự động thêm vào Túi Đồ!</div>
+                  <div class="muted" style="font-size:12.5px;margin-top:3px;">${isGear ? "Đã thêm vào Túi Đồ! Nâng Rank & Rarity trong Xưởng Rèn theo công thức cũ (Common → Transcendent)." : "Đã tự động thêm vào Túi Đồ!"}</div>
                 </div>
               </div>
             </div>`;
@@ -3842,7 +3855,19 @@
               </div>
               <div class="wrap-row">
                 ${(st.boosts || []).map(b => `<span class="rarity-pill" style="color:var(--px-gold);">${pxIcon("bolt", 12)} ${esc(b.scope)} x${b.multiplier}</span>`).join("")}
-                ${st.stats.potions_stock > 0 ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("potion", 12)} Lọ Mutation ×${st.stats.potions_stock}</span>` : ""}
+                ${(() => {
+                  const mp = st.mutation_potion || {};
+                  const rem = Number(mp.remaining_seconds || 0);
+                  const mm = Math.floor(rem / 60), ss2 = String(rem % 60).padStart(2, "0");
+                  let out = "";
+                  if (mp.active && rem > 0) {
+                    out += `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("potion", 12)} Mutation ×${mp.stacks} · ${mm}:${ss2}</span>`;
+                  }
+                  if (st.stats.potions_stock > 0) {
+                    out += `<button type="button" class="btn btn-ghost btn-sm" style="color:var(--px-violet);" onclick="doUseMutationPotion(1)" title="Kích hoạt 1 Lọ Mutation (hiệu lực 5 phút)">${pxIcon("potion", 12)} Dùng Lọ (×${st.stats.potions_stock})</button>`;
+                  }
+                  return out;
+                })()}
                 <button type="button" class="btn btn-ghost btn-sm" onclick="openIslandQuickModal()">${pxIcon("boat", 13)} Đổi Đảo</button>
               </div>
             </div>
@@ -3972,6 +3997,8 @@
           actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('gear','${esc(it.item_id)}')">${it.equipped ? "Đang mặc " + pxIcon("check", 12) : "Mặc ô " + esc(it.slot)}</button>`;
         } else if (it.item_type === "afk_boost") {
           actions += `<button class="btn btn-emerald btn-sm" onclick="openAfkModal()">${pxIcon("clock", 13)} Treo AFK 8H</button>`;
+        } else if (it.item_type === "mutation_potion") {
+          actions += `<button class="btn btn-primary btn-sm" onclick="doUseMutationPotion(1)">${pxIcon("potion", 13)} Dùng (+5p)</button>`;
         }
         if (it.quantity > 1 && it.sell_unit_price > 0) {
           actions += `<button class="btn btn-ghost btn-sm" onclick="doSellItem('${esc(it.item_id)}')">Bán dư (${fmt(it.sell_unit_price * (it.quantity - 1))} RC)</button>`;
