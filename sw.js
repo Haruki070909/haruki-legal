@@ -1,7 +1,13 @@
-const CACHE_NAME = "haru-ecosystem-v1";
+const CACHE_NAME = "haru-ecosystem-v2";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
+  "./harubot.html",
+  "./harumod.html",
+  "./dashboard.html",
+  "./shared.css",
+  "./index-D1Nckd2P.js",
+  "./index-Vs_wrV2D.css",
   "./manifest.webmanifest",
   "./pwa-app.js",
   "./haru-avatar.webp",
@@ -13,7 +19,16 @@ const CORE_SHELL_ASSETS = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_SHELL_ASSETS)).catch(() => {})
+    caches
+      .open(CACHE_NAME)
+      .then((cache) =>
+        Promise.allSettled(
+          CORE_SHELL_ASSETS.map((assetUrl) =>
+            cache.add(new Request(assetUrl, { cache: "reload" })).catch(() => {})
+          )
+        )
+      )
+      .catch(() => {})
   );
   self.skipWaiting();
 });
@@ -32,6 +47,24 @@ self.addEventListener("activate", (event) => {
       .then(() => self.clients.claim())
   );
 });
+
+function updateCacheInBackground(request) {
+  return fetch(request)
+    .then((res) => {
+      if (res && res.ok && res.type === "basic") {
+        const copy = res.clone();
+        const cacheKeyUrl = new URL(request.url);
+        cacheKeyUrl.search = "";
+        return caches
+          .open(CACHE_NAME)
+          .then((cache) => cache.put(cacheKeyUrl.toString(), copy))
+          .then(() => res)
+          .catch(() => res);
+      }
+      return res;
+    })
+    .catch(() => null);
+}
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
@@ -54,27 +87,45 @@ self.addEventListener("fetch", (event) => {
     reqUrl.pathname.endsWith(".html");
 
   if (isHtmlNav) {
-    // Network-first for fresh HTML & OAuth callbacks, cache fallback offline
+    const hasOAuthParams =
+      reqUrl.searchParams.has("code") ||
+      reqUrl.searchParams.has("state") ||
+      reqUrl.searchParams.has("error");
+
+    // OAuth callbacks always hit network first
+    if (hasOAuthParams) {
+      event.respondWith(
+        fetch(req)
+          .then((res) => {
+            if (res && res.ok && res.type === "basic") {
+              const copy = res.clone();
+              caches.open(CACHE_NAME).then((c) => c.put(reqUrl.origin + reqUrl.pathname, copy)).catch(() => {});
+            }
+            return res;
+          })
+          .catch(() => caches.match(req, { ignoreSearch: true }).then((c) => c || caches.match("./index.html")))
+      );
+      return;
+    }
+
+    // Instant Stale-While-Revalidate for all 4 app pages (returns cached HTML in ~15ms)
     event.respondWith(
-      fetch(req)
-        .then((res) => {
-          if (res && res.ok && res.type === "basic") {
-            const copy = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
-          }
-          return res;
-        })
-        .catch(() =>
-          caches.match(req).then((cached) => cached || caches.match("./index.html"))
-        )
+      caches.match(req, { ignoreSearch: true }).then((cached) => {
+        const bgFetch = updateCacheInBackground(req);
+        if (cached) {
+          event.waitUntil(bgFetch);
+          return cached;
+        }
+        return bgFetch.then((netRes) => netRes || caches.match("./index.html"));
+      })
     );
     return;
   }
 
   // Stale-while-revalidate for static assets (CSS, JS, icons, avatars, manifest)
   event.respondWith(
-    caches.match(req).then((cached) => {
-      const netFetch = fetch(req)
+    caches.match(req, { ignoreSearch: true }).then((cached) => {
+      const bgFetch = fetch(req)
         .then((res) => {
           if (res && res.ok && res.type === "basic") {
             const copy = res.clone();
@@ -83,7 +134,11 @@ self.addEventListener("fetch", (event) => {
           return res;
         })
         .catch(() => cached);
-      return cached || netFetch;
+      if (cached) {
+        event.waitUntil(bgFetch);
+        return cached;
+      }
+      return bgFetch;
     })
   );
 });

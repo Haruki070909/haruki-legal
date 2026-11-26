@@ -3,6 +3,8 @@
   window.__haruPwaInitialized = true;
 
   let deferredInstallPrompt = null;
+  let navProgressTimer = null;
+  const prefetchedUrls = new Set();
 
   const isStandalone = () =>
     Boolean(
@@ -14,7 +16,10 @@
     document.documentElement.classList.add("haru-pwa-standalone");
   }
 
-  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+  if (
+    "serviceWorker" in navigator &&
+    (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")
+  ) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {});
     });
@@ -30,9 +35,34 @@
 
   function detectPlatform() {
     const ua = navigator.userAgent || "";
-    const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isIOS =
+      /iPhone|iPad|iPod/i.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
     const isAndroid = /Android/i.test(ua);
     return { isIOS, isAndroid };
+  }
+
+  function getCurrentRouteKey() {
+    const p = (location.pathname || "").toLowerCase();
+    if (p.includes("dashboard")) return "dashboard";
+    if (p.includes("harubot")) return "harubot";
+    if (p.includes("harumod")) return "harumod";
+    return "home";
+  }
+
+  function prefetchUrl(href) {
+    if (!href) return;
+    let resolved;
+    try {
+      resolved = new URL(href, location.href).toString();
+    } catch (_) {
+      return;
+    }
+    if (prefetchedUrls.has(resolved)) return;
+    prefetchedUrls.add(resolved);
+    fetch(resolved, { credentials: "same-origin" }).catch(() => {
+      prefetchedUrls.delete(resolved);
+    });
   }
 
   function injectPwaStyles() {
@@ -40,6 +70,24 @@
     const style = document.createElement("style");
     style.id = "haru-pwa-styles";
     style.textContent = `
+      @view-transition {
+        navigation: auto;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.14s;
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      ::view-transition-group(haru-app-dock) {
+        animation: none;
+      }
+
+      .haru-pwa-standalone .navbar,
+      .haru-pwa-standalone .dash-topbar {
+        padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+        height: auto !important;
+      }
+
       .haru-install-btn {
         display: inline-flex;
         align-items: center;
@@ -74,6 +122,25 @@
       }
       .haru-pwa-standalone [data-haru-install-app] {
         display: none !important;
+      }
+
+      /* Top Loading Shimmer Bar */
+      #haru-nav-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2.5px;
+        width: 0%;
+        background: #38bdf8;
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.55);
+        z-index: 10040;
+        opacity: 0;
+        pointer-events: none;
+        transition: width 0.25s ease, opacity 0.15s ease;
+      }
+      #haru-nav-progress.active {
+        opacity: 1;
+        width: 78%;
       }
 
       /* Install App Modal */
@@ -220,7 +287,7 @@
         background: #7dd3fc;
       }
 
-      /* Mobile App Bottom Dock */
+      /* Mobile App Bottom Dock - GPU pinned solid surface, zero backdrop repaint stutter */
       #haru-app-dock {
         display: none;
       }
@@ -242,9 +309,10 @@
           right: 0;
           bottom: 0;
           z-index: 950;
-          background: rgba(11, 15, 25, 0.96);
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
+          background: #0b0f19;
+          view-transition-name: haru-app-dock;
+          transform: translate3d(0, 0, 0);
+          will-change: transform;
           border-top: 1.5px solid #263147;
           padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) 8px;
           box-sizing: border-box;
@@ -262,9 +330,15 @@
           font-size: 0.69rem;
           font-weight: 700;
           letter-spacing: 0.01em;
-          transition: background 0.14s ease, color 0.14s ease;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+          transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.14s ease;
           border: 1px solid transparent;
           font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        .haru-dock-item:active {
+          transform: scale(0.93);
         }
         .haru-dock-item svg {
           width: 19px;
@@ -276,13 +350,45 @@
           stroke-linejoin: round;
         }
         .haru-dock-item.active {
-          background: rgba(56, 189, 248, 0.13);
-          border-color: rgba(56, 189, 248, 0.36);
+          background: rgba(56, 189, 248, 0.14);
+          border-color: rgba(56, 189, 248, 0.38);
           color: #38bdf8;
         }
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function ensureNavProgressBar() {
+    let bar = document.getElementById("haru-nav-progress");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "haru-nav-progress";
+      bar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(bar);
+    }
+    return bar;
+  }
+
+  function startNavProgressDelayed() {
+    clearTimeout(navProgressTimer);
+    navProgressTimer = setTimeout(() => {
+      const bar = ensureNavProgressBar();
+      bar.classList.remove("active");
+      void bar.offsetWidth;
+      bar.classList.add("active");
+    }, 60);
+  }
+
+  function resetNavProgressAndDock() {
+    clearTimeout(navProgressTimer);
+    const bar = document.getElementById("haru-nav-progress");
+    if (bar) bar.classList.remove("active");
+
+    const curKey = getCurrentRouteKey();
+    document.querySelectorAll("#haru-app-dock .haru-dock-item").forEach((el) => {
+      el.classList.toggle("active", el.getAttribute("data-dock-key") === curKey);
+    });
   }
 
   function ensureInstallModal() {
@@ -422,14 +528,7 @@
 
   function renderMobileAppDock() {
     if (document.getElementById("haru-app-dock")) return;
-    const p = (location.pathname || "").toLowerCase();
-    const currentKey = p.includes("dashboard")
-      ? "dashboard"
-      : p.includes("harubot")
-      ? "harubot"
-      : p.includes("harumod")
-      ? "harumod"
-      : "home";
+    const currentKey = getCurrentRouteKey();
 
     const items = [
       {
@@ -469,9 +568,22 @@
       .join("");
 
     nav.querySelectorAll("a.haru-dock-item").forEach((a) => {
+      const targetKey = a.getAttribute("data-dock-key");
+      const targetHref = a.getAttribute("href");
+
+      const warmTarget = () => {
+        if (targetKey !== getCurrentRouteKey()) {
+          prefetchUrl(targetHref);
+        }
+      };
+      a.addEventListener("pointerdown", warmTarget, { passive: true });
+      a.addEventListener("touchstart", warmTarget, { passive: true });
+
       a.addEventListener("click", (e) => {
-        const key = a.getAttribute("data-dock-key");
-        if (key === currentKey) return;
+        if (targetKey === getCurrentRouteKey()) {
+          e.preventDefault();
+          return;
+        }
         const cfgSuite = document.getElementById("config-suite");
         const inConfig = cfgSuite && cfgSuite.classList.contains("active");
         if (
@@ -482,25 +594,47 @@
         ) {
           e.preventDefault();
           const targetLabel = a.querySelector("span")?.textContent || "Page";
-          const targetHref = a.getAttribute("href");
           openUnsavedChangesGuard({
             fromLabel: typeof getConfigTabDisplayTitle === "function" ? getConfigTabDisplayTitle(activeConfigTab) : "Dashboard",
             toLabel: targetLabel,
             onProceed: () => {
               hasUnsavedChanges = false;
+              startNavProgressDelayed();
               location.href = targetHref;
             }
           });
+          return;
         }
+
+        // Instant optimistic active state so mobile tap feels immediate with 0ms lag
+        nav.querySelectorAll(".haru-dock-item").forEach((btn) => {
+          btn.classList.toggle("active", btn === a);
+        });
+        startNavProgressDelayed();
       });
     });
 
     document.body.appendChild(nav);
+
+    // Pre-warm sibling pages silently on idle
+    const warmSiblings = () => {
+      const cur = getCurrentRouteKey();
+      items.forEach((it) => {
+        if (it.key !== cur) prefetchUrl(it.href);
+      });
+    };
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(warmSiblings, { timeout: 2500 });
+    } else {
+      setTimeout(warmSiblings, 1200);
+    }
   }
 
   function init() {
     injectPwaStyles();
+    ensureNavProgressBar();
     renderMobileAppDock();
+    window.addEventListener("pageshow", resetNavProgressAndDock);
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeInstallModal();
     });
