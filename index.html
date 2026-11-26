@@ -24,7 +24,7 @@
   <style>
 
     /* Native instantaneous hardware scroll */
-    #harubot, #harumod, #bots, #watcher, #about, #legal, section[id], article[id] {
+    #harubot, #harumod, #harune, #bots, #watcher, #about, #legal, section[id], article[id] {
       scroll-margin-top: 70px !important;
     }
     svg[fill="none"] {
@@ -1441,6 +1441,7 @@
         <a href="#about" data-i18n="navAbout">Về Tác Giả</a>
         <a href="#harubot" data-i18n="navHaruBot">HaruBot</a>
         <a href="#harumod" data-i18n="navHaruMod">HaruMod</a>
+        <a href="#harune" data-i18n="navHarune">Harune</a>
         <a href="#watcher" data-i18n="navWatcher">Watcher</a>
         <a href="#legal" data-i18n="navLegal">Điều Khoản & Bảo Mật</a>
       </nav>
@@ -1482,6 +1483,10 @@
       <a href="#harumod" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span data-i18n="navHaruMod">HaruMod</span>
+      </a>
+      <a href="#harune" onclick="togglePortalMobileMenu()" class="portal-drawer-link" style="color:#38bdf8;font-weight:700;">
+        <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <span data-i18n="navHarune">Harune Music</span>
       </a>
       <a href="#watcher" onclick="togglePortalMobileMenu()" class="portal-drawer-link">
         <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -1535,6 +1540,10 @@
       <a href="#harumod" class="btn btn-emerald">
         <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
         <span data-i18n="btnExploreMod">Khám Phá HaruMod</span>
+      </a>
+      <a href="./harune/" class="btn btn-primary" style="background:linear-gradient(135deg,#0ea5e9,#2563eb);border:1px solid rgba(125,211,252,0.45);">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <span data-i18n="btnOpenHarune">Mở App Harune</span>
       </a>
       <a href="#legal" class="btn btn-secondary">
         <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
@@ -1604,12 +1613,6 @@
               </a>
               <a href="./fishing.html?install=1" class="btn btn-secondary" style="background:linear-gradient(135deg,#4f3b16,#7d5818);color:#fff6d6;border:2px solid #ecc570;border-radius:4px;box-shadow:3px 3px 0 #040a14;">
                 <span>⬇ Tải Game</span>
-              </a>
-              <a href="./harune/" class="btn btn-primary" style="background:linear-gradient(135deg,#18181f,#231512);color:#f5f5f7;border:1px solid #ff5a36;">
-                <span>🎵 Harune Hi-Fi Music</span>
-              </a>
-              <a href="./harune/?install=1" class="btn btn-secondary" style="background:#15151a;color:#ff8a6b;border:1px solid rgba(255,90,54,0.55);">
-                <span>⬇ Tải Harune App</span>
               </a>
               <a href="./harubot.html?v=3.6" class="btn btn-secondary">
                 <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -1695,6 +1698,60 @@
           </div>
         </article>
       </div>
+
+      <!-- Dedicated Flagship Showcase Card: Harune Hi-Fi Music App (Permanent URL linked to VibeHost 24/7!) -->
+      <article class="bot-card harubot" id="harune" style="margin-top: 32px; border-color: rgba(56,189,248,0.28);">
+        <div>
+          <div class="bot-header">
+            <div class="bot-avatar-box cyan" style="background:#050b14;">
+              <img src="./harune/icons/harune-logo.png" alt="Harune Exclusive Logo" class="bot-avatar" loading="lazy" decoding="async">
+            </div>
+            <div class="bot-header-info">
+              <h3>
+                Harune
+                <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35); padding:3px 10px; border-radius:12px;">Hi-Fi Music App · PWA</span>
+              </h3>
+              <p class="bot-tagline" data-i18n="haruneTagline">Nhạc Full Hi-Fi 32-bit · Sân khấu Wave · AI DJ Remix · Nghe Cùng Nhau (Jam)</p>
+            </div>
+          </div>
+          <p class="bot-desc" data-i18n="haruneDesc">
+            Harune là ứng dụng nghe nhạc Hi-Fi độc quyền trong hệ sinh thái Haru, chạy trên hạ tầng VibeHost 24/7 và cài trực tiếp như App gốc trên iPhone, Android, iPad &amp; PC. Hỗ trợ chạy nền màn hình khóa như Spotify, EQ 10 băng, Karaoke, AI DJ remix trực tiếp, phòng nghe cùng bạn bè và phát đa tai nghe AirPods/Bluetooth Lossless.
+          </p>
+          <ul class="bot-features-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            <li>
+              <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2l3-8 4 16 3-10 2 6 2-4h4"/></svg></span>
+              <span data-i18n="haruneFeat1">Sân khấu Wave 60 FPS tự đồng bộ màu ảnh bìa &amp; thanh sóng beat 2 bên</span>
+            </li>
+            <li>
+              <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+              <span data-i18n="haruneFeat2">AI DJ remix trực tiếp, Autoplay nối bài cùng gu &amp; BXH 4 nguồn (SP · YT · AM · DZ)</span>
+            </li>
+            <li>
+              <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <span data-i18n="haruneFeat3">Tài khoản, Kết bạn, Chia sẻ Playlist &amp; Phòng Nghe Cùng Nhau (Jam Real-Time)</span>
+            </li>
+            <li>
+              <span class="feat-icon-badge cyan"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+              <span data-i18n="haruneFeat4">Kết nối đa tai nghe AirPods / Bluetooth cùng lúc &amp; chế độ Lossless Hi-Fi</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bot-card-footer">
+          <div class="bot-btn-row">
+            <a href="./harune/" class="btn btn-primary" style="background:linear-gradient(135deg,#0ea5e9,#2563eb);border:1px solid rgba(125,211,252,0.45);">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span data-i18n="btnOpenHarune">Mở App Harune</span>
+            </a>
+            <a href="./harune/?install=1" class="btn btn-secondary" style="border-color:rgba(56,189,248,0.45);color:#bae6fd;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span data-i18n="btnInstallHarune">Cài App (iOS · Android · PC)</span>
+            </a>
+          </div>
+          <div class="bot-legal-links">
+            <span style="font-size:0.82rem;color:#94a3b8;font-family:monospace;">Permanent URL: haruki070909.github.io/haruki-legal/harune/ · VibeHost 24/7</span>
+          </div>
+        </div>
+      </article>
     </section>
 
     <!-- Watcher Section -->
@@ -2115,8 +2172,17 @@
         navAbout: "Về Tác Giả",
         navHaruBot: "HaruBot",
         navHaruMod: "HaruMod",
+        navHarune: "Harune",
         navWatcher: "Watcher",
         navLegal: "Điều Khoản & Bảo Mật",
+        btnOpenHarune: "Mở App Harune",
+        btnInstallHarune: "Cài App (iOS · Android · PC)",
+        haruneTagline: "Nhạc Full Hi-Fi 32-bit · Sân khấu Wave · AI DJ Remix · Nghe Cùng Nhau (Jam)",
+        haruneDesc: "Harune là ứng dụng nghe nhạc Hi-Fi độc quyền trong hệ sinh thái Haru, chạy trên hạ tầng VibeHost 24/7 và cài trực tiếp như App gốc trên iPhone, Android, iPad &amp; PC. Hỗ trợ chạy nền màn hình khóa như Spotify, EQ 10 băng, Karaoke, AI DJ remix trực tiếp, phòng nghe cùng bạn bè và phát đa tai nghe AirPods/Bluetooth Lossless.",
+        haruneFeat1: "Sân khấu Wave 60 FPS tự đồng bộ màu ảnh bìa &amp; thanh sóng beat 2 bên",
+        haruneFeat2: "AI DJ remix trực tiếp, Autoplay nối bài cùng gu &amp; BXH 4 nguồn (SP · YT · AM · DZ)",
+        haruneFeat3: "Tài khoản, Kết bạn, Chia sẻ Playlist &amp; Phòng Nghe Cùng Nhau (Jam Real-Time)",
+        haruneFeat4: "Kết nối đa tai nghe AirPods / Bluetooth cùng lúc &amp; chế độ Lossless Hi-Fi",
         heroPill1: "HaruBot V2 Trực Tuyến",
         heroPill2: "HaruMod Pro Trực Tuyến",
         heroPill3: "Hạ Tầng Host 24/7",
@@ -2170,8 +2236,17 @@
         navAbout: "About Author",
         navHaruBot: "HaruBot",
         navHaruMod: "HaruMod",
+        navHarune: "Harune",
         navWatcher: "Watcher",
         navLegal: "Legal & Privacy",
+        btnOpenHarune: "Open Harune App",
+        btnInstallHarune: "Install App (iOS · Android · PC)",
+        haruneTagline: "Full 32-bit Hi-Fi Audio · Wave Stage · Live AI DJ · Listen Together (Jam)",
+        haruneDesc: "Harune is the exclusive Hi-Fi music app of the Haru Ecosystem, powered 24/7 by dedicated VibeHost infrastructure and installable as a native-feel PWA on iPhone, Android, iPad &amp; PC. Supports Spotify-grade background playback, 10-band EQ, Karaoke, Live AI DJ remixing, real-time Jam rooms with friends, and Multi-AirPods / Bluetooth Lossless output.",
+        haruneFeat1: "60 FPS Wave Stage with auto artwork colors &amp; flush dual-side beat bars",
+        haruneFeat2: "Live AI DJ remixing, Smart Autoplay Radio &amp; 4-source consensus charts",
+        haruneFeat3: "Accounts, Friends, Shareable Playlists &amp; Real-Time WebSocket Jam Rooms",
+        haruneFeat4: "Simultaneous Multi-AirPods / Bluetooth output &amp; Bluetooth Lossless Hi-Fi",
         heroPill1: "HaruBot V2 Online",
         heroPill2: "HaruMod Pro Online",
         heroPill3: "Powered by Host 24/7",

@@ -1,4 +1,4 @@
-const CACHE_NAME = "harune-pwa-v14";
+const CACHE_NAME = "harune-pwa-v15";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -37,8 +37,13 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // Never intercept API calls, audio range streams, or cross-origin media
-  if (url.origin !== self.location.origin || url.pathname.includes("/api/") || req.headers.has("range")) {
+  // Never intercept API calls, live server.json discovery, audio range streams, or cross-origin media
+  if (
+    url.origin !== self.location.origin ||
+    url.pathname.includes("/api/") ||
+    url.pathname.endsWith("/server.json") ||
+    req.headers.has("range")
+  ) {
     return;
   }
 
