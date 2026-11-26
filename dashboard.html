@@ -2100,31 +2100,188 @@
       gap: 12px;
     }
 
-    /* Floating Save Bar */
+    /* Floating Save Bar & Unsaved Navigation Guard */
     .save-bar {
       position: fixed;
       bottom: 24px;
       left: 50%;
-      transform: translateX(-50%) translateY(140px);
-      background: rgba(11, 17, 34, 0.96);
-      backdrop-filter: blur(24px);
-      border: 1px solid var(--emerald-accent);
-      border-radius: 16px;
-      padding: 14px 28px;
+      transform: translateX(-50%) translateY(150px);
+      background: #111622;
+      border: 1.5px solid #2e3951;
+      border-radius: 14px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
-      gap: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 25px var(--emerald-glow);
-      z-index: 200;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      justify-content: space-between;
+      gap: 20px;
+      min-width: min(560px, calc(100vw - 32px));
+      max-width: calc(100vw - 32px);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.78);
+      z-index: 250;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .save-bar.visible {
       transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .save-bar.is-alert-shake {
+      border-color: #e11d48 !important;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.85), 0 0 0 3px rgba(225, 29, 72, 0.25) !important;
+      animation: unsavedBarShake 0.48s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes unsavedBarShake {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      18% { transform: translateX(calc(-50% - 10px)) translateY(0); }
+      36% { transform: translateX(calc(-50% + 9px)) translateY(0); }
+      54% { transform: translateX(calc(-50% - 6px)) translateY(0); }
+      72% { transform: translateX(calc(-50% + 5px)) translateY(0); }
+    }
+    .save-bar-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .save-bar-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+      flex-shrink: 0;
     }
     .save-bar-text {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.35;
+    }
+    .save-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .btn-unsaved-discard {
+      background: #171e2e !important;
+      border: 1.5px solid #334155 !important;
+      color: #cbd5e1 !important;
+      font-weight: 700 !important;
+      padding: 8px 14px !important;
+      border-radius: 9px !important;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .btn-unsaved-discard:hover:not(:disabled) {
+      background: #1e293b !important;
+      border-color: #64748b !important;
+      color: #ffffff !important;
+    }
+    .btn-unsaved-save {
+      background: #10b981 !important;
+      border: 1.5px solid #059669 !important;
+      color: #06281e !important;
+      font-weight: 800 !important;
+      padding: 8px 16px !important;
+      border-radius: 9px !important;
+      transition: background 0.15s, transform 0.12s, opacity 0.15s;
+    }
+    .btn-unsaved-save:hover:not(:disabled) {
+      background: #34d399 !important;
+      color: #041d15 !important;
+    }
+    .btn-unsaved-save:disabled,
+    .btn-unsaved-discard:disabled,
+    .btn-unsaved-discard-danger:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Unsaved Changes Navigation Guard Modal */
+    .unsaved-guard-card {
+      max-width: 468px !important;
+      background: #111622 !important;
+      border: 1.5px solid #2e3951 !important;
+      border-radius: 14px !important;
+      padding: 22px 24px !important;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85) !important;
+    }
+    .unsaved-guard-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .unsaved-guard-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .unsaved-guard-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .unsaved-guard-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+    .unsaved-guard-title {
+      margin: 0;
+      font-size: 1.05rem;
       font-weight: 800;
-      color: #ffffff;
+      color: #f8fafc;
+    }
+    .unsaved-guard-desc {
+      margin: 0 0 18px 0;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+    .unsaved-guard-tab-pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 6px;
+      background: #171e2e;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .unsaved-guard-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1.5px solid #222b3e;
+      flex-wrap: wrap;
+    }
+    .btn-unsaved-discard-danger {
+      background: rgba(225, 29, 72, 0.14) !important;
+      border: 1.5px solid rgba(225, 29, 72, 0.45) !important;
+      color: #fda4af !important;
+      font-weight: 700 !important;
+      padding: 8px 15px !important;
+      border-radius: 9px !important;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .btn-unsaved-discard-danger:hover:not(:disabled) {
+      background: #e11d48 !important;
+      border-color: #f43f5e !important;
+      color: #ffffff !important;
     }
 
     /* Toast Notification */
@@ -2616,19 +2773,33 @@
         left: 12px !important;
         right: 12px !important;
         bottom: 12px !important;
+        min-width: 0 !important;
         width: auto !important;
         max-width: calc(100% - 24px) !important;
         transform: translateY(180px) !important;
         padding: 14px 16px !important;
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 10px !important;
+        gap: 12px !important;
         border-radius: 14px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 20px rgba(16, 185, 129, 0.25) !important;
+        box-shadow: 0 12px 36px rgba(0,0,0,0.88) !important;
       }
       #sticky-save-bar.visible, .save-bar.visible, .sticky-save-bar.visible {
         transform: translateY(0) !important;
+      }
+      #sticky-save-bar.is-alert-shake {
+        animation: unsavedBarShakeMobile 0.48s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+      }
+      @keyframes unsavedBarShakeMobile {
+        0%, 100% { transform: translateX(0) translateY(0); }
+        20% { transform: translateX(-8px) translateY(0); }
+        40% { transform: translateX(8px) translateY(0); }
+        60% { transform: translateX(-5px) translateY(0); }
+        80% { transform: translateX(5px) translateY(0); }
+      }
+      #sticky-save-bar .save-bar-status {
+        justify-content: center !important;
       }
       #sticky-save-bar .save-bar-text, .save-bar .save-bar-text {
         font-size: 0.86rem !important;
@@ -2636,10 +2807,24 @@
         line-height: 1.4 !important;
         word-break: break-word !important;
       }
+      #sticky-save-bar .save-bar-actions {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+      }
       #sticky-save-bar .btn, .save-bar .btn {
         width: 100% !important;
         justify-content: center !important;
-        height: 42px !important;
+        height: 40px !important;
+      }
+      .unsaved-guard-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+      #unsaved-guard-btn-stay {
+        grid-column: 1 / -1;
+        order: 3;
       }
     }
 
@@ -7899,7 +8084,7 @@
               <!-- Server Language -->
               <div class="dash-form-item">
                 <label class="dash-form-label">Server Language</label>
-                <select id="cfg-dash-language" class="form-input" onchange="switchDashLang(this.value); triggerUnsaved();">
+                <select id="cfg-dash-language" class="form-input" onchange="switchDashLang(this.value)">
                   <option value="en" selected>English</option>
                   <option value="vi">Tiếng Việt (Vietnamese)</option>
                   <option value="ja">日本語 (Japanese)</option>
@@ -8024,7 +8209,7 @@
             <!-- Activity Status -->
             <div class="input-group" style="margin-top:18px;">
               <label class="input-label" data-i18n="labelBotStatus">Custom Playing / Activity Status</label>
-              <input type="text" id="cfg-bot-status-input" class="form-input" placeholder="e.g. Watching members · Type /help" value="Watching members · 100% Secure" oninput="updateLiveBotPreview()">
+              <input type="text" id="cfg-bot-status-input" class="form-input" placeholder="e.g. Watching members · Type /help" value="Watching members · 100% Secure" oninput="updateLiveBotPreview(true)">
             </div>
 
             <!-- Role Tag Color -->
@@ -9535,10 +9720,15 @@
   </main>
 
   <!-- Sticky Save Bar -->
-  <div id="sticky-save-bar" class="save-bar">
-    <span class="save-bar-text" data-i18n="unsavedText">You have unsaved changes on this server!</span>
-    <button class="btn btn-secondary btn-sm" onclick="discardChanges()" data-i18n="btnDiscard">Discard</button>
-    <button class="btn btn-emerald btn-sm" onclick="saveChanges()" data-i18n="btnSave">Save Changes</button>
+  <div id="sticky-save-bar" class="save-bar" role="region" aria-live="polite">
+    <div class="save-bar-status">
+      <span class="save-bar-dot" aria-hidden="true"></span>
+      <span class="save-bar-text" id="sticky-save-bar-text" data-i18n="unsavedText">You have unsaved changes on this server!</span>
+    </div>
+    <div class="save-bar-actions">
+      <button type="button" id="sticky-btn-discard" class="btn btn-secondary btn-sm btn-unsaved-discard" onclick="discardChanges()" data-i18n="btnDiscard">Discard</button>
+      <button type="button" id="sticky-btn-save" class="btn btn-emerald btn-sm btn-unsaved-save" onclick="saveChanges()" data-i18n="btnSave">Save Changes</button>
+    </div>
   </div>
 
   <!-- Toast Notification -->
@@ -9941,8 +10131,8 @@
           const item = document.createElement("div");
           item.className = `server-dropdown-item ${g.id === currentGuildId ? "active" : ""}`;
           item.onclick = () => {
-            selectServerForConfig(g.id);
             toggleServerDropdown();
+            selectServerForConfig(g.id);
           };
 
           const iconHtml = renderGuildAvatarHtml(g, 26);
@@ -10138,11 +10328,11 @@
       if (!currentUser) {
         showToast("Vui lòng đăng nhập Discord để quản lý và chỉnh sửa server!", "info");
         startDiscordLogin();
-        return;
+        return false;
       }
       if (hasLiveBotGuildList && !liveBotGuildIds.has(String(guildId))) {
         showToast("HaruMod chưa có trong máy chủ này! Hãy bấm Add HaruMod trước.", "warning");
-        return;
+        return false;
       }
       currentGuildId = guildId;
       const g = userGuilds.find(x => x.id === guildId) || {
@@ -10196,17 +10386,34 @@
 
       window.scrollTo({ top: 0, behavior: "smooth" });
       activeStage = "config";
+      return true;
     }
 
-    function returnToHub() {
+    function returnToHub(force = false) {
       const cfgSuite = document.getElementById("config-suite");
+      const isInConfig = cfgSuite && cfgSuite.classList.contains("active");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      if (!force && isInConfig && hasUnsavedChanges && typeof openUnsavedChangesGuard === "function") {
+        openUnsavedChangesGuard({
+          fromLabel: typeof getConfigTabDisplayTitle === "function" ? getConfigTabDisplayTitle(activeConfigTab) : "Dashboard",
+          toLabel: activeLang === "vi" ? "Danh sách Máy chủ" : "Server List",
+          onProceed: () => returnToHub(true)
+        });
+        return false;
+      }
+
       if (cfgSuite) {
         cfgSuite.classList.remove("active");
         cfgSuite.style.setProperty("display", "none", "important");
       }
       const saveBar = document.getElementById("sticky-save-bar");
-      if (saveBar) saveBar.classList.remove("visible");
+      if (saveBar) {
+        saveBar.classList.remove("visible", "is-alert-shake");
+      }
       hasUnsavedChanges = false;
+      if (typeof lastSavedGuildConfig !== "undefined") lastSavedGuildConfig = null;
+      if (typeof lastSavedConfigSignature !== "undefined") lastSavedConfigSignature = "";
+      if (typeof activeConfigTab !== "undefined") activeConfigTab = "dashboard";
       document.getElementById("entrance-view").style.display = "block";
       document.getElementById("topbar-server-switcher").style.display = "none";
       document.getElementById("topbar-invite-btn").style.display = "inline-flex";
@@ -10217,6 +10424,7 @@
       const hub = document.getElementById("server-hub");
       if (hub) hub.scrollIntoView({ behavior: "smooth" });
       activeStage = "entrance";
+      return true;
     }
 
     function toggleServerDropdown() {
@@ -10248,28 +10456,6 @@
       }
 
       event.currentTarget.classList.add("active");
-    }
-
-    function triggerUnsaved() {
-      const cfgSuite = document.getElementById("config-suite");
-      if (!currentUser || !currentGuildId || !cfgSuite || !cfgSuite.classList.contains("active")) {
-        return;
-      }
-      hasUnsavedChanges = true;
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.add("visible");
-    }
-
-    function discardChanges() {
-      const bar = document.getElementById("sticky-save-bar");
-      bar.classList.remove("visible");
-      showToast("Unsaved changes discarded!");
-    }
-
-    function saveChanges() {
-      const bar = document.getElementById("sticky-save-bar");
-      bar.classList.remove("visible");
-      showToast("Security configuration saved & synced with HaruMod!");
     }
 
     function handleSimKey(e) {
@@ -11203,7 +11389,7 @@
       const roots = [
         document.querySelector(".topbar"),
         document.getElementById("config-suite"),
-        ...document.querySelectorAll(".dyno-modal-overlay")
+        ...Array.from(document.querySelectorAll(".dyno-modal-overlay")).filter(m => m.id !== "modal-unsaved-guard")
       ].filter(Boolean);
 
       const skipTags = new Set(["SCRIPT", "STYLE", "TEXTAREA", "INPUT", "NOSCRIPT"]);
@@ -11315,6 +11501,10 @@
       if (typeof renderRoleManagementUI === "function") renderRoleManagementUI();
       if (typeof renderVariablesGuide === "function") renderVariablesGuide();
       applyGlobalDomTranslation(activeLang);
+
+      // Refresh open unsaved guard modal & sticky bar labels if needed
+      if (typeof renderUnsavedGuardModalText === "function") renderUnsavedGuardModalText();
+      if (typeof syncStickySaveBarUI === "function") syncStickySaveBarUI();
 
       // Sync select dropdown in bot settings
       const langSel = document.getElementById("cfg-dash-language");
@@ -11749,10 +11939,13 @@
       identity: "Nhận diện & Biệt danh Bot",
       overview: "Tổng quan an ninh",
       automod: "Bộ lọc Auto-Mod Filters",
+      autoban: "Autoban",
       honeypot: "Honeypot & Chống Raid",
       cases: "Thang phạt vi phạm",
       channels: "Quản lý Kênh & Dọn dẹp (Purge & Slowmode)",
       members: "Trung tâm Xử phạt Thành viên",
+      slowmode: "Slowmode & Khóa kênh",
+      chat: "Trò chuyện kênh trực tiếp",
       welcome: "Chào mừng & Tự động gán quyền",
       roles: "Quản lý Role & Quyền",
       reactionroles: "Reaction Roles",
@@ -11994,11 +12187,40 @@
       }
     }
 
-    function switchConfigTab(tabKey) {
+    function getConfigTabDisplayTitle(tabKey) {
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      if (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang] && DYNO_TAB_TITLES_I18N[activeLang][tabKey]) {
+        return DYNO_TAB_TITLES_I18N[activeLang][tabKey];
+      }
+      if (typeof DYNO_TAB_TITLES !== "undefined" && DYNO_TAB_TITLES[tabKey]) {
+        return DYNO_TAB_TITLES[tabKey];
+      }
+      return tabKey || "Server Configuration";
+    }
+
+    function switchConfigTab(tabKey, force = false, afterSwitch = null) {
+      if (!tabKey) return false;
       // Prevent browser focus-scroll jumping when clicking sidebar buttons
       if (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains("dyno-nav-item")) {
         document.activeElement.blur();
       }
+
+      if (!force && tabKey === activeConfigTab) {
+        if (typeof afterSwitch === "function") afterSwitch();
+        return true;
+      }
+
+      const cfgSuite = document.getElementById("config-suite");
+      const isInConfig = cfgSuite && cfgSuite.classList.contains("active");
+      if (!force && isInConfig && hasUnsavedChanges && typeof openUnsavedChangesGuard === "function") {
+        openUnsavedChangesGuard({
+          fromLabel: getConfigTabDisplayTitle(activeConfigTab),
+          toLabel: getConfigTabDisplayTitle(tabKey),
+          onProceed: () => switchConfigTab(tabKey, true, afterSwitch)
+        });
+        return false;
+      }
+
       const prevScrollY = window.scrollY;
 
       document.querySelectorAll("#config-suite .tab-pane").forEach(p => p.classList.remove("active"));
@@ -12007,6 +12229,7 @@
 
       const targetPane = document.getElementById("cfg-pane-" + tabKey);
       if (targetPane) targetPane.classList.add("active");
+      activeConfigTab = tabKey;
       if (tabKey === 'chat' && typeof loadChannelMessages === 'function') {
         const sel = document.getElementById("chat-channel-select");
         const chId = (sel && sel.value) ? sel.value : (activeChatChannelId || (cachedChannels[0] && cachedChannels[0].id) || "1426568420287320095");
@@ -12018,9 +12241,7 @@
       if (targetBtn) targetBtn.classList.add("active");
 
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
-      const title = (typeof DYNO_TAB_TITLES_I18N !== "undefined" && DYNO_TAB_TITLES_I18N[activeLang] && DYNO_TAB_TITLES_I18N[activeLang][tabKey]) 
-                    ? DYNO_TAB_TITLES_I18N[activeLang][tabKey] 
-                    : (DYNO_TAB_TITLES[tabKey] || "Server Configuration");
+      const title = getConfigTabDisplayTitle(tabKey);
       const breadEl = document.getElementById("dyno-bread-tab");
       if (breadEl) breadEl.innerText = title;
       const titleEl = document.getElementById("dyno-active-title");
@@ -12051,6 +12272,9 @@
           window.scrollTo({ top: topPos, left: 0, behavior: "smooth" });
         }
       }
+
+      if (typeof afterSwitch === "function") afterSwitch();
+      return true;
     }
 
     // Live Preview updates as user types
@@ -12080,22 +12304,31 @@
       showToast("Preset applied: " + presetName);
     }
 
-    function setBotRoleColor(colorHex, el) {
-      currentBotRoleColor = colorHex;
-      document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
+    function setBotRoleColor(colorHex, el = null, silent = false) {
+      const normalized = colorHex || "#10b981";
+      currentBotRoleColor = normalized;
+      document.querySelectorAll(".color-swatch").forEach(s => {
+        s.classList.remove("active");
+        if (!el && (s.getAttribute("onclick") || "").toLowerCase().includes(normalized.toLowerCase())) {
+          s.classList.add("active");
+        }
+      });
       if (el) el.classList.add("active");
 
       const nameEl = document.getElementById("preview-bot-name");
-      if (nameEl) nameEl.style.color = colorHex;
+      if (nameEl) nameEl.style.color = normalized;
 
       const memNameEl = document.getElementById("preview-member-name");
-      if (memNameEl) memNameEl.style.color = colorHex;
+      if (memNameEl) memNameEl.style.color = normalized;
 
       const rolePill = document.getElementById("preview-bot-role");
       if (rolePill) {
-        rolePill.style.color = colorHex;
-        rolePill.style.borderColor = colorHex;
-        rolePill.style.background = colorHex + "22";
+        rolePill.style.color = normalized;
+        rolePill.style.borderColor = normalized;
+        rolePill.style.background = normalized + "22";
+      }
+      if (!silent && typeof triggerUnsaved === "function") {
+        triggerUnsaved();
       }
     }
 
@@ -12117,12 +12350,15 @@
     // Load saved identity whenever server config is opened
     const originalSelectServerForConfig = (typeof selectServerForConfig === "function") ? selectServerForConfig : null;
     selectServerForConfig = function(guildId) {
-      if (typeof originalSelectServerForConfig === "function") originalSelectServerForConfig(guildId);
+      let ok = true;
+      if (typeof originalSelectServerForConfig === "function") {
+        const res = originalSelectServerForConfig(guildId);
+        if (res === false) return false;
+      }
 
       // Load saved bot nickname for this guild
       const savedNick = localStorage.getItem("haruki_bot_nick_" + guildId) || "HaruMod Security";
       const savedStatus = localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure";
-      const savedColor = localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981";
 
       const nameInput = document.getElementById("cfg-bot-nickname-input");
       if (nameInput) nameInput.value = savedNick;
@@ -12130,31 +12366,231 @@
       const statusInput = document.getElementById("cfg-bot-status-input");
       if (statusInput) statusInput.value = savedStatus;
 
-      updateLiveBotPreview();
+      updateLiveBotPreview(false);
+      return ok;
     };
 
     
     /* ========================================================= */
     /* REAL PER-SERVER CONFIGURATION STORAGE & DISCORD SYNC      */
     /* ========================================================= */
+    let activeConfigTab = "dashboard";
     let hasUnsavedChanges = false;
+    let lastSavedGuildConfig = null;
+    let lastSavedModuleCards = null;
+    let lastSavedConfigSignature = "";
+    let isApplyingConfigSnapshot = false;
+    let pendingUnsavedGuardAction = null;
+    let isSavingChangesNow = false;
+    let _unsavedGuardSourceLabel = "";
+    let _unsavedGuardTargetLabel = "";
 
-    function triggerUnsaved() {
+    function getModuleCardStatesMap() {
+      const map = {};
+      if (typeof BOT_MODULES_LIST !== "undefined" && Array.isArray(BOT_MODULES_LIST) && typeof getModuleState === "function") {
+        BOT_MODULES_LIST.forEach(m => { map[m.id] = Boolean(getModuleState(m.id)); });
+      }
+      return map;
+    }
+
+    function restoreModuleCardStatesMap(map) {
+      if (!map || typeof map !== "object") return;
+      Object.entries(map).forEach(([modId, val]) => {
+        localStorage.setItem("haruki_mod_enabled_" + modId, String(Boolean(val)));
+      });
+      if (typeof renderModulesGrid === "function") renderModulesGrid();
+    }
+
+    function getNormalizedConfigSignature(cfg, moduleCardsMap = null) {
+      if (!cfg || typeof cfg !== "object") return "";
+      try {
+        const clean = JSON.parse(JSON.stringify(cfg));
+        delete clean.savedAt;
+        clean.__moduleCards = moduleCardsMap || getModuleCardStatesMap();
+        return JSON.stringify(clean);
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function syncStickySaveBarUI() {
+      const bar = document.getElementById("sticky-save-bar");
+      const textEl = document.getElementById("sticky-save-bar-text");
+      const btnDiscard = document.getElementById("sticky-btn-discard");
+      const btnSave = document.getElementById("sticky-btn-save");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const dict = (typeof DASH_I18N !== "undefined" && DASH_I18N[activeLang]) ? DASH_I18N[activeLang] : null;
+      if (textEl) {
+        textEl.textContent = (dict && dict.unsavedText) || (activeLang === "vi" ? "Bạn có thay đổi chưa lưu trên server này!" : "You have unsaved changes on this server!");
+      }
+      if (btnDiscard && !isSavingChangesNow) {
+        btnDiscard.textContent = (dict && dict.btnDiscard) || (activeLang === "vi" ? "Hủy Bỏ" : "Discard");
+      }
+      if (btnSave && !isSavingChangesNow) {
+        btnSave.textContent = (dict && dict.btnSave) || (activeLang === "vi" ? "Lưu Cấu Hình" : "Save Changes");
+      }
+      if (bar) {
+        bar.classList.toggle("visible", Boolean(hasUnsavedChanges));
+        if (!hasUnsavedChanges) bar.classList.remove("is-alert-shake");
+      }
+    }
+
+    function shakeStickySaveBar() {
+      const bar = document.getElementById("sticky-save-bar");
+      if (!bar) return;
+      bar.classList.add("visible");
+      bar.classList.remove("is-alert-shake");
+      void bar.offsetWidth;
+      bar.classList.add("is-alert-shake");
+      clearTimeout(bar._shakeTimer);
+      bar._shakeTimer = setTimeout(() => {
+        bar.classList.remove("is-alert-shake");
+      }, 550);
+    }
+
+    function captureSavedConfigBaseline(sourceCfg = null) {
+      try {
+        const raw = sourceCfg || collectFullGuildConfig();
+        const cloned = JSON.parse(JSON.stringify(raw));
+        const modMap = getModuleCardStatesMap();
+        lastSavedGuildConfig = cloned;
+        lastSavedModuleCards = { ...modMap };
+        lastSavedConfigSignature = getNormalizedConfigSignature(cloned, modMap);
+      } catch (e) {
+        lastSavedGuildConfig = null;
+        lastSavedModuleCards = null;
+        lastSavedConfigSignature = "";
+      }
+      hasUnsavedChanges = false;
+      syncStickySaveBarUI();
+    }
+
+    function renderUnsavedGuardModalText() {
+      const overlay = document.getElementById("modal-unsaved-guard");
+      if (!overlay) return;
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      const titleEl = document.getElementById("unsaved-guard-title");
+      const descEl = document.getElementById("unsaved-guard-desc");
+      const btnStay = document.getElementById("unsaved-guard-btn-stay");
+      const btnDiscard = document.getElementById("unsaved-guard-btn-discard");
+      const btnSave = document.getElementById("unsaved-guard-btn-save");
+
+      const fromEsc = typeof escapeHtml === "function" ? escapeHtml(_unsavedGuardSourceLabel || "Current") : (_unsavedGuardSourceLabel || "Current");
+      const toEsc = typeof escapeHtml === "function" ? escapeHtml(_unsavedGuardTargetLabel || "Next") : (_unsavedGuardTargetLabel || "Next");
+
+      if (activeLang === "vi") {
+        if (titleEl) titleEl.textContent = "Bạn có thay đổi chưa lưu";
+        if (descEl) {
+          descEl.innerHTML = `Bạn đang chỉnh sửa ở <span class="unsaved-guard-tab-pill">${fromEsc}</span> và muốn chuyển sang <span class="unsaved-guard-tab-pill">${toEsc}</span>. Hãy <strong>Lưu</strong> hoặc <strong>Hủy bỏ</strong> thay đổi trước khi rời trang này.`;
+        }
+        if (btnStay) btnStay.textContent = "Ở lại";
+        if (btnDiscard) btnDiscard.textContent = "Hủy bỏ & Chuyển";
+        if (btnSave && !isSavingChangesNow) btnSave.textContent = "Lưu & Chuyển";
+      } else {
+        if (titleEl) titleEl.textContent = "Unsaved Changes";
+        if (descEl) {
+          descEl.innerHTML = `You edited settings in <span class="unsaved-guard-tab-pill">${fromEsc}</span> before switching to <span class="unsaved-guard-tab-pill">${toEsc}</span>. Please <strong>Save</strong> or <strong>Discard</strong> your changes first.`;
+        }
+        if (btnStay) btnStay.textContent = "Stay";
+        if (btnDiscard) btnDiscard.textContent = "Discard & Switch";
+        if (btnSave && !isSavingChangesNow) btnSave.textContent = "Save & Switch";
+      }
+    }
+
+    function openUnsavedChangesGuard({ fromLabel, toLabel, onProceed }) {
+      _unsavedGuardSourceLabel = fromLabel || getConfigTabDisplayTitle(activeConfigTab);
+      _unsavedGuardTargetLabel = toLabel || "Next";
+      pendingUnsavedGuardAction = typeof onProceed === "function" ? onProceed : null;
+      renderUnsavedGuardModalText();
+      const overlay = document.getElementById("modal-unsaved-guard");
+      if (overlay) overlay.classList.add("open");
+      shakeStickySaveBar();
+    }
+
+    function cancelUnsavedGuard() {
+      if (isSavingChangesNow) return;
+      pendingUnsavedGuardAction = null;
+      const overlay = document.getElementById("modal-unsaved-guard");
+      if (overlay) overlay.classList.remove("open");
+    }
+
+    function confirmUnsavedGuardDiscard() {
+      if (isSavingChangesNow) return;
+      const next = pendingUnsavedGuardAction;
+      pendingUnsavedGuardAction = null;
+      const overlay = document.getElementById("modal-unsaved-guard");
+      if (overlay) overlay.classList.remove("open");
+      discardChanges(false);
+      if (typeof next === "function") next();
+    }
+
+    async function confirmUnsavedGuardSave() {
+      if (isSavingChangesNow) return;
+      const overlay = document.getElementById("modal-unsaved-guard");
+      const btnStay = document.getElementById("unsaved-guard-btn-stay");
+      const btnDiscard = document.getElementById("unsaved-guard-btn-discard");
+      const btnSave = document.getElementById("unsaved-guard-btn-save");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+
+      [btnStay, btnDiscard, btnSave].forEach(b => { if (b) b.disabled = true; });
+      if (btnSave) btnSave.textContent = activeLang === "vi" ? "Đang lưu..." : "Saving...";
+
+      let ok = false;
+      try {
+        ok = await saveAllServerSettingsAndSync(true);
+      } finally {
+        [btnStay, btnDiscard, btnSave].forEach(b => { if (b) b.disabled = false; });
+        renderUnsavedGuardModalText();
+      }
+
+      if (ok) {
+        const next = pendingUnsavedGuardAction;
+        pendingUnsavedGuardAction = null;
+        if (overlay) overlay.classList.remove("open");
+        if (typeof next === "function") next();
+      } else {
+        shakeStickySaveBar();
+      }
+    }
+
+    function triggerUnsaved(forceDirty = false) {
+      if (isApplyingConfigSnapshot) return;
       const cfgSuite = document.getElementById("config-suite");
       if (!currentUser || !currentGuildId || !cfgSuite || !cfgSuite.classList.contains("active")) {
         return;
       }
-      hasUnsavedChanges = true;
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.add("visible");
+      if (!forceDirty && lastSavedConfigSignature) {
+        const currentSig = getNormalizedConfigSignature(collectFullGuildConfig());
+        if (currentSig) {
+          hasUnsavedChanges = (currentSig !== lastSavedConfigSignature);
+        } else {
+          hasUnsavedChanges = true;
+        }
+      } else {
+        hasUnsavedChanges = true;
+      }
+      syncStickySaveBarUI();
     }
 
-    function discardChanges() {
-      hasUnsavedChanges = false;
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.remove("visible");
-      if (currentGuildId) loadGuildFullConfig(currentGuildId);
-      showToast("Unsaved changes discarded!");
+    function discardChanges(silentToast = false) {
+      isApplyingConfigSnapshot = true;
+      try {
+        if (lastSavedModuleCards) {
+          restoreModuleCardStatesMap(lastSavedModuleCards);
+        }
+        if (lastSavedGuildConfig) {
+          applyCloudGuildConfigToUI(JSON.parse(JSON.stringify(lastSavedGuildConfig)));
+        } else if (currentGuildId) {
+          loadGuildFullConfig(currentGuildId);
+        }
+      } finally {
+        isApplyingConfigSnapshot = false;
+      }
+      captureSavedConfigBaseline();
+      if (!silentToast) {
+        const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+        showToast(activeLang === "vi" ? "↺ Đã hủy các thay đổi chưa lưu!" : "↺ Unsaved changes discarded!");
+      }
     }
 
     // Harvest complete 1-1 Guild Config payload across ALL tabs
@@ -12172,13 +12608,14 @@
 
       return {
         guildId: currentGuildId,
+        disableWarnings: Boolean(document.getElementById("cfg-dash-disable-warnings")?.checked),
         botNickname: nick,
         botStatus: statusInput ? statusInput.value.trim() : "Watching members · 100% Secure",
         botRoleColor: currentBotRoleColor || "#10b981",
         prefix: prefixChar + "?",
         timezone: tzVal,
         updatesChannel: document.getElementById("cfg-dash-updates-channel")?.value || "",
-        managerRoles: typeof currentManagerRoles !== "undefined" ? currentManagerRoles : [],
+        managerRoles: typeof currentManagerRoles !== "undefined" ? [...currentManagerRoles] : [],
         webhookUrl: webhookInput ? webhookInput.value.trim() : "",
         discordSecurity: {
           verification_level: verSel ? parseInt(verSel.value) : null,
@@ -12190,7 +12627,7 @@
         sanctionLadder: typeof getSanctionLadderConfigForSave === "function" ? getSanctionLadderConfigForSave() : { enabled: false, stages: [] },
         autoban: {
           enabled: document.getElementById("cfg-switch-autoban") ? document.getElementById("cfg-switch-autoban").checked : false,
-          rules: typeof autobanRules !== "undefined" ? autobanRules : []
+          rules: typeof autobanRules !== "undefined" ? JSON.parse(JSON.stringify(autobanRules)) : []
         },
         actionLog: {
           enabled: document.getElementById("cfg-switch-actionlog") ? document.getElementById("cfg-switch-actionlog").checked : true,
@@ -12207,12 +12644,12 @@
             voice: document.getElementById("override-ch-voice")?.value || ""
           },
           events: typeof collectActionLogEventsMap === "function" ? collectActionLogEventsMap() : {},
-          ignoredChannels: typeof actionLogIgnoredChannels !== "undefined" ? actionLogIgnoredChannels : [],
-          ignoredRoles: typeof actionLogIgnoredRoles !== "undefined" ? actionLogIgnoredRoles : []
+          ignoredChannels: typeof actionLogIgnoredChannels !== "undefined" ? [...actionLogIgnoredChannels] : [],
+          ignoredRoles: typeof actionLogIgnoredRoles !== "undefined" ? [...actionLogIgnoredRoles] : []
         },
         autoDeleteEnabled: document.getElementById("cfg-switch-autodelete") ? document.getElementById("cfg-switch-autodelete").checked : false,
-        autoDelete: typeof autoDeleteRules !== "undefined" ? autoDeleteRules : [],
-        autoPurge: typeof autoPurgeJobs !== "undefined" ? autoPurgeJobs : [],
+        autoDelete: typeof autoDeleteRules !== "undefined" ? JSON.parse(JSON.stringify(autoDeleteRules)) : [],
+        autoPurge: typeof autoPurgeJobs !== "undefined" ? JSON.parse(JSON.stringify(autoPurgeJobs)) : [],
         welcomeEnabled: document.getElementById("cfg-welcome-enable") ? document.getElementById("cfg-welcome-enable").checked : false,
         welcome: {
           welcomeEnabled: document.getElementById("cfg-welcome-enable") ? document.getElementById("cfg-welcome-enable").checked : false,
@@ -12231,166 +12668,201 @@
 
     function applyCloudGuildConfigToUI(cfg) {
       if (!cfg || typeof cfg !== "object") return;
-      if (cfg.botNickname) {
-        const nameInput = document.getElementById("cfg-bot-nickname-input");
-        const dashNick = document.getElementById("cfg-dash-bot-nickname");
-        if (nameInput) nameInput.value = cfg.botNickname;
-        if (dashNick) dashNick.value = cfg.botNickname;
-      }
-      if (cfg.botStatus) {
-        const statusInput = document.getElementById("cfg-bot-status-input");
-        if (statusInput) statusInput.value = cfg.botStatus;
-      }
-      if (cfg.prefix && document.getElementById("cfg-dash-prefix-char")) {
-        document.getElementById("cfg-dash-prefix-char").value = cfg.prefix.replace("?", "") || "h";
-        if (typeof handlePrefixInput === "function") handlePrefixInput(document.getElementById("cfg-dash-prefix-char"), true);
-      }
-      if (cfg.timezone && typeof syncTimezoneSelects === "function") {
-        const dashTz = document.getElementById("cfg-dash-timezone");
-        if (dashTz) dashTz.value = cfg.timezone;
-        syncTimezoneSelects("cfg-dash-timezone", true);
-      } else if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
-        document.getElementById("cfg-dash-timezone").value = cfg.timezone;
-        if (typeof updateLiveClock === "function") updateLiveClock();
-      }
-      if (cfg.statsBoard && typeof applyStatsBoardConfig === "function") {
-        applyStatsBoardConfig(cfg.statsBoard);
-      }
-      if (cfg.updatesChannel && document.getElementById("cfg-dash-updates-channel")) {
-        document.getElementById("cfg-dash-updates-channel").value = cfg.updatesChannel;
-      }
-      if (Array.isArray(cfg.managerRoles) && typeof renderManagerRoles === "function") {
-        currentManagerRoles = cfg.managerRoles.slice();
-        renderManagerRoles();
-      }
-      if (cfg.webhookUrl) {
-        const w1 = document.getElementById("cfg-server-webhook");
-        const w2 = document.getElementById("cfg-server-webhook-sync-tab");
-        if (w1) w1.value = cfg.webhookUrl;
-        if (w2) w2.value = cfg.webhookUrl;
-      }
-      if (cfg.automod && typeof applyAutomodConfig === "function") {
-        applyAutomodConfig(cfg.automod);
-      }
-      if (cfg.honeypot && typeof applyHoneypotConfig === "function") {
-        applyHoneypotConfig(cfg.honeypot);
-      }
-      if (cfg.antiNuke && typeof applyAntiNukeConfig === "function") {
-        applyAntiNukeConfig(cfg.antiNuke);
-      }
-      if (cfg.sanctionLadder && typeof applySanctionLadderConfig === "function") {
-        applySanctionLadderConfig(cfg.sanctionLadder);
-      }
-      if (cfg.autoban) {
-        if (document.getElementById("cfg-switch-autoban") && typeof cfg.autoban.enabled === "boolean") {
-          document.getElementById("cfg-switch-autoban").checked = cfg.autoban.enabled;
+      const prevApplying = isApplyingConfigSnapshot;
+      isApplyingConfigSnapshot = true;
+      try {
+        if (typeof cfg.disableWarnings === "boolean" && document.getElementById("cfg-dash-disable-warnings")) {
+          document.getElementById("cfg-dash-disable-warnings").checked = cfg.disableWarnings;
         }
-        if (Array.isArray(cfg.autoban.rules) && typeof autobanRules !== "undefined") {
-          autobanRules = cfg.autoban.rules;
-          if (typeof renderAutobanRules === "function") renderAutobanRules();
+        if (typeof cfg.botNickname === "string") {
+          const nameInput = document.getElementById("cfg-bot-nickname-input");
+          const dashNick = document.getElementById("cfg-dash-bot-nickname");
+          if (nameInput) nameInput.value = cfg.botNickname;
+          if (dashNick) dashNick.value = cfg.botNickname;
+          const cmdCode = document.getElementById("sync-command-code");
+          if (cmdCode) cmdCode.innerText = `/botnick nickname: ${cfg.botNickname || "HaruMod"}`;
         }
-      }
-      if (cfg.actionLog) {
-        if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") {
-          document.getElementById("cfg-switch-actionlog").checked = cfg.actionLog.enabled;
-          if (typeof toggleActionLogModule === "function") toggleActionLogModule(cfg.actionLog.enabled, true);
+        if (typeof cfg.botStatus === "string") {
+          const statusInput = document.getElementById("cfg-bot-status-input");
+          if (statusInput) statusInput.value = cfg.botStatus;
         }
-        if (document.getElementById("opt-show-avatar") && typeof cfg.actionLog.showAvatar === "boolean") {
-          document.getElementById("opt-show-avatar").checked = cfg.actionLog.showAvatar;
+        if (typeof cfg.botRoleColor === "string" && typeof setBotRoleColor === "function") {
+          setBotRoleColor(cfg.botRoleColor || "#10b981", null, true);
         }
-        if (document.getElementById("opt-new-account-age") && typeof cfg.actionLog.newAccountAgeDays === "number") {
-          document.getElementById("opt-new-account-age").value = String(cfg.actionLog.newAccountAgeDays);
+        if (cfg.prefix && document.getElementById("cfg-dash-prefix-char")) {
+          document.getElementById("cfg-dash-prefix-char").value = cfg.prefix.replace("?", "") || "h";
+          if (typeof handlePrefixInput === "function") handlePrefixInput(document.getElementById("cfg-dash-prefix-char"), true);
         }
-        if (document.getElementById("opt-specify-channels") && typeof cfg.actionLog.specifyChannels === "boolean") {
-          document.getElementById("opt-specify-channels").checked = cfg.actionLog.specifyChannels;
-          if (typeof toggleSpecifyChannels === "function") toggleSpecifyChannels(cfg.actionLog.specifyChannels, true);
+        if (cfg.timezone && typeof syncTimezoneSelects === "function") {
+          const dashTz = document.getElementById("cfg-dash-timezone");
+          if (dashTz) dashTz.value = cfg.timezone;
+          syncTimezoneSelects("cfg-dash-timezone", true);
+        } else if (cfg.timezone && document.getElementById("cfg-dash-timezone")) {
+          document.getElementById("cfg-dash-timezone").value = cfg.timezone;
+          if (typeof updateLiveClock === "function") updateLiveClock();
         }
-        if (typeof cfg.actionLog.mainChannel === "string" && document.getElementById("cfg-actionlog-main-channel")) {
-          document.getElementById("cfg-actionlog-main-channel").value = cfg.actionLog.mainChannel;
+        if (cfg.statsBoard && typeof applyStatsBoardConfig === "function") {
+          applyStatsBoardConfig(cfg.statsBoard);
         }
-        if (cfg.actionLog.categoryChannels && typeof cfg.actionLog.categoryChannels === "object") {
-          const catMap = {
-            message: "override-ch-msg",
-            member: "override-ch-member",
-            role: "override-ch-role",
-            channel: "override-ch-channel",
-            emoji: "override-ch-emoji",
-            voice: "override-ch-voice"
-          };
-          Object.entries(catMap).forEach(([k, id]) => {
-            const el = document.getElementById(id);
-            if (el && typeof cfg.actionLog.categoryChannels[k] === "string") el.value = cfg.actionLog.categoryChannels[k];
-          });
+        if (typeof cfg.updatesChannel === "string" && document.getElementById("cfg-dash-updates-channel")) {
+          document.getElementById("cfg-dash-updates-channel").value = cfg.updatesChannel;
         }
-        if (cfg.actionLog.events && typeof applyActionLogEventsMap === "function") {
-          applyActionLogEventsMap(cfg.actionLog.events);
+        if (Array.isArray(cfg.managerRoles) && typeof renderManagerRoles === "function") {
+          currentManagerRoles = cfg.managerRoles.slice();
+          renderManagerRoles();
         }
-        if (Array.isArray(cfg.actionLog.ignoredChannels) && typeof actionLogIgnoredChannels !== "undefined") actionLogIgnoredChannels = cfg.actionLog.ignoredChannels;
-        if (Array.isArray(cfg.actionLog.ignoredRoles) && typeof actionLogIgnoredRoles !== "undefined") actionLogIgnoredRoles = cfg.actionLog.ignoredRoles;
-        if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+        if (typeof cfg.webhookUrl === "string") {
+          const w1 = document.getElementById("cfg-server-webhook");
+          const w2 = document.getElementById("cfg-server-webhook-sync-tab");
+          if (w1) w1.value = cfg.webhookUrl;
+          if (w2) w2.value = cfg.webhookUrl;
+        }
+        if (cfg.discordSecurity && typeof cfg.discordSecurity === "object") {
+          const verSel = document.getElementById("cfg-discord-verification-level");
+          if (verSel && typeof cfg.discordSecurity.verification_level === "number") {
+            verSel.value = String(cfg.discordSecurity.verification_level);
+          }
+          const filSel = document.getElementById("cfg-discord-content-filter");
+          if (filSel && typeof cfg.discordSecurity.explicit_content_filter === "number") {
+            filSel.value = String(cfg.discordSecurity.explicit_content_filter);
+          }
+        }
+        if (cfg.automod && typeof applyAutomodConfig === "function") {
+          applyAutomodConfig(cfg.automod);
+        }
+        if (cfg.honeypot && typeof applyHoneypotConfig === "function") {
+          applyHoneypotConfig(cfg.honeypot);
+        }
+        if (cfg.antiNuke && typeof applyAntiNukeConfig === "function") {
+          applyAntiNukeConfig(cfg.antiNuke);
+        }
+        if (cfg.sanctionLadder && typeof applySanctionLadderConfig === "function") {
+          applySanctionLadderConfig(cfg.sanctionLadder);
+        }
+        if (cfg.autoban) {
+          if (document.getElementById("cfg-switch-autoban") && typeof cfg.autoban.enabled === "boolean") {
+            document.getElementById("cfg-switch-autoban").checked = cfg.autoban.enabled;
+          }
+          if (Array.isArray(cfg.autoban.rules) && typeof autobanRules !== "undefined") {
+            autobanRules = JSON.parse(JSON.stringify(cfg.autoban.rules));
+            if (typeof renderAutobanRules === "function") renderAutobanRules();
+          }
+        }
+        if (cfg.actionLog) {
+          if (document.getElementById("cfg-switch-actionlog") && typeof cfg.actionLog.enabled === "boolean") {
+            document.getElementById("cfg-switch-actionlog").checked = cfg.actionLog.enabled;
+            if (typeof toggleActionLogModule === "function") toggleActionLogModule(cfg.actionLog.enabled, true);
+          }
+          if (document.getElementById("opt-show-avatar") && typeof cfg.actionLog.showAvatar === "boolean") {
+            document.getElementById("opt-show-avatar").checked = cfg.actionLog.showAvatar;
+          }
+          if (document.getElementById("opt-new-account-age") && typeof cfg.actionLog.newAccountAgeDays === "number") {
+            document.getElementById("opt-new-account-age").value = String(cfg.actionLog.newAccountAgeDays);
+          }
+          if (document.getElementById("opt-specify-channels") && typeof cfg.actionLog.specifyChannels === "boolean") {
+            document.getElementById("opt-specify-channels").checked = cfg.actionLog.specifyChannels;
+            if (typeof toggleSpecifyChannels === "function") toggleSpecifyChannels(cfg.actionLog.specifyChannels, true);
+          }
+          if (typeof cfg.actionLog.mainChannel === "string" && document.getElementById("cfg-actionlog-main-channel")) {
+            document.getElementById("cfg-actionlog-main-channel").value = cfg.actionLog.mainChannel;
+          }
+          if (cfg.actionLog.categoryChannels && typeof cfg.actionLog.categoryChannels === "object") {
+            const catMap = {
+              message: "override-ch-msg",
+              member: "override-ch-member",
+              role: "override-ch-role",
+              channel: "override-ch-channel",
+              emoji: "override-ch-emoji",
+              voice: "override-ch-voice"
+            };
+            Object.entries(catMap).forEach(([k, id]) => {
+              const el = document.getElementById(id);
+              if (el && typeof cfg.actionLog.categoryChannels[k] === "string") el.value = cfg.actionLog.categoryChannels[k];
+            });
+          }
+          if (cfg.actionLog.events && typeof applyActionLogEventsMap === "function") {
+            applyActionLogEventsMap(cfg.actionLog.events);
+          }
+          if (Array.isArray(cfg.actionLog.ignoredChannels) && typeof actionLogIgnoredChannels !== "undefined") {
+            actionLogIgnoredChannels = cfg.actionLog.ignoredChannels.slice();
+          }
+          if (Array.isArray(cfg.actionLog.ignoredRoles) && typeof actionLogIgnoredRoles !== "undefined") {
+            actionLogIgnoredRoles = cfg.actionLog.ignoredRoles.slice();
+          }
+          if (typeof renderActionLogIgnored === "function") renderActionLogIgnored();
+        }
+        if (document.getElementById("cfg-switch-autodelete")) {
+          document.getElementById("cfg-switch-autodelete").checked = typeof cfg.autoDeleteEnabled === "boolean" ? cfg.autoDeleteEnabled : false;
+        }
+        const wCfg = (cfg.welcome && typeof cfg.welcome === "object") ? cfg.welcome : {};
+        if (document.getElementById("cfg-welcome-enable")) {
+          const wOn = typeof wCfg.welcomeEnabled === "boolean" ? wCfg.welcomeEnabled : (typeof cfg.welcomeEnabled === "boolean" ? cfg.welcomeEnabled : false);
+          document.getElementById("cfg-welcome-enable").checked = wOn;
+        }
+        if (typeof wCfg.welcomeChannel === "string" && document.getElementById("cfg-welcome-channel")) {
+          document.getElementById("cfg-welcome-channel").value = wCfg.welcomeChannel;
+        }
+        if (typeof wCfg.welcomeMessage === "string" && document.getElementById("cfg-welcome-msg")) {
+          document.getElementById("cfg-welcome-msg").value = wCfg.welcomeMessage;
+        }
+        if (document.getElementById("cfg-goodbye-enable")) {
+          document.getElementById("cfg-goodbye-enable").checked = typeof wCfg.goodbyeEnabled === "boolean" ? wCfg.goodbyeEnabled : false;
+        }
+        if (typeof wCfg.goodbyeChannel === "string" && document.getElementById("cfg-goodbye-channel")) {
+          document.getElementById("cfg-goodbye-channel").value = wCfg.goodbyeChannel;
+        }
+        if (typeof wCfg.goodbyeMessage === "string" && document.getElementById("cfg-goodbye-msg")) {
+          document.getElementById("cfg-goodbye-msg").value = wCfg.goodbyeMessage;
+        }
+        if (Array.isArray(cfg.autoDelete) && typeof autoDeleteRules !== "undefined") {
+          autoDeleteRules = JSON.parse(JSON.stringify(cfg.autoDelete));
+          if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
+        }
+        if (Array.isArray(cfg.autoPurge) && typeof autoPurgeJobs !== "undefined") {
+          autoPurgeJobs = JSON.parse(JSON.stringify(cfg.autoPurge));
+          if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
+        }
+        if (typeof applyReactionRolesFromCloud === "function") {
+          applyReactionRolesFromCloud(cfg.reactionRoles);
+        }
+        if (typeof applyRoleManagementConfigToUI === "function") {
+          applyRoleManagementConfigToUI(cfg.roleManagement);
+        }
+        if (typeof updateSidebarStatusIndicators === "function") {
+          updateSidebarStatusIndicators();
+        }
+        if (typeof window.syncAllHaruSelectLabels === "function") {
+          window.syncAllHaruSelectLabels();
+        }
+        updateLiveBotPreview(false);
+      } finally {
+        isApplyingConfigSnapshot = prevApplying;
       }
-      if (document.getElementById("cfg-switch-autodelete")) {
-        document.getElementById("cfg-switch-autodelete").checked = typeof cfg.autoDeleteEnabled === "boolean" ? cfg.autoDeleteEnabled : false;
-      }
-      const wCfg = (cfg.welcome && typeof cfg.welcome === "object") ? cfg.welcome : {};
-      if (document.getElementById("cfg-welcome-enable")) {
-        const wOn = typeof wCfg.welcomeEnabled === "boolean" ? wCfg.welcomeEnabled : (typeof cfg.welcomeEnabled === "boolean" ? cfg.welcomeEnabled : false);
-        document.getElementById("cfg-welcome-enable").checked = wOn;
-      }
-      if (typeof wCfg.welcomeChannel === "string" && document.getElementById("cfg-welcome-channel")) {
-        document.getElementById("cfg-welcome-channel").value = wCfg.welcomeChannel;
-      }
-      if (typeof wCfg.welcomeMessage === "string" && document.getElementById("cfg-welcome-msg")) {
-        document.getElementById("cfg-welcome-msg").value = wCfg.welcomeMessage;
-      }
-      if (document.getElementById("cfg-goodbye-enable")) {
-        document.getElementById("cfg-goodbye-enable").checked = typeof wCfg.goodbyeEnabled === "boolean" ? wCfg.goodbyeEnabled : false;
-      }
-      if (typeof wCfg.goodbyeChannel === "string" && document.getElementById("cfg-goodbye-channel")) {
-        document.getElementById("cfg-goodbye-channel").value = wCfg.goodbyeChannel;
-      }
-      if (typeof wCfg.goodbyeMessage === "string" && document.getElementById("cfg-goodbye-msg")) {
-        document.getElementById("cfg-goodbye-msg").value = wCfg.goodbyeMessage;
-      }
-      if (Array.isArray(cfg.autoDelete) && cfg.autoDelete.length > 0 && typeof autoDeleteRules !== "undefined") {
-        autoDeleteRules = cfg.autoDelete;
-        if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules();
-      }
-      if (Array.isArray(cfg.autoPurge) && cfg.autoPurge.length > 0 && typeof autoPurgeJobs !== "undefined") {
-        autoPurgeJobs = cfg.autoPurge;
-        if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs();
-      }
-      if (typeof applyReactionRolesFromCloud === "function") {
-        applyReactionRolesFromCloud(cfg.reactionRoles);
-      }
-      if (typeof applyRoleManagementConfigToUI === "function") {
-        applyRoleManagementConfigToUI(cfg.roleManagement);
-      }
-      if (typeof updateSidebarStatusIndicators === "function") {
-        updateSidebarStatusIndicators();
-      }
-      updateLiveBotPreview(false);
     }
 
     // Master 1-1 Save & Sync Function (called by Topbar 'Lưu & Đồng bộ ngay' AND Sticky Save Bar!)
     async function saveAllServerSettingsAndSync(syncSecurityAlso = false) {
       if (!currentGuildId) {
         showToast("Vui lòng chọn máy chủ trước!", "warning");
-        return;
+        return false;
       }
+      if (isSavingChangesNow) return false;
+      isSavingChangesNow = true;
 
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.remove("visible");
-      hasUnsavedChanges = false;
+      const btnSave = document.getElementById("sticky-btn-save");
+      const btnDiscard = document.getElementById("sticky-btn-discard");
+      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+      if (btnSave) {
+        btnSave.disabled = true;
+        btnSave.textContent = activeLang === "vi" ? "Đang lưu..." : "Saving...";
+      }
+      if (btnDiscard) btnDiscard.disabled = true;
 
       const configData = collectFullGuildConfig();
-      localStorage.setItem("harumod_guild_cfg_" + currentGuildId, JSON.stringify(configData));
-
       const cmdCode = document.getElementById("sync-command-code");
       if (cmdCode) cmdCode.innerText = `/botnick nickname: ${configData.botNickname}`;
 
-      const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
-
+      let saveOk = false;
       try {
         const res = await fetch(`${CLOUD_GATEWAY_API}/guild/${currentGuildId}/config`, {
           method: "PUT",
@@ -12404,17 +12876,28 @@
         });
         const data = await res.json();
         if (res.ok && data.ok) {
+          localStorage.setItem("harumod_guild_cfg_" + currentGuildId, JSON.stringify(configData));
+          saveOk = true;
+          captureSavedConfigBaseline(configData);
           showToast(activeLang === "vi" ? "✓ Đã lưu!" : "✓ Saved!");
         } else {
+          hasUnsavedChanges = true;
           showToast(activeLang === "vi" ? "⚠️ Lưu lỗi, thử lại!" : "⚠️ Save failed");
         }
       } catch (err) {
+        hasUnsavedChanges = true;
         showToast(activeLang === "vi" ? "⚠️ Mất kết nối API" : "⚠️ API offline");
+      } finally {
+        isSavingChangesNow = false;
+        if (btnSave) btnSave.disabled = false;
+        if (btnDiscard) btnDiscard.disabled = false;
+        syncStickySaveBarUI();
       }
 
-      if (configData.webhookUrl && configData.webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
+      if (saveOk && configData.webhookUrl && configData.webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
         dispatchDiscordWebhookSync(configData.webhookUrl, configData);
       }
+      return saveOk;
     }
 
     async function applyRealDiscordSecuritySettings(ev) {
@@ -12431,83 +12914,69 @@
     }
 
     // Save full server configuration to Cloud DB & trigger 1-1 Discord sync
-    function saveChanges() {
-      saveAllServerSettingsAndSync(true);
+    async function saveChanges() {
+      return await saveAllServerSettingsAndSync(true);
     }
 
     // Load full server configuration when switching to a server
     function loadGuildFullConfig(guildId) {
       if (!guildId) return;
+      const prevApplying = isApplyingConfigSnapshot;
+      isApplyingConfigSnapshot = true;
+      try {
+        const raw = localStorage.getItem("harumod_guild_cfg_" + guildId);
+        let cfg = null;
+        if (raw) {
+          try { cfg = JSON.parse(raw); } catch(e){}
+        }
 
-      const raw = localStorage.getItem("harumod_guild_cfg_" + guildId);
-      let cfg = null;
-      if (raw) {
-        try { cfg = JSON.parse(raw); } catch(e){}
+        if (cfg && typeof cfg === "object") {
+          applyCloudGuildConfigToUI(cfg);
+        } else {
+          const nameVal = localStorage.getItem("haruki_bot_nick_" + guildId) || "";
+          const statusVal = localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure";
+          const colorVal = localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981";
+
+          const nameInput = document.getElementById("cfg-bot-nickname-input");
+          const dashNickInput = document.getElementById("cfg-dash-bot-nickname");
+          if (nameInput) nameInput.value = nameVal;
+          if (dashNickInput) dashNickInput.value = nameVal;
+
+          const statusInput = document.getElementById("cfg-bot-status-input");
+          if (statusInput) statusInput.value = statusVal;
+
+          const webhookInput = document.getElementById("cfg-server-webhook");
+          const webhookSync = document.getElementById("cfg-server-webhook-sync-tab");
+          if (webhookInput) webhookInput.value = "";
+          if (webhookSync) webhookSync.value = "";
+
+          const cmdCode = document.getElementById("sync-command-code");
+          if (cmdCode) cmdCode.innerText = `/botnick nickname: ${nameVal || "HaruMod"}`;
+
+          if (typeof setBotRoleColor === "function") setBotRoleColor(colorVal, null, true);
+          if (typeof applyAutomodConfig === "function") applyAutomodConfig(null);
+          if (typeof applyHoneypotConfig === "function") applyHoneypotConfig(null);
+          if (typeof applyAntiNukeConfig === "function") applyAntiNukeConfig(null);
+          if (typeof applySanctionLadderConfig === "function") applySanctionLadderConfig(null);
+          if (typeof resetStatsBoardToDefaults === "function") resetStatsBoardToDefaults(false);
+          if (typeof applyReactionRolesFromCloud === "function") applyReactionRolesFromCloud([]);
+          if (typeof applyRoleManagementConfigToUI === "function") applyRoleManagementConfigToUI(null);
+          if (document.getElementById("cfg-switch-autoban")) document.getElementById("cfg-switch-autoban").checked = false;
+          if (document.getElementById("cfg-switch-autodelete")) document.getElementById("cfg-switch-autodelete").checked = false;
+          if (document.getElementById("cfg-welcome-enable")) document.getElementById("cfg-welcome-enable").checked = false;
+          if (document.getElementById("cfg-goodbye-enable")) document.getElementById("cfg-goodbye-enable").checked = false;
+          if (typeof autobanRules !== "undefined") { autobanRules = []; if (typeof renderAutobanRules === "function") renderAutobanRules(); }
+          if (typeof autoDeleteRules !== "undefined") { autoDeleteRules = []; if (typeof renderAutoDeleteRules === "function") renderAutoDeleteRules(); }
+          if (typeof autoPurgeJobs !== "undefined") { autoPurgeJobs = []; if (typeof renderAutoPurgeJobs === "function") renderAutoPurgeJobs(); }
+        }
+
+        if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
+        if (typeof window.syncAllHaruSelectLabels === "function") window.syncAllHaruSelectLabels();
+        updateLiveBotPreview(false);
+      } finally {
+        isApplyingConfigSnapshot = prevApplying;
       }
-
-      const nameVal = (cfg && cfg.botNickname) || localStorage.getItem("haruki_bot_nick_" + guildId) || "";
-      const statusVal = (cfg && cfg.botStatus) || localStorage.getItem("haruki_bot_status_" + guildId) || "Watching members · 100% Secure";
-      const colorVal = (cfg && cfg.botRoleColor) || localStorage.getItem("haruki_bot_color_" + guildId) || "#10b981";
-      const webhookVal = cfg ? cfg.webhookUrl : "";
-
-      const nameInput = document.getElementById("cfg-bot-nickname-input");
-      const dashNickInput = document.getElementById("cfg-dash-bot-nickname");
-      if (nameInput && nameVal) nameInput.value = nameVal;
-      if (dashNickInput && nameVal) dashNickInput.value = nameVal;
-
-      const statusInput = document.getElementById("cfg-bot-status-input");
-      if (statusInput) statusInput.value = statusVal;
-
-      const webhookInput = document.getElementById("cfg-server-webhook");
-      if (webhookInput) webhookInput.value = webhookVal;
-
-      // Update slash command display
-      const cmdCode = document.getElementById("sync-command-code");
-      if (cmdCode && nameVal) cmdCode.innerText = `/botnick nickname: ${nameVal}`;
-
-      // Update color
-      if (typeof setBotRoleColor === "function") {
-        setBotRoleColor(colorVal);
-      }
-
-      if (cfg && cfg.automod && typeof applyAutomodConfig === "function") {
-        applyAutomodConfig(cfg.automod);
-      } else if (typeof applyAutomodConfig === "function") {
-        applyAutomodConfig(null);
-      }
-      if (cfg && cfg.honeypot && typeof applyHoneypotConfig === "function") {
-        applyHoneypotConfig(cfg.honeypot);
-      } else if (typeof applyHoneypotConfig === "function") {
-        applyHoneypotConfig(null);
-      }
-      if (cfg && cfg.antiNuke && typeof applyAntiNukeConfig === "function") {
-        applyAntiNukeConfig(cfg.antiNuke);
-      } else if (typeof applyAntiNukeConfig === "function") {
-        applyAntiNukeConfig(null);
-      }
-      if (cfg && cfg.sanctionLadder && typeof applySanctionLadderConfig === "function") {
-        applySanctionLadderConfig(cfg.sanctionLadder);
-      } else if (typeof applySanctionLadderConfig === "function") {
-        applySanctionLadderConfig(null);
-      }
-
-      hasUnsavedChanges = false;
-      const saveBar = document.getElementById("sticky-save-bar");
-      if (saveBar) saveBar.classList.remove("visible");
-
-      if (cfg && cfg.timezone && typeof syncTimezoneSelects === "function") {
-        const dashTz = document.getElementById("cfg-dash-timezone");
-        if (dashTz) dashTz.value = cfg.timezone;
-        syncTimezoneSelects("cfg-dash-timezone", true);
-      }
-      if (cfg && cfg.statsBoard && typeof applyStatsBoardConfig === "function") {
-        applyStatsBoardConfig(cfg.statsBoard);
-      } else if (typeof resetStatsBoardToDefaults === "function") {
-        resetStatsBoardToDefaults(false);
-      }
-
-      if (typeof updateSidebarStatusIndicators === "function") updateSidebarStatusIndicators();
-      updateLiveBotPreview(false);
+      captureSavedConfigBaseline();
     }
 
     // Copy slash command to clipboard
@@ -12640,11 +13109,35 @@
       }
     };
 
-    // Hook selectServerForConfig to load full guild configuration
+    // Hook selectServerForConfig to guard unsaved changes & load full guild configuration
     const prevSelectServerConfigHook = selectServerForConfig;
-    selectServerForConfig = function(guildId) {
-      if (typeof prevSelectServerConfigHook === "function") prevSelectServerConfigHook(guildId);
+    selectServerForConfig = function(guildId, force = false) {
+      const cfgSuite = document.getElementById("config-suite");
+      const isInConfig = cfgSuite && cfgSuite.classList.contains("active");
+      if (!force && isInConfig && currentGuildId && guildId === currentGuildId) {
+        return true;
+      }
+      if (!force && isInConfig && hasUnsavedChanges && currentGuildId && guildId !== currentGuildId && typeof openUnsavedChangesGuard === "function") {
+        const targetGuild = Array.isArray(userGuilds) ? userGuilds.find(x => x.id === guildId) : null;
+        const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
+        const toLabel = (targetGuild && targetGuild.name) ? targetGuild.name : (activeLang === "vi" ? "Máy chủ khác" : "Another Server");
+        openUnsavedChangesGuard({
+          fromLabel: typeof getConfigTabDisplayTitle === "function" ? getConfigTabDisplayTitle(activeConfigTab) : "Dashboard",
+          toLabel,
+          onProceed: () => selectServerForConfig(guildId, true)
+        });
+        return false;
+      }
+
+      if (typeof prevSelectServerConfigHook === "function") {
+        const res = prevSelectServerConfigHook(guildId);
+        if (res === false) return false;
+      }
       loadGuildFullConfig(guildId);
+      if (typeof switchConfigTab === "function") {
+        switchConfigTab("dashboard", true);
+      }
+      return true;
     };
 
     
@@ -12750,15 +13243,11 @@
       localStorage.setItem("haruki_bot_color_" + currentGuildId, currentBotRoleColor);
       const dashNick = document.getElementById("cfg-dash-bot-nickname");
       if (dashNick) dashNick.value = nameVal;
-      hasUnsavedChanges = false;
-      const bar = document.getElementById("sticky-save-bar");
-      if (bar) bar.classList.remove("visible");
       updateLiveBotPreview(false);
 
       const activeLang = localStorage.getItem("haruki_dash_lang") || "en";
       if (res.ok) {
-        showToast(activeLang === "vi" ? "Đã lưu!" : "Saved!");
-        saveAllServerSettingsAndSync(false);
+        await saveAllServerSettingsAndSync(false);
       } else {
         showToast(activeLang === "vi" ? "⚠️ Không đổi được biệt danh" : "⚠️ Nickname update failed");
       }
@@ -12818,11 +13307,18 @@
       const syncTimeEl = document.getElementById("live-sec-sync-time");
       if (syncTimeEl) syncTimeEl.textContent = `✓ Đồng bộ 1-1 lúc ${new Date().toLocaleTimeString("vi-VN")} (${snapshot.latencyMs || 0}ms)`;
 
-      // 2. Sync real Discord verification_level & explicit_content_filter into dropdowns
-      const verSel = document.getElementById("cfg-discord-verification-level");
-      if (verSel && typeof g.verification_level === "number") verSel.value = String(g.verification_level);
-      const filSel = document.getElementById("cfg-discord-content-filter");
-      if (filSel && typeof g.explicit_content_filter === "number") filSel.value = String(g.explicit_content_filter);
+      // 2. Sync real Discord verification_level & explicit_content_filter into dropdowns (without clobbering unsaved edits)
+      const prevSecApplying = isApplyingConfigSnapshot;
+      isApplyingConfigSnapshot = true;
+      try {
+        const verSel = document.getElementById("cfg-discord-verification-level");
+        if (verSel && !hasUnsavedChanges && typeof g.verification_level === "number") verSel.value = String(g.verification_level);
+        const filSel = document.getElementById("cfg-discord-content-filter");
+        if (filSel && !hasUnsavedChanges && typeof g.explicit_content_filter === "number") filSel.value = String(g.explicit_content_filter);
+        if (typeof window.syncAllHaruSelectLabels === "function") window.syncAllHaruSelectLabels();
+      } finally {
+        isApplyingConfigSnapshot = prevSecApplying;
+      }
 
       // 3. Sync real Bot Nickname currently active on Discord
       const liveNick = (snapshot.botMember && snapshot.botMember.nick)
@@ -12955,7 +13451,8 @@
           cachedRoles = snapshot.roles.filter(r => r.name !== "@everyone").sort((a, b) => (b.position || 0) - (a.position || 0));
         }
         populateAllDynoDropdowns();
-        if (snapshot.savedConfig && Object.keys(snapshot.savedConfig).length > 0) {
+        const shouldApplyFetchedConfig = !hasUnsavedChanges;
+        if (shouldApplyFetchedConfig && snapshot.savedConfig && Object.keys(snapshot.savedConfig).length > 0) {
           applyCloudGuildConfigToUI(snapshot.savedConfig);
         }
         renderLiveDiscordSecuritySnapshot(snapshot);
@@ -12964,6 +13461,13 @@
         }
         if (typeof updateLiveClock === "function") {
           updateLiveClock();
+        }
+        if (shouldApplyFetchedConfig && !hasUnsavedChanges && currentGuildId === guildId) {
+          try {
+            const mergedSnapshotCfg = collectFullGuildConfig();
+            localStorage.setItem("harumod_guild_cfg_" + guildId, JSON.stringify(mergedSnapshotCfg));
+            captureSavedConfigBaseline(mergedSnapshotCfg);
+          } catch (e) {}
         }
         if (showFeedback) {
           showToast(`Đã đọc trực tiếp dữ liệu 1-1 từ Discord (${cachedChannels.length} kênh, ${cachedRoles.length} roles)!`, "success");
@@ -13000,6 +13504,7 @@
         automod: "Automod",
         members: "Kiểm duyệt & Xử phạt",
         slowmode: "Slowmode & Khóa kênh",
+        chat: "Trò chuyện kênh trực tiếp",
         honeypot: "Honeypot & Chống Raid",
         cases: "Thang phạt vi phạm",
         roles: "Quản lý Role & Quyền",
@@ -13019,6 +13524,7 @@
         automod: "Automod",
         members: "Moderation",
         slowmode: "Slowmode & Lockdown",
+        chat: "Live Channel Chat",
         honeypot: "Honeypot & Anti-Raid",
         cases: "Sanction Ladder",
         roles: "Role Management",
@@ -16893,21 +17399,22 @@
         showToast("Chưa tìm thấy các role màu trên Discord — hãy bấm 'Tạo bộ màu này trên Discord (1-Click)' trước nhé!", "warning");
         return;
       }
-      switchConfigTab("reactionroles");
-      openReactionRoleModal(null);
-      const embToggle = true;
-      rrEmbedBuilderVisible = embToggle;
-      loadEmbedObjIntoBuilder({
-        title: "🎨 Chọn Màu Tên Yêu Thích",
-        description: descLines.join("\n"),
-        color: parseInt((customPaletteSwatches[0]?.hex || "#10B981").replace("#", ""), 16)
+      switchConfigTab("reactionroles", false, () => {
+        openReactionRoleModal(null);
+        const embToggle = true;
+        rrEmbedBuilderVisible = embToggle;
+        loadEmbedObjIntoBuilder({
+          title: "🎨 Chọn Màu Tên Yêu Thích",
+          description: descLines.join("\n"),
+          color: parseInt((customPaletteSwatches[0]?.hex || "#10B981").replace("#", ""), 16)
+        });
+        rrModalMappings = mappings;
+        const typeEl = document.getElementById("rr-type");
+        if (typeEl) { typeEl.value = "unique"; onReactionRoleTypeChange(); }
+        syncEmbedPanelVisibility();
+        renderReactionRoleMappings();
+        updateReactionRoleEmbedCountersAndPreview();
       });
-      rrModalMappings = mappings;
-      const typeEl = document.getElementById("rr-type");
-      if (typeEl) { typeEl.value = "unique"; onReactionRoleTypeChange(); }
-      syncEmbedPanelVisibility();
-      renderReactionRoleMappings();
-      updateReactionRoleEmbedCountersAndPreview();
     }
 
     async function createDiscordRoleLive() {
@@ -17420,8 +17927,49 @@
       if (typeof loadRecentActivities === "function") loadRecentActivities();
 
       const saveBar = document.getElementById("sticky-save-bar");
-      if (saveBar) saveBar.classList.remove("visible");
+      if (saveBar) saveBar.classList.remove("visible", "is-alert-shake");
       hasUnsavedChanges = false;
+      if (typeof captureSavedConfigBaseline === "function") captureSavedConfigBaseline();
+
+      // Safety delegated listener across #config-suite so NO setting edit can silently slip past dirty tracking
+      const cfgSuiteEl = document.getElementById("config-suite");
+      if (cfgSuiteEl && !cfgSuiteEl.dataset.unsavedGuardAttached) {
+        cfgSuiteEl.dataset.unsavedGuardAttached = "1";
+        const ignoredPaneSelector = "#cfg-pane-chat, #cfg-pane-sim, #cfg-pane-variables, #cfg-pane-members, #cfg-pane-slowmode, #cfg-pane-reactionroles";
+        const ignoredFieldIds = new Set(["rm-role-search", "cfg-dash-language"]);
+        const handleSuiteControlActivity = (ev) => {
+          if (isApplyingConfigSnapshot) return;
+          const target = ev && ev.target;
+          if (!target || !target.tagName) return;
+          if (!["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName)) return;
+          if (target.id && ignoredFieldIds.has(target.id)) return;
+          if (target.closest(ignoredPaneSelector)) return;
+          queueMicrotask(() => {
+            if (!isApplyingConfigSnapshot && typeof triggerUnsaved === "function") {
+              triggerUnsaved();
+            }
+          });
+        };
+        cfgSuiteEl.addEventListener("input", handleSuiteControlActivity);
+        cfgSuiteEl.addEventListener("change", handleSuiteControlActivity);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          const guardModal = document.getElementById("modal-unsaved-guard");
+          if (guardModal && guardModal.classList.contains("open") && typeof cancelUnsavedGuard === "function") {
+            cancelUnsavedGuard();
+          }
+        }
+      });
+
+      window.addEventListener("beforeunload", (e) => {
+        const cfgEl = document.getElementById("config-suite");
+        if (hasUnsavedChanges && cfgEl && cfgEl.classList.contains("active")) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
 
       // Check Discord OAuth login status: if not logged in, enforce logged-out state
       if (typeof checkOAuthCallback === "function") {
@@ -17823,6 +18371,29 @@
       <div class="dyno-modal-footer">
         <button class="btn-secondary" onclick="closeModal('modal-api-diagnostics')" data-i18n="btnClose">Close</button>
         <button class="btn-crimson" onclick="runLiveApiDiagnosticsTest()" data-i18n="btnTestConnection">Test Connection Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================== -->
+  <!-- MODAL: UNSAVED CHANGES NAVIGATION GUARD               -->
+  <!-- ===================================================== -->
+  <div id="modal-unsaved-guard" class="dyno-modal-overlay" style="z-index:1200;" onclick="if(event.target===this) cancelUnsavedGuard()">
+    <div class="dyno-modal-card unsaved-guard-card" role="dialog" aria-modal="true" aria-labelledby="unsaved-guard-title">
+      <div class="unsaved-guard-header">
+        <div class="unsaved-guard-title-wrap">
+          <div class="unsaved-guard-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+          </div>
+          <h3 id="unsaved-guard-title" class="unsaved-guard-title">Unsaved Changes</h3>
+        </div>
+        <button type="button" class="dyno-modal-close" onclick="cancelUnsavedGuard()" aria-label="Close">&times;</button>
+      </div>
+      <p id="unsaved-guard-desc" class="unsaved-guard-desc">You have unsaved changes. Please save or discard before switching tabs.</p>
+      <div class="unsaved-guard-actions">
+        <button type="button" id="unsaved-guard-btn-stay" class="btn btn-secondary btn-sm" onclick="cancelUnsavedGuard()">Stay</button>
+        <button type="button" id="unsaved-guard-btn-discard" class="btn btn-sm btn-unsaved-discard-danger" onclick="confirmUnsavedGuardDiscard()">Discard</button>
+        <button type="button" id="unsaved-guard-btn-save" class="btn btn-emerald btn-sm btn-unsaved-save" onclick="confirmUnsavedGuardSave()">Save Changes</button>
       </div>
     </div>
   </div>
