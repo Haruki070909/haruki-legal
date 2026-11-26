@@ -1,4 +1,4 @@
-const CACHE_NAME = "harune-pwa-v12";
+const CACHE_NAME = "harune-pwa-v13";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
