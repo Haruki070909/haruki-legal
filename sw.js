@@ -1,4 +1,4 @@
-const CACHE_NAME = "haru-ecosystem-v4";
+const CACHE_NAME = "haru-ecosystem-v5";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
