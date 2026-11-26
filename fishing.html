@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HaruBot Fishing RPG · Real Discord 1-1 Sync</title>
+  <meta name="theme-color" content="#060913" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="Haru Ecosystem" />
+  <link rel="icon" type="image/png" href="./icons/haru-app-icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <script src="./pwa-app.js?v=4" defer></script>
+  <style>
+    :root {
+      --bg-0: #060913;
+      --bg-1: #0c1222;
+      --bg-2: #121b30;
+      --bg-3: #18233d;
+      --line: rgba(148, 163, 184, 0.16);
+      --line-strong: rgba(56, 189, 248, 0.35);
+      --text-1: #f8fafc;
+      --text-2: #cbd5e1;
+      --text-3: #94a3b8;
+      --cyan: #38bdf8;
+      --cyan-dark: #0284c7;
+      --gold: #f59e0b;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --violet: #8b5cf6;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 9px;
+      --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-0);
+      color: var(--text-1);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+
+    /* Top Navigation Bar (matches .navbar PWA safe-area rules) */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: #070b16;
+      border-bottom: 1px solid var(--line);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .brand-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 9px;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .brand-back:hover { color: #fff; border-color: var(--cyan); }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 800;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-title img {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #64748b;
+      flex-shrink: 0;
+    }
+    .sync-pill.online { border-color: rgba(16, 185, 129, 0.45); color: #6ee7b7; }
+    .sync-pill.online .sync-dot { background: #10b981; }
+    .sync-pill.offline { border-color: rgba(244, 63, 94, 0.45); color: #fda4af; }
+    .sync-pill.offline .sync-dot { background: #f43f5e; }
+
+    .lang-wrap {
+      display: inline-flex;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-3);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .lang-btn.active {
+      background: var(--cyan-dark);
+      color: #fff;
+    }
+
+    .user-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 10px 4px 5px;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+    .user-chip img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+      text-decoration: none;
+      color: var(--text-1);
+      background: var(--bg-2);
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) { opacity: 0.92; }
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0b0f19;
+    }
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.45);
+      color: #fda4af;
+    }
+    .btn-ghost {
+      background: var(--bg-2);
+      border-color: var(--line);
+      color: var(--text-2);
+    }
+    .btn-ghost:hover:not(:disabled) { border-color: var(--cyan); color: #fff; }
+    .btn-sm { padding: 6px 11px; font-size: 12px; }
+
+    /* Shell */
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 18px 16px 86px;
+    }
+
+    /* Cards */
+    .panel {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .sub-card {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    /* HUD Strip */
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .hud-stat {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .hud-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .hud-val {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hud-sub {
+      font-size: 11.5px;
+      color: var(--text-3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .xp-track {
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.18);
+      overflow: hidden;
+      margin-top: 2px;
+    }
+    .xp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    /* Tab Navigation */
+    .rpg-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 10px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .rpg-tabs::-webkit-scrollbar { display: none; }
+    .rpg-tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 14px;
+      border-radius: 11px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      color: var(--text-2);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .rpg-tab:hover { border-color: rgba(56, 189, 248, 0.5); color: #fff; }
+    .rpg-tab.active {
+      background: #102542;
+      border-color: var(--cyan);
+      color: #fff;
+    }
+    .tab-badge {
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 800;
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--cyan);
+    }
+
+    /* Cast Stage */
+    .cast-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 16px;
+    }
+    .waters-stage {
+      background: linear-gradient(180deg, #0b162d 0%, #091122 100%);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 410px;
+      gap: 16px;
+    }
+    .island-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .stage-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
+      padding: 10px 0;
+    }
+
+    .cast-btn-main {
+      min-width: 240px;
+      padding: 16px 34px;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 14px;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+      color: #fff;
+      border: 1px solid rgba(125, 211, 252, 0.45);
+      box-shadow: 0 10px 28px rgba(14, 165, 233, 0.25);
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.15s ease;
+    }
+    .cast-btn-main:hover:not(:disabled) { transform: translateY(-1px); }
+    .cast-btn-main:active:not(:disabled) { transform: scale(0.97); }
+    .cast-btn-main:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+
+    .catch-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-2);
+      border: 1.5px solid var(--line-strong);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+    }
+    .catch-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .sprite-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      background: rgba(6, 9, 19, 0.75);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      font-size: 32px;
+    }
+    .sprite-box img {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+    .sprite-sm {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      background: rgba(6, 9, 19, 0.75);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      font-size: 20px;
+    }
+    .sprite-sm img { width: 38px; height: 38px; object-fit: contain; }
+
+    .rarity-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1px solid currentColor;
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    /* Tension Minigame */
+    .tension-box {
+      width: 100%;
+      max-width: 500px;
+      background: #14192d;
+      border: 1.5px solid #f59e0b;
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+    }
+    .tension-moves {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .move-btn {
+      padding: 13px 10px;
+      border-radius: 12px;
+      background: var(--bg-3);
+      border: 1.5px solid var(--line);
+      color: var(--text-1);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+    .move-btn.recommended {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.16);
+      color: #fde68a;
+    }
+
+    /* Grids */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+
+    /* Filters / Toolbar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .input, .select {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      color: var(--text-1);
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+    .input:focus, .select:focus { border-color: var(--cyan); }
+
+    /* Auth Gate */
+    .auth-gate {
+      max-width: 620px;
+      margin: 40px auto;
+      text-align: center;
+      padding: 34px 24px;
+      background: var(--bg-1);
+      border: 1px solid var(--line-strong);
+      border-radius: 22px;
+    }
+    .feature-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px 0 24px;
+    }
+    .feature-chip {
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      color: var(--text-2);
+    }
+
+    /* Toast */
+    #toast-wrap {
+      position: fixed;
+      bottom: 84px;
+      right: 18px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: min(360px, calc(100vw - 32px));
+    }
+    .toast {
+      background: #111827;
+      border: 1px solid var(--line-strong);
+      border-left: 4px solid var(--cyan);
+      color: var(--text-1);
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    }
+    .toast.err { border-left-color: var(--rose); }
+    .toast.ok { border-left-color: var(--emerald); }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 950;
+      background: rgba(3, 6, 14, 0.84);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-1);
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      padding: 20px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .muted { color: var(--text-3); }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .wrap-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+    @media (max-width: 1024px) {
+      .hud-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .cast-layout { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .navbar { padding: 0 10px; }
+      .brand-title { display: none; }
+      .brand-back { padding: 5px 9px; font-size: 12px; }
+      .sync-pill { padding: 5px 8px; }
+      .sync-pill span.sync-label { display: none; }
+      .user-chip { padding: 3px; border-radius: 50%; }
+      .user-chip span { display: none; }
+      .shell { padding: 12px 12px 92px; }
+      .hud-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hud-grid .hud-stat:last-child { grid-column: 1 / -1; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .tension-moves { grid-template-columns: 1fr; }
+      .cast-btn-main { width: 100%; min-width: 0; }
+      #toast-wrap { bottom: 90px; left: 12px; right: 12px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand-group">
+        <a href="./harubot.html" class="brand-back">← <span data-t="backBot">HaruBot</span></a>
+        <div class="brand-title">
+          <img src="./haru-avatar.webp" alt="HaruBot" />
+          <span>Fishing RPG</span>
+          <span class="sub-title muted" style="font-weight:600;font-size:12.5px;">· Live Discord 1-1</span>
+        </div>
+      </div>
+      <div class="nav-controls">
+        <div id="bridge-pill" class="sync-pill" title="Gateway Bridge Status">
+          <span class="sync-dot"></span>
+          <span class="sync-label" id="bridge-label">Checking...</span>
+        </div>
+        <div class="lang-wrap">
+          <button type="button" class="lang-btn" id="btn-lang-vi" onclick="setLang('vi')">VI</button>
+          <button type="button" class="lang-btn" id="btn-lang-en" onclick="setLang('en')">EN</button>
+        </div>
+        <div id="nav-auth-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div id="app-root"></div>
+  </main>
+
+  <div id="modal-root" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+    <div class="modal-card" id="modal-body"></div>
+  </div>
+  <div id="toast-wrap"></div>
+
+  <script>
+    const CLIENT_ID = "1573727590538289283";
+    const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
+    const GATEWAY_URL = "https://sepay-webhook-p0o1.onrender.com";
+
+    const I18N = {
+      vi: {
+        backBot: "HaruBot",
+        loginTitle: "Chơi Câu Cá Thật 1-1 Với Discord",
+        loginDesc: "Kết nối trực tiếp tới dữ liệu SQLite Fishing RPG sống của HaruBot. Mọi lượt thả cần, RuCoin, túi cá, trang bị, thủy cung và bảng xếp hạng đều đồng bộ tức thì với lệnh /fish trong Discord.",
+        loginBtn: "Đăng nhập Discord để vào câu cá",
+        bridgeOnline: "Live Discord Sync",
+        bridgeOffline: "HaruBot Bridge Offline",
+        tosTitle: "Điều Khoản Game Câu Cá (v1.2.1)",
+        tosDesc: "Xác nhận điều khoản để đồng bộ hồ sơ và nhận Cần Gỗ Tân Thủ (cần thiết cho người chơi mới).",
+        tosAccept: "Đồng ý & Nhận Cần Tân Thủ",
+        tabFish: "Câu Cá",
+        tabBag: "Túi Đồ",
+        tabGear: "Trang Bị & Đảo",
+        tabShop: "Cửa Hàng",
+        tabForge: "Rèn & Kỹ Năng",
+        tabAqua: "Thủy Cung & Boss",
+        tabCodex: "Bộ Sưu Tập & BXH",
+        castBtn: "Thả Cần Câu",
+        casting: "Đang thả cần...",
+        cooldown: "Hồi chiêu",
+        refresh: "Làm mới",
+        logout: "Đăng xuất",
+        noRod: "Chưa trang bị cần câu",
+        noBait: "Không dùng mồi",
+        sellAll: "Bán tất cả cá mở khóa",
+        collectAqua: "Thu hoạch RuCoin",
+        attackBoss: "Tấn công Boss"
+      },
+      en: {
+        backBot: "HaruBot",
+        loginTitle: "Play Real 1-1 Discord Fishing RPG",
+        loginDesc: "Connects live to HaruBot's real SQLite Fishing RPG database. Every cast, RuCoin, fish bag, gear loadout, aquarium profit, and leaderboard syncs 1-1 with Discord.",
+        loginBtn: "Sign in with Discord to Play",
+        bridgeOnline: "Live Discord Sync",
+        bridgeOffline: "HaruBot Bridge Offline",
+        tosTitle: "Fishing RPG Terms (v1.2.1)",
+        tosDesc: "Accept terms to initialize your angler profile and receive the Starter Wooden Rod.",
+        tosAccept: "Accept & Claim Starter Rod",
+        tabFish: "Cast & Catch",
+        tabBag: "Bag",
+        tabGear: "Gear & Islands",
+        tabShop: "Shop",
+        tabForge: "Workshop & Skills",
+        tabAqua: "Aquarium & Boss",
+        tabCodex: "Bestiary & Ranks",
+        castBtn: "Cast Line",
+        casting: "Casting...",
+        cooldown: "Cooldown",
+        refresh: "Refresh",
+        logout: "Logout",
+        noRod: "No rod equipped",
+        noBait: "No bait",
+        sellAll: "Sell all unlocked fish",
+        collectAqua: "Collect RuCoin",
+        attackBoss: "Attack World Boss"
+      }
+    };
+
+    const APP = {
+      lang: (localStorage.getItem("haruki_dash_lang") || localStorage.getItem("haruki_portal_lang") || "vi").startsWith("en") ? "en" : "vi",
+      token: localStorage.getItem("discord_access_token") || "",
+      discordUser: null,
+      bridgeOnline: null,
+      guildId: localStorage.getItem("harubot_fish_guild_id") || "",
+      activeTab: "fish",
+      bagSubTab: "fish",
+      forgeSubTab: "recipes",
+      codexSubTab: "bestiary",
+      state: null,
+      inventory: null,
+      shop: null,
+      workshop: null,
+      aquarium: null,
+      collection: null,
+      leaderboard: null,
+      lbCategory: "level",
+      selectedCollectionIsland: "starter_island",
+      bagFilter: "",
+      bagRarityFilter: "all",
+      shopFilter: "all",
+      selectedGearItemId: "",
+      lastCastResult: null,
+      busyCast: false,
+      busyAction: false,
+      cooldownUntilMs: 0,
+      weatherExpiresMs: 0,
+      cosmicChest: null,
+      cosmicChoices: ["", "", ""]
+    };
+
+    function t(key) { return (I18N[APP.lang] && I18N[APP.lang][key]) || I18N.vi[key] || key; }
+
+    function esc(s) {
+      return String(s == null ? "" : s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function fmt(n) {
+      return Number(n || 0).toLocaleString("en-US");
+    }
+
+    function spriteHtml(path, emoji, sm) {
+      const fb = esc(emoji || "🐟");
+      if (!path) return `<div class="${sm ? "sprite-sm" : "sprite-box"}">${fb}</div>`;
+      const clean = "./" + String(path).replace(/^\/+/, "");
+      return `<div class="${sm ? "sprite-sm" : "sprite-box"}"><img src="${esc(clean)}" alt="" loading="lazy" onerror="this.parentNode.textContent='${fb}'" /></div>`;
+    }
+
+    function toast(msg, kind) {
+      const wrap = document.getElementById("toast-wrap");
+      const el = document.createElement("div");
+      el.className = "toast" + (kind ? " " + kind : "");
+      el.textContent = msg;
+      wrap.appendChild(el);
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 4200);
+    }
+
+    function setLang(l) {
+      APP.lang = l === "en" ? "en" : "vi";
+      localStorage.setItem("haruki_dash_lang", APP.lang);
+      document.getElementById("btn-lang-vi").classList.toggle("active", APP.lang === "vi");
+      document.getElementById("btn-lang-en").classList.toggle("active", APP.lang === "en");
+      render();
+    }
+
+    function loginWithDiscord() {
+      try { sessionStorage.setItem("haru_oauth_return_to", "./fishing.html"); } catch (_) {}
+      const scope = encodeURIComponent("identify guilds");
+      const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${scope}`;
+      window.location.href = url;
+    }
+
+    function logoutDiscord() {
+      localStorage.removeItem("discord_access_token");
+      APP.token = "";
+      APP.discordUser = null;
+      APP.state = null;
+      render();
+    }
+
+    async function checkBridgeHealth() {
+      const pill = document.getElementById("bridge-pill");
+      const lbl = document.getElementById("bridge-label");
+      try {
+        const res = await fetch(`${GATEWAY_URL}/api/harubot/fish/health`, { cache: "no-store" });
+        const data = await res.json();
+        APP.bridgeOnline = Boolean(data && data.bridge_online);
+        pill.className = "sync-pill " + (APP.bridgeOnline ? "online" : "offline");
+        lbl.textContent = APP.bridgeOnline ? t("bridgeOnline") : t("bridgeOffline");
+      } catch (_) {
+        APP.bridgeOnline = false;
+        pill.className = "sync-pill offline";
+        lbl.textContent = t("bridgeOffline");
+      }
+    }
+
+    async function fishRpc(action, payload) {
+      const res = await fetch(`${GATEWAY_URL}/api/harubot/fish/rpc`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${APP.token}`
+        },
+        body: JSON.stringify({
+          action,
+          payload: Object.assign(APP.guildId ? { guild_id: APP.guildId } : {}, payload || {})
+        })
+      });
+      if (res.status === 401) {
+        logoutDiscord();
+        throw new Error(APP.lang === "en" ? "Discord session expired. Please sign in again." : "Phiên Discord hết hạn. Vui lòng đăng nhập lại.");
+      }
+      const data = await res.json().catch(() => ({ ok: false, error: `HTTP ${res.status}` }));
+      if (!res.ok && !data.error) {
+        data.error = `HTTP ${res.status}`;
+      }
+      if (data && data.state) {
+        applyState(data.state);
+      }
+      return data;
+    }
+
+    function applyState(st) {
+      APP.state = st;
+      if (st && st.context && st.context.guild_id) {
+        APP.guildId = st.context.guild_id;
+        localStorage.setItem("harubot_fish_guild_id", APP.guildId);
+      }
+      if (st && st.stats) {
+        const rem = Number(st.stats.cooldown_remaining || 0);
+        APP.cooldownUntilMs = rem > 0 ? (Date.now() + rem * 1000) : 0;
+      }
+      if (st && st.weather) {
+        APP.weatherExpiresMs = Date.now() + Number(st.weather.remaining_seconds || 0) * 1000;
+      }
+    }
+
+    async function bootstrap() {
+      setLang(APP.lang);
+      checkBridgeHealth();
+      setInterval(checkBridgeHealth, 25000);
+
+      if (!APP.token) {
+        render();
+        return;
+      }
+
+      renderLoading("Đang xác thực Discord & đồng bộ dữ liệu câu cá thật...");
+      try {
+        const uRes = await fetch("https://discord.com/api/v10/users/@me", {
+          headers: { Authorization: `Bearer ${APP.token}` }
+        });
+        if (!uRes.ok) {
+          logoutDiscord();
+          return;
+        }
+        APP.discordUser = await uRes.json();
+        await loadState();
+      } catch (e) {
+        toast(e.message || "Lỗi kết nối", "err");
+        render();
+      }
+    }
+
+    async function loadState() {
+      const data = await fishRpc("get_state", {});
+      if (!data.ok) {
+        toast(data.error || "Không tải được dữ liệu từ HaruBot", "err");
+      } else {
+        applyState(data);
+        APP.bridgeOnline = true;
+        document.getElementById("bridge-pill").className = "sync-pill online";
+        document.getElementById("bridge-label").textContent = t("bridgeOnline");
+      }
+      render();
+    }
+
+    async function switchTab(tab) {
+      APP.activeTab = tab;
+      render();
+      if (!APP.state) return;
+      try {
+        if (tab === "bag" && !APP.inventory) await refreshInventory();
+        if (tab === "gear" && !APP.inventory) await refreshInventory();
+        if (tab === "shop" && !APP.shop) await refreshShop();
+        if (tab === "forge" && !APP.workshop) await refreshWorkshop();
+        if (tab === "aqua" && !APP.aquarium) await refreshAquarium();
+        if (tab === "codex") {
+          if (APP.codexSubTab === "bestiary" && !APP.collection) await refreshCollection();
+          if (APP.codexSubTab === "leaderboard" && !APP.leaderboard) await refreshLeaderboard(APP.lbCategory);
+        }
+      } catch (e) {
+        toast(e.message || "Lỗi tải tab", "err");
+      }
+    }
+
+    async function refreshInventory() {
+      const res = await fishRpc("get_inventory", {});
+      if (res.ok) { APP.inventory = res; render(); }
+    }
+    async function refreshShop() {
+      const res = await fishRpc("get_shop", {});
+      if (res.ok) { APP.shop = res; render(); }
+    }
+    async function refreshWorkshop() {
+      const res = await fishRpc("get_workshop", {});
+      if (res.ok) { APP.workshop = res; render(); }
+    }
+    async function refreshAquarium() {
+      const res = await fishRpc("get_aquarium", {});
+      if (res.ok) { APP.aquarium = res; render(); }
+    }
+    async function refreshCollection() {
+      const res = await fishRpc("get_collection", {});
+      if (res.ok) { APP.collection = res; render(); }
+    }
+    async function refreshLeaderboard(cat) {
+      APP.lbCategory = cat || APP.lbCategory;
+      const res = await fishRpc("get_leaderboard", { category: APP.lbCategory });
+      if (res.ok) { APP.leaderboard = res; render(); }
+    }
+
+    async function doAcceptTos() {
+      if (APP.busyAction) return;
+      APP.busyAction = true; render();
+      try {
+        const res = await fishRpc("accept_tos", {});
+        if (res.ok) {
+          applyState(res);
+          toast(APP.lang === "en" ? "Terms accepted! Received Starter Wooden Rod." : "Đã đồng ý điều khoản và nhận Cần Gỗ Tân Thủ!", "ok");
+        } else {
+          toast(res.error || "Lỗi", "err");
+        }
+      } finally { APP.busyAction = false; render(); }
+    }
+
+    async function doCast() {
+      if (APP.busyCast || (APP.cooldownUntilMs > Date.now())) return;
+      APP.busyCast = true;
+      render();
+      try {
+        const res = await fishRpc("cast", {});
+        if (!res.ok) {
+          if (res.code === "cooldown" && res.remaining_seconds) {
+            APP.cooldownUntilMs = Date.now() + res.remaining_seconds * 1000;
+          }
+          toast(res.error || "Không thả cần được", "err");
+          return;
+        }
+        APP.lastCastResult = res;
+        APP.inventory = null;
+        if (res.level_up) {
+          toast(`🎉 LEVEL UP! Đạt cấp ${res.level}!`, "ok");
+        }
+      } catch (e) {
+        toast(e.message || "Lỗi kết nối khi thả cần", "err");
+      } finally {
+        APP.busyCast = false;
+        render();
+      }
+    }
+
+    async function doTensionMove(pendingId, move) {
+      if (APP.busyAction) return;
+      APP.busyAction = true; render();
+      try {
+        const res = await fishRpc("tension_step", { pending_id: pendingId, move });
+        if (!res.ok) {
+          toast(res.error || "Lỗi kéo cá", "err");
+          return;
+        }
+        APP.inventory = null;
+        if (res.done) {
+          if (res.won) {
+            APP.lastCastResult = {
+              mode: "caught",
+              catch: {
+                fish_id: res.fish_id,
+                fish_name: res.fish_name,
+                rarity_id: res.rarity_id,
+                rarity_name: res.rarity_name,
+                rarity_color: res.rarity_color,
+                weight: res.weight,
+                value: res.value,
+                mutation_name: res.mutation_name,
+                mutation_multiplier: res.mutation_multiplier,
+                image_path: res.image_path,
+                emoji: res.emoji,
+                serial_number: res.serial_number
+              },
+              bonus_catches: res.bonus_catches || [],
+              gained_xp: res.xp || 0,
+              level_up: res.level_up,
+              bonus_material: res.bonus_material || null
+            };
+            toast(`🎉 Kéo thành công ${res.fish_name}! (+${fmt(res.xp)} XP)`, "ok");
+          } else {
+            APP.lastCastResult = { mode: "tension_lost" };
+            toast("💨 Cá đã tuột khỏi dây!", "err");
+          }
+        } else {
+          toast(res.correct ? "✅ Chuẩn! Tiếp tục lượt tiếp theo" : "⚠️ Trượt nhịp, cẩn thận ở lượt sau!", res.correct ? "ok" : "err");
+        }
+      } finally { APP.busyAction = false; render(); }
+    }
+
+    async function doAbandonPending(pendingId) {
+      await fishRpc("abandon_pending", { pending_id: pendingId });
+      render();
+    }
+
+    async function doToggleLock(catchId) {
+      const res = await fishRpc("toggle_lock", { catch_id: catchId });
+      if (!res.ok) { toast(res.error || "Không khóa được cá", "err"); return; }
+      toast(res.message || "Đã cập nhật khóa cá", "ok");
+      await refreshInventory();
+    }
+
+    async function doSellCatch(catchId) {
+      const res = await fishRpc("sell_catch", { catch_id: catchId });
+      if (!res.ok) { toast(res.error || "Không bán được", "err"); return; }
+      toast(`💰 Bán cá thành công: +${fmt(res.rucoin_gained)} RuCoin!`, "ok");
+      await refreshInventory();
+    }
+
+    async function doSellAll() {
+      if (!confirm(APP.lang === "en" ? "Sell all unlocked fish outside Aquarium?" : "Bán toàn bộ cá không khóa ngoài Thủy Cung?")) return;
+      const res = await fishRpc("sell_all", {});
+      if (!res.ok) { toast(res.error || "Không có cá để bán", "err"); return; }
+      toast(`💰 Đã bán ${res.sold_count} cá! Nhận +${fmt(res.rucoin_gained)} RuCoin.`, "ok");
+      APP.inventory = null;
+      if (APP.activeTab === "bag") await refreshInventory(); else render();
+    }
+
+    async function doSellRarity(rarityId) {
+      if (!rarityId) return;
+      const res = await fishRpc("sell_rarity", { rarity_id: rarityId });
+      if (!res.ok) { toast(res.error || "Không có cá bậc này", "err"); return; }
+      toast(`💰 Đã bán ${res.sold_count} cá (${rarityId}): +${fmt(res.rucoin_gained)} RuCoin!`, "ok");
+      await refreshInventory();
+    }
+
+    async function doSellItem(itemId) {
+      const res = await fishRpc("sell_item", { item_id: itemId });
+      if (!res.ok) { toast(res.error || "Không bán được", "err"); return; }
+      toast(`💰 Đã bán ${res.item_name} ×${res.sold_count}: +${fmt(res.rucoin_gained)} RuCoin`, "ok");
+      await refreshInventory();
+    }
+
+    async function doEquip(kind, itemId, slot) {
+      const res = await fishRpc("equip", { kind, item_id: itemId || "", slot: slot || "" });
+      if (!res.ok) { toast(res.error || "Lỗi trang bị", "err"); return; }
+      toast(res.message || "Đã cập nhật trang bị!", "ok");
+      APP.inventory = null;
+      if (APP.activeTab === "gear" || APP.activeTab === "bag") await refreshInventory(); else render();
+    }
+
+    async function doTravelIsland(islandId) {
+      const res = await fishRpc("travel_island", { island_id: islandId });
+      if (!res.ok) { toast(res.error || "Không đi được tới đảo", "err"); return; }
+      toast(res.message, "ok");
+      render();
+    }
+
+    async function doUnlockIsland(islandId) {
+      const res = await fishRpc("unlock_island", { island_id: islandId });
+      if (!res.ok) { toast(res.error || "Chưa đủ điều kiện mở đảo", "err"); return; }
+      toast(res.message, "ok");
+      render();
+    }
+
+    async function doBuyItem(itemId) {
+      const inp = document.getElementById("qty-" + itemId);
+      const qty = Math.max(1, parseInt((inp && inp.value) || "1", 10) || 1);
+      const res = await fishRpc("buy_item", { item_id: itemId, quantity: qty });
+      if (!res.ok) { toast(res.error || "Mua thất bại", "err"); return; }
+      toast(res.message, "ok");
+      APP.inventory = null;
+      await refreshShop();
+    }
+
+    async function doCraft(recipeId) {
+      const res = await fishRpc("craft_recipe", { recipe_id: recipeId });
+      if (!res.ok) { toast(res.error || "Chế tạo thất bại", "err"); return; }
+      toast(res.message, "ok");
+      APP.inventory = null;
+      await refreshWorkshop();
+    }
+
+    async function doUpgradeRank(itemId) {
+      const res = await fishRpc("upgrade_rank", { item_id: itemId });
+      if (!res.ok) { toast(res.error || "Lỗi nâng Rank", "err"); return; }
+      const msg = res.outcome === "success"
+        ? `✨ Thành công! Lên Rank ${res.new_rank} (-${fmt(res.fee)} RC)`
+        : (res.outcome === "downgrade"
+          ? `⬇️ Tụt Rank: ${res.old_rank} → ${res.new_rank}`
+          : `💨 Hụt! Giữ nguyên Rank ${res.new_rank}`);
+      toast(msg, res.outcome === "success" ? "ok" : "err");
+      await refreshWorkshop();
+    }
+
+    async function doUpgradeRarity(itemId) {
+      const res = await fishRpc("upgrade_rarity", { item_id: itemId });
+      if (!res.ok) { toast(res.error || "Lỗi nâng Rarity", "err"); return; }
+      const msg = res.outcome === "success"
+        ? `🌟 Lên bậc ${res.new_rarity}! (Rank reset về F-)`
+        : (res.outcome === "downgrade" ? `⬇️ Giảm bậc về ${res.new_rarity}` : `💨 Hụt! Giữ ${res.new_rarity}`);
+      toast(msg, res.outcome === "success" ? "ok" : "err");
+      await refreshWorkshop();
+    }
+
+    async function doForgeGear(mainId) {
+      const phoiSel = document.getElementById("phoi-select");
+      const phoiId = phoiSel ? phoiSel.value : mainId;
+      const res = await fishRpc("forge_gear", { main_id: mainId, phoi_id: phoiId });
+      if (!res.ok) { toast(res.error || "Ghép thất bại", "err"); return; }
+      toast(res.outcome === "success" ? `⚒️ Ghép thành công! Lên Rank ${res.new_rank}` : `💨 Ghép ${res.outcome} -> Rank ${res.new_rank}`, res.outcome === "success" ? "ok" : "err");
+      await refreshWorkshop();
+    }
+
+    async function doUpgradeSkill(skillId, amount) {
+      const res = await fishRpc("upgrade_skill", { skill_id: skillId, amount: amount || 1 });
+      if (!res.ok) { toast(res.error || "Chưa đủ điểm", "err"); return; }
+      toast(res.message, "ok");
+      render();
+    }
+
+    async function doUnlockSkip(rarityId) {
+      if (!confirm(`Mở khóa bỏ qua minigame ${rarityId.toUpperCase()} bằng RuCoin?`)) return;
+      const res = await fishRpc("unlock_minigame_skip", { rarity_id: rarityId });
+      if (!res.ok) { toast(res.error || "Không mở được", "err"); return; }
+      toast(res.message, "ok");
+      render();
+    }
+
+    async function doOpenChest(chestId, qty) {
+      const res = await fishRpc("open_chest", { chest_id: chestId, quantity: qty || 1 });
+      if (!res.ok) { toast(res.error || "Không mở được rương", "err"); return; }
+      APP.inventory = null;
+      if (res.mode === "cosmic_puzzle") {
+        APP.cosmicChest = res;
+        APP.cosmicChoices = [res.symbols[0], res.symbols[0], res.symbols[0]];
+        openCosmicModal();
+      } else {
+        openChestRewardsModal(res);
+        await refreshInventory();
+      }
+    }
+
+    async function doCosmicGuess() {
+      if (!APP.cosmicChest) return;
+      const res = await fishRpc("cosmic_chest_guess", {
+        cosmic_chest_id: APP.cosmicChest.cosmic_chest_id,
+        choices: APP.cosmicChoices
+      });
+      if (!res.ok) { toast(res.error || "Lỗi mở rương", "err"); closeModal(); return; }
+      APP.cosmicChest.lastRes = res;
+      if (res.won) {
+        APP.cosmicChest = null;
+        openModal(`<h3 style="margin-top:0;">🎁 Mở Rương Vũ Trụ Thành Công!</h3>
+          <div class="stack">${(res.items || []).map(it => `<div class="sub-card row-between"><strong>${esc(it.name)}</strong><span>×${it.quantity}</span></div>`).join("")}</div>
+          <div style="margin-top:16px;text-align:right;"><button class="btn btn-primary" onclick="closeModal()">Đóng</button></div>`);
+        await refreshInventory();
+      } else if (res.done) {
+        APP.cosmicChest = null;
+        openModal(`<h3 style="margin-top:0;color:#fda4af;">🔒 Rương đã khóa lại!</h3>
+          <p class="muted">Đã hết 4 lượt thử.</p>
+          <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>`);
+      } else {
+        openCosmicModal();
+      }
+    }
+
+    function openCosmicModal() {
+      const c = APP.cosmicChest;
+      if (!c) return;
+      const syms = c.symbols || ["🐟", "🪸", "🫧", "🔱"];
+      const last = c.lastRes;
+      const lockedPos = new Set(last ? (last.correct_positions || []) : []);
+      const selectors = [0, 1, 2].map(idx => `
+        <div class="sub-card">
+          <div class="muted" style="font-size:12px;margin-bottom:6px;">Vị trí ${idx + 1} ${lockedPos.has(idx) ? "✅ Đúng" : ""}</div>
+          <select class="select" style="width:100%;font-size:18px;" onchange="APP.cosmicChoices[${idx}]=this.value">
+            ${syms.map(s => `<option value="${esc(s)}" ${APP.cosmicChoices[idx] === s ? "selected" : ""}>${esc(s)}</option>`).join("")}
+          </select>
+        </div>`).join("");
+      openModal(`
+        <h3 style="margin-top:0;">🔮 ${esc(c.chest_name)}</h3>
+        <p class="muted" style="font-size:13px;">Chọn đúng 3 ký hiệu bí mật (${c.reward_count} vật phẩm). ${last ? `Còn ${last.attempts_left} lượt · Đúng ${last.matches}/3 vị trí.` : "Bạn có 4 lượt thử."}</p>
+        <div class="grid-3">${selectors}</div>
+        <div class="row-between" style="margin-top:16px;">
+          <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>
+          <button class="btn btn-primary" onclick="doCosmicGuess()">🔓 Thử mở rương</button>
+        </div>
+      `);
+    }
+
+    function openChestRewardsModal(res) {
+      const rows = (res.rewards || []).map(r => `
+        <div class="sub-card wrap-row" style="justify-content:space-between;">
+          <div class="wrap-row">${spriteHtml(r.image_path, r.emoji, true)}<div><div style="font-weight:700;">${esc(r.name)}</div><div class="muted" style="font-size:11.5px;">${esc(r.rarity)}</div></div></div>
+          <strong>×${r.quantity}</strong>
+        </div>`).join("");
+      openModal(`
+        <h3 style="margin-top:0;">🎁 Đã mở ${res.quantity}× ${esc(res.chest_name)}</h3>
+        <div class="stack">${rows || '<p class="muted">Không có phần thưởng</p>'}</div>
+        <div style="margin-top:16px;text-align:right;"><button class="btn btn-primary" onclick="closeModal()">Tuyệt vời</button></div>
+      `);
+    }
+
+    async function doAquaAdd(catchId) {
+      const res = await fishRpc("aquarium_add", { catch_id: catchId });
+      if (!res.ok) { toast(res.error || "Không thả vào bể được", "err"); return; }
+      APP.aquarium = res;
+      APP.inventory = null;
+      toast("🐠 Đã thả cá vào Thủy Cung!", "ok");
+      render();
+    }
+
+    async function doAquaRemove(catchId) {
+      const res = await fishRpc("aquarium_remove", { catch_id: catchId });
+      if (!res.ok) { toast(res.error || "Lỗi", "err"); return; }
+      APP.aquarium = res;
+      APP.inventory = null;
+      toast("Đã đưa cá về túi đồ.", "ok");
+      render();
+    }
+
+    async function doAquaCollect() {
+      const res = await fishRpc("aquarium_collect", {});
+      if (!res.ok) { toast(res.error || "Chưa có RuCoin để thu hoạch", "err"); return; }
+      APP.aquarium = res;
+      toast(`💰 Thu hoạch +${fmt(res.collected)} RuCoin từ Thủy Cung!`, "ok");
+      render();
+    }
+
+    async function doBossFight() {
+      const res = await fishRpc("boss_fight", {});
+      if (!res.ok) { toast(res.error || "Không tấn công được", "err"); return; }
+      toast(res.defeated ? `🏆 Hạ gục ${res.boss_name}! Phần thưởng đã được chia!` : `⚔️ Gây ${fmt(res.damage)} sát thương lên ${res.boss_name}!`, "ok");
+      render();
+    }
+
+    function openModal(html) {
+      document.getElementById("modal-body").innerHTML = html;
+      document.getElementById("modal-root").classList.add("open");
+    }
+    function closeModal() {
+      document.getElementById("modal-root").classList.remove("open");
+    }
+
+    function renderLoading(msg) {
+      document.getElementById("app-root").innerHTML = `
+        <div class="auth-gate">
+          <div style="font-size:32px;margin-bottom:10px;">🎣</div>
+          <h3 style="margin:0 0 8px;">${esc(msg)}</h3>
+          <p class="muted" style="font-size:13px;">HaruBot Fishing RPG Gateway · Render HTTPS Bridge</p>
+        </div>`;
+    }
+
+    function renderNavAuth() {
+      const slot = document.getElementById("nav-auth-slot");
+      if (!APP.discordUser) {
+        slot.innerHTML = `<button class="btn btn-primary btn-sm" onclick="loginWithDiscord()">Login Discord</button>`;
+        return;
+      }
+      const u = APP.discordUser;
+      const av = u.avatar ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=64` : "./haru-avatar.webp";
+      slot.innerHTML = `
+        <div class="wrap-row" style="gap:6px;">
+          <div class="user-chip"><img src="${esc(av)}" alt="" /><span>${esc(u.global_name || u.username)}</span></div>
+          <button class="btn btn-ghost btn-sm" onclick="loadState()" title="${t("refresh")}">↻</button>
+          <button class="btn btn-ghost btn-sm" onclick="logoutDiscord()" title="${t("logout")}">⏻</button>
+        </div>`;
+    }
+
+    function render() {
+      renderNavAuth();
+      const root = document.getElementById("app-root");
+
+      if (!APP.token || !APP.discordUser) {
+        root.innerHTML = `
+          <section class="auth-gate">
+            <img src="./haru-avatar.webp" alt="HaruBot" style="width:74px;height:74px;border-radius:18px;border:2px solid var(--cyan);margin-bottom:14px;" />
+            <h1 style="margin:0 0 10px;font-size:24px;">${t("loginTitle")}</h1>
+            <p class="muted" style="font-size:14px;line-height:1.6;">${t("loginDesc")}</p>
+            <div class="feature-chips">
+              <span class="feature-chip">🪙 RuCoin Thật</span>
+              <span class="feature-chip">🏝️ 6 Đảo & 9 Thời Tiết</span>
+              <span class="feature-chip">⚔️ Rèn Rank & Rarity</span>
+              <span class="feature-chip">🐠 Thủy Cung +1%/giờ</span>
+              <span class="feature-chip">🐉 World Boss</span>
+              <span class="feature-chip">🏆 BXH Global</span>
+            </div>
+            <button class="btn btn-primary" style="padding:13px 26px;font-size:15px;" onclick="loginWithDiscord()">${t("loginBtn")}</button>
+          </section>`;
+        return;
+      }
+
+      if (!APP.state) {
+        root.innerHTML = `
+          <div class="auth-gate">
+            <h3 style="margin:0 0 8px;">Không kết nối được tới HaruBot Bridge</h3>
+            <p class="muted" style="font-size:13.5px;">Hãy chắc chắn HaruBot trên VibeHost đang Online và thử tải lại.</p>
+            <button class="btn btn-primary" onclick="loadState()">↻ Thử kết nối lại</button>
+          </div>`;
+        return;
+      }
+
+      const st = APP.state;
+      const u = st.user;
+      const s = st.stats;
+
+      if (!u.tos_accepted) {
+        root.innerHTML = `
+          <section class="auth-gate">
+            <div style="font-size:40px;margin-bottom:10px;">📜</div>
+            <h2 style="margin:0 0 10px;">${t("tosTitle")}</h2>
+            <p class="muted" style="font-size:14px;line-height:1.6;">${t("tosDesc")}</p>
+            <button class="btn btn-emerald" style="margin-top:16px;padding:13px 24px;" onclick="doAcceptTos()">✅ ${t("tosAccept")}</button>
+          </section>`;
+        return;
+      }
+
+      const xpPct = Math.min(100, Math.round((u.current_level_xp / Math.max(1, u.needed_level_xp)) * 100));
+      const isl = st.islands.find(i => i.id === st.current_island_id) || st.islands[0] || { name: "Starter Island" };
+      const w = st.weather;
+      const wRem = Math.max(0, Math.round((APP.weatherExpiresMs - Date.now()) / 1000));
+
+      const guildSelect = (st.context.guilds || []).length > 1 ? `
+        <select class="select" style="padding:4px 8px;font-size:11.5px;margin-top:2px;" onchange="APP.guildId=this.value;localStorage.setItem('harubot_fish_guild_id',this.value);loadState();">
+          ${(st.context.guilds || []).map(g => `<option value="${esc(g.id)}" ${g.id === st.context.guild_id ? "selected" : ""}>Server: ${esc(g.name)}</option>`).join("")}
+        </select>` : "";
+
+      const hud = `
+        <div class="hud-grid">
+          <div class="hud-stat">
+            <div class="hud-label"><span>🪙 RuCoin</span></div>
+            <div class="hud-val tabular" style="color:var(--gold);">${fmt(u.rucoin)}</div>
+            <div class="hud-sub">Ví đồng bộ Discord</div>
+          </div>
+          <div class="hud-stat">
+            <div class="hud-label"><span>⭐ Fish Level</span><span>${xpPct}%</span></div>
+            <div class="hud-val tabular">Lv. ${fmt(u.level)}</div>
+            <div class="xp-track"><div class="xp-fill" style="width:${xpPct}%;"></div></div>
+          </div>
+          <div class="hud-stat">
+            <div class="hud-label"><span>🍀 Stats</span><span>⏱️ ${s.cooldown_seconds}s</span></div>
+            <div class="hud-val tabular" style="color:#6ee7b7;">+${s.effective_luck} Luck</div>
+            <div class="hud-sub tabular">Tải tối đa: ${fmt(s.max_weight_kg)} kg</div>
+          </div>
+          <div class="hud-stat">
+            <div class="hud-label"><span>${w ? w.emoji : "🌊"} Thời tiết</span><span class="tabular">${w ? Math.floor(wRem/60) + "m" : ""}</span></div>
+            <div class="hud-val" style="font-size:14.5px;">${w ? esc(w.name) : "Biển lặng"}</div>
+            <div class="hud-sub">${w ? `+${w.luck_bonus} Luck · x${w.luck_multiplier}` : "Không có hiệu ứng"}</div>
+          </div>
+          <div class="hud-stat">
+            <div class="hud-label"><span>🏝️ Đảo & Túi</span></div>
+            <div class="hud-val" style="font-size:14px;">${esc(isl.name)}</div>
+            ${guildSelect || `<div class="hud-sub tabular">🐟 ${s.kept_catches} cá · 🧰 ${s.chests_count} rương</div>`}
+          </div>
+        </div>`;
+
+      const tabs = `
+        <div class="rpg-tabs">
+          <button class="rpg-tab ${APP.activeTab === "fish" ? "active" : ""}" onclick="switchTab('fish')">🎣 ${t("tabFish")}</button>
+          <button class="rpg-tab ${APP.activeTab === "bag" ? "active" : ""}" onclick="switchTab('bag')">🎒 ${t("tabBag")} <span class="tab-badge">${s.kept_catches}</span></button>
+          <button class="rpg-tab ${APP.activeTab === "gear" ? "active" : ""}" onclick="switchTab('gear')">⚔️ ${t("tabGear")}</button>
+          <button class="rpg-tab ${APP.activeTab === "shop" ? "active" : ""}" onclick="switchTab('shop')">🛒 ${t("tabShop")}</button>
+          <button class="rpg-tab ${APP.activeTab === "forge" ? "active" : ""}" onclick="switchTab('forge')">⚒️ ${t("tabForge")} ${st.skills.available_points > 0 ? `<span class="tab-badge">${st.skills.available_points} SP</span>` : ""}</button>
+          <button class="rpg-tab ${APP.activeTab === "aqua" ? "active" : ""}" onclick="switchTab('aqua')">🐠 ${t("tabAqua")} ${st.boss ? `<span class="tab-badge" style="background:rgba(244,63,94,.22);color:#fda4af;">BOSS</span>` : ""}</button>
+          <button class="rpg-tab ${APP.activeTab === "codex" ? "active" : ""}" onclick="switchTab('codex')">📖 ${t("tabCodex")}</button>
+        </div>`;
+
+      let content = "";
+      if (APP.activeTab === "fish") content = renderFishTab();
+      else if (APP.activeTab === "bag") content = renderBagTab();
+      else if (APP.activeTab === "gear") content = renderGearTab();
+      else if (APP.activeTab === "shop") content = renderShopTab();
+      else if (APP.activeTab === "forge") content = renderForgeTab();
+      else if (APP.activeTab === "aqua") content = renderAquaTab();
+      else content = renderCodexTab();
+
+      root.innerHTML = hud + tabs + content;
+    }
+
+    function renderFishTab() {
+      const st = APP.state;
+      const eq = st.equipment;
+      const isl = st.islands.find(i => i.id === st.current_island_id) || st.islands[0];
+      const remMs = Math.max(0, APP.cooldownUntilMs - Date.now());
+      const pending = st.pending_catch;
+
+      let centerHtml = "";
+      if (pending) {
+        const moveText = {
+          pull: "🌊 Cá đang lao mạnh — hãy bấm KÉO MẠNH!",
+          hold: "⚖️ Dây đang căng vừa — hãy bấm GIỮ DÂY!",
+          loosen: "🌀 Cá đang vùng xuống sâu — hãy bấm NỚI DÂY!"
+        }[pending.expected_move] || "Chọn thao tác!";
+        centerHtml = `
+          <div class="tension-box">
+            <div class="wrap-row" style="justify-content:center;margin-bottom:10px;">
+              ${spriteHtml(pending.image_path, "🦈", false)}
+              <div style="text-align:left;">
+                <span class="rarity-pill" style="color:${esc(pending.rarity_color)};">${esc(pending.rarity_name)}</span>
+                <div style="font-size:18px;font-weight:800;margin-top:4px;">${esc(pending.fish_name)}</div>
+                <div class="muted" style="font-size:12.5px;">⚖️ ${pending.weight} kg · 🪙 ${fmt(pending.value)} RC ${pending.bonus_count ? `· +${pending.bonus_count} cá kèm` : ""}</div>
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:700;color:#fde68a;">${moveText}</div>
+            <div class="muted" style="font-size:12px;margin-top:4px;">Lượt ${pending.turn}/${pending.max_turns} · Đúng ${pending.progress}/2 để giữ cá</div>
+            <div class="tension-moves">
+              <button class="move-btn ${pending.expected_move === "pull" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','pull')">🪝 Kéo mạnh</button>
+              <button class="move-btn ${pending.expected_move === "hold" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','hold')">✋ Giữ dây</button>
+              <button class="move-btn ${pending.expected_move === "loosen" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','loosen')">🪢 Nới dây</button>
+            </div>
+            <button class="btn btn-ghost btn-sm" style="margin-top:12px;" onclick="doAbandonPending('${esc(pending.pending_id)}')">Bỏ qua cá này</button>
+          </div>`;
+      } else if (APP.lastCastResult) {
+        const r = APP.lastCastResult;
+        if (r.mode === "caught" && r.catch) {
+          const c = r.catch;
+          const bList = (r.bonus_catches || []).map(b => `<span class="feature-chip" style="margin:0;">+ ${esc(b.fish_name)} (${fmt(b.value)} RC)</span>`).join("");
+          centerHtml = `
+            <div class="catch-card" style="border-color:${esc(c.rarity_color || "#38bdf8")};">
+              <div class="catch-top">
+                ${spriteHtml(c.image_path, c.emoji, false)}
+                <div style="flex:1;min-width:0;">
+                  <div class="wrap-row" style="gap:6px;">
+                    <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
+                    ${c.mutation_name ? `<span class="rarity-pill" style="color:#f472b6;">✨ ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
+                    ${c.serial_number ? `<span class="rarity-pill" style="color:#facc15;">#${String(c.serial_number).padStart(6, "0")}</span>` : ""}
+                  </div>
+                  <div style="font-size:19px;font-weight:800;margin-top:6px;">${esc(c.fish_name)}</div>
+                  <div class="muted" style="font-size:13px;margin-top:3px;">
+                    ⚖️ <strong>${c.weight} kg</strong> · 🪙 <strong style="color:var(--gold);">${fmt(c.value)} RuCoin</strong> · ✨ <strong>+${fmt(r.gained_xp)} XP</strong>
+                  </div>
+                </div>
+              </div>
+              ${bList ? `<div class="wrap-row" style="margin-top:10px;">${bList}</div>` : ""}
+              ${r.bonus_material ? `<div class="sub-card" style="margin-top:10px;padding:8px 12px;font-size:12.5px;">🪨 Nhặt thêm nguyên liệu: <strong>${esc(r.bonus_material.name)}</strong></div>` : ""}
+              ${c.catch_id ? `<div class="wrap-row" style="margin-top:12px;">
+                <button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}');APP.lastCastResult=null;">💰 Bán (+${fmt(c.value)})</button>
+                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">🔒 Khóa cá</button>
+              </div>` : ""}
+            </div>`;
+        } else if (r.mode === "chest" && r.chest) {
+          centerHtml = `
+            <div class="catch-card" style="border-color:var(--gold);">
+              <div class="catch-top">
+                ${spriteHtml(r.chest.image_path, r.chest.emoji, false)}
+                <div>
+                  <span class="rarity-pill" style="color:var(--gold);">RƯƠNG BÁU</span>
+                  <div style="font-size:18px;font-weight:800;margin-top:6px;">${esc(r.chest.name)} ×${r.chest.quantity}</div>
+                  <div class="muted" style="font-size:13px;margin-top:3px;">Đã cất vào Túi Đồ. Vào mục Túi Đồ -> Vật phẩm để mở!</div>
+                </div>
+              </div>
+            </div>`;
+        } else if (r.mode === "direct_reward" && r.reward) {
+          centerHtml = `
+            <div class="catch-card" style="border-color:var(--emerald);">
+              <div class="catch-top">
+                ${spriteHtml(r.reward.image_path, r.reward.emoji, false)}
+                <div>
+                  <span class="rarity-pill" style="color:var(--emerald);">${r.loot_class === "gear" ? "TRANG BỊ HIẾM" : "NGUYÊN LIỆU"}</span>
+                  <div style="font-size:18px;font-weight:800;margin-top:6px;">${esc(r.reward.name)} ×${r.reward.quantity}</div>
+                  <div class="muted" style="font-size:13px;margin-top:3px;">Đã tự động thêm vào Túi Đồ!</div>
+                </div>
+              </div>
+            </div>`;
+        } else if (r.mode === "line_snapped") {
+          centerHtml = `<div class="catch-card" style="border-color:var(--rose);"><div style="font-weight:800;color:#fda4af;">💦 Cá quá nặng (${r.fish_weight} kg) làm tuột dây!</div><div class="muted" style="font-size:13px;margin-top:4px;">Cần hiện tại chịu tối đa ${fmt(r.max_rod_weight)} kg. Hãy nâng cấp cần hoặc kỹ năng Sức mạnh cần!</div></div>`;
+        } else if (r.mode === "tension_lost") {
+          centerHtml = `<div class="catch-card" style="border-color:var(--rose);"><div style="font-weight:800;color:#fda4af;">💨 Cá hiếm đã thoát mất!</div><div class="muted" style="font-size:13px;margin-top:4px;">Hãy thả cần tiếp để phục thù.</div></div>`;
+        }
+      } else {
+        centerHtml = `<div class="muted" style="font-size:14px;max-width:420px;">Thả cần xuống vùng biển <strong>${esc(isl ? isl.name : "")}</strong> để săn cá hiếm, đột biến, trang bị 7 dòng & rương báu.</div>`;
+      }
+
+      const castBtn = !pending ? `
+        <button id="cast-btn-live" class="cast-btn-main" ${APP.busyCast || remMs > 0 ? "disabled" : ""} onclick="doCast()">
+          ${APP.busyCast ? `⏳ ${t("casting")}` : (remMs > 0 ? `⏱️ ${(remMs / 1000).toFixed(1)}s` : `🎣 ${t("castBtn")}`)}
+        </button>` : "";
+
+      const gearSummary = Object.entries({ head: "🎩 Nón", body: "🛡️ Giáp", ring: "💍 Nhẫn", relic: "🔮 Phụ kiện" }).map(([slot, lbl]) => {
+        const g = eq.slots[slot];
+        return `<div class="sub-card" style="padding:10px 12px;">
+          <div class="row-between">
+            <span class="muted" style="font-size:12px;">${lbl}</span>
+            ${g ? `<span class="tab-badge">${esc(g.rarity_name)} · ${esc(g.forge_rank_name)}</span>` : ""}
+          </div>
+          <div style="font-size:13px;font-weight:700;margin-top:4px;">${g ? esc(g.name) : '<span class="muted">Trống</span>'}</div>
+          ${g ? `<div class="muted" style="font-size:11px;margin-top:2px;">${esc(g.effect_label)}</div>` : ""}
+        </div>`;
+      }).join("");
+
+      return `
+        <div class="cast-layout">
+          <div class="waters-stage">
+            <div class="island-banner">
+              <div>
+                <div style="font-size:12px;color:var(--cyan);font-weight:700;">VÙNG BIỂN ĐANG CÂU</div>
+                <div style="font-size:17px;font-weight:800;">🏝️ ${esc(isl ? isl.name : "Starter Island")}</div>
+              </div>
+              <div class="wrap-row">
+                ${(st.boosts || []).map(b => `<span class="rarity-pill" style="color:#facc15;">⚡ ${esc(b.scope)} x${b.multiplier}</span>`).join("")}
+                ${st.stats.potions_stock > 0 ? `<span class="rarity-pill" style="color:#c084fc;">🧪 Lọ Mutation ×${st.stats.potions_stock}</span>` : ""}
+                <button class="btn btn-ghost btn-sm" onclick="switchTab('gear')">Đổi đảo</button>
+              </div>
+            </div>
+            <div class="stage-center">
+              ${centerHtml}
+              ${castBtn}
+            </div>
+            <div class="row-between muted" style="font-size:12px;border-top:1px solid var(--line);padding-top:12px;">
+              <span>🎣 Cần: <strong style="color:#fff;">${eq.rod ? esc(eq.rod.name) + " (" + esc(eq.rod.forge_rank_name) + ")" : t("noRod")}</strong></span>
+              <span>🪱 Mồi: <strong style="color:#fff;">${eq.bait ? esc(eq.bait.name) + " ×" + eq.bait.quantity : t("noBait")}</strong></span>
+            </div>
+          </div>
+
+          <div class="panel stack">
+            <div class="row-between">
+              <strong style="font-size:14px;">⚔️ Trang bị đang mặc</strong>
+              <button class="btn btn-ghost btn-sm" onclick="switchTab('gear')">Thay đồ</button>
+            </div>
+            <div class="sub-card row-between">
+              <div class="wrap-row">
+                ${spriteHtml(eq.rod && eq.rod.image_path, "🎣", true)}
+                <div>
+                  <div style="font-weight:800;font-size:13.5px;">${eq.rod ? esc(eq.rod.name) : t("noRod")}</div>
+                  <div class="muted" style="font-size:11.5px;">${eq.rod ? `${esc(eq.rod.rarity_name)} · ${esc(eq.rod.forge_rank_name)} · +${eq.rod.luck} Luck` : ""}</div>
+                </div>
+              </div>
+              ${eq.rod ? `<strong class="tabular" style="font-size:12px;">${fmt(eq.rod.base_max_weight_kg)} kg</strong>` : ""}
+            </div>
+            <div class="grid-2">${gearSummary}</div>
+            <div class="row-between" style="margin-top:4px;">
+              <span class="muted" style="font-size:12px;">🔒 Ổ Khóa Cá: <strong>${st.stats.locks_stock}</strong></span>
+              <button class="btn btn-gold btn-sm" onclick="doSellAll()">💰 ${t("sellAll")}</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderBagTab() {
+      if (!APP.inventory) return `<div class="panel"><p class="muted">Đang tải túi đồ thật từ Discord...</p></div>`;
+      const inv = APP.inventory;
+      const subBtns = `
+        <div class="toolbar">
+          <div class="wrap-row">
+            <button class="btn ${APP.bagSubTab === "fish" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='fish';render();">🐟 Kho Cá (${inv.catches.length})</button>
+            <button class="btn ${APP.bagSubTab === "items" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='items';render();">🧰 Vật Phẩm & Rương (${inv.items.length})</button>
+          </div>
+          <div class="wrap-row">
+            <input class="input" placeholder="Tìm tên..." value="${esc(APP.bagFilter)}" oninput="APP.bagFilter=this.value;render();" style="width:160px;" />
+            <button class="btn btn-gold btn-sm" onclick="doSellAll()">💰 ${t("sellAll")}</button>
+          </div>
+        </div>`;
+
+      if (APP.bagSubTab === "fish") {
+        const needle = APP.bagFilter.toLowerCase();
+        const list = inv.catches.filter(c =>
+          (!needle || c.name.toLowerCase().includes(needle) || (c.mutation_name || "").toLowerCase().includes(needle)) &&
+          (APP.bagRarityFilter === "all" || c.rarity_id === APP.bagRarityFilter)
+        );
+        const rarities = Array.from(new Set(inv.catches.map(c => c.rarity_id)));
+        const rarBar = `<div class="wrap-row" style="margin-bottom:12px;">
+          <select class="select" onchange="APP.bagRarityFilter=this.value;render();">
+            <option value="all">Mọi độ hiếm (${inv.catches.length})</option>
+            ${rarities.map(r => `<option value="${esc(r)}" ${APP.bagRarityFilter === r ? "selected" : ""}>${esc(r.toUpperCase())}</option>`).join("")}
+          </select>
+          ${APP.bagRarityFilter !== "all" ? `<button class="btn btn-gold btn-sm" onclick="doSellRarity('${esc(APP.bagRarityFilter)}')">Bán hết bậc ${esc(APP.bagRarityFilter)}</button>` : ""}
+        </div>`;
+        const cards = list.slice(0, 80).map(c => `
+          <div class="sub-card">
+            <div class="row-between">
+              <div class="wrap-row" style="flex:1;min-width:0;">
+                ${spriteHtml(c.image_path, c.emoji, true)}
+                <div style="min-width:0;">
+                  <div style="font-weight:800;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.locked ? "🔒 " : ""}${esc(c.name)}</div>
+                  <div class="wrap-row" style="gap:5px;margin-top:2px;">
+                    <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
+                    ${c.mutation_name ? `<span class="rarity-pill" style="color:#f472b6;">✨ ${esc(c.mutation_name)}</span>` : ""}
+                    ${c.serial_number ? `<span class="rarity-pill" style="color:#facc15;">#${c.serial_number}</span>` : ""}
+                  </div>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div class="tabular" style="font-weight:800;color:var(--gold);font-size:13.5px;">${fmt(c.value)} RC</div>
+                <div class="muted tabular" style="font-size:11.5px;">${c.weight} kg</div>
+              </div>
+            </div>
+            <div class="wrap-row" style="margin-top:10px;justify-content:flex-end;">
+              ${c.in_aquarium ? `<span class="tab-badge">Đang trong Thủy Cung</span>` : `
+                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">${c.locked ? "🔓 Mở khóa" : "🔒 Khóa"}</button>
+                <button class="btn btn-ghost btn-sm" onclick="doAquaAdd('${esc(c.catch_id)}')">🐠 Nuôi</button>
+                ${!c.locked ? `<button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}')">Bán</button>` : ""}
+              `}
+            </div>
+          </div>`).join("");
+        return `<div class="panel">${subBtns}${rarBar}<div class="grid-2">${cards || '<p class="muted">Túi cá trống.</p>'}</div></div>`;
+      }
+
+      const needle = APP.bagFilter.toLowerCase();
+      const items = inv.items.filter(it => !needle || it.name.toLowerCase().includes(needle) || it.item_type.toLowerCase().includes(needle));
+      const itemCards = items.map(it => {
+        let actions = "";
+        if (it.item_type === "chest") {
+          actions += `<button class="btn btn-emerald btn-sm" onclick="doOpenChest('${esc(it.item_id)}',1)">🔓 Mở ×1</button>`;
+          if (it.quantity >= 5 && it.item_id !== "60_cosmic_transcendent_chest") {
+            actions += `<button class="btn btn-ghost btn-sm" onclick="doOpenChest('${esc(it.item_id)}',5)">Mở ×5</button>`;
+          }
+        } else if (it.item_type === "rod" || it.item_type === "bait") {
+          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('${esc(it.item_type)}','${esc(it.item_id)}')">${it.equipped ? "Đang dùng ✓" : "Trang bị"}</button>`;
+        } else if (["gear", "hook", "reel"].includes(it.item_type)) {
+          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('gear','${esc(it.item_id)}')">${it.equipped ? "Đang mặc ✓" : "Mặc vào ô " + esc(it.slot)}</button>`;
+        }
+        if (it.quantity > 1 && it.sell_unit_price > 0) {
+          actions += `<button class="btn btn-ghost btn-sm" onclick="doSellItem('${esc(it.item_id)}')">Bán dư (${fmt(it.sell_unit_price * (it.quantity - 1))} RC)</button>`;
+        }
+        return `
+          <div class="sub-card">
+            <div class="row-between">
+              <div class="wrap-row" style="flex:1;min-width:0;">
+                ${spriteHtml(it.image_path, it.emoji, true)}
+                <div style="min-width:0;">
+                  <div style="font-weight:800;font-size:13.5px;">${esc(it.name)} <span style="color:var(--cyan);">×${fmt(it.quantity)}</span></div>
+                  <div class="muted" style="font-size:11.5px;">${esc(it.item_type.toUpperCase())}${it.rarity_name ? ` · ${esc(it.rarity_name)}` : ""}${it.forge_rank_name ? ` · ${esc(it.forge_rank_name)}` : ""}</div>
+                  ${it.effect_label ? `<div class="muted" style="font-size:11px;margin-top:2px;">${esc(it.effect_label)}</div>` : ""}
+                </div>
+              </div>
+            </div>
+            <div class="wrap-row" style="margin-top:10px;justify-content:flex-end;">${actions}</div>
+          </div>`;
+      }).join("");
+      return `<div class="panel">${subBtns}<div class="grid-2">${itemCards || '<p class="muted">Túi vật phẩm trống.</p>'}</div></div>`;
+    }
+
+    function renderGearTab() {
+      const st = APP.state;
+      const items = APP.inventory ? APP.inventory.items : [];
+      const rods = items.filter(i => i.item_type === "rod");
+      const baits = items.filter(i => i.item_type === "bait");
+      const wearables = items.filter(i => ["gear", "hook", "reel"].includes(i.item_type));
+
+      const slotNames = { head: "🎩 Nón / Vương miện (Head)", body: "🛡️ Giáp / Áo choàng (Body)", ring: "💍 Nhẫn (Ring)", relic: "🔮 Phụ kiện / Móc / Máy cuốn (Relic)" };
+      const slotsHtml = Object.entries(slotNames).map(([slot, title]) => {
+        const eq = st.equipment.slots[slot];
+        const choices = wearables.filter(w => w.slot === slot);
+        return `
+          <div class="sub-card stack">
+            <div class="row-between">
+              <strong style="font-size:13px;">${title}</strong>
+              ${eq ? `<button class="btn btn-ghost btn-sm" onclick="doEquip('clear_slot','','${slot}')">Tháo</button>` : ""}
+            </div>
+            ${eq ? `<div class="wrap-row">${spriteHtml(eq.image_path, eq.emoji, true)}<div><div style="font-weight:800;">${esc(eq.name)}</div><div class="muted" style="font-size:11.5px;">${esc(eq.rarity_name)} · ${esc(eq.forge_rank_name)} · ${esc(eq.effect_label)}</div></div></div>` : '<div class="muted" style="font-size:12.5px;">Ô này đang trống</div>'}
+            ${choices.length ? `<select class="select" onchange="if(this.value)doEquip('gear',this.value)"><option value="">-- Chọn đồ mặc vào ô này (${choices.length}) --</option>${choices.map(c => `<option value="${esc(c.item_id)}" ${eq && eq.item_id === c.item_id ? "selected" : ""}>${esc(c.name)} (${esc(c.forge_rank_name)})</option>`).join("")}</select>` : ""}
+          </div>`;
+      }).join("");
+
+      const islandsHtml = st.islands.map(isl => `
+        <div class="sub-card stack" style="${isl.current ? "border-color:var(--cyan);" : ""}">
+          <div class="row-between">
+            <strong style="font-size:14px;">${isl.order}. ${esc(isl.name)}</strong>
+            <span class="rarity-pill" style="color:${isl.unlocked ? "#10b981" : "#94a3b8"};">${isl.current ? "ĐANG Ở ĐÂY" : (isl.unlocked ? "ĐÃ MỞ" : "CHƯA MỞ")}</span>
+          </div>
+          <div class="muted" style="font-size:12px;">📖 Bộ sưu tập: <strong>${isl.bestiary_found}/${isl.bestiary_total}</strong> ${isl.bestiary_complete ? "✨ (+5% Luck)" : ""}</div>
+          <div class="muted" style="font-size:12px;">🎣 Khuyên dùng: ${esc(isl.recommended_rods || "Tùy chọn")}</div>
+          ${!isl.unlocked ? `<div style="font-size:12px;color:#fde68a;">Điều kiện: ${esc(isl.requirements_text || "Lv." + isl.level_required)}${isl.unlock_cost ? ` · Phí ${fmt(isl.unlock_cost)} RC` : ""}</div>` : ""}
+          <div class="row-between" style="margin-top:auto;">
+            ${isl.unlocked
+              ? `<button class="btn ${isl.current ? "btn-ghost" : "btn-primary"} btn-sm" ${isl.current ? "disabled" : ""} onclick="doTravelIsland('${esc(isl.id)}')">${isl.current ? "Đang câu tại đây" : "⛵ Di chuyển tới"}</button>`
+              : `<button class="btn btn-emerald btn-sm" onclick="doUnlockIsland('${esc(isl.id)}')">🗝️ Mở khóa đảo</button>`}
+          </div>
+        </div>`).join("");
+
+      return `
+        <div class="stack">
+          <div class="panel stack">
+            <div class="row-between">
+              <h3 style="margin:0;">⚔️ Cần câu, Mồi & 4 Ô Trang Bị</h3>
+              <button class="btn btn-ghost btn-sm" onclick="doEquip('clear_bait','')">Bỏ mồi</button>
+            </div>
+            <div class="grid-2">
+              <div class="sub-card stack">
+                <strong style="font-size:13px;">🎣 Chọn Cần Câu (${rods.length} sở hữu)</strong>
+                <select class="select" onchange="if(this.value)doEquip('rod',this.value)">
+                  ${rods.map(r => `<option value="${esc(r.item_id)}" ${st.equipment.rod && st.equipment.rod.item_id === r.item_id ? "selected" : ""}>${esc(r.name)} · ${esc(r.rarity_name || "")} ${esc(r.forge_rank_name || "")}</option>`).join("") || '<option>Chưa có cần</option>'}
+                </select>
+              </div>
+              <div class="sub-card stack">
+                <strong style="font-size:13px;">🪱 Chọn Mồi Câu (${baits.length} loại)</strong>
+                <select class="select" onchange="if(this.value==='__none')doEquip('clear_bait','');else if(this.value)doEquip('bait',this.value)">
+                  <option value="__none">Không dùng mồi</option>
+                  ${baits.map(b => `<option value="${esc(b.item_id)}" ${st.equipment.bait && st.equipment.bait.item_id === b.item_id ? "selected" : ""}>${esc(b.name)} (+${b.luck} Luck · ×${b.quantity})</option>`).join("")}
+                </select>
+              </div>
+            </div>
+            <div class="grid-2">${slotsHtml}</div>
+          </div>
+
+          <div class="panel">
+            <h3 style="margin:0 0 12px;">🏝️ Hành Trình 6 Hòn Đảo</h3>
+            <div class="grid-3">${islandsHtml}</div>
+          </div>
+        </div>`;
+    }
+
+    function renderShopTab() {
+      if (!APP.shop) return `<div class="panel"><p class="muted">Đang tải cửa hàng thật từ Discord...</p></div>`;
+      const items = APP.shop.items.filter(it => APP.shopFilter === "all" || it.item_type === APP.shopFilter);
+      const typeCats = [
+        ["all", "Tất cả"],
+        ["rod", "Cần câu"],
+        ["bait", "Mồi câu"],
+        ["fish_lock", "Ổ khóa cá"],
+        ["key", "Chìa khóa rương"],
+        ["lockpick", "Cậy khóa"],
+        ["mutation_potion", "Thuốc Mutation"]
+      ];
+      const filters = `<div class="wrap-row" style="margin-bottom:14px;">${typeCats.map(([k, l]) => `<button class="btn ${APP.shopFilter === k ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.shopFilter='${k}';render();">${l}</button>`).join("")}</div>`;
+      const cards = items.map(it => `
+        <div class="sub-card stack">
+          <div class="row-between">
+            <div class="wrap-row" style="flex:1;min-width:0;">
+              ${spriteHtml(it.image_path, it.emoji, true)}
+              <div style="min-width:0;">
+                <div style="font-weight:800;font-size:13.5px;">${esc(it.name)}</div>
+                <div class="muted" style="font-size:11.5px;">${it.luck ? `+${it.luck} Luck · ` : ""}${it.max_weight_kg ? `${fmt(it.max_weight_kg)} kg · ` : ""}Đang có: ${fmt(it.owned)}</div>
+              </div>
+            </div>
+          </div>
+          ${it.description ? `<div class="muted" style="font-size:12px;">${esc(it.description)}</div>` : ""}
+          <div class="row-between" style="margin-top:auto;padding-top:6px;">
+            <strong class="tabular" style="color:var(--gold);font-size:13.5px;">${fmt(it.cost)} RC</strong>
+            <div class="wrap-row" style="gap:6px;">
+              <input id="qty-${esc(it.item_id)}" type="number" min="1" max="10000" value="1" class="input tabular" style="width:68px;padding:5px 7px;" />
+              <button class="btn btn-primary btn-sm" onclick="doBuyItem('${esc(it.item_id)}')">Mua</button>
+            </div>
+          </div>
+        </div>`).join("");
+      return `<div class="panel"><h3 style="margin:0 0 12px;">🛒 Cửa Hàng Câu Cá</h3>${filters}<div class="grid-3">${cards}</div></div>`;
+    }
+
+    function renderForgeTab() {
+      const st = APP.state;
+      const ws = APP.workshop;
+      const nav = `
+        <div class="wrap-row" style="margin-bottom:14px;">
+          <button class="btn ${APP.forgeSubTab === "recipes" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='recipes';render();">🛠️ Chế Tạo Cần (${ws ? ws.recipes.length : 0})</button>
+          <button class="btn ${APP.forgeSubTab === "upgrade" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='upgrade';render();">⚒️ Nâng Rank / Rarity / Ghép</button>
+          <button class="btn ${APP.forgeSubTab === "skills" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='skills';render();">🌟 Kỹ Năng (${st.skills.available_points} SP)</button>
+        </div>`;
+
+      if (APP.forgeSubTab === "recipes") {
+        if (!ws) return `<div class="panel">${nav}<p class="muted">Đang tải xưởng chế tạo...</p></div>`;
+        const cards = ws.recipes.map(r => `
+          <div class="sub-card stack">
+            <div class="wrap-row">
+              ${spriteHtml(r.image_path, r.emoji, true)}
+              <div>
+                <div style="font-weight:800;font-size:14px;">${esc(r.name)} ×${r.output_quantity}</div>
+                <div class="tabular" style="font-size:12.5px;color:var(--gold);">Phí: ${fmt(r.cost)} RuCoin</div>
+              </div>
+            </div>
+            <div class="stack" style="gap:4px;">
+              ${r.required_rod_name ? `<div style="font-size:12px;">${r.rod_ok ? "✅" : "❌"} Cần: <strong>${esc(r.required_rod_name)}</strong></div>` : ""}
+              ${r.materials.map(m => `<div style="font-size:12px;">${m.have >= m.need ? "✅" : "❌"} ${esc(m.name)}: <strong>${m.have}/${m.need}</strong></div>`).join("")}
+            </div>
+            <button class="btn ${r.materials_ok && r.rod_ok ? "btn-emerald" : "btn-ghost"} btn-sm" style="margin-top:auto;" onclick="doCraft('${esc(r.recipe_id)}')">🛠️ Chế tạo</button>
+          </div>`).join("");
+        return `<div class="panel">${nav}<div class="grid-3">${cards}</div></div>`;
+      }
+
+      if (APP.forgeSubTab === "upgrade") {
+        if (!ws) return `<div class="panel">${nav}<p class="muted">Đang tải...</p></div>`;
+        const eqList = ws.equipment || [];
+        if (!APP.selectedGearItemId && eqList.length) APP.selectedGearItemId = eqList[0].item_id;
+        const sel = eqList.find(e => e.item_id === APP.selectedGearItemId) || eqList[0];
+        const phoiPool = sel && sel.item_type !== "rod"
+          ? eqList.filter(e => e.item_type !== "rod" && e.rarity_step === sel.rarity_step && (e.item_id !== sel.item_id || e.quantity >= 2))
+          : [];
+
+        return `
+          <div class="panel stack">
+            ${nav}
+            ${!sel ? '<p class="muted">Bạn chưa có cần hoặc trang bị để nâng cấp.</p>' : `
+              <div class="sub-card stack">
+                <label class="muted" style="font-size:12px;">Chọn cần câu hoặc trang bị cần nâng:</label>
+                <select class="select" onchange="APP.selectedGearItemId=this.value;render();">
+                  ${eqList.map(e => `<option value="${esc(e.item_id)}" ${e.item_id === sel.item_id ? "selected" : ""}>[${esc(e.item_type.toUpperCase())}] ${esc(e.name)} · ${esc(e.rarity_name)} · Rank ${esc(e.rank_name)} (×${e.quantity})</option>`).join("")}
+                </select>
+                <div class="row-between" style="margin-top:8px;">
+                  <div class="wrap-row">
+                    ${spriteHtml(sel.image_path, sel.emoji, false)}
+                    <div>
+                      <div style="font-size:17px;font-weight:800;">${esc(sel.name)}</div>
+                      <div class="wrap-row" style="margin-top:4px;">
+                        <span class="rarity-pill" style="color:var(--cyan);">Rank ${esc(sel.rank_name)}</span>
+                        <span class="rarity-pill" style="color:var(--gold);">${esc(sel.rarity_name)}</span>
+                      </div>
+                      <div class="muted" style="font-size:12px;margin-top:6px;">Tỉ lệ mỗi lần: ✨ 60% Lên · 💨 35% Hụt · ⬇️ 5% Tụt (F-/F không tụt)</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid-2" style="margin-top:10px;">
+                  <button class="btn btn-primary" onclick="doUpgradeRank('${esc(sel.item_id)}')">⚒️ Nâng Rank (${fmt(sel.rank_fee)} RC)</button>
+                  <button class="btn ${sel.can_upgrade_rarity ? "btn-gold" : "btn-ghost"}" ${sel.rarity_step >= 7 ? "disabled" : ""} onclick="doUpgradeRarity('${esc(sel.item_id)}')">
+                    ${sel.rarity_step >= 7 ? "👑 Đã đạt Transcendent" : `✨ Nâng lên ${esc(sel.next_rarity_name)} (Cần Rank ${esc(sel.required_rank_name)} · ${fmt(sel.rarity_fee)} RC)`}
+                  </button>
+                </div>
+                ${sel.item_type !== "rod" ? `
+                  <div style="border-top:1px solid var(--line);margin-top:10px;padding-top:12px;" class="stack">
+                    <div style="font-weight:700;font-size:13.5px;">⚒️ Ghép 2 Trang Bị Cùng Rarity (Tiêu hao 1 phôi)</div>
+                    ${phoiPool.length ? `
+                      <div class="wrap-row">
+                        <select id="phoi-select" class="select" style="flex:1;">
+                          ${phoiPool.map(p => `<option value="${esc(p.item_id)}">Phôi: ${esc(p.name)} (×${p.quantity})</option>`).join("")}
+                        </select>
+                        <button class="btn btn-emerald" onclick="doForgeGear('${esc(sel.item_id)}')">Ghép (${fmt(sel.forge_fee)} RC)</button>
+                      </div>` : '<div class="muted" style="font-size:12.5px;">Cần ít nhất 2 trang bị cùng Rarity trong túi để làm phôi.</div>'}
+                  </div>` : ""}
+              </div>`}
+          </div>`;
+      }
+
+      const sk = st.skills;
+      const skillCards = sk.items.map(s => `
+        <div class="sub-card stack">
+          <div class="row-between">
+            <strong style="font-size:14px;">${esc(APP.lang === "en" ? s.name_en : s.name_vi)}</strong>
+            <span class="tab-badge">${s.level}${s.max_level ? "/" + s.max_level : "/∞"}</span>
+          </div>
+          <div class="muted" style="font-size:12px;">${esc(APP.lang === "en" ? s.desc_en : s.desc_vi)}</div>
+          <div class="row-between" style="margin-top:auto;">
+            <span class="muted" style="font-size:12px;">${s.next_cost !== null ? `Cần: <strong>${s.next_cost} SP</strong>` : "👑 Tối đa"}</span>
+            ${s.next_cost !== null ? `<div class="wrap-row"><button class="btn btn-primary btn-sm" ${!s.can_upgrade ? "disabled" : ""} onclick="doUpgradeSkill('${esc(s.id)}',1)">+1</button><button class="btn btn-ghost btn-sm" onclick="doUpgradeSkill('${esc(s.id)}',5)">+5</button></div>` : ""}
+          </div>
+        </div>`).join("");
+
+      const skipCards = ["legendary", "mythic"].map(r => {
+        const unlocked = sk.minigame_skips.includes(r);
+        const cost = sk.skip_costs[r] || 0;
+        return `
+          <div class="sub-card row-between">
+            <div><strong>🎯 Bỏ qua Minigame ${r.toUpperCase()}</strong><div class="muted" style="font-size:12px;">Giá: ${fmt(cost)} RuCoin</div></div>
+            ${unlocked ? '<span class="rarity-pill" style="color:#10b981;">ĐÃ MỞ</span>' : `<button class="btn btn-gold btn-sm" onclick="doUnlockSkip('${r}')">Mở khóa</button>`}
+          </div>`;
+      }).join("");
+
+      return `
+        <div class="panel stack">
+          ${nav}
+          <div class="row-between">
+            <div><strong>✨ Điểm Kỹ Năng còn lại: <span style="color:var(--cyan);font-size:17px;">${fmt(sk.available_points)}</span></strong> <span class="muted">(Đã dùng ${sk.spent_points}/${sk.earned_points})</span></div>
+          </div>
+          <div class="grid-3">${skillCards}</div>
+          <h4 style="margin:8px 0 0;">🎯 Mở Khóa Vĩnh Viễn Bỏ Minigame</h4>
+          <div class="grid-2">${skipCards}</div>
+        </div>`;
+    }
+
+    function renderAquaTab() {
+      const st = APP.state;
+      const aq = APP.aquarium;
+      const boss = st.boss;
+
+      const bossCard = `
+        <div class="panel stack" style="border-color:${boss ? "rgba(244,63,94,0.45)" : "var(--line)"};">
+          <div class="row-between">
+            <h3 style="margin:0;">🐉 World Boss Raid</h3>
+            ${boss ? `<span class="rarity-pill" style="color:#fda4af;">Còn ${Math.floor(boss.remaining_seconds / 60)}m</span>` : ""}
+          </div>
+          ${boss ? `
+            <div class="sub-card stack">
+              <div class="row-between">
+                <strong style="font-size:16px;">${esc(boss.name)}</strong>
+                <strong class="tabular" style="color:var(--gold);">Quỹ thưởng: ${fmt(boss.reward)} RC</strong>
+              </div>
+              <div class="xp-track" style="height:10px;"><div class="xp-fill" style="width:${Math.round((boss.hp / Math.max(1, boss.max_hp)) * 100)}%;background:linear-gradient(90deg,#f43f5e,#f59e0b);"></div></div>
+              <div class="row-between muted" style="font-size:12.5px;">
+                <span class="tabular">HP: ${fmt(boss.hp)} / ${fmt(boss.max_hp)}</span>
+                <span class="tabular">Sát thương của bạn: ${fmt(boss.my_damage)}</span>
+              </div>
+              <button class="btn btn-danger" onclick="doBossFight()">⚔️ ${t("attackBoss")}</button>
+            </div>` : '<p class="muted" style="margin:0;">Hiện chưa có Boss nào được triệu hồi trong server (Admin dùng lệnh /fishboss trong Discord để gọi Boss).</p>'}
+        </div>`;
+
+      if (!aq) return `<div class="stack">${bossCard}<div class="panel"><p class="muted">Đang tải Thủy Cung...</p></div></div>`;
+
+      const placedHtml = aq.placed.map(p => `
+        <div class="sub-card row-between">
+          <div>
+            <div style="font-weight:800;font-size:13.5px;">${esc(p.name)} ${p.mutation_name ? `<span style="color:#f472b6;">· ${esc(p.mutation_name)}</span>` : ""}</div>
+            <div class="muted tabular" style="font-size:12px;">+${fmt(p.hourly)} RC/giờ · Đã tích lũy: <strong style="color:var(--gold);">${fmt(p.accrued)} RC</strong></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="doAquaRemove('${esc(p.catch_id)}')">Lấy ra</button>
+        </div>`).join("");
+
+      return `
+        <div class="stack">
+          ${bossCard}
+          <div class="panel stack">
+            <div class="toolbar" style="margin:0;">
+              <div>
+                <h3 style="margin:0;">🐠 Thủy Cung Cần Thủ (${aq.placed.length}/${aq.capacity} ô)</h3>
+                <div class="muted tabular" style="font-size:12.5px;">Tạo +1% giá trị cá mỗi giờ (+${fmt(aq.total_hourly)} RC/giờ · Tích lũy: <strong style="color:var(--gold);">${fmt(aq.total_accrued)} RC</strong>)</div>
+              </div>
+              <button class="btn btn-gold" ${aq.total_accrued <= 0 ? "disabled" : ""} onclick="doAquaCollect()">💰 ${t("collectAqua")} (+${fmt(aq.total_accrued)})</button>
+            </div>
+            ${aq.candidates.length ? `
+              <div class="wrap-row">
+                <select id="aqua-add-sel" class="select" style="flex:1;">
+                  ${aq.candidates.slice(0, 50).map(c => `<option value="${esc(c.catch_id)}">${esc(c.name)} · ${c.weight}kg (${esc(c.rarity_id)})${c.mutation_name ? " · " + esc(c.mutation_name) : ""}</option>`).join("")}
+                </select>
+                <button class="btn btn-emerald btn-sm" onclick="doAquaAdd(document.getElementById('aqua-add-sel').value)">➕ Thả cá vào bể</button>
+              </div>` : ""}
+            <div class="grid-2">${placedHtml || '<p class="muted">Chưa có cá nào trong Thủy Cung.</p>'}</div>
+          </div>
+        </div>`;
+    }
+
+    function renderCodexTab() {
+      const nav = `
+        <div class="wrap-row" style="margin-bottom:14px;">
+          <button class="btn ${APP.codexSubTab === "bestiary" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='bestiary';switchTab('codex');">📖 Bộ Sưu Tập Cá</button>
+          <button class="btn ${APP.codexSubTab === "leaderboard" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='leaderboard';switchTab('codex');">🏆 Bảng Xếp Hạng Global</button>
+        </div>`;
+
+      if (APP.codexSubTab === "bestiary") {
+        if (!APP.collection) return `<div class="panel">${nav}<p class="muted">Đang tải bộ sưu tập...</p></div>`;
+        const isls = APP.collection.islands || [];
+        const activeIsl = isls.find(i => i.island_id === APP.selectedCollectionIsland) || isls[0];
+        const pills = isls.map(i => `<button class="btn ${activeIsl && activeIsl.island_id === i.island_id ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.selectedCollectionIsland='${esc(i.island_id)}';render();">${esc(i.island_name.split("&")[0].trim())} (${i.discovered}/${i.total})</button>`).join("");
+        const grid = activeIsl ? activeIsl.species.map(sp => `
+          <div class="sub-card" style="opacity:${sp.discovered ? 1 : 0.45};">
+            <div class="wrap-row">
+              ${spriteHtml(sp.image_path, sp.emoji, true)}
+              <div style="min-width:0;">
+                <div style="font-weight:800;font-size:13px;">${sp.discovered ? "✅ " : "❓ "}${esc(sp.name)}</div>
+                <span class="rarity-pill" style="color:${esc(sp.rarity_color)};margin-top:3px;">${esc(sp.rarity_name)}</span>
+                <div class="muted tabular" style="font-size:11px;margin-top:2px;">Đã bắt: ${fmt(sp.caught_count)}</div>
+              </div>
+            </div>
+          </div>`).join("") : "";
+        return `<div class="panel stack">${nav}<div class="wrap-row">${pills}</div><div class="grid-3">${grid}</div></div>`;
+      }
+
+      const lbCats = [
+        ["level", "🏆 Level"],
+        ["rucoin", "🪙 RuCoin"],
+        ["best_fish", "💎 Cá đắt nhất"],
+        ["heaviest_fish", "🐋 Cá nặng nhất"],
+        ["catches", "🎣 Tổng lượt bắt"],
+        ["daily", "📅 Hôm nay"],
+        ["luck", "🍀 Lucky Buff"]
+      ];
+      const catBtns = `<div class="wrap-row" style="margin-bottom:14px;">${lbCats.map(([k, l]) => `<button class="btn ${APP.lbCategory === k ? "btn-primary" : "btn-ghost"} btn-sm" onclick="refreshLeaderboard('${k}')">${l}</button>`).join("")}</div>`;
+      const rows = APP.leaderboard ? (APP.leaderboard.entries || []).map((e, idx) => `
+        <div class="sub-card row-between" style="${e.user_id === APP.discordUser.id ? "border-color:var(--cyan);" : ""}">
+          <div class="wrap-row">
+            <strong style="width:28px;color:${idx < 3 ? "var(--gold)" : "var(--text-3)"};">${idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "#" + (idx + 1)}</strong>
+            <strong>${esc(e.name)}</strong>
+          </div>
+          <span class="tabular" style="font-weight:700;color:var(--text-2);font-size:13px;">${esc(e.detail)}</span>
+        </div>`).join("") : '<p class="muted">Đang tải bảng xếp hạng...</p>';
+      return `<div class="panel">${nav}${catBtns}<div class="stack">${rows || '<p class="muted">Chưa có dữ liệu.</p>'}</div></div>`;
+    }
+
+    // Live cooldown + weather countdown ticker + Spacebar cast shortcut
+    setInterval(() => {
+      if (!APP.state || APP.activeTab !== "fish" || APP.busyCast) return;
+      const btn = document.getElementById("cast-btn-live");
+      if (!btn) return;
+      const remMs = Math.max(0, APP.cooldownUntilMs - Date.now());
+      if (remMs > 0) {
+        btn.disabled = true;
+        btn.textContent = `⏱️ ${(remMs / 1000).toFixed(1)}s`;
+      } else if (btn.disabled) {
+        btn.disabled = false;
+        btn.textContent = `🎣 ${t("castBtn")}`;
+      }
+    }, 150);
+
+    document.addEventListener("keydown", (ev) => {
+      if (ev.code === "Space" && APP.activeTab === "fish" && APP.state && APP.state.user.tos_accepted && !APP.state.pending_catch) {
+        const tag = (document.activeElement && document.activeElement.tagName) || "";
+        if (!["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag)) {
+          ev.preventDefault();
+          doCast();
+        }
+      }
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>

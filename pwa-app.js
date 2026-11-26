@@ -52,7 +52,7 @@
   function getCurrentRouteKey() {
     const p = (location.pathname || "").toLowerCase();
     if (p.includes("dashboard")) return "dashboard";
-    if (p.includes("harubot")) return "harubot";
+    if (p.includes("harubot") || p.includes("fishing")) return "harubot";
     if (p.includes("harumod")) return "harumod";
     return "home";
   }

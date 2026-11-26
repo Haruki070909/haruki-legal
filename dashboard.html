@@ -9933,6 +9933,14 @@
         const token = params.get("access_token");
         if (token) {
           localStorage.setItem("discord_access_token", token);
+          try {
+            const ret = sessionStorage.getItem("haru_oauth_return_to");
+            if (ret && ret.startsWith("./")) {
+              sessionStorage.removeItem("haru_oauth_return_to");
+              window.location.replace(ret);
+              return;
+            }
+          } catch (_) {}
           window.history.replaceState(null, "", window.location.pathname);
           fetchDiscordData(token);
           return;
