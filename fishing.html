@@ -64,6 +64,23 @@
       image-rendering: pixelated;
       image-rendering: crisp-edges;
     }
+    .px-svg {
+      display: inline-block;
+      vertical-align: -0.18em;
+      flex-shrink: 0;
+      shape-rendering: crispEdges;
+      image-rendering: pixelated;
+    }
+    .hud-label > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .inline-ico {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
     /* Pixel Top Bar */
     .navbar {
@@ -487,6 +504,10 @@
     }
 
     .cast-btn-main {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
       min-width: 248px;
       padding: 14px 30px;
       font-family: var(--font-px);
@@ -578,6 +599,10 @@
       margin-top: 12px;
     }
     .move-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       padding: 12px 8px;
       background: var(--px-panel);
       border: 2px solid var(--px-border);
@@ -663,6 +688,9 @@
       margin: 16px 0 22px;
     }
     .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 5px 10px;
       font-size: 11.5px;
       font-weight: 700;
@@ -683,6 +711,9 @@
       max-width: min(360px, calc(100vw - 32px));
     }
     .toast {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       background: #0e1e30;
       border: 2px solid var(--px-cyan);
       border-left: 5px solid var(--px-cyan);
@@ -763,6 +794,10 @@
       .navbar { padding: calc(7px + env(safe-area-inset-top, 0px)) 8px 7px; }
       .nav-inner { gap: 5px; }
       .brand-title { display: none; }
+      .is-standalone .brand-title { display: flex !important; gap: 6px; }
+      .is-standalone .brand-title img { width: 26px; height: 26px; }
+      .is-standalone .brand-title .px-logo-text { font-size: 18px; }
+      .hide-xs { display: none; }
       .brand-back { padding: 4px 7px; font-size: 11px; }
       .brand-back span { display: none; }
       .nav-controls { gap: 4px; }
@@ -813,7 +848,7 @@
         cursor: pointer;
         position: relative;
       }
-      .hotbar-btn .hb-ico { font-size: 15px; line-height: 1.1; }
+      .hotbar-btn .hb-ico { display: flex; align-items: center; justify-content: center; height: 20px; line-height: 1; }
       .hotbar-btn.active {
         background: #14364a;
         border-color: var(--px-mint);
@@ -837,10 +872,10 @@
   <header class="navbar">
     <div class="nav-inner">
       <div class="brand-group">
-        <a href="./harubot.html" class="brand-back" title="HaruBot">◀ <span data-t="backBot">HaruBot</span></a>
+        <a href="./harubot.html" class="brand-back" data-hide-standalone title="HaruBot"><span id="ico-back-slot"></span><span data-t="backBot">HaruBot</span></a>
         <div class="brand-title">
           <img src="./icons/fishing-app-icon-192.png" class="px-icon" alt="Haru Fishing" />
-          <span class="px-logo-text">HARU FISHING RPG</span>
+          <span class="px-logo-text">HARU FISHING<span class="hide-xs"> RPG</span></span>
         </div>
       </div>
       <div class="nav-controls">
@@ -848,8 +883,8 @@
           <span class="sync-dot"></span>
           <span class="sync-label" id="bridge-label">Checking...</span>
         </div>
-        <button type="button" id="btn-sfx" class="btn btn-ghost btn-sm" onclick="toggleSfx()" title="8-bit SFX">🔊</button>
-        <button type="button" id="btn-install-top" data-hide-standalone class="btn btn-gold btn-sm" onclick="triggerInstallGame()">⬇ <span data-t="installBtn">Tải Game</span></button>
+        <button type="button" id="btn-sfx" class="btn btn-ghost btn-sm" onclick="toggleSfx()" title="8-bit SFX"></button>
+        <button type="button" id="btn-install-top" data-hide-standalone class="btn btn-gold btn-sm" onclick="triggerInstallGame()"><span id="ico-install-slot"></span><span data-t="installBtn">Tải Game</span></button>
         <div class="lang-wrap">
           <button type="button" class="lang-btn" id="btn-lang-vi" onclick="setLang('vi')">VI</button>
           <button type="button" class="lang-btn" id="btn-lang-en" onclick="setLang('en')">EN</button>
@@ -870,15 +905,27 @@
   </div>
   <div id="toast-wrap"></div>
 
+  <script src="./fishing-pixel-icons.js?v=1"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
     const GATEWAY_URL = "https://sepay-webhook-p0o1.onrender.com";
 
-    // Standalone game PWA registration (independent from ecosystem bottom dock)
+    // Standalone game PWA detection (hides Haru Ecosystem back button when installed/running as App)
+    try {
+      const qsBoot = new URLSearchParams(window.location.search);
+      if (qsBoot.get("source") === "game_pwa") {
+        sessionStorage.setItem("haru_fishing_pwa_mode", "1");
+      }
+    } catch (_) {}
     const isStandaloneGame = Boolean(
-      (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
-      window.navigator.standalone === true
+      (window.matchMedia && (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: fullscreen)").matches ||
+        window.matchMedia("(display-mode: minimal-ui)").matches
+      )) ||
+      window.navigator.standalone === true ||
+      sessionStorage.getItem("haru_fishing_pwa_mode") === "1"
     );
     if (isStandaloneGame) {
       document.documentElement.classList.add("is-standalone");
@@ -958,7 +1005,7 @@
       SFX.enabled = !SFX.enabled;
       localStorage.setItem("haru_fish_sfx", SFX.enabled ? "1" : "0");
       const btn = document.getElementById("btn-sfx");
-      if (btn) btn.textContent = SFX.enabled ? "🔊" : "🔇";
+      if (btn) btn.innerHTML = pxIcon(SFX.enabled ? "sound_on" : "sound_off", 15);
       if (SFX.enabled) SFX.coin();
     }
 
@@ -1068,17 +1115,22 @@
     function fmt(n) { return Number(n || 0).toLocaleString("en-US"); }
 
     function spriteHtml(path, emoji, sm) {
-      const fb = esc(emoji || "🐟");
-      if (!path) return `<div class="${sm ? "sprite-sm" : "sprite-box"}">${fb}</div>`;
+      const key = pxEmojiKey(emoji);
+      const sz = sm ? 28 : 44;
+      if (!path) return `<div class="${sm ? "sprite-sm" : "sprite-box"}">${pxIcon(key, sz)}</div>`;
       const clean = "./" + String(path).replace(/^\/+/, "");
-      return `<div class="${sm ? "sprite-sm" : "sprite-box"}"><img src="${esc(clean)}" alt="" loading="lazy" onerror="this.parentNode.textContent='${fb}'" /></div>`;
+      return `<div class="${sm ? "sprite-sm" : "sprite-box"}"><img src="${esc(clean)}" alt="" loading="lazy" onerror="this.parentNode.innerHTML=pxIcon('${key}',${sz})" /></div>`;
     }
 
-    function toast(msg, kind) {
+    function toast(msg, kind, iconName) {
       const wrap = document.getElementById("toast-wrap");
       const el = document.createElement("div");
       el.className = "toast" + (kind ? " " + kind : "");
-      el.textContent = msg;
+      const ico = iconName || (kind === "ok" ? "check" : (kind === "err" ? "warn" : "sparkle"));
+      const txt = document.createElement("span");
+      txt.textContent = msg;
+      el.innerHTML = pxIcon(ico, 16);
+      el.appendChild(txt);
       wrap.appendChild(el);
       setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 4200);
     }
@@ -1145,7 +1197,7 @@
       }
 
       const quickInstallBtn = deferredGameInstall
-        ? `<button class="btn btn-emerald" style="width:100%;margin-top:12px;padding:11px 14px;font-size:13.5px;" onclick="runNativeInstallPrompt()">⚡ ${isVi ? "Cài Đặt Ngay (1-Click App)" : "Install Now (1-Click App)"}</button>`
+        ? `<button class="btn btn-emerald" style="width:100%;margin-top:12px;padding:11px 14px;font-size:13.5px;" onclick="runNativeInstallPrompt()">${pxIcon("bolt", 15)} ${isVi ? "Cài Đặt Ngay (1-Click App)" : "Install Now (1-Click App)"}</button>`
         : "";
 
       openModal(`
@@ -1288,8 +1340,12 @@
     }
 
     async function bootstrap() {
+      const backSlot = document.getElementById("ico-back-slot");
+      if (backSlot) backSlot.innerHTML = pxIcon("back", 13);
+      const instSlot = document.getElementById("ico-install-slot");
+      if (instSlot) instSlot.innerHTML = pxIcon("download", 14);
       const sfxBtn = document.getElementById("btn-sfx");
-      if (sfxBtn) sfxBtn.textContent = SFX.enabled ? "🔊" : "🔇";
+      if (sfxBtn) sfxBtn.innerHTML = pxIcon(SFX.enabled ? "sound_on" : "sound_off", 15);
 
       setLang(APP.lang);
       checkBridgeHealth();
@@ -1447,7 +1503,7 @@
         } else if (res.mode === "line_snapped") {
           SFX.miss();
         }
-        if (res.level_up) toast(`🎉 LEVEL UP! Đạt cấp ${res.level}!`, "ok");
+        if (res.level_up) toast(`LEVEL UP! Đạt cấp ${res.level}!`, "ok", "party");
       } catch (e) {
         SFX.miss();
         toast(e.message || "Lỗi kết nối khi thả cần", "err");
@@ -1481,15 +1537,15 @@
               level_up: res.level_up,
               bonus_material: res.bonus_material || null
             };
-            toast(`🎉 Kéo thành công ${res.fish_name}! (+${fmt(res.xp)} XP)`, "ok");
+            toast(`Kéo thành công ${res.fish_name}! (+${fmt(res.xp)} XP)`, "ok", "party");
           } else {
             SFX.miss();
             APP.lastCastResult = { mode: "tension_lost" };
-            toast("💨 Cá đã tuột khỏi dây!", "err");
+            toast("Cá đã tuột khỏi dây!", "err", "puff");
           }
         } else {
           res.correct ? SFX.coin() : SFX.miss();
-          toast(res.correct ? "✅ Chuẩn! Tiếp tục lượt tiếp theo" : "⚠️ Trượt nhịp, cẩn thận ở lượt sau!", res.correct ? "ok" : "err");
+          toast(res.correct ? "Chuẩn! Tiếp tục lượt tiếp theo" : "Trượt nhịp, cẩn thận ở lượt sau!", res.correct ? "ok" : "err", res.correct ? "check" : "warn");
         }
       } finally { APP.busyAction = false; render(); }
     }
@@ -1503,7 +1559,7 @@
       const res = await fishRpc("toggle_lock", { catch_id: catchId });
       if (!res.ok) { toast(res.error || "Không khóa được cá", "err"); return; }
       SFX.coin();
-      toast(res.message || "Đã cập nhật khóa cá", "ok");
+      toast(res.message || "Đã cập nhật khóa cá", "ok", "lock");
       await refreshInventory();
     }
 
@@ -1511,7 +1567,7 @@
       const res = await fishRpc("sell_catch", { catch_id: catchId });
       if (!res.ok) { toast(res.error || "Không bán được", "err"); return; }
       SFX.coin();
-      toast(`💰 Bán cá thành công: +${fmt(res.rucoin_gained)} RuCoin!`, "ok");
+      toast(`Bán cá thành công: +${fmt(res.rucoin_gained)} RuCoin!`, "ok", "moneybag");
       await refreshInventory();
     }
 
@@ -1520,7 +1576,7 @@
       const res = await fishRpc("sell_all", {});
       if (!res.ok) { toast(res.error || "Không có cá để bán", "err"); return; }
       SFX.coin();
-      toast(`💰 Đã bán ${res.sold_count} cá! Nhận +${fmt(res.rucoin_gained)} RuCoin.`, "ok");
+      toast(`Đã bán ${res.sold_count} cá! Nhận +${fmt(res.rucoin_gained)} RuCoin.`, "ok", "moneybag");
       APP.inventory = null;
       if (APP.activeTab === "bag") await refreshInventory(); else render();
     }
@@ -1530,7 +1586,7 @@
       const res = await fishRpc("sell_rarity", { rarity_id: rarityId });
       if (!res.ok) { toast(res.error || "Không có cá bậc này", "err"); return; }
       SFX.coin();
-      toast(`💰 Đã bán ${res.sold_count} cá (${rarityId}): +${fmt(res.rucoin_gained)} RuCoin!`, "ok");
+      toast(`Đã bán ${res.sold_count} cá (${rarityId}): +${fmt(res.rucoin_gained)} RuCoin!`, "ok", "moneybag");
       await refreshInventory();
     }
 
@@ -1538,7 +1594,7 @@
       const res = await fishRpc("sell_item", { item_id: itemId });
       if (!res.ok) { toast(res.error || "Không bán được", "err"); return; }
       SFX.coin();
-      toast(`💰 Đã bán ${res.item_name} ×${res.sold_count}: +${fmt(res.rucoin_gained)} RuCoin`, "ok");
+      toast(`Đã bán ${res.item_name} ×${res.sold_count}: +${fmt(res.rucoin_gained)} RuCoin`, "ok", "moneybag");
       await refreshInventory();
     }
 
@@ -1592,9 +1648,10 @@
       if (!res.ok) { toast(res.error || "Lỗi nâng Rank", "err"); return; }
       res.outcome === "success" ? SFX.forge() : SFX.miss();
       const msg = res.outcome === "success"
-        ? `✨ Thành công! Lên Rank ${res.new_rank} (-${fmt(res.fee)} RC)`
-        : (res.outcome === "downgrade" ? `⬇️ Tụt Rank: ${res.old_rank} → ${res.new_rank}` : `💨 Hụt! Giữ nguyên Rank ${res.new_rank}`);
-      toast(msg, res.outcome === "success" ? "ok" : "err");
+        ? `Thành công! Lên Rank ${res.new_rank} (-${fmt(res.fee)} RC)`
+        : (res.outcome === "downgrade" ? `Tụt Rank: ${res.old_rank} -> ${res.new_rank}` : `Hụt! Giữ nguyên Rank ${res.new_rank}`);
+      const ico = res.outcome === "success" ? "sparkle" : (res.outcome === "downgrade" ? "down_arrow" : "puff");
+      toast(msg, res.outcome === "success" ? "ok" : "err", ico);
       await refreshWorkshop();
     }
 
@@ -1603,9 +1660,10 @@
       if (!res.ok) { toast(res.error || "Lỗi nâng Rarity", "err"); return; }
       res.outcome === "success" ? SFX.catch(true) : SFX.miss();
       const msg = res.outcome === "success"
-        ? `🌟 Lên bậc ${res.new_rarity}! (Rank reset về F-)`
-        : (res.outcome === "downgrade" ? `⬇️ Giảm bậc về ${res.new_rarity}` : `💨 Hụt! Giữ ${res.new_rarity}`);
-      toast(msg, res.outcome === "success" ? "ok" : "err");
+        ? `Lên bậc ${res.new_rarity}! (Rank reset về F-)`
+        : (res.outcome === "downgrade" ? `Giảm bậc về ${res.new_rarity}` : `Hụt! Giữ ${res.new_rarity}`);
+      const ico = res.outcome === "success" ? "star" : (res.outcome === "downgrade" ? "down_arrow" : "puff");
+      toast(msg, res.outcome === "success" ? "ok" : "err", ico);
       await refreshWorkshop();
     }
 
@@ -1615,7 +1673,11 @@
       const res = await fishRpc("forge_gear", { main_id: mainId, phoi_id: phoiId });
       if (!res.ok) { toast(res.error || "Ghép thất bại", "err"); return; }
       res.outcome === "success" ? SFX.forge() : SFX.miss();
-      toast(res.outcome === "success" ? `⚒️ Ghép thành công! Lên Rank ${res.new_rank}` : `💨 Ghép ${res.outcome} -> Rank ${res.new_rank}`, res.outcome === "success" ? "ok" : "err");
+      toast(
+        res.outcome === "success" ? `Ghép thành công! Lên Rank ${res.new_rank}` : `Ghép ${res.outcome} -> Rank ${res.new_rank}`,
+        res.outcome === "success" ? "ok" : "err",
+        res.outcome === "success" ? "anvil" : "puff"
+      );
       await refreshWorkshop();
     }
 
@@ -1663,14 +1725,14 @@
       if (res.won) {
         SFX.catch(true);
         APP.cosmicChest = null;
-        openModal(`<h3 style="margin-top:0;color:var(--px-gold);">🎁 Mở Rương Vũ Trụ Thành Công!</h3>
+        openModal(`<h3 class="inline-ico" style="margin-top:0;color:var(--px-gold);">${pxIcon("gift", 20)} Mở Rương Vũ Trụ Thành Công!</h3>
           <div class="stack">${(res.items || []).map(it => `<div class="sub-card row-between"><strong>${esc(it.name)}</strong><span class="px-num" style="font-size:20px;">×${it.quantity}</span></div>`).join("")}</div>
           <div style="margin-top:16px;text-align:right;"><button class="btn btn-primary" onclick="closeModal()">Đóng</button></div>`);
         await refreshInventory();
       } else if (res.done) {
         SFX.miss();
         APP.cosmicChest = null;
-        openModal(`<h3 style="margin-top:0;color:var(--px-coral);">🔒 Rương đã khóa lại!</h3>
+        openModal(`<h3 class="inline-ico" style="margin-top:0;color:var(--px-coral);">${pxIcon("lock", 20)} Rương đã khóa lại!</h3>
           <p class="muted">Đã hết 4 lượt thử.</p>
           <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>`);
       } else {
@@ -1682,23 +1744,23 @@
     function openCosmicModal() {
       const c = APP.cosmicChest;
       if (!c) return;
-      const syms = c.symbols || ["🐟", "🪸", "🫧", "🔱"];
+      const syms = c.symbols || ["fish", "coral", "bubble", "trident"];
       const last = c.lastRes;
       const lockedPos = new Set(last ? (last.correct_positions || []) : []);
       const selectors = [0, 1, 2].map(idx => `
         <div class="sub-card">
-          <div class="muted" style="font-size:11.5px;margin-bottom:6px;">Vị trí ${idx + 1} ${lockedPos.has(idx) ? "✅ Đúng" : ""}</div>
-          <select class="select" style="width:100%;font-size:18px;" onchange="APP.cosmicChoices[${idx}]=this.value">
-            ${syms.map(s => `<option value="${esc(s)}" ${APP.cosmicChoices[idx] === s ? "selected" : ""}>${esc(s)}</option>`).join("")}
-          </select>
+          <div class="muted inline-ico" style="font-size:11.5px;margin-bottom:8px;">Vị trí ${idx + 1} ${lockedPos.has(idx) ? pxIcon("check", 13) + " Đúng" : ""}</div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;">
+            ${syms.map(s => `<button type="button" class="btn ${APP.cosmicChoices[idx] === s ? "btn-primary" : "btn-ghost"} btn-sm" style="padding:7px;" onclick="APP.cosmicChoices[${idx}]=this.getAttribute('data-sym');openCosmicModal();" data-sym="${esc(s)}">${pxIcon(pxEmojiKey(s), 22)}</button>`).join("")}
+          </div>
         </div>`).join("");
       openModal(`
-        <h3 style="margin-top:0;color:var(--px-violet);">🔮 ${esc(c.chest_name)}</h3>
+        <h3 class="inline-ico" style="margin-top:0;color:var(--px-violet);">${pxIcon("relic", 20)} ${esc(c.chest_name)}</h3>
         <p class="muted" style="font-size:12.5px;">Chọn đúng 3 ký hiệu bí mật (${c.reward_count} vật phẩm). ${last ? `Còn ${last.attempts_left} lượt · Đúng ${last.matches}/3 vị trí.` : "Bạn có 4 lượt thử."}</p>
         <div class="grid-3">${selectors}</div>
         <div class="row-between" style="margin-top:16px;">
           <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>
-          <button class="btn btn-primary" onclick="doCosmicGuess()">🔓 Thử mở rương</button>
+          <button class="btn btn-primary" onclick="doCosmicGuess()">${pxIcon("unlock", 14)} Thử mở rương</button>
         </div>
       `);
     }
@@ -1710,7 +1772,7 @@
           <strong class="px-num" style="font-size:20px;">×${r.quantity}</strong>
         </div>`).join("");
       openModal(`
-        <h3 style="margin-top:0;color:var(--px-gold);">🎁 Đã mở ${res.quantity}× ${esc(res.chest_name)}</h3>
+        <h3 class="inline-ico" style="margin-top:0;color:var(--px-gold);">${pxIcon("gift", 20)} Đã mở ${res.quantity}× ${esc(res.chest_name)}</h3>
         <div class="stack">${rows || '<p class="muted">Không có phần thưởng</p>'}</div>
         <div style="margin-top:16px;text-align:right;"><button class="btn btn-gold" onclick="closeModal()">Tuyệt vời</button></div>
       `);
@@ -1721,7 +1783,7 @@
       if (!res.ok) { toast(res.error || "Không thả vào bể được", "err"); return; }
       SFX.coin();
       APP.aquarium = res; APP.inventory = null;
-      toast("🐠 Đã thả cá vào Thủy Cung!", "ok");
+      toast("Đã thả cá vào Thủy Cung!", "ok", "aqua");
       render();
     }
 
@@ -1729,7 +1791,7 @@
       const res = await fishRpc("aquarium_remove", { catch_id: catchId });
       if (!res.ok) { toast(res.error || "Lỗi", "err"); return; }
       APP.aquarium = res; APP.inventory = null;
-      toast("Đã đưa cá về túi đồ.", "ok");
+      toast("Đã đưa cá về túi đồ.", "ok", "bag");
       render();
     }
 
@@ -1738,7 +1800,7 @@
       if (!res.ok) { toast(res.error || "Chưa có RuCoin để thu hoạch", "err"); return; }
       SFX.coin();
       APP.aquarium = res;
-      toast(`💰 Thu hoạch +${fmt(res.collected)} RuCoin từ Thủy Cung!`, "ok");
+      toast(`Thu hoạch +${fmt(res.collected)} RuCoin từ Thủy Cung!`, "ok", "moneybag");
       render();
     }
 
@@ -1746,7 +1808,11 @@
       const res = await fishRpc("boss_fight", {});
       if (!res.ok) { toast(res.error || "Không tấn công được", "err"); return; }
       SFX.forge();
-      toast(res.defeated ? `🏆 Hạ gục ${res.boss_name}! Phần thưởng đã được chia!` : `⚔️ Gây ${fmt(res.damage)} sát thương lên ${res.boss_name}!`, "ok");
+      toast(
+        res.defeated ? `Hạ gục ${res.boss_name}! Phần thưởng đã được chia!` : `Gây ${fmt(res.damage)} sát thương lên ${res.boss_name}!`,
+        "ok",
+        res.defeated ? "trophy" : "sword"
+      );
       render();
     }
 
@@ -1778,8 +1844,8 @@
       slot.innerHTML = `
         <div class="wrap-row" style="gap:5px;">
           <div class="user-chip"><img src="${esc(av)}" alt="" /><span>${esc(u.global_name || u.username)}</span></div>
-          <button class="btn btn-ghost btn-sm" onclick="loadState()" title="${t("refresh")}">↻</button>
-          <button class="btn btn-ghost btn-sm" onclick="logoutDiscord()" title="${t("logout")}">⏻</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadState()" title="${t("refresh")}">${pxIcon("refresh", 14)}</button>
+          <button class="btn btn-ghost btn-sm" onclick="logoutDiscord()" title="${t("logout")}">${pxIcon("power", 14)}</button>
         </div>`;
     }
 
@@ -1791,13 +1857,13 @@
         return;
       }
       const items = [
-        { k: "fish", ico: "🎣", lbl: APP.lang === "en" ? "Fish" : "Câu" },
-        { k: "bag", ico: "🎒", lbl: APP.lang === "en" ? "Bag" : "Túi", badge: st.stats.kept_catches || 0 },
-        { k: "gear", ico: "⚔️", lbl: APP.lang === "en" ? "Gear" : "Đồ" },
-        { k: "shop", ico: "🛒", lbl: "Shop" },
-        { k: "forge", ico: "⚒️", lbl: APP.lang === "en" ? "Forge" : "Rèn", badge: st.skills.available_points || 0 },
-        { k: "aqua", ico: "🐠", lbl: APP.lang === "en" ? "Tank" : "Bể", badge: st.boss ? "!" : 0 },
-        { k: "codex", ico: "🏆", lbl: "BXH" }
+        { k: "fish", ico: pxIcon("rod", 18), lbl: APP.lang === "en" ? "Fish" : "Câu" },
+        { k: "bag", ico: pxIcon("bag", 18), lbl: APP.lang === "en" ? "Bag" : "Túi", badge: st.stats.kept_catches || 0 },
+        { k: "gear", ico: pxIcon("sword", 18), lbl: APP.lang === "en" ? "Gear" : "Đồ" },
+        { k: "shop", ico: pxIcon("shop", 18), lbl: "Shop" },
+        { k: "forge", ico: pxIcon("anvil", 18), lbl: APP.lang === "en" ? "Forge" : "Rèn", badge: st.skills.available_points || 0 },
+        { k: "aqua", ico: pxIcon("aqua", 18), lbl: APP.lang === "en" ? "Tank" : "Bể", badge: st.boss ? "!" : 0 },
+        { k: "codex", ico: pxIcon("trophy", 18), lbl: "BXH" }
       ];
       bar.className = "visible";
       bar.innerHTML = items.map(it => `
@@ -1820,16 +1886,16 @@
             <h1 class="px-num" style="margin:0 0 8px;font-size:34px;color:var(--px-gold);line-height:1;">${t("loginTitle")}</h1>
             <p class="muted" style="font-size:13.5px;line-height:1.55;">${t("loginDesc")}</p>
             <div class="feature-chips">
-              <span class="feature-chip">🪙 RuCoin Thật</span>
-              <span class="feature-chip">🏝️ 6 Đảo · 9 Thời Tiết</span>
-              <span class="feature-chip">⚒️ Rèn Rank & Rarity</span>
-              <span class="feature-chip">🐠 Thủy Cung +1%/giờ</span>
-              <span class="feature-chip">🐉 World Boss</span>
-              <span class="feature-chip">🏆 BXH Global</span>
+              <span class="feature-chip">${pxIcon("coin", 14)} RuCoin Thật</span>
+              <span class="feature-chip">${pxIcon("island", 14)} 6 Đảo · 9 Thời Tiết</span>
+              <span class="feature-chip">${pxIcon("anvil", 14)} Rèn Rank & Rarity</span>
+              <span class="feature-chip">${pxIcon("aqua", 14)} Thủy Cung +1%/giờ</span>
+              <span class="feature-chip">${pxIcon("dragon", 14)} World Boss</span>
+              <span class="feature-chip">${pxIcon("trophy", 14)} BXH Global</span>
             </div>
             <div class="wrap-row" style="justify-content:center;gap:10px;">
-              <button class="btn btn-primary" style="padding:12px 22px;font-size:14px;" onclick="loginWithDiscord()">🎮 ${t("loginBtn")}</button>
-              <button data-hide-standalone class="btn btn-gold" style="padding:12px 20px;font-size:14px;" onclick="triggerInstallGame()">⬇ ${t("installBtn")}</button>
+              <button class="btn btn-primary" style="padding:12px 22px;font-size:14px;" onclick="loginWithDiscord()">${pxIcon("gamepad", 16)} ${t("loginBtn")}</button>
+              <button data-hide-standalone class="btn btn-gold" style="padding:12px 20px;font-size:14px;" onclick="triggerInstallGame()">${pxIcon("download", 15)} ${t("installBtn")}</button>
             </div>
           </section>`;
         return;
@@ -1839,11 +1905,11 @@
         renderHotbar(null);
         root.innerHTML = `
           <div class="auth-gate">
-            <div style="font-size:34px;margin-bottom:8px;">⚠️</div>
+            <div style="margin-bottom:8px;">${pxIcon("warn", 38)}</div>
             <h3 class="px-num" style="margin:0 0 8px;font-size:26px;color:var(--px-coral);">${APP.lang === "en" ? "COULD NOT SYNC WITH HARUBOT BRIDGE" : "CHƯA ĐỒNG BỘ ĐƯỢC VỚI HARUBOT BRIDGE"}</h3>
             <p class="muted" style="font-size:13px;line-height:1.5;">${esc(APP.lastError || (APP.lang === "en" ? "Please check that HaruBot on VibeHost is Online and retry." : "Hãy chắc chắn HaruBot trên VibeHost đang Online rồi bấm thử lại."))}</p>
             <div class="wrap-row" style="justify-content:center;margin-top:16px;">
-              <button class="btn btn-primary" onclick="renderLoading('Đang thử kết nối lại...');loadState()">↻ ${t("refresh")}</button>
+              <button class="btn btn-primary" onclick="renderLoading('Đang thử kết nối lại...');loadState()">${pxIcon("refresh", 15)} ${t("refresh")}</button>
               <button class="btn btn-ghost" onclick="logoutDiscord();loginWithDiscord();">${APP.lang === "en" ? "Re-login Discord" : "Đăng nhập lại Discord"}</button>
             </div>
           </div>`;
@@ -1858,10 +1924,10 @@
         renderHotbar(null);
         root.innerHTML = `
           <section class="auth-gate">
-            <div style="font-size:38px;margin-bottom:8px;">📜</div>
+            <div style="margin-bottom:8px;">${pxIcon("scroll", 40)}</div>
             <h2 class="px-num" style="margin:0 0 8px;font-size:28px;color:var(--px-gold);">${t("tosTitle")}</h2>
             <p class="muted" style="font-size:13.5px;line-height:1.55;">${t("tosDesc")}</p>
-            <button class="btn btn-emerald" style="margin-top:16px;padding:12px 24px;" onclick="doAcceptTos()">✅ ${t("tosAccept")}</button>
+            <button class="btn btn-emerald" style="margin-top:16px;padding:12px 24px;" onclick="doAcceptTos()">${pxIcon("check", 16)} ${t("tosAccept")}</button>
           </section>`;
         return;
       }
@@ -1881,41 +1947,41 @@
       const hud = `
         <div class="hud-grid">
           <div class="hud-stat">
-            <div class="hud-label"><span>🪙 RuCoin</span></div>
+            <div class="hud-label"><span>${pxIcon("coin", 14)} RuCoin</span></div>
             <div class="hud-val" style="color:var(--px-gold);">${fmt(u.rucoin)}</div>
             <div class="hud-sub">Ví Discord 1-1</div>
           </div>
           <div class="hud-stat">
-            <div class="hud-label"><span>⭐ Fish Level</span><span class="px-num" style="font-size:14px;">${xpPct}%</span></div>
+            <div class="hud-label"><span>${pxIcon("star", 14)} Fish Level</span><span class="px-num" style="font-size:14px;">${xpPct}%</span></div>
             <div class="hud-val">LV.${fmt(u.level)}</div>
             <div class="xp-track"><div class="xp-fill" style="width:${xpPct}%;"></div></div>
           </div>
           <div class="hud-stat">
-            <div class="hud-label"><span>🍀 Stats</span><span class="px-num" style="font-size:14px;">⏱️${s.cooldown_seconds}S</span></div>
+            <div class="hud-label"><span>${pxIcon("clover", 14)} Stats</span><span class="px-num" style="font-size:14px;">${pxIcon("clock", 13)} ${s.cooldown_seconds}S</span></div>
             <div class="hud-val" style="color:var(--px-mint);">+${s.effective_luck} LUCK</div>
             <div class="hud-sub">Tải: ${fmt(s.max_weight_kg)} kg</div>
           </div>
           <div class="hud-stat">
-            <div class="hud-label"><span>${w ? w.emoji : "🌊"} Thời tiết</span><span class="px-num" style="font-size:14px;">${w ? Math.floor(wRem/60) + "M" : ""}</span></div>
+            <div class="hud-label"><span>${pxWeatherIcon(w, 15)} Thời tiết</span><span class="px-num" style="font-size:14px;">${w ? Math.floor(wRem/60) + "M" : ""}</span></div>
             <div class="hud-val text-sm-val">${w ? esc(w.name) : "Biển lặng"}</div>
             <div class="hud-sub">${w ? `+${w.luck_bonus} Luck · x${w.luck_multiplier}` : "Không hiệu ứng"}</div>
           </div>
           <div class="hud-stat">
-            <div class="hud-label"><span>🏝️ Đảo & Túi</span></div>
+            <div class="hud-label"><span>${pxIcon("island", 14)} Đảo & Túi</span></div>
             <div class="hud-val text-sm-val">${esc(isl.name)}</div>
-            ${guildSelect || `<div class="hud-sub">🐟 ${s.kept_catches} cá · 🧰 ${s.chests_count} rương</div>`}
+            ${guildSelect || `<div class="hud-sub inline-ico">${pxIcon("fish", 12)} ${s.kept_catches} cá · ${pxIcon("chest", 12)} ${s.chests_count} rương</div>`}
           </div>
         </div>`;
 
       const tabs = `
         <div class="rpg-tabs">
-          <button class="rpg-tab ${APP.activeTab === "fish" ? "active" : ""}" onclick="switchTab('fish')">🎣 ${t("tabFish")}</button>
-          <button class="rpg-tab ${APP.activeTab === "bag" ? "active" : ""}" onclick="switchTab('bag')">🎒 ${t("tabBag")} <span class="tab-badge">${s.kept_catches}</span></button>
-          <button class="rpg-tab ${APP.activeTab === "gear" ? "active" : ""}" onclick="switchTab('gear')">⚔️ ${t("tabGear")}</button>
-          <button class="rpg-tab ${APP.activeTab === "shop" ? "active" : ""}" onclick="switchTab('shop')">🛒 ${t("tabShop")}</button>
-          <button class="rpg-tab ${APP.activeTab === "forge" ? "active" : ""}" onclick="switchTab('forge')">⚒️ ${t("tabForge")} ${st.skills.available_points > 0 ? `<span class="tab-badge">${st.skills.available_points} SP</span>` : ""}</button>
-          <button class="rpg-tab ${APP.activeTab === "aqua" ? "active" : ""}" onclick="switchTab('aqua')">🐠 ${t("tabAqua")} ${st.boss ? `<span class="tab-badge" style="color:var(--px-coral);">BOSS</span>` : ""}</button>
-          <button class="rpg-tab ${APP.activeTab === "codex" ? "active" : ""}" onclick="switchTab('codex')">📖 ${t("tabCodex")}</button>
+          <button class="rpg-tab ${APP.activeTab === "fish" ? "active" : ""}" onclick="switchTab('fish')">${pxIcon("rod", 16)} ${t("tabFish")}</button>
+          <button class="rpg-tab ${APP.activeTab === "bag" ? "active" : ""}" onclick="switchTab('bag')">${pxIcon("bag", 16)} ${t("tabBag")} <span class="tab-badge">${s.kept_catches}</span></button>
+          <button class="rpg-tab ${APP.activeTab === "gear" ? "active" : ""}" onclick="switchTab('gear')">${pxIcon("sword", 16)} ${t("tabGear")}</button>
+          <button class="rpg-tab ${APP.activeTab === "shop" ? "active" : ""}" onclick="switchTab('shop')">${pxIcon("shop", 16)} ${t("tabShop")}</button>
+          <button class="rpg-tab ${APP.activeTab === "forge" ? "active" : ""}" onclick="switchTab('forge')">${pxIcon("anvil", 16)} ${t("tabForge")} ${st.skills.available_points > 0 ? `<span class="tab-badge">${st.skills.available_points} SP</span>` : ""}</button>
+          <button class="rpg-tab ${APP.activeTab === "aqua" ? "active" : ""}" onclick="switchTab('aqua')">${pxIcon("aqua", 16)} ${t("tabAqua")} ${st.boss ? `<span class="tab-badge" style="color:var(--px-coral);">BOSS</span>` : ""}</button>
+          <button class="rpg-tab ${APP.activeTab === "codex" ? "active" : ""}" onclick="switchTab('codex')">${pxIcon("book", 16)} ${t("tabCodex")}</button>
         </div>`;
 
       let content = "";
@@ -1940,26 +2006,26 @@
       let centerHtml = "";
       if (pending) {
         const moveText = {
-          pull: "🌊 Cá đang lao mạnh — hãy bấm KÉO MẠNH!",
-          hold: "⚖️ Dây đang căng vừa — hãy bấm GIỮ DÂY!",
-          loosen: "🌀 Cá đang vùng xuống sâu — hãy bấm NỚI DÂY!"
+          pull: `${pxIcon("wave", 15)} Cá đang lao mạnh — hãy bấm KÉO MẠNH!`,
+          hold: `${pxIcon("scale", 15)} Dây đang căng vừa — hãy bấm GIỮ DÂY!`,
+          loosen: `${pxIcon("potion", 15)} Cá đang vùng xuống sâu — hãy bấm NỚI DÂY!`
         }[pending.expected_move] || "Chọn thao tác!";
         centerHtml = `
           <div class="tension-box">
             <div class="wrap-row" style="justify-content:center;margin-bottom:10px;">
-              ${spriteHtml(pending.image_path, "🦈", false)}
+              ${spriteHtml(pending.image_path, "fish", false)}
               <div style="text-align:left;">
                 <span class="rarity-pill" style="color:${esc(pending.rarity_color)};">${esc(pending.rarity_name)}</span>
                 <div style="font-size:17px;font-weight:700;margin-top:4px;">${esc(pending.fish_name)}</div>
-                <div class="muted" style="font-size:12px;">⚖️ ${pending.weight} kg · 🪙 ${fmt(pending.value)} RC ${pending.bonus_count ? `· +${pending.bonus_count} cá kèm` : ""}</div>
+                <div class="muted inline-ico" style="font-size:12px;">${pxIcon("scale", 13)} ${pending.weight} kg · ${pxIcon("coin", 13)} ${fmt(pending.value)} RC ${pending.bonus_count ? `· +${pending.bonus_count} cá kèm` : ""}</div>
               </div>
             </div>
-            <div style="font-size:13.5px;font-weight:700;color:var(--px-gold);">${moveText}</div>
+            <div class="inline-ico" style="justify-content:center;font-size:13.5px;font-weight:700;color:var(--px-gold);">${moveText}</div>
             <div class="muted" style="font-size:12px;margin-top:4px;">Lượt ${pending.turn}/${pending.max_turns} · Đúng ${pending.progress}/2 để giữ cá</div>
             <div class="tension-moves">
-              <button class="move-btn ${pending.expected_move === "pull" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','pull')">🪝 Kéo mạnh</button>
-              <button class="move-btn ${pending.expected_move === "hold" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','hold')">✋ Giữ dây</button>
-              <button class="move-btn ${pending.expected_move === "loosen" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','loosen')">🪢 Nới dây</button>
+              <button class="move-btn ${pending.expected_move === "pull" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','pull')">${pxIcon("hook", 16)} Kéo mạnh</button>
+              <button class="move-btn ${pending.expected_move === "hold" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','hold')">${pxIcon("hand", 16)} Giữ dây</button>
+              <button class="move-btn ${pending.expected_move === "loosen" ? "recommended" : ""}" onclick="doTensionMove('${esc(pending.pending_id)}','loosen')">${pxIcon("rope", 16)} Nới dây</button>
             </div>
             <button class="btn btn-ghost btn-sm" style="margin-top:12px;" onclick="doAbandonPending('${esc(pending.pending_id)}')">Bỏ qua cá này</button>
           </div>`;
@@ -1975,20 +2041,24 @@
                 <div style="flex:1;min-width:0;">
                   <div class="wrap-row" style="gap:5px;">
                     <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
-                    ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">✨ ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
+                    ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("sparkle", 12)} ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
                     ${c.serial_number ? `<span class="rarity-pill" style="color:var(--px-gold);">#${String(c.serial_number).padStart(6, "0")}</span>` : ""}
                   </div>
                   <div style="font-size:18px;font-weight:700;margin-top:5px;">${esc(c.fish_name)}</div>
-                  <div class="muted" style="font-size:12.5px;margin-top:3px;">
-                    ⚖️ <strong>${c.weight} kg</strong> · 🪙 <strong style="color:var(--px-gold);">${fmt(c.value)} RC</strong> · ✨ <strong>+${fmt(r.gained_xp)} XP</strong>
+                  <div class="muted wrap-row" style="font-size:12.5px;margin-top:3px;gap:6px;">
+                    <span class="inline-ico">${pxIcon("scale", 13)} <strong>${c.weight} kg</strong></span>
+                    <span>·</span>
+                    <span class="inline-ico">${pxIcon("coin", 13)} <strong style="color:var(--px-gold);">${fmt(c.value)} RC</strong></span>
+                    <span>·</span>
+                    <span class="inline-ico">${pxIcon("sparkle", 13)} <strong>+${fmt(r.gained_xp)} XP</strong></span>
                   </div>
                 </div>
               </div>
               ${bList ? `<div class="wrap-row" style="margin-top:10px;">${bList}</div>` : ""}
-              ${r.bonus_material ? `<div class="sub-card" style="margin-top:10px;padding:7px 10px;font-size:12px;">🪨 Nhặt thêm nguyên liệu: <strong>${esc(r.bonus_material.name)}</strong></div>` : ""}
+              ${r.bonus_material ? `<div class="sub-card inline-ico" style="margin-top:10px;padding:7px 10px;font-size:12px;">${pxIcon("rock", 14)} Nhặt thêm nguyên liệu: <strong>${esc(r.bonus_material.name)}</strong></div>` : ""}
               ${c.catch_id ? `<div class="wrap-row" style="margin-top:10px;">
-                <button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}');APP.lastCastResult=null;">💰 Bán (+${fmt(c.value)})</button>
-                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">🔒 Khóa cá</button>
+                <button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}');APP.lastCastResult=null;">${pxIcon("moneybag", 13)} Bán (+${fmt(c.value)})</button>
+                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">${pxIcon("lock", 13)} Khóa cá</button>
               </div>` : ""}
             </div>`;
         } else if (r.mode === "chest" && r.chest) {
@@ -2016,9 +2086,9 @@
               </div>
             </div>`;
         } else if (r.mode === "line_snapped") {
-          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div style="font-weight:700;color:#fda4af;">💦 Cá quá nặng (${r.fish_weight} kg) làm tuột dây!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Cần chịu tối đa ${fmt(r.max_rod_weight)} kg. Hãy nâng cấp cần hoặc kỹ năng Sức mạnh cần!</div></div>`;
+          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div class="inline-ico" style="font-weight:700;color:#fda4af;">${pxIcon("splash", 16)} Cá quá nặng (${r.fish_weight} kg) làm tuột dây!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Cần chịu tối đa ${fmt(r.max_rod_weight)} kg. Hãy nâng cấp cần hoặc kỹ năng Sức mạnh cần!</div></div>`;
         } else if (r.mode === "tension_lost") {
-          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div style="font-weight:700;color:#fda4af;">💨 Cá hiếm đã thoát mất!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Hãy thả cần tiếp để phục thù.</div></div>`;
+          centerHtml = `<div class="catch-card" style="border-color:var(--px-coral);"><div class="inline-ico" style="font-weight:700;color:#fda4af;">${pxIcon("puff", 16)} Cá hiếm đã thoát mất!</div><div class="muted" style="font-size:12.5px;margin-top:4px;">Hãy thả cần tiếp để phục thù.</div></div>`;
         }
       } else {
         centerHtml = `<div class="muted" style="font-size:13px;max-width:420px;">Thả cần xuống vùng biển <strong style="color:var(--px-text);">${esc(isl ? isl.name : "")}</strong> để săn cá hiếm, đột biến, trang bị & rương báu.</div>`;
@@ -2026,14 +2096,19 @@
 
       const castBtn = !pending ? `
         <button id="cast-btn-live" class="cast-btn-main" ${APP.busyCast || remMs > 0 ? "disabled" : ""} onclick="doCast()">
-          ${APP.busyCast ? `⏳ ${t("casting")}` : (remMs > 0 ? `⏱️ ${(remMs / 1000).toFixed(1)}S` : `🎣 ${t("castBtn")}`)}
+          ${APP.busyCast ? `${pxIcon("hourglass", 20)} ${t("casting")}` : (remMs > 0 ? `${pxIcon("clock", 20)} ${(remMs / 1000).toFixed(1)}S` : `${pxIcon("rod", 22)} ${t("castBtn")}`)}
         </button>` : "";
 
-      const gearSummary = Object.entries({ head: "🎩 NÓN", body: "🛡️ GIÁP", ring: "💍 NHẪN", relic: "🔮 PHỤ KIỆN" }).map(([slot, lbl]) => {
+      const gearSummary = [
+        ["head", "hat", "NÓN"],
+        ["body", "armor", "GIÁP"],
+        ["ring", "ring", "NHẪN"],
+        ["relic", "relic", "PHỤ KIỆN"]
+      ].map(([slot, ico, title]) => {
         const g = eq.slots[slot];
         return `<div class="sub-card" style="padding:9px 10px;">
           <div class="row-between">
-            <span class="muted" style="font-size:11px;font-weight:700;">${lbl}</span>
+            <span class="muted inline-ico" style="font-size:11px;font-weight:700;">${pxIcon(ico, 13)} ${title}</span>
             ${g ? `<span class="tab-badge">${esc(g.rarity_name)} · ${esc(g.forge_rank_name)}</span>` : ""}
           </div>
           <div style="font-size:12.5px;font-weight:700;margin-top:4px;">${g ? esc(g.name) : '<span class="muted">Trống</span>'}</div>
@@ -2047,11 +2122,11 @@
             <div class="island-banner">
               <div>
                 <div style="font-size:11px;color:var(--px-mint);font-weight:700;letter-spacing:.05em;">VÙNG BIỂN ĐANG CÂU</div>
-                <div style="font-size:16px;font-weight:700;">🏝️ ${esc(isl ? isl.name : "Starter Island")}</div>
+                <div class="inline-ico" style="font-size:16px;font-weight:700;">${pxIcon("island", 17)} ${esc(isl ? isl.name : "Starter Island")}</div>
               </div>
               <div class="wrap-row">
-                ${(st.boosts || []).map(b => `<span class="rarity-pill" style="color:var(--px-gold);">⚡ ${esc(b.scope)} x${b.multiplier}</span>`).join("")}
-                ${st.stats.potions_stock > 0 ? `<span class="rarity-pill" style="color:var(--px-violet);">🧪 Lọ Mutation ×${st.stats.potions_stock}</span>` : ""}
+                ${(st.boosts || []).map(b => `<span class="rarity-pill" style="color:var(--px-gold);">${pxIcon("bolt", 12)} ${esc(b.scope)} x${b.multiplier}</span>`).join("")}
+                ${st.stats.potions_stock > 0 ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("potion", 12)} Lọ Mutation ×${st.stats.potions_stock}</span>` : ""}
                 <button class="btn btn-ghost btn-sm" onclick="switchTab('gear')">Đổi đảo</button>
               </div>
             </div>
@@ -2064,19 +2139,19 @@
               ${castBtn}
             </div>
             <div class="row-between muted" style="font-size:12px;border-top:2px solid var(--px-border);padding-top:10px;">
-              <span>🎣 Cần: <strong style="color:#fff;">${eq.rod ? esc(eq.rod.name) + " (" + esc(eq.rod.forge_rank_name) + ")" : t("noRod")}</strong></span>
-              <span>🪱 Mồi: <strong style="color:#fff;">${eq.bait ? esc(eq.bait.name) + " ×" + eq.bait.quantity : t("noBait")}</strong></span>
+              <span class="inline-ico">${pxIcon("rod", 14)} Cần: <strong style="color:#fff;">${eq.rod ? esc(eq.rod.name) + " (" + esc(eq.rod.forge_rank_name) + ")" : t("noRod")}</strong></span>
+              <span class="inline-ico">${pxIcon("bait", 14)} Mồi: <strong style="color:#fff;">${eq.bait ? esc(eq.bait.name) + " ×" + eq.bait.quantity : t("noBait")}</strong></span>
             </div>
           </div>
 
           <div class="panel stack">
             <div class="row-between">
-              <strong style="font-size:13.5px;color:var(--px-mint);">⚔️ TRANG BỊ ĐANG MẶC</strong>
+              <strong class="inline-ico" style="font-size:13.5px;color:var(--px-mint);">${pxIcon("sword", 15)} TRANG BỊ ĐANG MẶC</strong>
               <button class="btn btn-ghost btn-sm" onclick="switchTab('gear')">Thay đồ</button>
             </div>
             <div class="sub-card row-between">
               <div class="wrap-row">
-                ${spriteHtml(eq.rod && eq.rod.image_path, "🎣", true)}
+                ${spriteHtml(eq.rod && eq.rod.image_path, "rod", true)}
                 <div>
                   <div style="font-weight:700;font-size:13px;">${eq.rod ? esc(eq.rod.name) : t("noRod")}</div>
                   <div class="muted" style="font-size:11px;">${eq.rod ? `${esc(eq.rod.rarity_name)} · ${esc(eq.rod.forge_rank_name)} · +${eq.rod.luck} Luck` : ""}</div>
@@ -2086,8 +2161,8 @@
             </div>
             <div class="grid-2">${gearSummary}</div>
             <div class="row-between" style="margin-top:4px;">
-              <span class="muted" style="font-size:12px;">🔒 Ổ Khóa Cá: <strong style="color:var(--px-text);">${st.stats.locks_stock}</strong></span>
-              <button class="btn btn-gold btn-sm" onclick="doSellAll()">💰 ${t("sellAll")}</button>
+              <span class="muted inline-ico" style="font-size:12px;">${pxIcon("lock", 13)} Ổ Khóa Cá: <strong style="color:var(--px-text);">${st.stats.locks_stock}</strong></span>
+              <button class="btn btn-gold btn-sm" onclick="doSellAll()">${pxIcon("moneybag", 14)} ${t("sellAll")}</button>
             </div>
           </div>
         </div>`;
@@ -2099,12 +2174,12 @@
       const subBtns = `
         <div class="toolbar">
           <div class="wrap-row">
-            <button class="btn ${APP.bagSubTab === "fish" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='fish';render();">🐟 Kho Cá (${inv.catches.length})</button>
-            <button class="btn ${APP.bagSubTab === "items" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='items';render();">🧰 Vật Phẩm & Rương (${inv.items.length})</button>
+            <button class="btn ${APP.bagSubTab === "fish" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='fish';render();">${pxIcon("fish", 14)} Kho Cá (${inv.catches.length})</button>
+            <button class="btn ${APP.bagSubTab === "items" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='items';render();">${pxIcon("chest", 14)} Vật Phẩm & Rương (${inv.items.length})</button>
           </div>
           <div class="wrap-row">
             <input class="input" placeholder="Tìm tên..." value="${esc(APP.bagFilter)}" oninput="APP.bagFilter=this.value;render();" style="width:150px;" />
-            <button class="btn btn-gold btn-sm" onclick="doSellAll()">💰 ${t("sellAll")}</button>
+            <button class="btn btn-gold btn-sm" onclick="doSellAll()">${pxIcon("moneybag", 14)} ${t("sellAll")}</button>
           </div>
         </div>`;
 
@@ -2128,10 +2203,10 @@
               <div class="wrap-row" style="flex:1;min-width:0;">
                 ${spriteHtml(c.image_path, c.emoji, true)}
                 <div style="min-width:0;">
-                  <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.locked ? "🔒 " : ""}${esc(c.name)}</div>
+                  <div class="inline-ico" style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.locked ? pxIcon("lock", 12) + " " : ""}${esc(c.name)}</div>
                   <div class="wrap-row" style="gap:4px;margin-top:2px;">
                     <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
-                    ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">✨ ${esc(c.mutation_name)}</span>` : ""}
+                    ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("sparkle", 12)} ${esc(c.mutation_name)}</span>` : ""}
                     ${c.serial_number ? `<span class="rarity-pill" style="color:var(--px-gold);">#${c.serial_number}</span>` : ""}
                   </div>
                 </div>
@@ -2143,8 +2218,8 @@
             </div>
             <div class="wrap-row" style="margin-top:9px;justify-content:flex-end;">
               ${c.in_aquarium ? `<span class="tab-badge">Đang trong Thủy Cung</span>` : `
-                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">${c.locked ? "🔓 Mở khóa" : "🔒 Khóa"}</button>
-                <button class="btn btn-ghost btn-sm" onclick="doAquaAdd('${esc(c.catch_id)}')">🐠 Nuôi</button>
+                <button class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}')">${c.locked ? pxIcon("unlock", 13) + " Mở khóa" : pxIcon("lock", 13) + " Khóa"}</button>
+                <button class="btn btn-ghost btn-sm" onclick="doAquaAdd('${esc(c.catch_id)}')">${pxIcon("aqua", 13)} Nuôi</button>
                 ${!c.locked ? `<button class="btn btn-gold btn-sm" onclick="doSellCatch('${esc(c.catch_id)}')">Bán</button>` : ""}
               `}
             </div>
@@ -2157,14 +2232,14 @@
       const itemCards = items.map(it => {
         let actions = "";
         if (it.item_type === "chest") {
-          actions += `<button class="btn btn-emerald btn-sm" onclick="doOpenChest('${esc(it.item_id)}',1)">🔓 Mở ×1</button>`;
+          actions += `<button class="btn btn-emerald btn-sm" onclick="doOpenChest('${esc(it.item_id)}',1)">${pxIcon("unlock", 13)} Mở ×1</button>`;
           if (it.quantity >= 5 && it.item_id !== "60_cosmic_transcendent_chest") {
             actions += `<button class="btn btn-ghost btn-sm" onclick="doOpenChest('${esc(it.item_id)}',5)">Mở ×5</button>`;
           }
         } else if (it.item_type === "rod" || it.item_type === "bait") {
-          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('${esc(it.item_type)}','${esc(it.item_id)}')">${it.equipped ? "Đang dùng ✓" : "Trang bị"}</button>`;
+          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('${esc(it.item_type)}','${esc(it.item_id)}')">${it.equipped ? "Đang dùng " + pxIcon("check", 12) : "Trang bị"}</button>`;
         } else if (["gear", "hook", "reel"].includes(it.item_type)) {
-          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('gear','${esc(it.item_id)}')">${it.equipped ? "Đang mặc ✓" : "Mặc ô " + esc(it.slot)}</button>`;
+          actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('gear','${esc(it.item_id)}')">${it.equipped ? "Đang mặc " + pxIcon("check", 12) : "Mặc ô " + esc(it.slot)}</button>`;
         }
         if (it.quantity > 1 && it.sell_unit_price > 0) {
           actions += `<button class="btn btn-ghost btn-sm" onclick="doSellItem('${esc(it.item_id)}')">Bán dư (${fmt(it.sell_unit_price * (it.quantity - 1))} RC)</button>`;
@@ -2194,14 +2269,19 @@
       const baits = items.filter(i => i.item_type === "bait");
       const wearables = items.filter(i => ["gear", "hook", "reel"].includes(i.item_type));
 
-      const slotNames = { head: "🎩 NÓN (HEAD)", body: "🛡️ GIÁP (BODY)", ring: "💍 NHẪN (RING)", relic: "🔮 PHỤ KIỆN (RELIC)" };
+      const slotNames = {
+        head: `${pxIcon("hat", 13)} NÓN (HEAD)`,
+        body: `${pxIcon("armor", 13)} GIÁP (BODY)`,
+        ring: `${pxIcon("ring", 13)} NHẪN (RING)`,
+        relic: `${pxIcon("relic", 13)} PHỤ KIỆN (RELIC)`
+      };
       const slotCard = (slot) => {
         const eq = st.equipment.slots[slot];
         const choices = wearables.filter(w => w.slot === slot);
         return `
           <div class="sub-card stack">
             <div class="row-between">
-              <strong style="font-size:12px;color:var(--px-mint);">${slotNames[slot]}</strong>
+              <strong class="inline-ico" style="font-size:12px;color:var(--px-mint);">${slotNames[slot]}</strong>
               ${eq ? `<button class="btn btn-ghost btn-sm" onclick="doEquip('clear_slot','','${slot}')">Tháo</button>` : ""}
             </div>
             ${eq ? `<div class="wrap-row">${spriteHtml(eq.image_path, eq.emoji, true)}<div><div style="font-weight:700;font-size:13px;">${esc(eq.name)}</div><div class="muted" style="font-size:11px;">${esc(eq.rarity_name)} · ${esc(eq.forge_rank_name)} · ${esc(eq.effect_label)}</div></div></div>` : '<div class="muted" style="font-size:12px;">Ô trống</div>'}
@@ -2230,13 +2310,13 @@
             <strong style="font-size:13.5px;">${isl.order}. ${esc(isl.name)}</strong>
             <span class="rarity-pill" style="color:${isl.unlocked ? "#6fdbbf" : "#84a0bd"};">${isl.current ? "ĐANG Ở ĐÂY" : (isl.unlocked ? "ĐÃ MỞ" : "CHƯA MỞ")}</span>
           </div>
-          <div class="muted" style="font-size:11.5px;">📖 Bộ sưu tập: <strong>${isl.bestiary_found}/${isl.bestiary_total}</strong> ${isl.bestiary_complete ? "✨ (+5% Luck)" : ""}</div>
-          <div class="muted" style="font-size:11.5px;">🎣 Khuyên dùng: ${esc(isl.recommended_rods || "Tùy chọn")}</div>
+          <div class="muted inline-ico" style="font-size:11.5px;">${pxIcon("book", 13)} Bộ sưu tập: <strong>${isl.bestiary_found}/${isl.bestiary_total}</strong> ${isl.bestiary_complete ? pxIcon("sparkle", 12) + " (+5% Luck)" : ""}</div>
+          <div class="muted inline-ico" style="font-size:11.5px;">${pxIcon("rod", 13)} Khuyên dùng: ${esc(isl.recommended_rods || "Tùy chọn")}</div>
           ${!isl.unlocked ? `<div style="font-size:11.5px;color:var(--px-gold);">Điều kiện: ${esc(isl.requirements_text || "Lv." + isl.level_required)}${isl.unlock_cost ? ` · Phí ${fmt(isl.unlock_cost)} RC` : ""}</div>` : ""}
           <div class="row-between" style="margin-top:auto;">
             ${isl.unlocked
-              ? `<button class="btn ${isl.current ? "btn-ghost" : "btn-primary"} btn-sm" ${isl.current ? "disabled" : ""} onclick="doTravelIsland('${esc(isl.id)}')">${isl.current ? "Đang câu tại đây" : "⛵ Di chuyển tới"}</button>`
-              : `<button class="btn btn-emerald btn-sm" onclick="doUnlockIsland('${esc(isl.id)}')">🗝️ Mở khóa đảo</button>`}
+              ? `<button class="btn ${isl.current ? "btn-ghost" : "btn-primary"} btn-sm" ${isl.current ? "disabled" : ""} onclick="doTravelIsland('${esc(isl.id)}')">${isl.current ? "Đang câu tại đây" : pxIcon("boat", 14) + " Di chuyển tới"}</button>`
+              : `<button class="btn btn-emerald btn-sm" onclick="doUnlockIsland('${esc(isl.id)}')">${pxIcon("key", 14)} Mở khóa đảo</button>`}
           </div>
         </div>`).join("");
 
@@ -2244,18 +2324,18 @@
         <div class="stack">
           <div class="panel stack">
             <div class="row-between">
-              <h3 class="px-num" style="margin:0;font-size:24px;color:var(--px-mint);">⚔️ BẢNG TRANG BỊ CẦN THỦ</h3>
+              <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-mint);">${pxIcon("sword", 18)} BẢNG TRANG BỊ CẦN THỦ</h3>
               <button class="btn btn-ghost btn-sm" onclick="doEquip('clear_bait','')">Bỏ mồi</button>
             </div>
             <div class="grid-2">
               <div class="sub-card stack">
-                <strong style="font-size:12.5px;">🎣 Cần Câu (${rods.length} sở hữu)</strong>
+                <strong class="inline-ico" style="font-size:12.5px;">${pxIcon("rod", 14)} Cần Câu (${rods.length} sở hữu)</strong>
                 <select class="select" onchange="if(this.value)doEquip('rod',this.value)">
                   ${rods.map(r => `<option value="${esc(r.item_id)}" ${st.equipment.rod && st.equipment.rod.item_id === r.item_id ? "selected" : ""}>${esc(r.name)} · ${esc(r.rarity_name || "")} ${esc(r.forge_rank_name || "")}</option>`).join("") || '<option>Chưa có cần</option>'}
                 </select>
               </div>
               <div class="sub-card stack">
-                <strong style="font-size:12.5px;">🪱 Mồi Câu (${baits.length} loại)</strong>
+                <strong class="inline-ico" style="font-size:12.5px;">${pxIcon("bait", 14)} Mồi Câu (${baits.length} loại)</strong>
                 <select class="select" onchange="if(this.value==='__none')doEquip('clear_bait','');else if(this.value)doEquip('bait',this.value)">
                   <option value="__none">Không dùng mồi</option>
                   ${baits.map(b => `<option value="${esc(b.item_id)}" ${st.equipment.bait && st.equipment.bait.item_id === b.item_id ? "selected" : ""}>${esc(b.name)} (+${b.luck} Luck · ×${b.quantity})</option>`).join("")}
@@ -2266,7 +2346,7 @@
           </div>
 
           <div class="panel">
-            <h3 class="px-num" style="margin:0 0 12px;font-size:24px;color:var(--px-gold);">🏝️ HÀNH TRÌNH 6 HÒN ĐẢO</h3>
+            <h3 class="px-num inline-ico" style="margin:0 0 12px;font-size:24px;color:var(--px-gold);">${pxIcon("island", 18)} HÀNH TRÌNH 6 HÒN ĐẢO</h3>
             <div class="grid-3">${islandsHtml}</div>
           </div>
         </div>`;
@@ -2299,7 +2379,7 @@
             </div>
           </div>
         </div>`).join("");
-      return `<div class="panel"><h3 class="px-num" style="margin:0 0 12px;font-size:24px;color:var(--px-gold);">🛒 CỬA HÀNG CÂU CÁ</h3>${filters}<div class="grid-3">${cards}</div></div>`;
+      return `<div class="panel"><h3 class="px-num inline-ico" style="margin:0 0 12px;font-size:24px;color:var(--px-gold);">${pxIcon("shop", 18)} CỬA HÀNG CÂU CÁ</h3>${filters}<div class="grid-3">${cards}</div></div>`;
     }
 
     function renderForgeTab() {
@@ -2307,9 +2387,9 @@
       const ws = APP.workshop;
       const nav = `
         <div class="wrap-row" style="margin-bottom:14px;">
-          <button class="btn ${APP.forgeSubTab === "recipes" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='recipes';render();">🛠️ Chế Tạo Cần (${ws ? ws.recipes.length : 0})</button>
-          <button class="btn ${APP.forgeSubTab === "upgrade" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='upgrade';render();">⚒️ Nâng Rank / Rarity / Ghép</button>
-          <button class="btn ${APP.forgeSubTab === "skills" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='skills';render();">🌟 Kỹ Năng (${st.skills.available_points} SP)</button>
+          <button class="btn ${APP.forgeSubTab === "recipes" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='recipes';render();">${pxIcon("wrench", 14)} Chế Tạo Cần (${ws ? ws.recipes.length : 0})</button>
+          <button class="btn ${APP.forgeSubTab === "upgrade" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='upgrade';render();">${pxIcon("anvil", 14)} Nâng Rank / Rarity / Ghép</button>
+          <button class="btn ${APP.forgeSubTab === "skills" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.forgeSubTab='skills';render();">${pxIcon("star", 14)} Kỹ Năng (${st.skills.available_points} SP)</button>
         </div>`;
 
       if (APP.forgeSubTab === "recipes") {
@@ -2324,10 +2404,10 @@
               </div>
             </div>
             <div class="stack" style="gap:4px;">
-              ${r.required_rod_name ? `<div style="font-size:11.5px;">${r.rod_ok ? "✅" : "❌"} Cần: <strong>${esc(r.required_rod_name)}</strong></div>` : ""}
-              ${r.materials.map(m => `<div style="font-size:11.5px;">${m.have >= m.need ? "✅" : "❌"} ${esc(m.name)}: <strong>${m.have}/${m.need}</strong></div>`).join("")}
+              ${r.required_rod_name ? `<div class="inline-ico" style="font-size:11.5px;">${r.rod_ok ? pxIcon("check", 12) : pxIcon("cross", 12)} Cần: <strong>${esc(r.required_rod_name)}</strong></div>` : ""}
+              ${r.materials.map(m => `<div class="inline-ico" style="font-size:11.5px;">${m.have >= m.need ? pxIcon("check", 12) : pxIcon("cross", 12)} ${esc(m.name)}: <strong>${m.have}/${m.need}</strong></div>`).join("")}
             </div>
-            <button class="btn ${r.materials_ok && r.rod_ok ? "btn-emerald" : "btn-ghost"} btn-sm" style="margin-top:auto;" onclick="doCraft('${esc(r.recipe_id)}')">🛠️ Chế tạo</button>
+            <button class="btn ${r.materials_ok && r.rod_ok ? "btn-emerald" : "btn-ghost"} btn-sm" style="margin-top:auto;" onclick="doCraft('${esc(r.recipe_id)}')">${pxIcon("wrench", 13)} Chế tạo</button>
           </div>`).join("");
         return `<div class="panel">${nav}<div class="grid-3">${cards}</div></div>`;
       }
@@ -2358,18 +2438,25 @@
                       <span class="rarity-pill" style="color:var(--px-cyan);">Rank ${esc(sel.rank_name)}</span>
                       <span class="rarity-pill" style="color:var(--px-gold);">${esc(sel.rarity_name)}</span>
                     </div>
-                    <div class="muted" style="font-size:11.5px;margin-top:6px;">Tỉ lệ mỗi lần: ✨ 60% Lên · 💨 35% Hụt · ⬇️ 5% Tụt (F-/F không tụt)</div>
+                    <div class="muted wrap-row" style="font-size:11.5px;margin-top:6px;gap:6px;">
+                      <span>Tỉ lệ mỗi lần:</span>
+                      <span class="inline-ico">${pxIcon("sparkle", 12)} 60% Lên</span>
+                      <span>·</span>
+                      <span class="inline-ico">${pxIcon("puff", 12)} 35% Hụt</span>
+                      <span>·</span>
+                      <span class="inline-ico">${pxIcon("down_arrow", 12)} 5% Tụt (F-/F không tụt)</span>
+                    </div>
                   </div>
                 </div>
                 <div class="grid-2" style="margin-top:10px;">
-                  <button class="btn btn-primary" onclick="doUpgradeRank('${esc(sel.item_id)}')">⚒️ Nâng Rank (${fmt(sel.rank_fee)} RC)</button>
+                  <button class="btn btn-primary" onclick="doUpgradeRank('${esc(sel.item_id)}')">${pxIcon("anvil", 15)} Nâng Rank (${fmt(sel.rank_fee)} RC)</button>
                   <button class="btn ${sel.can_upgrade_rarity ? "btn-gold" : "btn-ghost"}" ${sel.rarity_step >= 7 ? "disabled" : ""} onclick="doUpgradeRarity('${esc(sel.item_id)}')">
-                    ${sel.rarity_step >= 7 ? "👑 Đã đạt Transcendent" : `✨ Lên ${esc(sel.next_rarity_name)} (Cần Rank ${esc(sel.required_rank_name)} · ${fmt(sel.rarity_fee)} RC)`}
+                    ${sel.rarity_step >= 7 ? `${pxIcon("crown", 15)} Đã đạt Transcendent` : `${pxIcon("sparkle", 15)} Lên ${esc(sel.next_rarity_name)} (Cần Rank ${esc(sel.required_rank_name)} · ${fmt(sel.rarity_fee)} RC)`}
                   </button>
                 </div>
                 ${sel.item_type !== "rod" ? `
                   <div style="border-top:2px solid var(--px-border);margin-top:10px;padding-top:12px;" class="stack">
-                    <div style="font-weight:700;font-size:13px;">⚒️ Ghép 2 Trang Bị Cùng Rarity (Tiêu hao 1 phôi)</div>
+                    <div class="inline-ico" style="font-weight:700;font-size:13px;">${pxIcon("anvil", 14)} Ghép 2 Trang Bị Cùng Rarity (Tiêu hao 1 phôi)</div>
                     ${phoiPool.length ? `
                       <div class="wrap-row">
                         <select id="phoi-select" class="select" style="flex:1;">
@@ -2391,7 +2478,7 @@
           </div>
           <div class="muted" style="font-size:11.5px;">${esc(APP.lang === "en" ? s.desc_en : s.desc_vi)}</div>
           <div class="row-between" style="margin-top:auto;">
-            <span class="muted" style="font-size:11.5px;">${s.next_cost !== null ? `Cần: <strong>${s.next_cost} SP</strong>` : "👑 Tối đa"}</span>
+            <span class="muted inline-ico" style="font-size:11.5px;">${s.next_cost !== null ? `Cần: <strong>${s.next_cost} SP</strong>` : `${pxIcon("crown", 13)} Tối đa`}</span>
             ${s.next_cost !== null ? `<div class="wrap-row"><button class="btn btn-primary btn-sm" ${!s.can_upgrade ? "disabled" : ""} onclick="doUpgradeSkill('${esc(s.id)}',1)">+1</button><button class="btn btn-ghost btn-sm" onclick="doUpgradeSkill('${esc(s.id)}',5)">+5</button></div>` : ""}
           </div>
         </div>`).join("");
@@ -2401,7 +2488,7 @@
         const cost = sk.skip_costs[r] || 0;
         return `
           <div class="sub-card row-between">
-            <div><strong>🎯 Bỏ qua Minigame ${r.toUpperCase()}</strong><div class="muted" style="font-size:11.5px;">Giá: ${fmt(cost)} RC</div></div>
+            <div><strong class="inline-ico">${pxIcon("target", 14)} Bỏ qua Minigame ${r.toUpperCase()}</strong><div class="muted" style="font-size:11.5px;">Giá: ${fmt(cost)} RC</div></div>
             ${unlocked ? '<span class="rarity-pill" style="color:var(--px-mint);">ĐÃ MỞ</span>' : `<button class="btn btn-gold btn-sm" onclick="doUnlockSkip('${r}')">Mở khóa</button>`}
           </div>`;
       }).join("");
@@ -2410,10 +2497,10 @@
         <div class="panel stack">
           ${nav}
           <div class="row-between">
-            <div><strong>✨ Điểm Kỹ Năng còn lại: <span class="px-num" style="color:var(--px-gold);font-size:22px;">${fmt(sk.available_points)}</span></strong> <span class="muted">(Đã dùng ${sk.spent_points}/${sk.earned_points})</span></div>
+            <div><strong class="inline-ico">${pxIcon("sparkle", 15)} Điểm Kỹ Năng còn lại: <span class="px-num" style="color:var(--px-gold);font-size:22px;">${fmt(sk.available_points)}</span></strong> <span class="muted">(Đã dùng ${sk.spent_points}/${sk.earned_points})</span></div>
           </div>
           <div class="grid-3">${skillCards}</div>
-          <h4 style="margin:8px 0 0;color:var(--px-mint);">🎯 Mở Khóa Vĩnh Viễn Bỏ Minigame</h4>
+          <h4 class="inline-ico" style="margin:8px 0 0;color:var(--px-mint);">${pxIcon("target", 15)} Mở Khóa Vĩnh Viễn Bỏ Minigame</h4>
           <div class="grid-2">${skipCards}</div>
         </div>`;
     }
@@ -2426,7 +2513,7 @@
       const bossCard = `
         <div class="panel stack" style="border-color:${boss ? "var(--px-coral)" : "var(--px-border)"};">
           <div class="row-between">
-            <h3 class="px-num" style="margin:0;font-size:24px;color:var(--px-coral);">🐉 WORLD BOSS RAID</h3>
+            <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-coral);">${pxIcon("dragon", 19)} WORLD BOSS RAID</h3>
             ${boss ? `<span class="rarity-pill" style="color:var(--px-coral);">Còn ${Math.floor(boss.remaining_seconds / 60)}m</span>` : ""}
           </div>
           ${boss ? `
@@ -2440,7 +2527,7 @@
                 <span class="px-num" style="font-size:17px;">HP: ${fmt(boss.hp)} / ${fmt(boss.max_hp)}</span>
                 <span class="px-num" style="font-size:17px;">Sát thương: ${fmt(boss.my_damage)}</span>
               </div>
-              <button class="btn btn-danger" onclick="doBossFight()">⚔️ ${t("attackBoss")}</button>
+              <button class="btn btn-danger" onclick="doBossFight()">${pxIcon("sword", 15)} ${t("attackBoss")}</button>
             </div>` : '<p class="muted" style="margin:0;">Hiện chưa có Boss nào được triệu hồi trong server (Admin dùng lệnh /fishboss trong Discord để gọi Boss).</p>'}
         </div>`;
 
@@ -2461,17 +2548,17 @@
           <div class="panel stack">
             <div class="toolbar" style="margin:0;">
               <div>
-                <h3 class="px-num" style="margin:0;font-size:24px;color:var(--px-mint);">🐠 THỦY CUNG (${aq.placed.length}/${aq.capacity} Ô)</h3>
+                <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-mint);">${pxIcon("aqua", 19)} THỦY CUNG (${aq.placed.length}/${aq.capacity} Ô)</h3>
                 <div class="muted" style="font-size:12px;">Tạo +1% giá cá/giờ (+${fmt(aq.total_hourly)} RC/giờ · Tích lũy: <strong style="color:var(--px-gold);">${fmt(aq.total_accrued)} RC</strong>)</div>
               </div>
-              <button class="btn btn-gold" ${aq.total_accrued <= 0 ? "disabled" : ""} onclick="doAquaCollect()">💰 ${t("collectAqua")} (+${fmt(aq.total_accrued)})</button>
+              <button class="btn btn-gold" ${aq.total_accrued <= 0 ? "disabled" : ""} onclick="doAquaCollect()">${pxIcon("moneybag", 15)} ${t("collectAqua")} (+${fmt(aq.total_accrued)})</button>
             </div>
             ${aq.candidates.length ? `
               <div class="wrap-row">
                 <select id="aqua-add-sel" class="select" style="flex:1;">
                   ${aq.candidates.slice(0, 50).map(c => `<option value="${esc(c.catch_id)}">${esc(c.name)} · ${c.weight}kg (${esc(c.rarity_id)})${c.mutation_name ? " · " + esc(c.mutation_name) : ""}</option>`).join("")}
                 </select>
-                <button class="btn btn-emerald btn-sm" onclick="doAquaAdd(document.getElementById('aqua-add-sel').value)">➕ Thả cá vào bể</button>
+                <button class="btn btn-emerald btn-sm" onclick="doAquaAdd(document.getElementById('aqua-add-sel').value)">${pxIcon("plus", 13)} Thả cá vào bể</button>
               </div>` : ""}
             <div class="grid-2">${placedHtml || '<p class="muted">Chưa có cá nào trong Thủy Cung.</p>'}</div>
           </div>
@@ -2481,8 +2568,8 @@
     function renderCodexTab() {
       const nav = `
         <div class="wrap-row" style="margin-bottom:14px;">
-          <button class="btn ${APP.codexSubTab === "bestiary" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='bestiary';switchTab('codex');">📖 Bộ Sưu Tập Cá</button>
-          <button class="btn ${APP.codexSubTab === "leaderboard" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='leaderboard';switchTab('codex');">🏆 Bảng Xếp Hạng Global</button>
+          <button class="btn ${APP.codexSubTab === "bestiary" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='bestiary';switchTab('codex');">${pxIcon("book", 14)} Bộ Sưu Tập Cá</button>
+          <button class="btn ${APP.codexSubTab === "leaderboard" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.codexSubTab='leaderboard';switchTab('codex');">${pxIcon("trophy", 14)} Bảng Xếp Hạng Global</button>
         </div>`;
 
       if (APP.codexSubTab === "bestiary") {
@@ -2495,7 +2582,7 @@
             <div class="wrap-row">
               ${spriteHtml(sp.image_path, sp.emoji, true)}
               <div style="min-width:0;">
-                <div style="font-weight:700;font-size:12.5px;">${sp.discovered ? "✅ " : "❓ "}${esc(sp.name)}</div>
+                <div class="inline-ico" style="font-weight:700;font-size:12.5px;">${sp.discovered ? pxIcon("check", 12) : pxIcon("question", 12)} ${esc(sp.name)}</div>
                 <span class="rarity-pill" style="color:${esc(sp.rarity_color)};margin-top:3px;">${esc(sp.rarity_name)}</span>
                 <div class="muted" style="font-size:11px;margin-top:2px;">Đã bắt: ${fmt(sp.caught_count)}</div>
               </div>
@@ -2505,15 +2592,15 @@
       }
 
       const lbCats = [
-        ["level", "🏆 Level"], ["rucoin", "🪙 RuCoin"],
-        ["best_fish", "💎 Cá đắt nhất"], ["heaviest_fish", "🐋 Cá nặng nhất"],
-        ["catches", "🎣 Tổng lượt bắt"], ["daily", "📅 Hôm nay"], ["luck", "🍀 Lucky Buff"]
+        ["level", `${pxIcon("trophy", 13)} Level`], ["rucoin", `${pxIcon("coin", 13)} RuCoin`],
+        ["best_fish", `${pxIcon("gem", 13)} Cá đắt nhất`], ["heaviest_fish", `${pxIcon("whale", 13)} Cá nặng nhất`],
+        ["catches", `${pxIcon("rod", 13)} Tổng lượt bắt`], ["daily", `${pxIcon("calendar", 13)} Hôm nay`], ["luck", `${pxIcon("clover", 13)} Lucky Buff`]
       ];
       const catBtns = `<div class="wrap-row" style="margin-bottom:14px;">${lbCats.map(([k, l]) => `<button class="btn ${APP.lbCategory === k ? "btn-primary" : "btn-ghost"} btn-sm" onclick="refreshLeaderboard('${k}')">${l}</button>`).join("")}</div>`;
       const rows = APP.leaderboard ? (APP.leaderboard.entries || []).map((e, idx) => `
         <div class="sub-card row-between" style="${e.user_id === APP.discordUser.id ? "border-color:var(--px-mint);" : ""}">
           <div class="wrap-row">
-            <strong class="px-num" style="width:28px;font-size:20px;color:${idx < 3 ? "var(--px-gold)" : "var(--px-muted)"};">${idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "#" + (idx + 1)}</strong>
+            <strong class="px-num inline-ico" style="width:28px;font-size:20px;justify-content:center;color:${idx < 3 ? "var(--px-gold)" : "var(--px-muted)"};">${idx === 0 ? pxIcon("medal_1", 20) : idx === 1 ? pxIcon("medal_2", 20) : idx === 2 ? pxIcon("medal_3", 20) : "#" + (idx + 1)}</strong>
             <strong>${esc(e.name)}</strong>
           </div>
           <span style="font-weight:700;color:var(--px-text-2);font-size:12.5px;">${esc(e.detail)}</span>
@@ -2528,10 +2615,10 @@
       const remMs = Math.max(0, APP.cooldownUntilMs - Date.now());
       if (remMs > 0) {
         btn.disabled = true;
-        btn.textContent = `⏱️ ${(remMs / 1000).toFixed(1)}S`;
+        btn.innerHTML = `${pxIcon("clock", 20)} ${(remMs / 1000).toFixed(1)}S`;
       } else if (btn.disabled) {
         btn.disabled = false;
-        btn.textContent = `🎣 ${t("castBtn")}`;
+        btn.innerHTML = `${pxIcon("rod", 22)} ${esc(t("castBtn"))}`;
       }
     }, 150);
 
