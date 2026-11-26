@@ -25,7 +25,13 @@
     N: "#75431c",
     w: "#ffffff",
     s: "#cbd5e1",
-    S: "#64748b"
+    S: "#64748b",
+    I: "#93c5fd",
+    A: "#fb923c",
+    T: "#14b8a6",
+    G: "#38bdf8",
+    D: "#334155",
+    B: "#1e293b"
   };
 
   const SPRITES = {
@@ -1378,6 +1384,162 @@
       "................",
       "................",
       "................"
+    ],
+    key_iron: [
+      "........................",
+      "....kkkkkk..............",
+      "..kksswwsskk............",
+      ".kswwcGGcwssk...........",
+      "kswwGiiiiGwwsk..........",
+      "kswcGiwwiGcwsk..........",
+      "kswcGiGGiGcwsk..........",
+      ".kssGiiiiGssk...........",
+      "..kssccccsskk...........",
+      "...kkDDDDkkskk..........",
+      ".....kkkkksswsk.........",
+      "........kkswwssk........",
+      ".........kDswwssk.......",
+      "..........kDswwssk......",
+      "...........kDswwssk.....",
+      "............kDswwssk....",
+      ".............kDswsssk...",
+      "............kksDssskkk..",
+      "...........ksswDsDsswsk.",
+      "...........kSSDkkDDssDk.",
+      "............kk..ksswsk..",
+      ".................kDDk...",
+      "..................kk....",
+      "........................"
+    ],
+    key_gold: [
+      ".................k......",
+      "...k..k..k......kYk.....",
+      "..kYkkYkkYk......k......",
+      "..kYYYYYYYk.............",
+      ".kYYyrrrYYyk............",
+      "kYYyrpRryYYok...........",
+      "kYyyrrRryyYok...........",
+      "kYyyyoooyyyok...........",
+      ".kYYyyyyyyook...........",
+      "..kkYYYYyyokkk..........",
+      "....kkookYYwYok.........",
+      "........kkYYwYok........",
+      ".........koYYwYok.......",
+      "..........koYYwYok......",
+      "...........koYYwYok.....",
+      "............koYYwYok....",
+      "...k.........koYYwYok...",
+      "..kYk.......kkoYYwYkkk..",
+      "...k.......kYYwYoYYwwYk.",
+      "...........kYoYkkYYyYok.",
+      "............kk..kYYyYok.",
+      ".................kYYok..",
+      "..................kkk...",
+      "........................"
+    ],
+    tool_lockpick: [
+      "........................",
+      "..............kkk.......",
+      "....kkkk.....kYYok......",
+      "...kssssk...kYYok.......",
+      "..ksskkssk.kYYok........",
+      "..ksk..kskkYYok.........",
+      "...k....kkYYok..........",
+      ".......kkYYoksk.........",
+      "......kYYyoksssk........",
+      ".....kYYyok.ksssk.......",
+      "....kYYyok...ksssk......",
+      "...kYYyok.....kwwsk.....",
+      "..kYYyok......kNNsk.....",
+      ".kYYok........kNNnsk....",
+      ".kYok........kNNnnnsk...",
+      "..kk.........kNnnknnsk..",
+      ".......k......kkk.kNnsk.",
+      "......kck.........kNnsk.",
+      ".....kcwck.........knk..",
+      "......kck...........k...",
+      ".......k................",
+      "........................",
+      "........................",
+      "........................"
+    ],
+    tool_fish_lock: [
+      "........................",
+      ".......kkkkkkkkkk.......",
+      ".....kkYYYYyyyyyykk.....",
+      "....kYYykkkkkkkkYYyk....",
+      "...kYyk..........kYyk...",
+      "...kYyk..........kYyk...",
+      "...kYyk..........kYyk...",
+      "...kYyk..........kYyk...",
+      "..kkkkkkkkkkkkkkkkkkkk..",
+      ".kYYyBBBBBBBBBBBBBBYYyk.",
+      ".kYyBDDDDkkmmkkDDDDBYyk.",
+      ".kBBDDkkmmwmTmmkkDDBBBk.",
+      ".kBBDDkmTTmmmmTmkDDBBBk.",
+      ".kBBDDkmmmTTkmmmkDDBBBk.",
+      ".kBBDDDkmmkkmmmkDDDBBBk.",
+      ".kBBDDDDkmmmmkkDDDDBBBk.",
+      ".kBBDDDDkmmTTkDDDDDBBBk.",
+      ".kBBDDDDDkmmkDDDDDDBBBk.",
+      ".kYYBBBBBBBBBBBBBBBBYyk.",
+      ".koooYYYYYYYYYYYYYYoook.",
+      "..kkkkkkkkkkkkkkkkkkkk..",
+      "........................",
+      "........................",
+      "........................"
+    ],
+    afk_boost: [
+      "........................",
+      "...kkkkkkkkkkkkkkkkkk...",
+      "..kYYYYyyyyyyyyyyooook..",
+      "..kooooooooooooooooook..",
+      "...kkcwiBBBBBBBBiwckk...",
+      "....kciBBssssssBBick....",
+      "....kciBBmmmmmmBBick....",
+      ".....kcBBmmwmTTBBck.....",
+      "......kcBBmmmmBBck......",
+      ".......kcBBmmBBck.......",
+      "........kccmmcck........",
+      ".........kkmmkk.........",
+      ".........kkmmkk.........",
+      "........kcBmmBck........",
+      ".......kcBBmmBBck.......",
+      "......kcBBmwwmBBck......",
+      ".....kcBBmmYYmmBBck.....",
+      "....kciBmYYYYYYmBick....",
+      "....kciBYYYYYYYYBick....",
+      "...kkYYYYyyyyyyyyooook..",
+      "..kYYooooooooooooooook..",
+      "...kkkkkkkkkkkkkkkkkk...",
+      "....k..............k....",
+      "........................"
+    ],
+    afk_boost_pro: [
+      ".....k.....kk.....k.....",
+      "....kYk...kYYk...kYk....",
+      "....kYYk.kYYYYk.kYYk....",
+      "....kYYYkYYrRYYkYYYk....",
+      "...kkYYYYYYYYYYYYYYkk...",
+      "..kYYyooooooooooooyYYk..",
+      "...kkvViBBBBBBBBiVvkk...",
+      "....kvBBvvvvvvvvBBvk....",
+      "....kvBBvvYYYYvvBBvk....",
+      ".....kvBBYwwwwYBBvk.....",
+      "......kvBBYYYYBBvk......",
+      ".......kvBBYYBBvk.......",
+      "........kvvYYvvk........",
+      ".........kkYYkk.........",
+      "........kvBYYBvk........",
+      ".......kvBBmmBBvk.......",
+      "......kvBBmYYmBBvk......",
+      ".....kvBBYYmmYYBBvk.....",
+      "....kvBYYYYYYYYYYBvk....",
+      "...kkYYYYyyyyyyyyooook..",
+      "..kYYooooooooooooooook..",
+      "...kkkkkkkkkkkkkkkkkk...",
+      "..kYk............kck....",
+      "...k..............k....."
     ]
   };
 
@@ -1386,30 +1548,32 @@
   function compileBody(name) {
     if (CACHE[name]) return CACHE[name];
     const grid = SPRITES[name] || SPRITES.fish;
+    const dim = grid.length || 16;
     let rects = "";
-    for (let y = 0; y < 16; y++) {
-      const row = grid[y] || "................";
+    for (let y = 0; y < dim; y++) {
+      const row = grid[y] || "";
       let x = 0;
-      while (x < 16) {
+      while (x < dim) {
         const ch = row[x];
         if (!ch || ch === "." || !PALETTE[ch]) {
           x++;
           continue;
         }
         let w = 1;
-        while (x + w < 16 && row[x + w] === ch) w++;
+        while (x + w < dim && row[x + w] === ch) w++;
         rects += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${PALETTE[ch]}"/>`;
         x += w;
       }
     }
-    CACHE[name] = rects;
-    return rects;
+    CACHE[name] = { dim, rects };
+    return CACHE[name];
   }
 
   window.pxIcon = function pxIcon(name, size, extraClass) {
     const px = size || 16;
     const cls = extraClass ? `px-svg ${extraClass}` : "px-svg";
-    return `<svg viewBox="0 0 16 16" width="${px}" height="${px}" shape-rendering="crispEdges" class="${cls}" aria-hidden="true">${compileBody(name)}</svg>`;
+    const entry = compileBody(name);
+    return `<svg viewBox="0 0 ${entry.dim} ${entry.dim}" width="${px}" height="${px}" shape-rendering="crispEdges" class="${cls}" aria-hidden="true">${entry.rects}</svg>`;
   };
 
   const EMOJI_MAP = {

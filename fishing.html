@@ -704,7 +704,7 @@
     /* Quick Fishing Utility Dock & Live Session Strip */
     .fish-quick-dock {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
       padding-top: 10px;
       border-top: 2px solid var(--px-border);
@@ -730,6 +730,63 @@
     .dock-btn:hover { border-color: var(--px-mint); color: #fff; }
     .dock-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--px-shadow); }
     .dock-btn.gold { border-color: var(--px-gold); color: var(--px-gold); }
+    .dock-btn.idle-on {
+      background: #113a31;
+      border-color: var(--px-mint);
+      color: var(--px-mint);
+      box-shadow: inset 2px 2px 0 rgba(111, 219, 191, 0.2), 0 0 12px rgba(111, 219, 191, 0.25), 2px 2px 0 var(--px-shadow);
+    }
+    .dock-btn.afk-active {
+      background: #1a2444;
+      border-color: var(--px-cyan);
+      color: var(--px-cyan);
+    }
+    @keyframes afkReadyPulse {
+      0%, 100% { border-color: #ecc570; box-shadow: 0 0 10px rgba(236, 197, 112, 0.3), 2px 2px 0 var(--px-shadow); }
+      50% { border-color: #fff4b8; box-shadow: 0 0 16px rgba(255, 244, 184, 0.55), 2px 2px 0 var(--px-shadow); }
+    }
+    .dock-btn.afk-ready {
+      background: #33250b;
+      border-color: var(--px-gold);
+      color: #fff4b8;
+      animation: afkReadyPulse 1.5s infinite;
+    }
+
+    /* Redesigned Shop Key & AFK Pedestals */
+    .sprite-ped {
+      width: 56px;
+      height: 56px;
+      background: #07111e;
+      border: 2px solid var(--px-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      box-shadow: inset 0 0 12px rgba(126, 200, 217, 0.14);
+    }
+    .sprite-ped.sm { width: 48px; height: 48px; }
+    .sprite-ped.ped-iron { border-color: #60a5fa; background: radial-gradient(circle, #132c4c 0%, #07111e 75%); box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.24); }
+    .sprite-ped.ped-gold { border-color: #ecc570; background: radial-gradient(circle, #38250a 0%, #090e1a 75%); box-shadow: inset 0 0 14px rgba(236, 197, 112, 0.34); }
+    .sprite-ped.ped-lockpick { border-color: #94a3b8; background: radial-gradient(circle, #1e293b 0%, #07111e 75%); }
+    .sprite-ped.ped-fishlock { border-color: #2ea88d; background: radial-gradient(circle, #113a33 0%, #07111e 75%); box-shadow: inset 0 0 12px rgba(111, 219, 191, 0.26); }
+    .sprite-ped.ped-afk { border-color: #6fdbbf; background: radial-gradient(circle, #103442 0%, #07111e 75%); box-shadow: inset 0 0 14px rgba(111, 219, 191, 0.32); }
+    .sprite-ped.ped-afk-pro { border-color: #c6a4e2; background: radial-gradient(circle, #2a174a 0%, #080d1a 75%); box-shadow: inset 0 0 16px rgba(198, 164, 226, 0.4); }
+    .shop-card-featured { border-color: var(--px-mint); background: linear-gradient(160deg, #102a3c 0%, #14273d 100%); box-shadow: 4px 4px 0 var(--px-shadow), 0 0 18px rgba(111, 219, 191, 0.14); }
+    .shop-card-key { border-color: #ecc570; background: linear-gradient(160deg, #211b10 0%, #14273d 100%); box-shadow: 4px 4px 0 var(--px-shadow), 0 0 16px rgba(236, 197, 112, 0.16); }
+
+    .afk-meter {
+      width: 100%;
+      height: 16px;
+      background: #060d18;
+      border: 2px solid var(--px-border);
+      padding: 2px;
+    }
+    .afk-meter-fill {
+      height: 100%;
+      background: repeating-linear-gradient(90deg, #6fdbbf 0px, #6fdbbf 8px, #ecc570 8px, #ecc570 12px);
+      transition: width 0.3s steps(12);
+    }
 
     .fish-session-strip {
       display: flex;
@@ -1358,7 +1415,7 @@
   <div id="confirm-modal-root" class="modal-backdrop"></div>
   <div id="toast-wrap"></div>
 
-  <script src="./fishing-pixel-icons.js?v=1"></script>
+  <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
   <script src="./fishing-minigame.js?v=1"></script>
   <script>
@@ -1602,6 +1659,10 @@
       lastError: "",
       busyCast: false,
       busyAction: false,
+      busyIdle: false,
+      idleMode: false,
+      idleTimerId: 0,
+      afkEndsMs: 0,
       cooldownUntilMs: 0,
       cooldownDurationMs: 1500,
       weatherExpiresMs: 0,
@@ -1629,6 +1690,23 @@
       if (!path) return `<div class="${sm ? "sprite-sm" : "sprite-box"}">${pxIcon(key, sz)}</div>`;
       const clean = "./" + String(path).replace(/^\/+/, "");
       return `<div class="${sm ? "sprite-sm" : "sprite-box"}"><img src="${esc(clean)}" alt="" loading="lazy" onerror="this.parentNode.innerHTML=pxIcon('${key}',${sz})" /></div>`;
+    }
+
+    const CUSTOM_ITEM_ART = {
+      iron_chest_key: { icon: "key_iron", ped: "ped-iron", tag: "CHÌA KHÓA SẮT" },
+      gold_chest_key: { icon: "key_gold", ped: "ped-gold", tag: "CHÌA KHÓA VÀNG" },
+      fishing_lockpick: { icon: "tool_lockpick", ped: "ped-lockpick", tag: "CẬY KHÓA" },
+      fish_catch_lock: { icon: "tool_fish_lock", ped: "ped-fishlock", tag: "KHÓA BẢO VỆ" },
+      afk_boost_8h: { icon: "afk_boost", ped: "ped-afk", tag: "TREO AFK 8 GIỜ" },
+      afk_boost_8h_pro: { icon: "afk_boost_pro", ped: "ped-afk-pro", tag: "AFK HOÀNG KIM ×2" }
+    };
+
+    function itemSpriteHtml(item, sm) {
+      const meta = item && CUSTOM_ITEM_ART[item.item_id];
+      if (meta) {
+        return `<div class="sprite-ped ${meta.ped}${sm ? " sm" : ""}">${pxIcon(meta.icon, sm ? 34 : 44)}</div>`;
+      }
+      return spriteHtml(item && item.image_path, item && item.emoji, sm);
     }
 
     function toast(msg, kind, iconName) {
@@ -1751,6 +1829,7 @@
     }
 
     function logoutDiscord() {
+      stopIdleFishing(true);
       localStorage.removeItem("discord_access_token");
       APP.token = "";
       APP.discordUser = null;
@@ -1871,6 +1950,9 @@
       if (st && st.weather) {
         APP.weatherExpiresMs = Date.now() + Number(st.weather.remaining_seconds || 0) * 1000;
       }
+      APP.afkEndsMs = (st && st.afk && st.afk.active && st.afk.ends_at)
+        ? (Number(st.afk.ends_at) * 1000)
+        : 0;
       if (st && st.pending_catch && !APP.activeChallenge && !APP.busyAction) {
         const p = st.pending_catch;
         APP.activeChallenge = {
@@ -1975,6 +2057,7 @@
     }
 
     async function switchTab(tab) {
+      if (tab !== "fish" && APP.idleMode) stopIdleFishing(true);
       APP.activeTab = tab;
       render();
       if (!APP.state) return;
@@ -1991,6 +2074,310 @@
       } catch (e) {
         toast(e.message || "Lỗi tải tab", "err");
       }
+    }
+
+    function formatDurationHMS(sec) {
+      const s = Math.max(0, Math.floor(Number(sec || 0)));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const rem = s % 60;
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(rem).padStart(2, "0")}`;
+    }
+
+    function stopIdleFishing(silent) {
+      if (APP.idleTimerId) {
+        clearTimeout(APP.idleTimerId);
+        APP.idleTimerId = null;
+      }
+      APP.idleMode = false;
+      APP.busyIdle = false;
+      if (window.HaruOceanStage && !APP.busyCast && !APP.activeChallenge) {
+        HaruOceanStage.setMode("idle");
+      }
+      if (!silent) render();
+    }
+
+    function toggleIdleFishing() {
+      if (APP.idleMode) {
+        stopIdleFishing(false);
+        toast(APP.lang === "en" ? "Idle Auto-Fishing stopped." : "Đã tắt Idle Câu Cá Tự Động.", "", "rod");
+        return;
+      }
+      if (!APP.state) return;
+      if (APP.activeChallenge || APP.state.pending_catch) {
+        toast(APP.lang === "en" ? "Finish your current bite first!" : "Hãy xử lý con cá đang cắn câu trước!", "err", "warn");
+        return;
+      }
+      APP.idleMode = true;
+      SFX.cast();
+      if (window.HaruOceanStage) HaruOceanStage.setMode("casting");
+      toast(APP.lang === "en" ? "Idle Auto-Fishing ON!" : "Bật Idle Câu Cá Tự Động! Bot tự thả cần & thưởng RuCoin mỗi nhịp.", "ok", "bolt");
+      render();
+      scheduleNextIdle(350);
+    }
+
+    function scheduleNextIdle(delayMs) {
+      if (APP.idleTimerId) {
+        clearTimeout(APP.idleTimerId);
+        APP.idleTimerId = null;
+      }
+      if (!APP.idleMode || APP.activeTab !== "fish" || !APP.state) return;
+      APP.idleTimerId = setTimeout(runIdleCycle, Math.max(250, Number(delayMs || 1500)));
+    }
+
+    async function runIdleCycle() {
+      APP.idleTimerId = null;
+      if (!APP.idleMode || APP.activeTab !== "fish" || !APP.state) return;
+      if (APP.busyCast || APP.busyAction || APP.activeChallenge || APP.busyIdle) {
+        scheduleNextIdle(900);
+        return;
+      }
+      const localCdMs = Number(APP.cooldownUntilMs || 0) - Date.now();
+      if (localCdMs > 250) {
+        scheduleNextIdle(localCdMs + 150);
+        return;
+      }
+      APP.busyIdle = true;
+      if (window.HaruOceanStage) HaruOceanStage.setMode("casting");
+      try {
+        const res = await fishRpc("idle_tick", {});
+        if (!APP.idleMode || APP.activeTab !== "fish") return;
+        if (!res.ok) {
+          if (res.code === "cooldown" && Number(res.remaining_seconds || 0) > 0) {
+            APP.cooldownUntilMs = Date.now() + Math.ceil(Number(res.remaining_seconds) * 1000);
+            scheduleNextIdle(Math.ceil(Number(res.remaining_seconds) * 1000) + 250);
+            return;
+          }
+          toast(res.error || "Idle tạm dừng", "err", "warn");
+          stopIdleFishing(false);
+          return;
+        }
+        if (res.state) applyState(res.state);
+        APP.inventory = null;
+        APP.lastCastResult = res;
+        let pendingBurst = null;
+        if (res.mode === "idle_caught" && res.catch) {
+          const c = res.catch;
+          const rk = rarityRankOf(c.rarity_id);
+          const totalVal = Number(c.value || 0) + Number(res.idle_rucoin_bonus || 0);
+          recordSessionCatch(c, res);
+          SFX.rarityFanfare(rk, totalVal);
+          pendingBurst = [c.rarity_id, rk, c.rarity_color, totalVal, Boolean(c.mutation_name), "IDLE AUTO!"];
+        }
+        render();
+        if (window.HaruOceanStage && pendingBurst) {
+          HaruOceanStage.triggerCatchBurst(...pendingBurst);
+        }
+        const nextWait = Math.max(2200, (Number(APP.cooldownUntilMs || 0) - Date.now()) + 300);
+        scheduleNextIdle(nextWait);
+      } catch (e) {
+        if (APP.idleMode) {
+          toast(e.message || "Lỗi kết nối Idle", "err", "warn");
+          scheduleNextIdle(4000);
+        }
+      } finally {
+        APP.busyIdle = false;
+      }
+    }
+
+    function openAfkModal() {
+      if (!APP.state) return;
+      const afk = APP.state.afk || {};
+      const st = APP.state;
+      const isActive = Boolean(afk.active);
+      const isCompleted = Boolean(afk.completed);
+      const canClaim = Boolean(afk.can_claim);
+      const remSec = isActive && APP.afkEndsMs > 0
+        ? Math.max(0, Math.round((APP.afkEndsMs - Date.now()) / 1000))
+        : Number(afk.remaining_seconds || 0);
+      const pct = Math.max(0, Math.min(100, Number(afk.progress_pct || 0)));
+
+      if (isActive) {
+        const tierIcon = afk.boost_tier === "pro" ? "afk_boost_pro" : "afk_boost";
+        const claimBtn = isCompleted
+          ? `<button type="button" class="btn btn-emerald" onclick="doAfkClaim(true)">${pxIcon("trophy", 15)} Nhận Quà AFK 8H Ngay!</button>`
+          : (canClaim
+            ? `<button type="button" class="btn btn-gold" onclick="doAfkClaim(false)">${pxIcon("clock", 15)} Nhận Sớm (${Math.max(1, Math.floor((afk.elapsed_seconds || 0) / 60))} phút)</button>`
+            : `<button type="button" class="btn btn-ghost" disabled>${pxIcon("hourglass", 14)} Cần treo tối thiểu 1 phút</button>`);
+        openModal(`
+          <div class="row-between" style="margin-bottom:10px;">
+            <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-mint);">${pxIcon("clock", 18)} PHIÊN TREO AFK 8 TIẾNG</h3>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
+          </div>
+          <div class="sub-card stack" style="border-color:${isCompleted ? "var(--px-gold)" : "var(--px-mint)"};margin-bottom:12px;">
+            <div class="row-between">
+              <div class="inline-ico" style="font-weight:700;font-size:14px;">${pxIcon(tierIcon, 24)} ${esc(afk.boost_name || "Boost AFK 8 Giờ")}</div>
+              <span class="rarity-pill" style="color:${isCompleted ? "var(--px-gold)" : "var(--px-mint)"};">${isCompleted ? "SẴN SÀNG NHẬN" : "ĐANG CÂU OFFLINE"}</span>
+            </div>
+            <div class="muted inline-ico" style="font-size:12px;">${pxIcon("island", 13)} Đảo treo: <strong>${esc(afk.island_name || (st.equipment.island && st.equipment.island.name) || "Đảo Hiện Tại")}</strong></div>
+            <div class="row-between" style="margin-top:4px;">
+              <span class="muted" style="font-size:12px;">Thời gian còn lại</span>
+              <strong id="afk-modal-clock" class="px-num" style="font-size:24px;color:${isCompleted ? "var(--px-gold)" : "var(--px-cyan)"};">${isCompleted ? "HOÀN TẤT 8/8 GIỜ!" : formatDurationHMS(remSec)}</strong>
+            </div>
+            <div class="afk-meter"><div class="afk-meter-fill" id="afk-modal-bar" style="width:${pct}%;"></div></div>
+            <div class="grid-2" style="gap:8px;margin-top:4px;">
+              <div class="sub-card" style="padding:8px;">
+                <div class="muted" style="font-size:11px;">Cá dự kiến đã câu</div>
+                <strong class="px-num inline-ico" style="font-size:18px;color:var(--px-mint);">${pxIcon("fish", 14)} ~${fmt(afk.estimated_fish || 0)} con</strong>
+                <div class="muted" style="font-size:10.5px;">Giữ ${fmt(afk.max_kept || 40)} con hiếm nhất</div>
+              </div>
+              <div class="sub-card" style="padding:8px;">
+                <div class="muted" style="font-size:11px;">RuCoin ước tính</div>
+                <strong class="px-num inline-ico" style="font-size:18px;color:var(--px-gold);">${pxIcon("coin", 14)} ~${fmt(afk.estimated_rucoin || 0)} RC</strong>
+                <div class="muted" style="font-size:10.5px;">Chạy liên tục dù tắt App</div>
+              </div>
+            </div>
+          </div>
+          <div class="row-between">
+            <span class="muted" style="font-size:11.5px;">Mở lại game sau 8 tiếng để hốt trọn mẻ lớn!</span>
+            ${claimBtn}
+          </div>`);
+        return;
+      }
+
+      const stdStock = Number(afk.stock_standard || 0);
+      const proStock = Number(afk.stock_pro || 0);
+      openModal(`
+        <div class="row-between" style="margin-bottom:10px;">
+          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-gold);">${pxIcon("clock", 18)} CÂU CÁ AFK 8 TIẾNG</h3>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
+        </div>
+        <p class="muted" style="font-size:12px;margin-top:0;line-height:1.45;">
+          Dùng vé <strong>Boost AFK</strong> trong Shop để Bot tự câu suốt <strong>8 tiếng ngay cả khi đóng web/tắt máy</strong>. Hệ thống giữ lại những con cá hiếm nhất vào Túi và tự bán phần cá dư + thưởng RuCoin theo giờ!
+        </p>
+        <div class="grid-2" style="gap:10px;margin:12px 0;">
+          <div class="sub-card stack shop-card-featured">
+            <div class="wrap-row" style="gap:10px;">
+              ${itemSpriteHtml({ item_id: "afk_boost_8h" }, false)}
+              <div style="min-width:0;flex:1;">
+                <span class="rarity-pill" style="color:var(--px-mint);">TIÊU CHUẨN 8H</span>
+                <div style="font-weight:700;font-size:13.5px;margin-top:3px;">Boost AFK 8 Giờ</div>
+                <div class="muted" style="font-size:11px;">Đang có: <strong style="color:var(--px-cyan);">×${fmt(stdStock)}</strong></div>
+              </div>
+            </div>
+            <div class="muted" style="font-size:11.5px;line-height:1.4;">~20 cá/giờ · Giữ 40 cá hiếm nhất + RuCoin thụ động suốt 8 tiếng.</div>
+            <div style="margin-top:auto;">
+              ${stdStock > 0
+                ? `<button type="button" class="btn btn-emerald btn-sm" style="width:100%;" onclick="doAfkStart('standard')">${pxIcon("bolt", 14)} Kích Hoạt 8H</button>`
+                : `<button type="button" class="btn btn-gold btn-sm" style="width:100%;" onclick="closeModal();APP.shopFilter='afk_boost';switchTab('shop');">${pxIcon("shop", 14)} Mua Trong Shop (250K RC)</button>`}
+            </div>
+          </div>
+
+          <div class="sub-card stack shop-card-featured" style="border-color:var(--px-gold);">
+            <div class="wrap-row" style="gap:10px;">
+              ${itemSpriteHtml({ item_id: "afk_boost_8h_pro" }, false)}
+              <div style="min-width:0;flex:1;">
+                <span class="rarity-pill" style="color:var(--px-violet);">HOÀNG KIM ×2</span>
+                <div style="font-weight:700;font-size:13.5px;margin-top:3px;">Boost AFK Hoàng Kim</div>
+                <div class="muted" style="font-size:11px;">Đang có: <strong style="color:var(--px-gold);">×${fmt(proStock)}</strong></div>
+              </div>
+            </div>
+            <div class="muted" style="font-size:11.5px;line-height:1.4;">~30 cá/giờ · +Luck & Giữ 60 cá hiếm nhất · Tiền AFK gấp bội!</div>
+            <div style="margin-top:auto;">
+              ${proStock > 0
+                ? `<button type="button" class="btn btn-emerald btn-sm" style="width:100%;" onclick="doAfkStart('pro')">${pxIcon("sparkle", 14)} Kích Hoạt Hoàng Kim</button>`
+                : `<button type="button" class="btn btn-gold btn-sm" style="width:100%;" onclick="closeModal();APP.shopFilter='afk_boost';switchTab('shop');">${pxIcon("shop", 14)} Mua Pro Trong Shop (1.5M RC)</button>`}
+            </div>
+          </div>
+        </div>
+        <div class="row-between">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal();APP.shopFilter='afk_boost';switchTab('shop');">${pxIcon("shop", 13)} Mở Shop Boost AFK</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
+        </div>`);
+    }
+
+    async function doAfkStart(tier) {
+      if (APP.busyAction) return;
+      APP.busyAction = true;
+      try {
+        const res = await fishRpc("afk_start", { tier });
+        if (!res.ok) {
+          toast(res.error || "Không thể kích hoạt AFK 8H", "err", "warn");
+          return;
+        }
+        if (res.state) applyState(res.state);
+        APP.inventory = null;
+        APP.shop = null;
+        SFX.forge();
+        toast(res.message || "Đã bật treo AFK 8 giờ!", "ok", "clock");
+        render();
+        openAfkModal();
+      } catch (e) {
+        toast(e.message || "Lỗi kết nối AFK", "err", "warn");
+      } finally {
+        APP.busyAction = false;
+      }
+    }
+
+    async function doAfkClaim(isCompleted) {
+      if (APP.busyAction) return;
+      if (!isCompleted) {
+        const ok = await pxConfirm({
+          title: "NHẬN QUÀ AFK SỚM?",
+          message: "Thời gian 8 tiếng chưa kết thúc. Nếu thu hoạch ngay bây giờ, phiên AFK sẽ kết thúc và bạn nhận cá + RuCoin tính đến thời điểm hiện tại.",
+          confirmText: "Nhận Ngay",
+          cancelText: "Treo Tiếp",
+          danger: false
+        });
+        if (!ok) return;
+      }
+      APP.busyAction = true;
+      try {
+        const res = await fishRpc("afk_claim", {});
+        if (!res.ok) {
+          toast(res.error || "Chưa thể thu hoạch AFK", "err", "warn");
+          return;
+        }
+        if (res.state) applyState(res.state);
+        APP.inventory = null;
+        SFX.rarityFanfare(5, Number(res.total_rucoin || 0));
+        render();
+        openAfkClaimResultModal(res);
+      } catch (e) {
+        toast(e.message || "Lỗi thu hoạch AFK", "err", "warn");
+      } finally {
+        APP.busyAction = false;
+      }
+    }
+
+    function openAfkClaimResultModal(res) {
+      const topHtml = (res.top_catches || []).slice(0, 6).map(c => `
+        <div class="sub-card row-between" style="padding:8px 10px;border-color:${esc(c.rarity_color || "#7ec8d9")};">
+          <div class="wrap-row" style="gap:8px;min-width:0;flex:1;">
+            ${spriteHtml(c.image_path, c.emoji, true)}
+            <div style="min-width:0;">
+              <div style="font-weight:700;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(c.fish_name)}</div>
+              <div class="muted" style="font-size:11px;">
+                <span style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
+                ${c.mutation_name ? ` · ${esc(c.mutation_name)}` : ""} · ${c.weight} kg
+              </div>
+            </div>
+          </div>
+          <strong class="px-num" style="color:var(--px-gold);font-size:17px;">${fmt(c.value)} RC</strong>
+        </div>`).join("");
+      openModal(`
+        <div class="row-between" style="margin-bottom:10px;">
+          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-gold);">${pxIcon("trophy", 18)} TỔNG KẾT TREO AFK</h3>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
+        </div>
+        <div class="grid-2" style="gap:8px;margin-bottom:10px;">
+          <div class="sub-card" style="padding:9px;">
+            <div class="muted" style="font-size:11px;">Tổng thu nhập AFK</div>
+            <strong class="px-num inline-ico" style="font-size:21px;color:var(--px-gold);">${pxIcon("moneybag", 15)} +${fmt(res.total_rucoin)} RC</strong>
+            <div class="muted" style="font-size:10.5px;">Thù lao ${fmt(res.stipend_rucoin)} + Bán dư ${fmt(res.sold_rucoin)}</div>
+          </div>
+          <div class="sub-card" style="padding:9px;">
+            <div class="muted" style="font-size:11px;">Cá câu trong ${formatDurationHMS(res.elapsed_seconds)}</div>
+            <strong class="px-num inline-ico" style="font-size:21px;color:var(--px-mint);">${pxIcon("fish", 15)} ${fmt(res.total_caught)} con</strong>
+            <div class="muted" style="font-size:10.5px;">Cất Túi ${fmt(res.kept_count)} · Tự bán ${fmt(res.auto_sold_count)} · +${fmt(res.gained_xp)} XP</div>
+          </div>
+        </div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:6px;color:var(--px-cyan);">Top Cá Hiếm Đã Cất Vào Túi:</div>
+        <div class="stack" style="max-height:42vh;overflow-y:auto;gap:6px;">${topHtml || '<p class="muted">Đã quy đổi toàn bộ thành RuCoin.</p>'}</div>
+        <div class="row-between" style="margin-top:12px;">
+          <span class="muted" style="font-size:11.5px;">Level hiện tại: <strong style="color:var(--px-mint);">LV.${fmt(res.level)}</strong></span>
+          <button type="button" class="btn btn-primary btn-sm" onclick="closeModal()">Tuyệt vời!</button>
+        </div>`);
     }
 
     async function refreshInventory() {
@@ -2178,6 +2565,7 @@
 
     async function doCast() {
       if (APP.busyCast || APP.busyAction || APP.activeChallenge || (APP.cooldownUntilMs > Date.now())) return;
+      if (APP.idleMode) stopIdleFishing(true);
       SFX.cast();
       APP.busyCast = true;
       APP.lastCastResult = null;
@@ -3050,9 +3438,9 @@
         centerHtml = `<div class="sub-card inline-ico" style="padding:14px 20px;border-color:var(--px-mint);">${pxIcon("hourglass", 18)} <strong>Đang kéo cá lên & lưu vào Discord...</strong></div>`;
       } else if (APP.lastCastResult) {
         const r = APP.lastCastResult;
-        if (r.mode === "caught" && r.catch) {
+        if ((r.mode === "caught" || r.mode === "idle_caught") && r.catch) {
           const c = r.catch;
-          const totalVal = Number(c.value || 0) + (r.bonus_catches || []).reduce((s, b) => s + Number(b.value || 0), 0);
+          const totalVal = Number(c.value || 0) + (r.bonus_catches || []).reduce((s, b) => s + Number(b.value || 0), 0) + Number(r.idle_rucoin_bonus || 0);
           const tierCls = rarityTierClass(c.rarity_id);
           const bList = (r.bonus_catches || []).map(b => `<span class="feature-chip" style="margin:0;">+ ${esc(b.fish_name)} (${fmt(b.value)} RC)</span>`).join("");
           centerHtml = `
@@ -3063,6 +3451,8 @@
                   <div class="wrap-row" style="gap:5px;">
                     <span class="rarity-pill" style="color:${esc(c.rarity_color)};">${esc(c.rarity_name)}</span>
                     ${valueBadgeHtml(totalVal)}
+                    ${r.mode === "idle_caught" ? `<span class="rarity-pill" style="color:var(--px-mint);">${pxIcon("bolt", 12)} IDLE AUTO</span>` : ""}
+                    ${r.idle_rucoin_bonus ? `<span class="rarity-pill" style="color:var(--px-gold);">+${fmt(r.idle_rucoin_bonus)} RC Idle</span>` : ""}
                     ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("sparkle", 12)} ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
                     ${c.serial_number ? `<span class="rarity-pill" style="color:var(--px-gold);">#${String(c.serial_number).padStart(6, "0")}</span>` : ""}
                   </div>
@@ -3124,9 +3514,15 @@
           <span class="cast-key-hint">SPACE</span>
         </button>` : "";
 
+      const afk = (st && st.afk) || {};
+      const afkRemNow = afk.active && APP.afkEndsMs > 0
+        ? Math.max(0, Math.round((APP.afkEndsMs - Date.now()) / 1000))
+        : Number(afk.remaining_seconds || 0);
       const stageTag = ch
         ? (ch.practice ? `${pxIcon("target", 12)} TẬP LUYỆN` : `${pxIcon("bolt", 12)} CÁ CẮN CÂU!`)
-        : (APP.busyCast ? `${pxIcon("wave", 12)} Đang quăng dây...` : `${pxIcon("rod", 12)} Sẵn sàng thả cần`);
+        : (APP.idleMode
+          ? `${pxIcon("bolt", 12)} IDLE TỰ ĐỘNG...`
+          : (APP.busyCast ? `${pxIcon("wave", 12)} Đang quăng dây...` : `${pxIcon("rod", 12)} Sẵn sàng thả cần`));
 
       const recentHtml = ss.recent.length
         ? ss.recent.map(item => `<span class="session-pill" style="border-color:${esc(item.rarity_color)};color:${esc(item.rarity_color)};">${esc(item.fish_name)} · ${fmt(item.value)} RC</span>`).join("")
@@ -3162,6 +3558,8 @@
             <div class="fish-quick-dock">
               <button type="button" class="dock-btn" onclick="openIslandQuickModal()">${pxIcon("island", 14)} Đổi Đảo</button>
               <button type="button" class="dock-btn" onclick="openBaitQuickModal()">${pxIcon("bait", 14)} ${eq.bait ? esc(eq.bait.name) + " ×" + eq.bait.quantity : "Chọn Mồi"}</button>
+              <button type="button" class="dock-btn${APP.idleMode ? " idle-on" : ""}" onclick="toggleIdleFishing()">${pxIcon("bolt", 14)} ${APP.idleMode ? "Idle: ĐANG CHẠY" : "Idle Tự Động"}</button>
+              <button type="button" class="dock-btn${afk.active ? (afk.completed ? " afk-ready" : " afk-active") : ""}" onclick="openAfkModal()">${pxIcon(afk.boost_tier === "pro" ? "afk_boost_pro" : "afk_boost", 15)} ${afk.active ? `<span id="afk-dock-clock">${afk.completed ? "NHẬN AFK!" : formatDurationHMS(afkRemNow)}</span>` : "Treo AFK 8H"}</button>
               <button type="button" class="dock-btn" onclick="openChallengeGuideModal()">${pxIcon("target", 14)} Tập Thử Thách</button>
               <button type="button" class="dock-btn gold" onclick="doSellAll()">${pxIcon("moneybag", 14)} Bán (${fmt(st.stats.kept_catches)})</button>
             </div>
@@ -3268,6 +3666,8 @@
           actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('${esc(it.item_type)}','${esc(it.item_id)}')">${it.equipped ? "Đang dùng " + pxIcon("check", 12) : "Trang bị"}</button>`;
         } else if (["gear", "hook", "reel"].includes(it.item_type)) {
           actions += `<button class="btn ${it.equipped ? "btn-ghost" : "btn-primary"} btn-sm" onclick="doEquip('gear','${esc(it.item_id)}')">${it.equipped ? "Đang mặc " + pxIcon("check", 12) : "Mặc ô " + esc(it.slot)}</button>`;
+        } else if (it.item_type === "afk_boost") {
+          actions += `<button class="btn btn-emerald btn-sm" onclick="openAfkModal()">${pxIcon("clock", 13)} Treo AFK 8H</button>`;
         }
         if (it.quantity > 1 && it.sell_unit_price > 0) {
           actions += `<button class="btn btn-ghost btn-sm" onclick="doSellItem('${esc(it.item_id)}')">Bán dư (${fmt(it.sell_unit_price * (it.quantity - 1))} RC)</button>`;
@@ -3276,7 +3676,7 @@
           <div class="sub-card">
             <div class="row-between">
               <div class="wrap-row" style="flex:1;min-width:0;">
-                ${spriteHtml(it.image_path, it.emoji, true)}
+                ${itemSpriteHtml(it, true)}
                 <div style="min-width:0;">
                   <div style="font-weight:700;font-size:13px;">${esc(it.name)} <span style="color:var(--px-cyan);">×${fmt(it.quantity)}</span></div>
                   <div class="muted" style="font-size:11px;">${esc(it.item_type.toUpperCase())}${it.rarity_name ? ` · ${esc(it.rarity_name)}` : ""}${it.forge_rank_name ? ` · ${esc(it.forge_rank_name)}` : ""}</div>
@@ -3435,21 +3835,30 @@
       if (!APP.shop) return `<div class="panel"><p class="muted">Đang tải cửa hàng thật từ Discord...</p></div>`;
       const items = APP.shop.items.filter(it => APP.shopFilter === "all" || it.item_type === APP.shopFilter);
       const typeCats = [
-        ["all", "Tất cả"], ["rod", "Cần câu"], ["bait", "Mồi câu"],
+        ["all", "Tất cả"], ["afk_boost", "Boost AFK 8H"], ["rod", "Cần câu"], ["bait", "Mồi câu"],
         ["fish_lock", "Ổ khóa cá"], ["key", "Chìa khóa rương"],
         ["lockpick", "Cậy khóa"], ["mutation_potion", "Thuốc Mutation"]
       ];
       const filters = `<div class="wrap-row" style="margin-bottom:14px;">${typeCats.map(([k, l]) => `<button class="btn ${APP.shopFilter === k ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.shopFilter='${k}';render();">${l}</button>`).join("")}</div>`;
-      const cards = items.map(it => `
-        <div class="sub-card stack">
-          <div class="wrap-row" style="flex:1;min-width:0;">
-            ${spriteHtml(it.image_path, it.emoji, true)}
-            <div style="min-width:0;">
-              <div style="font-weight:700;font-size:13px;">${esc(it.name)}</div>
-              <div class="muted" style="font-size:11px;">${it.luck ? `+${it.luck} Luck · ` : ""}${it.max_weight_kg ? `${fmt(it.max_weight_kg)} kg · ` : ""}Đang có: ${fmt(it.owned)}</div>
+      const cards = items.map(it => {
+        const artMeta = CUSTOM_ITEM_ART[it.item_id];
+        const cardCls = it.item_type === "afk_boost"
+          ? "sub-card stack shop-card-featured"
+          : (artMeta ? "sub-card stack shop-card-key" : "sub-card stack");
+        const tagPill = artMeta
+          ? `<span class="rarity-pill" style="margin-bottom:4px;color:${it.item_type === "afk_boost" ? "var(--px-mint)" : "var(--px-gold)"};">${esc(artMeta.tag)}</span>`
+          : "";
+        return `
+        <div class="${cardCls}">
+          <div class="wrap-row" style="flex:1;min-width:0;align-items:flex-start;">
+            ${itemSpriteHtml(it, false)}
+            <div style="min-width:0;flex:1;">
+              ${tagPill}
+              <div style="font-weight:700;font-size:13.5px;">${esc(it.name)}</div>
+              <div class="muted" style="font-size:11px;margin-top:2px;">${it.luck ? `+${it.luck} Luck · ` : ""}${it.max_weight_kg ? `${fmt(it.max_weight_kg)} kg · ` : ""}Đang có: <strong style="color:var(--px-cyan);">${fmt(it.owned)}</strong></div>
             </div>
           </div>
-          ${it.description ? `<div class="muted" style="font-size:11.5px;">${esc(it.description)}</div>` : ""}
+          ${it.description ? `<div class="muted" style="font-size:11.5px;line-height:1.45;">${esc(it.description)}</div>` : ""}
           <div class="row-between" style="margin-top:auto;padding-top:6px;">
             <strong class="px-num" style="color:var(--px-gold);font-size:20px;">${fmt(it.cost)} RC</strong>
             <div class="wrap-row" style="gap:6px;">
@@ -3462,7 +3871,8 @@
               <button class="btn btn-primary btn-sm" onclick="doBuyItem('${esc(it.item_id)}')">Mua</button>
             </div>
           </div>
-        </div>`).join("");
+        </div>`;
+      }).join("");
       return `<div class="panel"><h3 class="px-num inline-ico" style="margin:0 0 12px;font-size:24px;color:var(--px-gold);">${pxIcon("shop", 18)} CỬA HÀNG CÂU CÁ</h3>${filters}<div class="grid-3">${cards}</div></div>`;
     }
 
@@ -3752,6 +4162,28 @@
         const wRem = Math.max(0, Math.round((APP.weatherExpiresMs - Date.now()) / 1000));
         const txt = `${Math.floor(wRem / 60)}:${String(wRem % 60).padStart(2, "0")}`;
         wEl.textContent = APP.activeTab === "fish" ? `(${txt})` : txt;
+      }
+      if (APP.afkEndsMs > 0 && APP.state.afk && APP.state.afk.active) {
+        const afkRem = Math.max(0, Math.round((APP.afkEndsMs - Date.now()) / 1000));
+        const dur = Math.max(60, Number(APP.state.afk.duration_seconds || 28800));
+        const elapsedNow = Math.max(0, dur - afkRem);
+        APP.state.afk.remaining_seconds = afkRem;
+        APP.state.afk.elapsed_seconds = elapsedNow;
+        if (elapsedNow >= 60) APP.state.afk.can_claim = true;
+        const dockClock = document.getElementById("afk-dock-clock");
+        if (dockClock) dockClock.textContent = afkRem > 0 ? formatDurationHMS(afkRem) : "NHẬN AFK!";
+        const modalClock = document.getElementById("afk-modal-clock");
+        if (modalClock) modalClock.textContent = afkRem > 0 ? formatDurationHMS(afkRem) : "HOÀN TẤT 8/8 GIỜ!";
+        const modalBar = document.getElementById("afk-modal-bar");
+        if (modalBar) modalBar.style.width = `${Math.min(100, Math.round((elapsedNow / dur) * 100))}%`;
+        if (afkRem === 0 && !APP.state.afk.completed) {
+          APP.state.afk.completed = true;
+          APP.state.afk.can_claim = true;
+          render();
+          if (document.getElementById("modal-root") && document.getElementById("modal-root").classList.contains("open") && modalClock) {
+            openAfkModal();
+          }
+        }
       }
       if (APP.activeTab !== "fish" || APP.busyCast || APP.busyAction) return;
       const btn = document.getElementById("cast-btn-live");
