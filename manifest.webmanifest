@@ -1,0 +1,83 @@
+{
+  "id": "/haruki-legal/",
+  "name": "Haru Ecosystem",
+  "short_name": "Haru Ecosystem",
+  "description": "Haru Ecosystem — HaruBot (Music, RPG & Mini-Games) & HaruMod (Security, Anti-Nuke & Dashboard)",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#070913",
+  "theme_color": "#070913",
+  "categories": [
+    "utilities",
+    "entertainment",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "./icons/haru-app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/haru-app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/haru-app-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "HaruMod Dashboard",
+      "short_name": "Dashboard",
+      "description": "Open HaruMod Security & Server Configurator",
+      "url": "./dashboard.html",
+      "icons": [
+        {
+          "src": "./icons/harumod-shortcut-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "HaruBot",
+      "short_name": "HaruBot",
+      "description": "Music, Fishing RPG & Mini-Games Bot",
+      "url": "./harubot.html",
+      "icons": [
+        {
+          "src": "./icons/harubot-shortcut-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "HaruMod Security",
+      "short_name": "HaruMod",
+      "description": "Anti-Nuke, Auto-Mod & Server Protection",
+      "url": "./harumod.html",
+      "icons": [
+        {
+          "src": "./icons/harumod-shortcut-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
