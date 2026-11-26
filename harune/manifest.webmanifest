@@ -1,14 +1,14 @@
 {
   "id": "./",
-  "name": "Harune — Warm Audiophile Music",
+  "name": "Harune — Crystal Hi-Fi Music",
   "short_name": "Harune",
-  "description": "Ứng dụng nghe nhạc Hi-Fi 32-bit DSP đa nền tảng (PC, Android, iOS), EQ 10 băng, Tube Warmth, Lời Karaoke 3D & Mix DJ kết nối HaruBot.",
+  "description": "Ứng dụng nghe nhạc Hi-Fi 32-bit DSP đa nền tảng (Điện thoại, iPad, PC), AI DJ Remix, Phòng nghe cùng bạn bè & Đa tai nghe Bluetooth Lossless.",
   "start_url": "./?source=harune_pwa",
   "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
-  "background_color": "#0B0B0E",
-  "theme_color": "#0B0B0E",
+  "background_color": "#050B14",
+  "theme_color": "#050B14",
   "categories": ["music", "entertainment"],
   "icons": [
     {

@@ -1,8 +1,9 @@
-const CACHE_NAME = "harune-pwa-v11";
+const CACHE_NAME = "harune-pwa-v12";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./icons/harune-logo.png",
   "./icons/apple-touch-icon-180.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
