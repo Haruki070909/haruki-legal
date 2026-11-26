@@ -1,4 +1,4 @@
-const CACHE_NAME = "haru-ecosystem-v17";
+const CACHE_NAME = "haru-ecosystem-v18";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,7 @@ const CORE_SHELL_ASSETS = [
   "./fishing.html",
   "./fishing-pixel-icons.js?v=2",
   "./fishing-stage-engine.js?v=2",
-  "./fishing-minigame.js?v=4",
+  "./fishing-minigame.js?v=5",
   "./harumod.html",
   "./dashboard.html",
   "./shared.css",
@@ -14,7 +14,7 @@ const CORE_SHELL_ASSETS = [
   "./index-Vs_wrV2D.css",
   "./manifest.webmanifest",
   "./fishing-manifest.webmanifest",
-  "./pwa-app.js?v=5",
+  "./pwa-app.js?v=6",
   "./haru-avatar.webp",
   "./harumod-avatar.png",
   "./icons/haru-app-icon-192.png",
@@ -54,6 +54,17 @@ self.addEventListener("activate", (event) => {
         )
       )
       .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: "window", includeUncontrolled: true }))
+      .then((clients) =>
+        Promise.allSettled(
+          clients.map((client) => {
+            if (client.url && client.url.includes("fishing.html") && typeof client.navigate === "function") {
+              return client.navigate(client.url).catch(() => {});
+            }
+            return Promise.resolve();
+          })
+        )
+      )
   );
 });
 

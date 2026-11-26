@@ -22,7 +22,7 @@
   ) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("./sw.js", { scope: "./" })
+        .register("./sw.js", { scope: "./", updateViaCache: "none" })
         .then((reg) => {
           if (reg && typeof reg.update === "function") {
             reg.update().catch(() => {});

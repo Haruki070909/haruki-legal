@@ -1578,7 +1578,7 @@
         <a href="./harubot.html" class="brand-back" data-hide-standalone title="HaruBot"><span id="ico-back-slot"></span><span data-t="backBot">HaruBot</span></a>
         <div class="brand-title">
           <img src="./icons/fishing-app-icon-192.png" class="px-icon" alt="Haru Fishing" />
-          <span class="px-logo-text">HARU FISHING<span class="hide-xs"> RPG</span></span>
+          <span class="px-logo-text">HARU FISHING<span class="hide-xs"> RPG</span><span style="font-size:10px;color:var(--px-mint);opacity:.85;margin-left:5px;letter-spacing:0;">v18</span></span>
         </div>
       </div>
       <div class="nav-controls">
@@ -1612,7 +1612,7 @@
 
   <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
-  <script src="./fishing-minigame.js?v=4"></script>
+  <script src="./fishing-minigame.js?v=5"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -1639,16 +1639,26 @@
     }
     if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
       const hadSwController = Boolean(navigator.serviceWorker.controller);
+      let swRegRef = null;
       navigator.serviceWorker.addEventListener("controllerchange", () => {
         if (hadSwController && !window.__haruSwReloaded) {
           window.__haruSwReloaded = true;
           window.location.reload();
         }
       });
+      const checkSwUpdate = () => {
+        if (swRegRef && typeof swRegRef.update === "function") {
+          swRegRef.update().catch(() => {});
+        }
+      };
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js", { scope: "./" }).then((reg) => {
-          if (reg && typeof reg.update === "function") reg.update().catch(() => {});
+        navigator.serviceWorker.register("./sw.js", { scope: "./", updateViaCache: "none" }).then((reg) => {
+          swRegRef = reg;
+          checkSwUpdate();
         }).catch(() => {});
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") checkSwUpdate();
       });
     }
 
@@ -2238,6 +2248,9 @@
     }
 
     async function loadState() {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => {});
+      }
       try {
         const data = await fishRpc("get_state", {});
         if (!data.ok) {

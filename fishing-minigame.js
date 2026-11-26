@@ -518,7 +518,7 @@
   function beginCountdown() {
     if (!session || session.finished || session.stagePhase !== "briefing") return;
     session.stagePhase = "countdown";
-    session.countdown = 2.1;
+    session.countdown = 3.0;
     session.lastCountBeat = 3;
     const ov = document.getElementById("mg-briefing-overlay");
     if (ov) ov.style.display = "none";
@@ -668,7 +668,7 @@
 
     if (session.stagePhase === "countdown") {
       session.countdown -= dt;
-      const beat = Math.max(1, Math.ceil(session.countdown / 0.7));
+      const beat = Math.max(1, Math.min(3, Math.ceil(session.countdown)));
       if (beat < session.lastCountBeat && session.countdown > 0) {
         session.lastCountBeat = beat;
         const chimeFreq = beat === 2 ? 523.25 : 659.25;
@@ -677,7 +677,7 @@
       if (session.countdown <= 0) {
         session.stagePhase = "playing";
         session.elapsed = 0;
-        PianoAudio.playNote(783.99, 0.28, 0.08);
+        PianoAudio.playNote(880.0, 0.28, 0.08);
       }
       return;
     }
@@ -908,7 +908,7 @@
 
     // Opening countdown (3 -> 2 -> 1) or GO! flash
     if (session.stagePhase === "countdown") {
-      const cntNum = Math.max(1, Math.min(3, Math.ceil(session.countdown / 0.7)));
+      const cntNum = Math.max(1, Math.min(3, Math.ceil(session.countdown)));
       ctx.fillStyle = "rgba(6, 14, 26, 0.88)";
       ctx.fillRect(54, 62, CW - 108, 92);
       ctx.strokeStyle = session.rarityColor;
@@ -923,7 +923,7 @@
       ctx.fillText(isVi ? "CHUẨN BỊ NGÓN TAY!" : "HANDS READY!", CW / 2, 131);
       ctx.fillStyle = "#cbd5e1";
       ctx.font = "10px monospace";
-      ctx.fillText(`${diff.bpm} BPM · ${diff.notes} ${isVi ? "NỐT" : "NOTES"}`, CW / 2, 146);
+      ctx.fillText(`${session.countdown.toFixed(1)}s · ${diff.bpm} BPM · ${diff.notes} ${isVi ? "NỐT" : "NOTES"}`, CW / 2, 146);
     } else if (session.stagePhase === "playing" && session.elapsed < 0.45) {
       ctx.textAlign = "center";
       ctx.fillStyle = "#6fdbbf";
