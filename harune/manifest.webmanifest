@@ -1,0 +1,33 @@
+{
+  "id": "./",
+  "name": "Harune — Warm Audiophile Music",
+  "short_name": "Harune",
+  "description": "Ứng dụng nghe nhạc Hi-Fi 32-bit DSP đa nền tảng (PC, Android, iOS), EQ 10 băng, Tube Warmth, Lời Karaoke 3D & Mix DJ kết nối HaruBot.",
+  "start_url": "./?source=harune_pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#0B0B0E",
+  "theme_color": "#0B0B0E",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
