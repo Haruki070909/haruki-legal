@@ -1,4 +1,4 @@
-const CACHE_NAME = "haru-ecosystem-v16";
+const CACHE_NAME = "haru-ecosystem-v17";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,7 @@ const CORE_SHELL_ASSETS = [
   "./fishing.html",
   "./fishing-pixel-icons.js?v=2",
   "./fishing-stage-engine.js?v=2",
-  "./fishing-minigame.js?v=3",
+  "./fishing-minigame.js?v=4",
   "./harumod.html",
   "./dashboard.html",
   "./shared.css",
@@ -117,21 +117,40 @@ self.addEventListener("fetch", (event) => {
       return;
     }
 
-    // Instant Stale-While-Revalidate for all 4 app pages (returns cached HTML in ~15ms)
+    // Network-first for HTML pages so installed PWAs always receive fresh updates
     event.respondWith(
-      caches.match(req, { ignoreSearch: true }).then((cached) => {
-        const bgFetch = updateCacheInBackground(req);
-        if (cached) {
-          event.waitUntil(bgFetch);
-          return cached;
-        }
-        return bgFetch.then((netRes) => netRes || caches.match("./index.html"));
-      })
+      fetch(req.url, { cache: "no-cache" })
+        .then((res) => {
+          if (res && res.ok && res.type === "basic") {
+            const copy = res.clone();
+            const cacheKeyUrl = new URL(req.url);
+            cacheKeyUrl.search = "";
+            caches.open(CACHE_NAME).then((c) => c.put(cacheKeyUrl.toString(), copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req, { ignoreSearch: true }).then((c) => c || caches.match("./index.html")))
     );
     return;
   }
 
-  // Stale-while-revalidate for static assets (CSS, JS, icons, avatars, manifest)
+  // Network-first for JS scripts (respecting query version tags) so updates load immediately
+  if (reqUrl.pathname.endsWith(".js")) {
+    event.respondWith(
+      fetch(req.url, { cache: "no-cache" })
+        .then((res) => {
+          if (res && res.ok && res.type === "basic") {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Stale-while-revalidate for static assets (CSS, icons, avatars, manifest)
   event.respondWith(
     caches.match(req, { ignoreSearch: true }).then((cached) => {
       const bgFetch = fetch(req)

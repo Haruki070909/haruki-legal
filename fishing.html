@@ -1612,7 +1612,7 @@
 
   <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
-  <script src="./fishing-minigame.js?v=3"></script>
+  <script src="./fishing-minigame.js?v=4"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -1638,6 +1638,13 @@
       document.documentElement.classList.add("is-standalone");
     }
     if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
+      const hadSwController = Boolean(navigator.serviceWorker.controller);
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadSwController && !window.__haruSwReloaded) {
+          window.__haruSwReloaded = true;
+          window.location.reload();
+        }
+      });
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./sw.js", { scope: "./" }).then((reg) => {
           if (reg && typeof reg.update === "function") reg.update().catch(() => {});
@@ -2712,18 +2719,14 @@
     }
 
     const CHALLENGE_LADDER = [
-      { id: "common", name: "Common", color: "#94a3b8", fish: "Cá Mú Đá", weight: 2.8, value: 48, archVi: "96 BPM · 7 nốt đơn" },
-      { id: "uncommon", name: "Uncommon", color: "#22c55e", fish: "Cá Chim Bạc", weight: 6.4, value: 165, archVi: "108 BPM · 10 nốt · Có nốt giữ" },
-      { id: "rare", name: "Rare", color: "#38bdf8", fish: "Cá Sấu Hỏa Tiễn", weight: 42.5, value: 6800, archVi: "122 BPM · 14 nốt · Hợp âm đôi nhẹ" },
-      { id: "epic", name: "Epic", color: "#a855f7", fish: "Cá Koi Dung Nham", weight: 412.5, value: 32500, archVi: "136 BPM · 18 nốt · Hợp âm & giữ dài" },
-      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "150 BPM · 22 nốt · Giao hưởng nhanh" },
-      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "164 BPM · 26 nốt · Chặn bấm bừa" },
-      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "176 BPM · 30 nốt · Hợp âm dồn dập" },
-      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "188 BPM · 34 nốt · Tối đa 2 trượt" },
-      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "200 BPM · 38 nốt · Độc tấu siêu tốc" },
-      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "212 BPM · 42 nốt · Hợp âm đôi 48%" },
-      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "224 BPM · 46 nốt · Khúc Boss Cổ" },
-      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "238 BPM · 52 nốt · Hợp âm đôi & giữ dài" }
+      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "132 BPM · 16 nốt · 5 mạng · Hợp âm đôi nhẹ" },
+      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "146 BPM · 20 nốt · 5 mạng · Chặn bấm bừa" },
+      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "160 BPM · 24 nốt · 4 mạng · Hợp âm dồn dập" },
+      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "172 BPM · 28 nốt · 4 mạng · Siêu tốc" },
+      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "184 BPM · 32 nốt · 4 mạng · Độc tấu" },
+      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "196 BPM · 36 nốt · 4 mạng · Hợp âm 44%" },
+      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "208 BPM · 40 nốt · 3 mạng · Boss Cổ" },
+      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "220 BPM · 44 nốt · 3 mạng · Trùm Cuối" }
     ];
 
     function startPracticeChallenge(rarityId) {
@@ -2823,10 +2826,10 @@
         </div>`).join("");
       openModal(`
         <div class="row-between" style="margin-bottom:8px;">
-          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-cyan);">${pxIcon("target", 18)} TẬP ĐÁNH ĐÀN 12 ĐỘ HIẾM</h3>
+          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-cyan);">${pxIcon("target", 18)} TẬP ĐÁNH ĐÀN (LEGENDARY → OMEGA)</h3>
           <button class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
         </div>
-        <p class="muted" style="font-size:12px;margin-top:0;line-height:1.45;">Đàn 4 phím pixel (chạm trực tiếp 4 phím đàn hoặc bấm D - F - J - K). Cá độ hiếm càng cao, giá trị lớn hoặc có Mutation sẽ tăng tốc độ BPM, nốt đôi và nốt giữ dài!</p>
+        <p class="muted" style="font-size:12px;margin-top:0;line-height:1.45;">Cá Common – Epic sẽ câu thẳng vào túi! Chỉ cá từ <strong>Legendary trở lên</strong> mới cần Đánh Đàn 4 phím (hoặc mở khóa Bỏ qua Legend/Mythic ở Kỹ Năng).</p>
         <div class="stack" style="max-height:58vh;overflow-y:auto;">${rows}</div>`);
     }
 

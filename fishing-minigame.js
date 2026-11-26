@@ -48,50 +48,50 @@
     },
     legendary: {
       rank: 5, stars: 5, labelVi: "HUYỀN THOẠI", labelEn: "LEGENDARY",
-      bpm: 150, notes: 22, scroll: 208, doubleProb: 0.26, holdProb: 0.24,
-      perfectPx: 19, goodPx: 30, maxMiss: 3, scaleKey: "dramatic",
+      bpm: 132, notes: 16, scroll: 178, doubleProb: 0.16, holdProb: 0.20,
+      perfectPx: 22, goodPx: 36, maxMiss: 4, scaleKey: "dramatic",
       songVi: "Giao Hưởng Vàng", songEn: "Golden Symphony"
     },
     mythic: {
       rank: 6, stars: 6, labelVi: "THẦN THOẠI", labelEn: "MYTHIC",
-      bpm: 164, notes: 26, scroll: 226, doubleProb: 0.32, holdProb: 0.24,
-      perfectPx: 17, goodPx: 28, maxMiss: 3, scaleKey: "dramatic",
+      bpm: 146, notes: 20, scroll: 196, doubleProb: 0.24, holdProb: 0.22,
+      perfectPx: 20, goodPx: 33, maxMiss: 4, scaleKey: "dramatic",
       songVi: "Độc Tấu Thần Thoại", songEn: "Mythic Toccata"
     },
     ancient: {
       rank: 7, stars: 7, labelVi: "CỔ ĐẠI", labelEn: "ANCIENT",
-      bpm: 176, notes: 30, scroll: 242, doubleProb: 0.36, holdProb: 0.24,
-      perfectPx: 16, goodPx: 26, maxMiss: 3, scaleKey: "boss",
+      bpm: 160, notes: 24, scroll: 214, doubleProb: 0.30, holdProb: 0.22,
+      perfectPx: 19, goodPx: 31, maxMiss: 3, scaleKey: "boss",
       songVi: "Hồi Chuông Cổ Đại", songEn: "Ancient Requiem"
     },
     transcendent: {
       rank: 8, stars: 8, labelVi: "SIÊU VIỆT", labelEn: "TRANSCENDENT",
-      bpm: 188, notes: 34, scroll: 258, doubleProb: 0.40, holdProb: 0.24,
-      perfectPx: 15, goodPx: 24, maxMiss: 2, scaleKey: "boss",
+      bpm: 172, notes: 28, scroll: 230, doubleProb: 0.35, holdProb: 0.24,
+      perfectPx: 18, goodPx: 29, maxMiss: 3, scaleKey: "boss",
       songVi: "Siêu Việt Liên Hoàn", songEn: "Transcendent Etude"
     },
     eternity: {
       rank: 9, stars: 9, labelVi: "VĨNH HẰNG", labelEn: "ETERNITY",
-      bpm: 200, notes: 38, scroll: 272, doubleProb: 0.44, holdProb: 0.24,
-      perfectPx: 14, goodPx: 22, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 184, notes: 32, scroll: 246, doubleProb: 0.40, holdProb: 0.24,
+      perfectPx: 17, goodPx: 27, maxMiss: 3, scaleKey: "virtuoso",
       songVi: "Khúc Vĩnh Hằng", songEn: "Eternity Nocturne"
     },
     infinity: {
       rank: 10, stars: 10, labelVi: "VÔ CỰC", labelEn: "INFINITY",
-      bpm: 212, notes: 42, scroll: 286, doubleProb: 0.48, holdProb: 0.24,
-      perfectPx: 13, goodPx: 21, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 196, notes: 36, scroll: 260, doubleProb: 0.44, holdProb: 0.24,
+      perfectPx: 16, goodPx: 26, maxMiss: 3, scaleKey: "virtuoso",
       songVi: "Vô Cực Concerto", songEn: "Infinity Concerto"
     },
     genesis: {
       rank: 11, stars: 11, labelVi: "KHỞI NGUYÊN", labelEn: "GENESIS",
-      bpm: 224, notes: 46, scroll: 300, doubleProb: 0.52, holdProb: 0.22,
-      perfectPx: 12, goodPx: 20, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 208, notes: 40, scroll: 274, doubleProb: 0.48, holdProb: 0.22,
+      perfectPx: 15, goodPx: 25, maxMiss: 2, scaleKey: "virtuoso",
       songVi: "Khởi Nguyên Boss", songEn: "Genesis Fugue"
     },
     omega: {
       rank: 12, stars: 12, labelVi: "OMEGA", labelEn: "OMEGA",
-      bpm: 238, notes: 52, scroll: 316, doubleProb: 0.56, holdProb: 0.22,
-      perfectPx: 11, goodPx: 19, maxMiss: 2, scaleKey: "virtuoso",
+      bpm: 220, notes: 44, scroll: 288, doubleProb: 0.52, holdProb: 0.22,
+      perfectPx: 14, goodPx: 24, maxMiss: 2, scaleKey: "virtuoso",
       songVi: "OMEGA FINALE", songEn: "OMEGA FINALE"
     }
   };
@@ -116,26 +116,27 @@
     const badges = [];
 
     if (hasMutation) {
-      speedMul += 0.12;
+      speedMul += 0.08;
       extraNotes += 3;
-      extraDouble += 0.08;
+      extraDouble += 0.06;
       tightenPx += 1;
-      badges.push(isVi ? "ĐỘT BIẾN +12%" : "MUTATED +12%");
+      badges.push(isVi ? "ĐỘT BIẾN +8%" : "MUTATED +8%");
     }
     if (val >= 500000) {
-      speedMul += 0.12;
+      speedMul += 0.09;
       extraNotes += 4;
       tightenPx += 1;
       badges.push(isVi ? "CÁ CỰC PHẨM" : "PRIZE VALUE");
     } else if (val >= 100000) {
-      speedMul += 0.08;
+      speedMul += 0.06;
       extraNotes += 2;
       badges.push(isVi ? "CÁ XỊN" : "HIGH VALUE");
     } else if (val >= 25000) {
-      speedMul += 0.04;
+      speedMul += 0.03;
       extraNotes += 1;
     }
 
+    const cappedMul = Math.min(1.18, speedMul);
     return {
       rarityId,
       rank: base.rank,
@@ -145,13 +146,13 @@
       songVi: base.songVi,
       songEn: base.songEn,
       scaleKey: base.scaleKey,
-      bpm: Math.round(base.bpm * speedMul),
+      bpm: Math.min(248, Math.round(base.bpm * cappedMul)),
       notes: base.notes + extraNotes,
-      scroll: Math.round(base.scroll * speedMul),
-      doubleProb: Math.min(0.72, base.doubleProb + extraDouble),
+      scroll: Math.min(315, Math.round(base.scroll * cappedMul)),
+      doubleProb: Math.min(0.68, base.doubleProb + extraDouble),
       holdProb: base.holdProb,
-      perfectPx: Math.max(10, base.perfectPx - tightenPx),
-      goodPx: Math.max(17, base.goodPx - tightenPx),
+      perfectPx: Math.max(12, base.perfectPx - tightenPx),
+      goodPx: Math.max(21, base.goodPx - tightenPx),
       maxMiss: base.maxMiss,
       badges
     };
