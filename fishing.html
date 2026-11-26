@@ -591,10 +591,178 @@
       scroll-margin-bottom: 84px;
     }
     .mg-canvas-box {
+      position: relative;
+      overflow: hidden;
+      min-height: 264px;
       margin: 10px 0;
       border: 2px solid var(--px-border);
       background: #050c17;
       line-height: 0;
+    }
+    .mg-briefing-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      background: rgba(6, 14, 26, 0.96);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+      line-height: 1.28;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .mg-briefing-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mg-rule-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 10.5px;
+      line-height: 1.25;
+      color: var(--px-text);
+      background: #0c1b2e;
+      border: 1.5px solid var(--px-border);
+      padding: 4px 6px;
+    }
+    .mg-rule-dot {
+      width: 9px;
+      height: 9px;
+      margin-top: 3px;
+      flex-shrink: 0;
+      border: 1px solid #040811;
+    }
+    .rc-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 980;
+      background: radial-gradient(circle at 50% 42%, rgba(16, 38, 66, 0.92), rgba(3, 7, 15, 0.96));
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow: hidden;
+    }
+    .rc-overlay.open { display: flex; }
+    .rc-sunburst {
+      position: absolute;
+      width: min(640px, 145vw);
+      height: min(640px, 145vw);
+      background: repeating-conic-gradient(
+        from 0deg,
+        rgba(255, 255, 255, 0.08) 0deg 10deg,
+        transparent 10deg 22deg
+      );
+      mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.95) 12%, transparent 68%);
+      -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.95) 12%, transparent 68%);
+      animation: rcSpin 18s linear infinite;
+      pointer-events: none;
+    }
+    .rc-sparks {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .rc-spark {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--rc-col, #ecc570);
+      box-shadow: 0 0 8px var(--rc-col, #ecc570);
+      animation: rcSpark 2.2s steps(6) infinite;
+    }
+    .rc-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(180deg, #0e2036 0%, #081220 100%);
+      border: 4px solid var(--rc-col, var(--px-gold));
+      box-shadow: 0 0 38px rgba(0, 0, 0, 0.75), 0 0 28px var(--rc-glow, rgba(236, 197, 112, 0.35)), 6px 6px 0 #040811;
+      padding: 18px 16px 16px;
+      text-align: center;
+      animation: rcPop 0.28s steps(4);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .rc-card.rc-cosmic {
+      box-shadow: 0 0 46px rgba(192, 132, 252, 0.45), 0 0 24px rgba(56, 189, 248, 0.4), 6px 6px 0 #040811;
+    }
+    .rc-ribbon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: #06101c;
+      border: 2px solid var(--rc-col, var(--px-gold));
+      color: var(--rc-col, var(--px-gold));
+      font-family: var(--font-px);
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: 0.06em;
+    }
+    .rc-pedestal {
+      width: 112px;
+      height: 112px;
+      margin: 14px auto 10px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, #071220 74%);
+      border: 3px solid var(--rc-col, var(--px-gold));
+      box-shadow: inset 0 0 18px var(--rc-glow, rgba(236, 197, 112, 0.32)), 4px 4px 0 #040811;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: rcFloat 2.1s steps(4) infinite;
+    }
+    .rc-pedestal .sprite-box {
+      width: 96px;
+      height: 96px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+    .rc-pedestal .sprite-box img {
+      width: 84px;
+      height: 84px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+    .rc-pedestal .sprite-box svg {
+      width: 74px;
+      height: 74px;
+    }
+    .rc-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .rc-stat-box {
+      background: #0a1829;
+      border: 2px solid var(--px-border);
+      padding: 8px 5px;
+    }
+    @keyframes rcSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes rcPop {
+      0% { transform: scale(0.76); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes rcFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes rcSpark {
+      0% { transform: translateY(20px) scale(0.8); opacity: 0; }
+      35% { opacity: 1; }
+      100% { transform: translateY(-70px) scale(1.2); opacity: 0; }
     }
     #mg-canvas {
       display: block;
@@ -1439,11 +1607,12 @@
     <div class="modal-card" id="modal-body"></div>
   </div>
   <div id="confirm-modal-root" class="modal-backdrop"></div>
+  <div id="rare-catch-overlay" class="rc-overlay" onclick="if(event.target===this)closeRareCatchOverlay()"></div>
   <div id="toast-wrap"></div>
 
   <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
-  <script src="./fishing-minigame.js?v=2"></script>
+  <script src="./fishing-minigame.js?v=3"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -2123,6 +2292,78 @@
       if (!silent) render();
     }
 
+    function shouldShowRareOverlay(c, totalVal) {
+      if (!c) return false;
+      const rk = rarityRankOf(c.rarity_id);
+      return rk >= 4 || Boolean(c.mutation_name) || Number(totalVal || c.value || 0) >= 50000;
+    }
+
+    function openRareCatchOverlay(c, res) {
+      const ov = document.getElementById("rare-catch-overlay");
+      if (!ov || !c) return;
+      const rk = rarityRankOf(c.rarity_id);
+      const col = c.rarity_color || "#ecc570";
+      const totalVal = Number(c.value || 0) + ((res && res.bonus_catches) || []).reduce((s, b) => s + Number(b.value || 0), 0);
+      const ribbonText = rk >= 10
+        ? "THẦN THÚ VŨ TRỤ!"
+        : (rk >= 8 ? "CỰC PHẨM SIÊU VIỆT!" : (rk >= 5 ? "TRÚNG CÁ HUYỀN THOẠI!" : "CÁ HIẾM ĐẶC BIỆT!"));
+      const sparks = Array.from({ length: 14 }, (_, idx) => {
+        const left = 6 + ((idx * 19) % 88);
+        const top = 18 + ((idx * 23) % 66);
+        const delay = ((idx % 7) * 0.28).toFixed(2);
+        return `<span class="rc-spark" style="left:${left}%;top:${top}%;animation-delay:${delay}s;"></span>`;
+      }).join("");
+      const bonusCount = (res && res.bonus_catches) ? res.bonus_catches.length : 0;
+
+      ov.style.setProperty("--rc-col", col);
+      ov.style.setProperty("--rc-glow", col + "55");
+      ov.innerHTML = `
+        <div class="rc-sunburst"></div>
+        <div class="rc-sparks">${sparks}</div>
+        <div class="rc-card${rk >= 8 ? " rc-cosmic" : ""}">
+          <div class="rc-ribbon">${pxIcon(rk >= 5 ? "crown" : "sparkle", 18)} ${ribbonText}</div>
+          <div class="rc-pedestal">${spriteHtml(c.image_path, c.emoji, false)}</div>
+          <div class="wrap-row" style="justify-content:center;gap:5px;">
+            <span class="rarity-pill" style="color:${esc(col)};">${esc(c.rarity_name || c.rarity_id || "RARE")}</span>
+            ${c.mutation_name ? `<span class="rarity-pill" style="color:var(--px-violet);">${pxIcon("sparkle", 12)} ${esc(c.mutation_name)} ×${c.mutation_multiplier}</span>` : ""}
+            ${c.minigame_skipped ? `<span class="rarity-pill" style="color:var(--px-mint);">${pxIcon("bolt", 12)} BỎ QUA MINI-GAME</span>` : ""}
+            ${c.serial_number ? `<span class="rarity-pill" style="color:var(--px-gold);">#${String(c.serial_number).padStart(6, "0")}</span>` : ""}
+          </div>
+          <h2 class="px-num" style="margin:8px 0 4px;font-size:28px;line-height:1.1;color:#fff;">${esc(c.fish_name)}</h2>
+          ${bonusCount > 0 ? `<div style="font-size:11.5px;color:var(--px-cyan);">+${bonusCount} cá kèm trong mẻ lưới</div>` : ""}
+          <div class="rc-stats-grid">
+            <div class="rc-stat-box">
+              <div class="muted" style="font-size:10.5px;">Cân nặng</div>
+              <strong class="px-num" style="font-size:18px;color:#fff;">${c.weight} kg</strong>
+            </div>
+            <div class="rc-stat-box">
+              <div class="muted" style="font-size:10.5px;">Giá trị</div>
+              <strong class="px-num" style="font-size:18px;color:var(--px-gold);">${fmt(totalVal)} RC</strong>
+            </div>
+            <div class="rc-stat-box">
+              <div class="muted" style="font-size:10.5px;">Kinh nghiệm</div>
+              <strong class="px-num" style="font-size:18px;color:var(--px-mint);">+${fmt((res && res.gained_xp) || 0)}</strong>
+            </div>
+          </div>
+          <div class="wrap-row" style="justify-content:center;gap:8px;margin-top:10px;">
+            ${c.catch_id ? `<button type="button" class="btn btn-ghost btn-sm" onclick="doToggleLock('${esc(c.catch_id)}');closeRareCatchOverlay(true);">${pxIcon("lock", 13)} Khóa cá</button>` : ""}
+            ${c.catch_id ? `<button type="button" class="btn btn-primary btn-sm" onclick="doAquaAdd('${esc(c.catch_id)}');closeRareCatchOverlay(true);">${pxIcon("aqua", 13)} Thả Bể</button>` : ""}
+            <button type="button" class="btn btn-emerald" onclick="closeRareCatchOverlay(true)">${pxIcon("trophy", 15)} Tuyệt Vời!</button>
+          </div>
+        </div>`;
+      APP._rcOpenedAt = Date.now();
+      ov.classList.add("open");
+    }
+
+    function closeRareCatchOverlay(force) {
+      if (!force && APP._rcOpenedAt && (Date.now() - APP._rcOpenedAt < 450)) return;
+      const ov = document.getElementById("rare-catch-overlay");
+      if (ov) {
+        ov.classList.remove("open");
+        ov.innerHTML = "";
+      }
+    }
+
     function toggleIdleFishing() {
       if (APP.idleMode) {
         stopIdleFishing(false);
@@ -2137,7 +2378,7 @@
       APP.idleMode = true;
       SFX.cast();
       if (window.HaruOceanStage) HaruOceanStage.setMode("casting");
-      toast(APP.lang === "en" ? "Idle Auto-Fishing ON!" : "Bật Idle Câu Cá Tự Động! Bot tự thả cần & thưởng RuCoin mỗi nhịp.", "ok", "bolt");
+      toast(APP.lang === "en" ? "Idle Auto-Fishing ON (Common-Epic only; Legendary+ requires manual cast)." : "Bật Idle Tự Động! Chỉ câu cá Common–Epic; cá Huyền Thoại+ cần câu tay.", "ok", "bolt");
       render();
       scheduleNextIdle(350);
     }
@@ -2269,7 +2510,7 @@
           <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
         </div>
         <p class="muted" style="font-size:12px;margin-top:0;line-height:1.45;">
-          Dùng vé <strong>Boost AFK</strong> trong Shop để Bot tự câu suốt <strong>8 tiếng ngay cả khi đóng web/tắt máy</strong>. Hệ thống giữ lại những con cá hiếm nhất vào Túi và tự bán phần cá dư + thưởng RuCoin theo giờ!
+          Dùng vé <strong>Boost AFK</strong> trong Shop để Bot tự câu suốt <strong>8 tiếng ngay cả khi đóng web/tắt máy</strong>. Hệ thống giữ lại cá giá trị nhất vào Túi và tự bán phần cá dư + thưởng RuCoin theo giờ! <span style="color:var(--px-gold);">Lưu ý: Treo AFK & Idle chỉ câu cá Common–Epic; cá Huyền Thoại+ cần câu tay!</span>
         </p>
         <div class="grid-2" style="gap:10px;margin:12px 0;">
           <div class="sub-card stack shop-card-featured">
@@ -2599,6 +2840,7 @@
       render();
       let pendingBurst = null;
       let pendingEscape = null;
+      let pendingRare = null;
       try {
         const res = await fishRpc("cast", { web_challenge: true });
         if (!res.ok) {
@@ -2638,6 +2880,12 @@
           recordSessionCatch(c, res);
           SFX.rarityFanfare(rk, totalVal);
           pendingBurst = [c.rarity_id, rk, c.rarity_color, totalVal, Boolean(c.mutation_name), (c.rarity_name || "").toUpperCase() + "!"];
+          if (c.minigame_skipped) {
+            toast(`Bỏ qua Mini-game! Bắt thẳng ${c.fish_name}!`, "ok", "bolt");
+          }
+          if (shouldShowRareOverlay(c, totalVal)) {
+            pendingRare = { c, res };
+          }
         } else if (res.mode === "chest" || res.mode === "direct_reward") {
           SFX.rarityFanfare(5, 25000);
           pendingBurst = ["legendary", 5, "#ecc570", 25000, false, res.mode === "chest" ? "RƯƠNG BÁU!" : "TRANG BỊ!"];
@@ -2656,6 +2904,9 @@
         if (window.HaruOceanStage) {
           if (pendingBurst) HaruOceanStage.triggerCatchBurst(...pendingBurst);
           else if (pendingEscape) HaruOceanStage.triggerEscape(pendingEscape);
+        }
+        if (pendingRare) {
+          openRareCatchOverlay(pendingRare.c, pendingRare.res);
         }
       }
     }
@@ -2688,6 +2939,7 @@
       render();
       let pendingBurst = null;
       let pendingEscape = null;
+      let pendingRare = null;
       try {
         let res = await fishRpc("resolve_challenge", {
           pending_id: ch.pending_id,
@@ -2719,6 +2971,9 @@
           pendingBurst = [c.rarity_id, rk, c.rarity_color, totalVal, Boolean(c.mutation_name), (c.rarity_name || "").toUpperCase() + "!"];
           toast(`${c.fish_name} (+${fmt(res.gained_xp)} XP)`, "ok", rk >= 5 ? "trophy" : "fish");
           if (res.level_up) toast(`LEVEL UP! Đạt cấp ${res.level}!`, "ok", "party");
+          if (shouldShowRareOverlay(c, totalVal)) {
+            pendingRare = { c, res };
+          }
         } else if (res.mode === "challenge_lost" || res.mode === "tension_lost") {
           recordSessionEscape();
           SFX.snap();
@@ -2739,6 +2994,9 @@
         if (window.HaruOceanStage) {
           if (pendingBurst) HaruOceanStage.triggerCatchBurst(...pendingBurst);
           else if (pendingEscape) HaruOceanStage.triggerEscape(pendingEscape);
+        }
+        if (pendingRare) {
+          openRareCatchOverlay(pendingRare.c, pendingRare.res);
         }
       }
     }
@@ -4047,7 +4305,7 @@
         const cost = sk.skip_costs[r] || 0;
         return `
           <div class="sub-card row-between">
-            <div><strong class="inline-ico">${pxIcon("target", 14)} Bỏ qua Minigame ${r.toUpperCase()}</strong><div class="muted" style="font-size:11.5px;">Giá: ${fmt(cost)} RC</div></div>
+            <div><strong class="inline-ico">${pxIcon("target", 14)} Bỏ qua Minigame ${r.toUpperCase()}</strong><div class="muted" style="font-size:11.5px;">Câu thẳng không cần đánh đàn · Giá: ${fmt(cost)} RC</div></div>
             ${unlocked ? '<span class="rarity-pill" style="color:var(--px-mint);">ĐÃ MỞ</span>' : `<button class="btn btn-gold btn-sm" onclick="doUnlockSkip('${r}')">Mở khóa</button>`}
           </div>`;
       }).join("");
@@ -4233,7 +4491,14 @@
     }, 150);
 
     document.addEventListener("keydown", (ev) => {
-      if (ev.code === "Space" && APP.activeTab === "fish" && APP.state && APP.state.user.tos_accepted && !APP.activeChallenge && !APP.state.pending_catch && !(window.HaruMiniGame && HaruMiniGame.isActive())) {
+      const rcEl = document.getElementById("rare-catch-overlay");
+      const rcOpen = Boolean(rcEl && rcEl.classList.contains("open"));
+      if (rcOpen && (ev.code === "Escape" || ev.code === "Enter")) {
+        ev.preventDefault();
+        closeRareCatchOverlay(true);
+        return;
+      }
+      if (ev.code === "Space" && !rcOpen && APP.activeTab === "fish" && APP.state && APP.state.user.tos_accepted && !APP.activeChallenge && !APP.state.pending_catch && !(window.HaruMiniGame && HaruMiniGame.isActive())) {
         const tag = (document.activeElement && document.activeElement.tagName) || "";
         if (!["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag)) {
           ev.preventDefault();

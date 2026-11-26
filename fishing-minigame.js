@@ -25,19 +25,19 @@
     common: {
       rank: 1, stars: 1, labelVi: "THÔNG THƯỜNG", labelEn: "COMMON",
       bpm: 96, notes: 7, scroll: 130, doubleProb: 0.0, holdProb: 0.0,
-      perfectPx: 26, goodPx: 42, maxMiss: 3, scaleKey: "folk",
+      perfectPx: 26, goodPx: 42, maxMiss: 4, scaleKey: "folk",
       songVi: "Khúc Dạo Biển", songEn: "Gentle Harbor"
     },
     uncommon: {
       rank: 2, stars: 2, labelVi: "KHÔNG PHỔ BIẾN", labelEn: "UNCOMMON",
       bpm: 108, notes: 10, scroll: 148, doubleProb: 0.0, holdProb: 0.15,
-      perfectPx: 24, goodPx: 39, maxMiss: 3, scaleKey: "folk",
+      perfectPx: 24, goodPx: 39, maxMiss: 4, scaleKey: "folk",
       songVi: "Sóng Nhẹ", songEn: "Sea Breeze"
     },
     rare: {
       rank: 3, stars: 3, labelVi: "HIẾM", labelEn: "RARE",
       bpm: 122, notes: 14, scroll: 168, doubleProb: 0.12, holdProb: 0.20,
-      perfectPx: 22, goodPx: 36, maxMiss: 3, scaleKey: "hero",
+      perfectPx: 22, goodPx: 36, maxMiss: 4, scaleKey: "hero",
       songVi: "Vũ Điệu San Hô", songEn: "Coral Waltz"
     },
     epic: {
@@ -328,7 +328,7 @@
 
     const laneBusyUntil = [0, 0, 0, 0];
     const notes = [];
-    let curTime = 1.85;
+    let curTime = 1.25;
     let chordGroupSeq = 1;
     let noteIdSeq = 1;
     let prevLane = Math.floor(Math.random() * LANE_COUNT);
@@ -514,10 +514,28 @@
     el.classList.toggle("pressed", active);
   }
 
+  function beginCountdown() {
+    if (!session || session.finished || session.stagePhase !== "briefing") return;
+    session.stagePhase = "countdown";
+    session.countdown = 2.1;
+    session.lastCountBeat = 3;
+    const ov = document.getElementById("mg-briefing-overlay");
+    if (ov) ov.style.display = "none";
+    PianoAudio.playNote(440.0, 0.22, 0.065);
+    renderChallengeCanvas();
+  }
+
   function triggerLaneHit(lane) {
     if (!session || session.finished) return;
     if (lane < 0 || lane >= LANE_COUNT) return;
     session.laneFlash[lane] = 0.22;
+
+    if (session.stagePhase !== "playing") {
+      const scale = SCALES[session.diff.scaleKey] || SCALES.folk;
+      session.laneGood[lane] = 0.18;
+      PianoAudio.playNote(scale[lane], 0.24, 0.07);
+      return;
+    }
 
     const diff = session.diff;
     const notes = session.notes;
@@ -637,14 +655,35 @@
 
   function stepSession(dt) {
     if (!session || session.finished) return;
-    session.elapsed += dt;
-    if (session.missFlash > 0) session.missFlash = Math.max(0, session.missFlash - dt);
-    if (session.judgeTimer > 0) session.judgeTimer = Math.max(0, session.judgeTimer - dt);
 
     for (let l = 0; l < LANE_COUNT; l++) {
       if (session.laneFlash[l] > 0) session.laneFlash[l] = Math.max(0, session.laneFlash[l] - dt);
       if (session.laneGood[l] > 0) session.laneGood[l] = Math.max(0, session.laneGood[l] - dt);
     }
+
+    if (session.stagePhase === "briefing") {
+      return;
+    }
+
+    if (session.stagePhase === "countdown") {
+      session.countdown -= dt;
+      const beat = Math.max(1, Math.ceil(session.countdown / 0.7));
+      if (beat < session.lastCountBeat && session.countdown > 0) {
+        session.lastCountBeat = beat;
+        const chimeFreq = beat === 2 ? 523.25 : 659.25;
+        PianoAudio.playNote(chimeFreq, 0.22, 0.065);
+      }
+      if (session.countdown <= 0) {
+        session.stagePhase = "playing";
+        session.elapsed = 0;
+        PianoAudio.playNote(783.99, 0.28, 0.08);
+      }
+      return;
+    }
+
+    session.elapsed += dt;
+    if (session.missFlash > 0) session.missFlash = Math.max(0, session.missFlash - dt);
+    if (session.judgeTimer > 0) session.judgeTimer = Math.max(0, session.judgeTimer - dt);
 
     for (let i = session.particles.length - 1; i >= 0; i--) {
       const p = session.particles[i];
@@ -866,26 +905,30 @@
     }
     ctx.globalAlpha = 1;
 
-    // Opening READY / PLAY banner (first 1.2s, first note arrives cleanly at 1.85s)
-    if (session.elapsed < 1.20) {
-      ctx.fillStyle = "rgba(6, 14, 26, 0.86)";
-      ctx.fillRect(46, 84, CW - 92, 46);
+    // Opening countdown (3 -> 2 -> 1) or GO! flash
+    if (session.stagePhase === "countdown") {
+      const cntNum = Math.max(1, Math.min(3, Math.ceil(session.countdown / 0.7)));
+      ctx.fillStyle = "rgba(6, 14, 26, 0.88)";
+      ctx.fillRect(54, 62, CW - 108, 92);
       ctx.strokeStyle = session.rarityColor;
       ctx.lineWidth = 2;
-      ctx.strokeRect(46, 84, CW - 92, 46);
+      ctx.strokeRect(54, 62, CW - 108, 92);
       ctx.textAlign = "center";
       ctx.fillStyle = "#ecc570";
-      ctx.font = "bold 14px monospace";
-      ctx.fillText(
-        session.elapsed < 0.75
-          ? (isVi ? "CHUẨN BỊ ĐÁNH ĐÀN!" : "GET READY!")
-          : (isVi ? "BẮT ĐẦU!" : "PLAY NOW!"),
-        CW / 2, 105
-      );
+      ctx.font = "bold 40px monospace";
+      ctx.fillText(String(cntNum), CW / 2, 110);
+      ctx.fillStyle = "#6fdbbf";
+      ctx.font = "bold 11px monospace";
+      ctx.fillText(isVi ? "CHUẨN BỊ NGÓN TAY!" : "HANDS READY!", CW / 2, 131);
       ctx.fillStyle = "#cbd5e1";
       ctx.font = "10px monospace";
-      ctx.fillText(`${diff.bpm} BPM · ${diff.notes} ${isVi ? "NỐT" : "NOTES"}`, CW / 2, 122);
-    } else if (session.judgeTimer > 0 && session.judgeText) {
+      ctx.fillText(`${diff.bpm} BPM · ${diff.notes} ${isVi ? "NỐT" : "NOTES"}`, CW / 2, 146);
+    } else if (session.stagePhase === "playing" && session.elapsed < 0.45) {
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#6fdbbf";
+      ctx.font = "bold 18px monospace";
+      ctx.fillText(isVi ? "BẮT ĐẦU!" : "PLAY!", CW / 2, 110);
+    } else if (session.stagePhase === "playing" && session.judgeTimer > 0 && session.judgeText) {
       ctx.textAlign = "center";
       ctx.fillStyle = "#040811";
       ctx.font = "bold 14px monospace";
@@ -941,6 +984,11 @@
 
   function onKeyDown(ev) {
     if (!session || session.finished) return;
+    if (session.stagePhase === "briefing" && (ev.code === "Space" || ev.code === "Enter")) {
+      ev.preventDefault();
+      if (!ev.repeat) beginCountdown();
+      return;
+    }
     const lane = keyToLane(ev);
     if (lane === -1) return;
     ev.preventDefault();
@@ -1019,6 +1067,21 @@
         </div>
         <div class="mg-canvas-box">
           <canvas id="mg-canvas" width="${CW}" height="${CH}"></canvas>
+          <div id="mg-briefing-overlay" class="mg-briefing-overlay">
+            <div class="row-between" style="gap:6px;">
+              <strong style="color:var(--px-gold);font-size:12.5px;">${isVi ? "LUẬT CHƠI ĐÁNH ĐÀN" : "PIANO RULES"}</strong>
+              <span class="tab-badge" style="color:var(--px-cyan);">${diff.bpm} BPM · ${session.notes.length} ${isVi ? "NỐT" : "NOTES"}</span>
+            </div>
+            <div class="mg-briefing-rules">
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#38bdf8;"></span><span>${isVi ? "<strong>Nốt đơn:</strong> Bấm 4 phím dưới (hoặc <strong>D · F · J · K</strong>) khi nốt chạm <strong>vạch vàng</strong>." : "<strong>Single:</strong> Tap 4 keys below (or <strong>D · F · J · K</strong>) at the <strong>gold line</strong>."}</span></div>
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#ecc570;"></span><span>${isVi ? "<strong>Hợp âm đôi:</strong> Nốt nối thanh vàng → chạm <strong>cùng lúc 2 phím</strong> (hỗ trợ đa điểm)." : "<strong>Chord:</strong> Gold-linked notes → tap <strong>2 keys together</strong>."}</span></div>
+              <div class="mg-rule-row"><span class="mg-rule-dot" style="background:#6fdbbf;"></span><span>${isVi ? "<strong>Nốt giữ dài:</strong> Có đuôi sáng → <strong>nhấn giữ</strong> đến hết đuôi mới thả." : "<strong>Hold:</strong> Bright tail → <strong>hold</strong> until end."}</span></div>
+            </div>
+            <div style="font-size:10.5px;color:var(--px-mint);">${isVi ? "Bấm thử 4 phím đàn bên dưới để thử tiếng trước khi bắt đầu!" : "Tap any of the 4 keys below to warm up first!"}</div>
+            <button type="button" class="btn btn-emerald" id="mg-start-btn" style="width:100%;padding:9px 10px;font-size:12.5px;">
+              ${pxIconSafe("bolt", 15)} ${isVi ? "SẴN SÀNG · BẮT ĐẦU! (SPACE)" : "READY · START SONG! (SPACE)"}
+            </button>
+          </div>
         </div>
         <div class="mg-piano-deck">${keysHtml}</div>
       </div>`;
@@ -1030,8 +1093,17 @@
     session.hudProgEl = document.getElementById("mg-hud-prog");
     session.keyEls = [0, 1, 2, 3].map(l => document.getElementById(`mg-pkey-${l}`));
 
+    const startBtn = document.getElementById("mg-start-btn");
+    if (startBtn) {
+      startBtn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        beginCountdown();
+      });
+    }
+
     session.keyEls.forEach((el, l) => bindPointerDown(el, () => l));
     bindPointerDown(session.canvas, (ev) => {
+      if (!session || session.stagePhase === "briefing") return -1;
       const rect = session.canvas.getBoundingClientRect();
       const relX = (ev.clientX - rect.left) / Math.max(1, rect.width);
       const cx = relX * CW;
@@ -1058,6 +1130,7 @@
     getProfile,
     computeDifficulty,
     isActive() { return Boolean(session && !session.finished); },
+    beginNow() { beginCountdown(); },
     stop() { stopSession(); },
     start(rootEl, opts) {
       stopSession();
@@ -1074,6 +1147,9 @@
         rarityColor: preview.rarity_color || "#6fdbbf",
         diff,
         notes: chart.notes,
+        stagePhase: "briefing",
+        countdown: 0,
+        lastCountBeat: 4,
         elapsed: 0,
         score: 0,
         combo: 0,
