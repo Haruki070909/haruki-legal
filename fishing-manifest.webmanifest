@@ -1,0 +1,40 @@
+{
+  "id": "/haruki-legal/fishing.html",
+  "name": "Haru Fishing RPG",
+  "short_name": "Haru Fishing",
+  "description": "16-Bit Pixel Fishing RPG synced 1-1 live with HaruBot on Discord — Cast, Tension Minigame, Forge, Aquarium, World Boss & Leaderboard.",
+  "start_url": "./fishing.html?source=game_pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#0b1523",
+  "theme_color": "#0b1523",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "./icons/fishing-app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/fishing-app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/fishing-app-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

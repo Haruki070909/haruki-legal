@@ -1,4 +1,4 @@
-const CACHE_NAME = "haru-ecosystem-v7";
+const CACHE_NAME = "haru-ecosystem-v8";
 const CORE_SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -10,12 +10,17 @@ const CORE_SHELL_ASSETS = [
   "./index-D1Nckd2P.js",
   "./index-Vs_wrV2D.css",
   "./manifest.webmanifest",
+  "./fishing-manifest.webmanifest",
   "./pwa-app.js?v=4",
   "./haru-avatar.webp",
   "./harumod-avatar.png",
   "./icons/haru-app-icon-192.png",
   "./icons/haru-app-icon-512.png",
-  "./icons/apple-touch-icon.png"
+  "./icons/apple-touch-icon.png",
+  "./icons/fishing-app-icon-180.png",
+  "./icons/fishing-app-icon-192.png",
+  "./icons/fishing-app-icon-512.png",
+  "./icons/fishing-app-icon-maskable-512.png"
 ];
 
 self.addEventListener("install", (event) => {
