@@ -1,84 +1,98 @@
-/* Haru Fishing RPG - 6-Archetype / 12-Rarity Real-Time Skill Challenge Engine */
+/* Haru Fishing RPG - 4-Lane 16-Bit Pixel Piano Rhythm Challenge Engine (v2) */
 (function () {
   "use strict";
+
+  const CW = 320;
+  const CH = 248;
+  const HIT_Y = 212;
+  const LANE_COUNT = 4;
+  const START_X = 16;
+  const LANE_W = 72;
+
+  const LANE_COLORS = ["#38bdf8", "#6fdbbf", "#ecc570", "#e879f9"];
+  const KEY_LABELS = ["D", "F", "J", "K"];
+  const NOTE_NAMES = ["DO", "RE", "MI", "SOL"];
+
+  const SCALES = {
+    folk: [261.63, 293.66, 329.63, 392.00],       // C4 D4 E4 G4
+    hero: [220.00, 261.63, 329.63, 392.00],       // A3 C4 E4 G4
+    dramatic: [293.66, 349.23, 440.00, 523.25],   // D4 F4 A4 C5
+    boss: [329.63, 392.00, 493.88, 622.25],       // E4 G4 B4 D#5
+    virtuoso: [277.18, 329.63, 415.30, 523.25]    // C#4 E4 G#4 C5
+  };
 
   const RARITY_PROFILES = {
     common: {
       rank: 1, stars: 1, labelVi: "THÔNG THƯỜNG", labelEn: "COMMON",
-      phases: [{ type: "strike", hits: 1, zone: 0.24, speed: 1.15, time: 5.5, maxMiss: 1 }]
+      bpm: 96, notes: 7, scroll: 130, doubleProb: 0.0, holdProb: 0.0,
+      perfectPx: 26, goodPx: 42, maxMiss: 3, scaleKey: "folk",
+      songVi: "Khúc Dạo Biển", songEn: "Gentle Harbor"
     },
     uncommon: {
       rank: 2, stars: 2, labelVi: "KHÔNG PHỔ BIẾN", labelEn: "UNCOMMON",
-      phases: [{ type: "double_strike", hits: 2, zone: 0.19, zone2: 0.14, speed: 1.35, speed2: 1.65, time: 6.5, maxMiss: 1 }]
+      bpm: 108, notes: 10, scroll: 148, doubleProb: 0.0, holdProb: 0.15,
+      perfectPx: 24, goodPx: 39, maxMiss: 3, scaleKey: "folk",
+      songVi: "Sóng Nhẹ", songEn: "Sea Breeze"
     },
     rare: {
       rank: 3, stars: 3, labelVi: "HIẾM", labelEn: "RARE",
-      phases: [{ type: "track", barSize: 0.26, start: 0.30, fill: 0.28, drain: 0.18, fishSpd: 0.58, lunge: false, time: 18 }]
+      bpm: 122, notes: 14, scroll: 168, doubleProb: 0.12, holdProb: 0.20,
+      perfectPx: 22, goodPx: 36, maxMiss: 3, scaleKey: "hero",
+      songVi: "Vũ Điệu San Hô", songEn: "Coral Waltz"
     },
     epic: {
       rank: 4, stars: 4, labelVi: "SỬ THI", labelEn: "EPIC",
-      phases: [{ type: "track", barSize: 0.20, start: 0.26, fill: 0.24, drain: 0.24, fishSpd: 0.85, lunge: true, lungeCd: 2.2, time: 20 }]
+      bpm: 136, notes: 18, scroll: 188, doubleProb: 0.20, holdProb: 0.22,
+      perfectPx: 20, goodPx: 33, maxMiss: 3, scaleKey: "hero",
+      songVi: "Khúc Biển Động", songEn: "Riptide Sonata"
     },
     legendary: {
       rank: 5, stars: 5, labelVi: "HUYỀN THOẠI", labelEn: "LEGENDARY",
-      phases: [
-        { type: "ring", hits: 3, zone: 0.15, speed: 1.45, maxMiss: 1, time: 11 },
-        { type: "track", barSize: 0.17, start: 0.28, fill: 0.23, drain: 0.28, fishSpd: 1.05, lunge: true, lungeCd: 1.75, time: 20 }
-      ]
+      bpm: 150, notes: 22, scroll: 208, doubleProb: 0.26, holdProb: 0.24,
+      perfectPx: 19, goodPx: 30, maxMiss: 3, scaleKey: "dramatic",
+      songVi: "Giao Hưởng Vàng", songEn: "Golden Symphony"
     },
     mythic: {
       rank: 6, stars: 6, labelVi: "THẦN THOẠI", labelEn: "MYTHIC",
-      phases: [
-        { type: "rhythm", notes: 8, need: 6, speed: 1.25, interval: 0.62, maxFail: 2 },
-        { type: "track", barSize: 0.15, start: 0.25, fill: 0.22, drain: 0.31, fishSpd: 1.20, lunge: true, lungeCd: 1.45, time: 20 }
-      ]
+      bpm: 164, notes: 26, scroll: 226, doubleProb: 0.32, holdProb: 0.24,
+      perfectPx: 17, goodPx: 28, maxMiss: 3, scaleKey: "dramatic",
+      songVi: "Độc Tấu Thần Thoại", songEn: "Mythic Toccata"
     },
     ancient: {
       rank: 7, stars: 7, labelVi: "CỔ ĐẠI", labelEn: "ANCIENT",
-      phases: [
-        { type: "rhythm", notes: 10, need: 8, speed: 1.48, interval: 0.52, maxFail: 2 },
-        { type: "track", barSize: 0.14, start: 0.24, fill: 0.21, drain: 0.34, fishSpd: 1.32, lunge: true, lungeCd: 1.25, time: 22 }
-      ]
+      bpm: 176, notes: 30, scroll: 242, doubleProb: 0.36, holdProb: 0.24,
+      perfectPx: 16, goodPx: 26, maxMiss: 3, scaleKey: "boss",
+      songVi: "Hồi Chuông Cổ Đại", songEn: "Ancient Requiem"
     },
     transcendent: {
       rank: 8, stars: 8, labelVi: "SIÊU VIỆT", labelEn: "TRANSCENDENT",
-      phases: [
-        { type: "ring", hits: 3, zone: 0.13, speed: 1.55, maxMiss: 1, time: 11 },
-        { type: "rhythm", notes: 8, need: 6, speed: 1.55, interval: 0.48, maxFail: 2 },
-        { type: "track", barSize: 0.135, start: 0.24, fill: 0.20, drain: 0.35, fishSpd: 1.38, lunge: true, polarity: true, lungeCd: 1.15, time: 22 }
-      ]
+      bpm: 188, notes: 34, scroll: 258, doubleProb: 0.40, holdProb: 0.24,
+      perfectPx: 15, goodPx: 24, maxMiss: 2, scaleKey: "boss",
+      songVi: "Siêu Việt Liên Hoàn", songEn: "Transcendent Etude"
     },
     eternity: {
       rank: 9, stars: 9, labelVi: "VĨNH HẰNG", labelEn: "ETERNITY",
-      phases: [
-        { type: "ring", hits: 4, zone: 0.12, speed: 1.68, maxMiss: 1, time: 12 },
-        { type: "rhythm", notes: 10, need: 8, speed: 1.68, interval: 0.44, maxFail: 2 },
-        { type: "track", barSize: 0.128, start: 0.24, fill: 0.20, drain: 0.37, fishSpd: 1.46, lunge: true, polarity: true, lungeCd: 1.05, time: 22 }
-      ]
+      bpm: 200, notes: 38, scroll: 272, doubleProb: 0.44, holdProb: 0.24,
+      perfectPx: 14, goodPx: 22, maxMiss: 2, scaleKey: "virtuoso",
+      songVi: "Khúc Vĩnh Hằng", songEn: "Eternity Nocturne"
     },
     infinity: {
       rank: 10, stars: 10, labelVi: "VÔ CỰC", labelEn: "INFINITY",
-      phases: [
-        { type: "ring", hits: 4, zone: 0.11, speed: 1.82, maxMiss: 1, time: 12 },
-        { type: "rhythm", notes: 11, need: 9, speed: 1.80, interval: 0.41, maxFail: 2 },
-        { type: "track", barSize: 0.122, start: 0.24, fill: 0.20, drain: 0.39, fishSpd: 1.55, lunge: true, polarity: true, lungeCd: 0.98, time: 22 }
-      ]
+      bpm: 212, notes: 42, scroll: 286, doubleProb: 0.48, holdProb: 0.24,
+      perfectPx: 13, goodPx: 21, maxMiss: 2, scaleKey: "virtuoso",
+      songVi: "Vô Cực Concerto", songEn: "Infinity Concerto"
     },
     genesis: {
       rank: 11, stars: 11, labelVi: "KHỞI NGUYÊN", labelEn: "GENESIS",
-      phases: [
-        { type: "ring", hits: 5, zone: 0.10, speed: 1.95, maxMiss: 1, time: 13 },
-        { type: "rhythm", notes: 12, need: 10, speed: 1.92, interval: 0.38, maxFail: 2 },
-        { type: "track", barSize: 0.116, start: 0.23, fill: 0.20, drain: 0.40, fishSpd: 1.62, lunge: true, polarity: true, lungeCd: 0.92, time: 24 }
-      ]
+      bpm: 224, notes: 46, scroll: 300, doubleProb: 0.52, holdProb: 0.22,
+      perfectPx: 12, goodPx: 20, maxMiss: 2, scaleKey: "virtuoso",
+      songVi: "Khởi Nguyên Boss", songEn: "Genesis Fugue"
     },
     omega: {
       rank: 12, stars: 12, labelVi: "OMEGA", labelEn: "OMEGA",
-      phases: [
-        { type: "ring", hits: 5, zone: 0.09, speed: 2.10, maxMiss: 1, time: 13 },
-        { type: "rhythm", notes: 14, need: 12, speed: 2.05, interval: 0.35, maxFail: 2 },
-        { type: "track", barSize: 0.11, start: 0.22, fill: 0.20, drain: 0.42, fishSpd: 1.72, lunge: true, polarity: true, lungeCd: 0.85, time: 25 }
-      ]
+      bpm: 238, notes: 52, scroll: 316, doubleProb: 0.56, holdProb: 0.22,
+      perfectPx: 11, goodPx: 19, maxMiss: 2, scaleKey: "virtuoso",
+      songVi: "OMEGA FINALE", songEn: "OMEGA FINALE"
     }
   };
 
@@ -87,13 +101,338 @@
     return RARITY_PROFILES[k] || RARITY_PROFILES.common;
   }
 
-  function starStr(n) {
-    const cap = Math.min(6, Math.max(1, n));
-    return n > 6 ? `LV.${n}` : "*".repeat(cap);
+  function computeDifficulty(preview, lang) {
+    const pv = preview || {};
+    const isVi = lang !== "en";
+    const rarityId = String(pv.rarity_id || "common").toLowerCase();
+    const base = getProfile(rarityId);
+    const val = Number(pv.value || 0);
+    const hasMutation = Boolean(pv.mutation_name);
+
+    let speedMul = 1.0;
+    let extraNotes = 0;
+    let extraDouble = 0;
+    let tightenPx = 0;
+    const badges = [];
+
+    if (hasMutation) {
+      speedMul += 0.12;
+      extraNotes += 3;
+      extraDouble += 0.08;
+      tightenPx += 1;
+      badges.push(isVi ? "ĐỘT BIẾN +12%" : "MUTATED +12%");
+    }
+    if (val >= 500000) {
+      speedMul += 0.12;
+      extraNotes += 4;
+      tightenPx += 1;
+      badges.push(isVi ? "CÁ CỰC PHẨM" : "PRIZE VALUE");
+    } else if (val >= 100000) {
+      speedMul += 0.08;
+      extraNotes += 2;
+      badges.push(isVi ? "CÁ XỊN" : "HIGH VALUE");
+    } else if (val >= 25000) {
+      speedMul += 0.04;
+      extraNotes += 1;
+    }
+
+    return {
+      rarityId,
+      rank: base.rank,
+      stars: base.stars,
+      labelVi: base.labelVi,
+      labelEn: base.labelEn,
+      songVi: base.songVi,
+      songEn: base.songEn,
+      scaleKey: base.scaleKey,
+      bpm: Math.round(base.bpm * speedMul),
+      notes: base.notes + extraNotes,
+      scroll: Math.round(base.scroll * speedMul),
+      doubleProb: Math.min(0.72, base.doubleProb + extraDouble),
+      holdProb: base.holdProb,
+      perfectPx: Math.max(10, base.perfectPx - tightenPx),
+      goodPx: Math.max(17, base.goodPx - tightenPx),
+      maxMiss: base.maxMiss,
+      badges
+    };
   }
 
-  const CW = 300;
-  const CH = 156;
+  const PianoAudio = {
+    activeHolds: new Map(),
+
+    getCtx() {
+      if (window.SFX && !window.SFX.enabled) return null;
+      try {
+        let ctx = window.SFX && window.SFX.ctx;
+        if (!ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          ctx = new AC();
+          if (window.SFX) window.SFX.ctx = ctx;
+        }
+        if (ctx.state === "suspended") ctx.resume().catch(() => {});
+        return ctx;
+      } catch (_) {
+        return null;
+      }
+    },
+
+    playNote(freq, durSec, gainVal) {
+      const ctx = this.getCtx();
+      if (!ctx) return;
+      try {
+        const t0 = ctx.currentTime;
+        const dur = Math.max(0.12, durSec || 0.34);
+        const vol = gainVal || 0.09;
+
+        const osc1 = ctx.createOscillator();
+        const g1 = ctx.createGain();
+        osc1.type = "triangle";
+        osc1.frequency.setValueAtTime(freq, t0);
+        g1.gain.setValueAtTime(0.001, t0);
+        g1.gain.linearRampToValueAtTime(vol, t0 + 0.01);
+        g1.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+        osc1.connect(g1);
+        g1.connect(ctx.destination);
+        osc1.start(t0);
+        osc1.stop(t0 + dur + 0.03);
+
+        const osc2 = ctx.createOscillator();
+        const g2 = ctx.createGain();
+        osc2.type = "sine";
+        osc2.frequency.setValueAtTime(freq * 2, t0);
+        g2.gain.setValueAtTime(0.001, t0);
+        g2.gain.linearRampToValueAtTime(vol * 0.38, t0 + 0.008);
+        g2.gain.exponentialRampToValueAtTime(0.001, t0 + dur * 0.68);
+        osc2.connect(g2);
+        g2.connect(ctx.destination);
+        osc2.start(t0);
+        osc2.stop(t0 + dur + 0.02);
+
+        const osc3 = ctx.createOscillator();
+        const g3 = ctx.createGain();
+        osc3.type = "square";
+        osc3.frequency.setValueAtTime(freq, t0);
+        g3.gain.setValueAtTime(vol * 0.28, t0);
+        g3.gain.exponentialRampToValueAtTime(0.001, t0 + 0.026);
+        osc3.connect(g3);
+        g3.connect(ctx.destination);
+        osc3.start(t0);
+        osc3.stop(t0 + 0.035);
+      } catch (_) {}
+    },
+
+    playMutedTap(freq) {
+      const ctx = this.getCtx();
+      if (!ctx) return;
+      try {
+        const t0 = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime((freq || 240) * 0.65, t0);
+        g.gain.setValueAtTime(0.024, t0);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.065);
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.start(t0);
+        osc.stop(t0 + 0.08);
+      } catch (_) {}
+    },
+
+    startHold(keyId, freq) {
+      this.stopHold(keyId);
+      const ctx = this.getCtx();
+      if (!ctx) return;
+      try {
+        const t0 = ctx.currentTime;
+        const master = ctx.createGain();
+        master.gain.setValueAtTime(0.001, t0);
+        master.gain.linearRampToValueAtTime(0.085, t0 + 0.015);
+        master.gain.linearRampToValueAtTime(0.055, t0 + 0.9);
+        master.connect(ctx.destination);
+
+        const o1 = ctx.createOscillator();
+        o1.type = "triangle";
+        o1.frequency.setValueAtTime(freq, t0);
+        o1.connect(master);
+        o1.start(t0);
+
+        const o2 = ctx.createOscillator();
+        const g2 = ctx.createGain();
+        o2.type = "sine";
+        o2.frequency.setValueAtTime(freq * 2, t0);
+        g2.gain.setValueAtTime(0.32, t0);
+        o2.connect(g2);
+        g2.connect(master);
+        o2.start(t0);
+
+        this.activeHolds.set(keyId, { ctx, master, o1, o2 });
+      } catch (_) {}
+    },
+
+    stopHold(keyId) {
+      const v = this.activeHolds.get(keyId);
+      if (!v) return;
+      this.activeHolds.delete(keyId);
+      try {
+        const now = v.ctx.currentTime;
+        v.master.gain.cancelScheduledValues(now);
+        v.master.gain.setValueAtTime(Math.max(0.001, v.master.gain.value || 0.04), now);
+        v.master.gain.exponentialRampToValueAtTime(0.0008, now + 0.05);
+        v.o1.stop(now + 0.06);
+        v.o2.stop(now + 0.06);
+      } catch (_) {}
+    },
+
+    stopAllHolds() {
+      for (const k of Array.from(this.activeHolds.keys())) {
+        this.stopHold(k);
+      }
+    },
+
+    playMiss() {
+      const ctx = this.getCtx();
+      if (!ctx) return;
+      try {
+        const t0 = ctx.currentTime;
+        [115, 123].forEach(f => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(f, t0);
+          g.gain.setValueAtTime(0.04, t0);
+          g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.12);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.14);
+        });
+      } catch (_) {}
+    },
+
+    playChordWin() {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((f, idx) => {
+        setTimeout(() => this.playNote(f, 0.38, 0.08), idx * 55);
+      });
+    }
+  };
+
+  function generateChart(diff) {
+    const scale = SCALES[diff.scaleKey] || SCALES.folk;
+    const beatSec = 60 / diff.bpm;
+    const baseStepSec = diff.rank >= 8
+      ? Math.max(0.22, beatSec * 0.92)
+      : (diff.rank >= 4 ? Math.max(0.26, beatSec * 0.95) : beatSec);
+
+    const laneBusyUntil = [0, 0, 0, 0];
+    const notes = [];
+    let curTime = 1.85;
+    let chordGroupSeq = 1;
+    let noteIdSeq = 1;
+    let prevLane = Math.floor(Math.random() * LANE_COUNT);
+    let dir = Math.random() < 0.5 ? 1 : -1;
+    let stepIdx = 0;
+
+    while (notes.length < diff.notes) {
+      if (stepIdx > 0 && stepIdx % 4 === 0 && Math.random() < 0.35) {
+        dir = -dir;
+      }
+      let candLane = prevLane + dir;
+      if (candLane < 0 || candLane >= LANE_COUNT) {
+        dir = -dir;
+        candLane = Math.max(0, Math.min(LANE_COUNT - 1, prevLane + dir));
+      }
+      if (stepIdx % 5 === 3) {
+        candLane = (prevLane + 2) % LANE_COUNT;
+      }
+
+      if (curTime < laneBusyUntil[candLane] + 0.16) {
+        let free = -1;
+        for (let k = 0; k < LANE_COUNT; k++) {
+          const check = (candLane + k) % LANE_COUNT;
+          if (curTime >= laneBusyUntil[check] + 0.16) {
+            free = check;
+            break;
+          }
+        }
+        if (free === -1) {
+          curTime = Math.min(...laneBusyUntil) + 0.17;
+          continue;
+        }
+        candLane = free;
+      }
+
+      const canDouble = diff.doubleProb > 0 && notes.length + 1 < diff.notes;
+      let lane2 = -1;
+      if (canDouble && Math.random() < diff.doubleProb) {
+        const pref2 = candLane < 2 ? 2 + (candLane % 2) : candLane % 2;
+        if (pref2 !== candLane && curTime >= laneBusyUntil[pref2] + 0.16) {
+          lane2 = pref2;
+        } else {
+          for (let k = 0; k < LANE_COUNT; k++) {
+            if (k !== candLane && curTime >= laneBusyUntil[k] + 0.16) {
+              lane2 = k;
+              break;
+            }
+          }
+        }
+      }
+
+      let holdDur = 0;
+      if (lane2 === -1 && diff.holdProb > 0 && notes.length < diff.notes - 1 && Math.random() < diff.holdProb) {
+        holdDur = Math.max(0.35, Math.min(0.75, beatSec * (diff.rank >= 7 ? 1.35 : 1.65)));
+      }
+
+      const accentHi = stepIdx % 4 === 2 && diff.rank >= 5 ? 2 : 1;
+      const groupId = lane2 !== -1 ? chordGroupSeq++ : 0;
+
+      const n1Id = noteIdSeq++;
+      notes.push({
+        id: n1Id,
+        lane: candLane,
+        hitTime: curTime,
+        holdDur,
+        chordGroupId: groupId,
+        freq: scale[candLane] * accentHi,
+        y: -40,
+        tailY: -40,
+        hit: false,
+        holding: false,
+        completed: false,
+        missed: false
+      });
+      laneBusyUntil[candLane] = curTime + holdDur + 0.16;
+
+      if (lane2 !== -1 && notes.length < diff.notes) {
+        const n2Id = noteIdSeq++;
+        notes.push({
+          id: n2Id,
+          lane: lane2,
+          hitTime: curTime,
+          holdDur: 0,
+          chordGroupId: groupId,
+          freq: scale[lane2] * accentHi,
+          y: -40,
+          tailY: -40,
+          hit: false,
+          holding: false,
+          completed: false,
+          missed: false
+        });
+        laneBusyUntil[lane2] = curTime + 0.16;
+      }
+
+      prevLane = candLane;
+      stepIdx += 1;
+      const quickFlourish = diff.rank >= 5 && holdDur === 0 && lane2 === -1 && baseStepSec >= 0.34 && Math.random() < 0.25;
+      const delta = holdDur > 0 ? Math.max(baseStepSec, holdDur * 0.88 + 0.14) : (quickFlourish ? baseStepSec * 0.62 : baseStepSec);
+      curTime += delta;
+    }
+
+    return { notes, totalDuration: curTime + 1.0 };
+  }
 
   let session = null;
 
@@ -101,510 +440,479 @@
     return typeof window.pxIcon === "function" ? window.pxIcon(name, size || 16) : "";
   }
 
-  function triggerSfx(name, arg) {
-    const s = window.SFX;
-    if (!s) return;
-    try {
-      if (typeof s[name] === "function") s[name](arg);
-    } catch (_) {}
+  function starStr(n) {
+    const cap = Math.min(6, Math.max(1, n));
+    return n > 6 ? `LV.${n}` : "*".repeat(cap);
   }
 
-  function makePhaseState(cfg) {
-    if (cfg.type === "strike" || cfg.type === "double_strike") {
-      return {
-        pos: 0.12,
-        dir: 1,
-        zoneCenter: 0.56,
-        zoneWidth: cfg.zone,
-        speed: cfg.speed,
-        hits: 0,
-        misses: 0,
-        timer: cfg.time,
-        flash: 0,
-        hitAnim: 0
-      };
-    }
-    if (cfg.type === "ring") {
-      return {
-        radius: 1.0,
-        target: 0.36,
-        zone: cfg.zone,
-        speed: cfg.speed,
-        hits: 0,
-        misses: 0,
-        timer: cfg.time,
-        flash: 0
-      };
-    }
-    if (cfg.type === "rhythm") {
-      const notes = [];
-      for (let i = 0; i < cfg.notes; i++) {
-        notes.push({
-          lane: Math.floor(Math.random() * 3),
-          spawnAt: 0.45 + i * cfg.interval,
-          y: -14,
-          hit: false,
-          missed: false
-        });
-      }
-      return {
-        elapsed: 0,
-        notes,
-        hits: 0,
-        missed: 0,
-        laneFlash: [0, 0, 0],
-        laneGood: [0, 0, 0]
-      };
-    }
-    // track / turbulent / boss struggle
-    return {
-      barY: 0.42,
-      barVel: 0,
-      fishY: 0.5,
-      fishTarget: 0.25,
-      fishMoveTimer: 0.5,
-      lungeWarn: 0,
-      lungeDir: 0,
-      lungeTimer: cfg.lungeCd || 2.0,
-      progress: cfg.start || 0.28,
-      timer: cfg.time || 20,
-      holding: false,
-      flash: 0
+  function computeAccuracyAndGrade(st) {
+    const judged = st.perfects + st.greats + st.goods + st.misses;
+    if (!judged) return { accuracy: 100, grade: "S" };
+    const pts = st.perfects * 1.0 + st.greats * 0.78 + st.goods * 0.55;
+    const accuracy = Math.max(0, Math.min(100, Math.round((pts / judged) * 100)));
+    let grade = "B";
+    if (st.misses === 0 && accuracy >= 96) grade = "S+";
+    else if (accuracy >= 90) grade = "S";
+    else if (accuracy >= 80) grade = "A";
+    else if (accuracy >= 65) grade = "B";
+    else grade = "C";
+    return { accuracy, grade };
+  }
+
+  function finishSong(won, reason) {
+    if (!session || session.finished) return;
+    session.finished = true;
+    PianoAudio.stopAllHolds();
+    const { accuracy, grade } = computeAccuracyAndGrade(session);
+    if (won) PianoAudio.playChordWin();
+    else PianoAudio.playMiss();
+
+    const payload = {
+      won: Boolean(won),
+      score: Math.round(session.score),
+      accuracy,
+      maxCombo: session.maxCombo,
+      grade: won ? grade : "F",
+      details: reason || (won ? "piano_clear" : "piano_failed")
     };
+    const cb = session.onDone;
+    stopSession();
+    cb(payload);
   }
 
-  function currentPhaseCfg() {
-    return session.profile.phases[session.phaseIdx];
+  function addParticles(lane, color, count) {
+    if (!session) return;
+    const cx = START_X + lane * LANE_W + LANE_W / 2;
+    for (let i = 0; i < count; i++) {
+      const ang = -Math.PI + Math.random() * Math.PI;
+      const spd = 38 + Math.random() * 78;
+      session.particles.push({
+        x: cx + (Math.random() - 0.5) * 26,
+        y: HIT_Y - 2,
+        vx: Math.cos(ang) * spd,
+        vy: Math.sin(ang) * spd - 22,
+        life: 0.34 + Math.random() * 0.16,
+        maxLife: 0.5,
+        sz: Math.random() < 0.45 ? 4 : 3,
+        color
+      });
+    }
   }
 
-  function advanceOrFinish(wonPhase, details) {
+  function setJudge(text, color) {
+    if (!session) return;
+    session.judgeText = text;
+    session.judgeColor = color;
+    session.judgeTimer = 0.52;
+  }
+
+  function updateDomKeyVisual(lane) {
+    if (!session || !session.keyEls) return;
+    const el = session.keyEls[lane];
+    if (!el) return;
+    const active = session.laneKeyDown[lane] || session.lanePointers[lane].size > 0;
+    el.classList.toggle("pressed", active);
+  }
+
+  function triggerLaneHit(lane) {
     if (!session || session.finished) return;
-    if (!wonPhase) {
-      session.finished = true;
-      session.onDone({ won: false, score: session.score, details: details || "missed" });
-      stopSession();
-      return;
-    }
-    session.score += 100;
-    if (session.phaseIdx + 1 < session.profile.phases.length) {
-      session.phaseIdx += 1;
-      session.phase = makePhaseState(currentPhaseCfg());
-      session.phaseBanner = 1.1;
-      triggerSfx("phaseClear");
-      updateHudAndControls();
-    } else {
-      session.finished = true;
-      session.onDone({ won: true, score: session.score, details: "cleared" });
-      stopSession();
-    }
-  }
+    if (lane < 0 || lane >= LANE_COUNT) return;
+    session.laneFlash[lane] = 0.22;
 
-  function handleStrikeInput() {
-    if (!session || session.finished) return;
-    const cfg = currentPhaseCfg();
-    const st = session.phase;
-
-    if (cfg.type === "strike" || cfg.type === "double_strike") {
-      const dist = Math.abs(st.pos - st.zoneCenter);
-      if (dist <= st.zoneWidth * 0.54) {
-        st.hits += 1;
-        st.hitAnim = 0.28;
-        triggerSfx("hit", st.hits);
-        if (st.hits >= cfg.hits) {
-          advanceOrFinish(true, "strike_clear");
-        } else {
-          st.zoneWidth = cfg.zone2 || cfg.zone * 0.78;
-          st.speed = cfg.speed2 || cfg.speed * 1.2;
-          st.zoneCenter = st.zoneCenter < 0.5 ? (0.58 + Math.random() * 0.26) : (0.16 + Math.random() * 0.26);
-        }
-      } else {
-        st.misses += 1;
-        st.flash = 0.25;
-        triggerSfx("miss");
-        if (st.misses > cfg.maxMiss) {
-          advanceOrFinish(false, "bad_timing");
-        }
-      }
-      return;
-    }
-
-    if (cfg.type === "ring") {
-      const dist = Math.abs(st.radius - st.target);
-      if (dist <= st.zone * 0.65) {
-        st.hits += 1;
-        st.radius = 1.0;
-        st.flash = 0.22;
-        triggerSfx("hit", st.hits);
-        if (st.hits >= cfg.hits) {
-          advanceOrFinish(true, "ring_clear");
-        }
-      } else {
-        st.misses += 1;
-        st.radius = 1.0;
-        st.flash = -0.25;
-        triggerSfx("miss");
-        if (st.misses > cfg.maxMiss) {
-          advanceOrFinish(false, "ring_miss");
-        }
-      }
-    }
-  }
-
-  function handleRhythmLane(lane) {
-    if (!session || session.finished) return;
-    const cfg = currentPhaseCfg();
-    if (cfg.type !== "rhythm") return;
-    const st = session.phase;
-    const hitY = CH - 24;
-    st.laneFlash[lane] = 0.16;
-
-    // Pick closest active note in this lane near hitY
+    const diff = session.diff;
+    const notes = session.notes;
     let best = null;
-    let bestDist = 999;
-    for (let i = 0; i < st.notes.length; i++) {
-      const n = st.notes[i];
-      if (n.hit || n.missed || n.lane !== lane || st.elapsed < n.spawnAt) continue;
-      const d = Math.abs(n.y - hitY);
+    let bestDist = 9999;
+
+    for (let i = 0; i < notes.length; i++) {
+      const n = notes[i];
+      if (n.lane !== lane || n.hit || n.missed) continue;
+      const d = Math.abs(n.y - HIT_Y);
       if (d < bestDist) {
         bestDist = d;
         best = n;
       }
     }
-    if (best && bestDist <= 22) {
+
+    const hitLimit = diff.goodPx + 14;
+    if (best && bestDist <= hitLimit) {
+      session.ghostTaps[lane] = 0;
       best.hit = true;
-      st.hits += 1;
-      st.laneGood[lane] = 0.22;
-      session.score += 25;
-      triggerSfx("hit", st.hits);
-      if (st.hits >= cfg.need) {
-        advanceOrFinish(true, "rhythm_clear");
+      session.combo += 1;
+      if (session.combo > session.maxCombo) session.maxCombo = session.combo;
+
+      let pts = 50;
+      if (bestDist <= diff.perfectPx) {
+        pts = 100;
+        session.perfects += 1;
+        setJudge("PERFECT!", "#ecc570");
+        addParticles(lane, "#ecc570", 8);
+        session.laneGood[lane] = 0.28;
+      } else if (bestDist <= diff.goodPx) {
+        pts = 75;
+        session.greats += 1;
+        setJudge("GREAT!", "#6fdbbf");
+        addParticles(lane, LANE_COLORS[lane], 6);
+        session.laneGood[lane] = 0.22;
+      } else {
+        pts = 55;
+        session.goods += 1;
+        setJudge("GOOD", "#7ec8d9");
+        addParticles(lane, "#7ec8d9", 4);
+        session.laneGood[lane] = 0.16;
       }
-    } else {
-      triggerSfx("tick");
-    }
-  }
 
-  function stepChallenge(dt) {
-    if (!session || session.finished) return;
-    if (session.phaseBanner > 0) session.phaseBanner = Math.max(0, session.phaseBanner - dt);
+      const comboMul = 1 + Math.min(1.0, Math.floor(session.combo / 5) * 0.1);
+      session.score += Math.round(pts * comboMul);
 
-    const cfg = currentPhaseCfg();
-    const st = session.phase;
-
-    if (cfg.type === "strike" || cfg.type === "double_strike") {
-      if (st.flash > 0) st.flash = Math.max(0, st.flash - dt);
-      if (st.hitAnim > 0) st.hitAnim = Math.max(0, st.hitAnim - dt);
-      st.pos += st.dir * st.speed * dt;
-      if (st.pos >= 1) { st.pos = 1; st.dir = -1; }
-      if (st.pos <= 0) { st.pos = 0; st.dir = 1; }
-      st.timer -= dt;
-      if (st.timer <= 0) advanceOrFinish(false, "timeout");
+      if (best.holdDur > 0) {
+        best.holding = true;
+        session.activeHoldByLane[lane] = best;
+        PianoAudio.startHold(`h_${lane}_${best.id}`, best.freq);
+      } else {
+        best.completed = true;
+        session.clearedNotes += 1;
+        PianoAudio.playNote(best.freq, 0.34, 0.09);
+      }
       return;
     }
 
-    if (cfg.type === "ring") {
-      if (st.flash > 0) st.flash = Math.max(0, st.flash - dt);
-      if (st.flash < 0) st.flash = Math.min(0, st.flash + dt);
-      st.radius -= cfg.speed * 0.55 * dt;
-      st.timer -= dt;
-      if (st.radius <= 0.12) {
-        st.misses += 1;
-        st.radius = 1.0;
-        st.flash = -0.25;
-        triggerSfx("miss");
-        if (st.misses > cfg.maxMiss) {
-          advanceOrFinish(false, "ring_expired");
-          return;
-        }
-      }
-      if (st.timer <= 0) advanceOrFinish(false, "timeout");
-      return;
-    }
-
-    if (cfg.type === "rhythm") {
-      st.elapsed += dt;
-      for (let l = 0; l < 3; l++) {
-        if (st.laneFlash[l] > 0) st.laneFlash[l] = Math.max(0, st.laneFlash[l] - dt);
-        if (st.laneGood[l] > 0) st.laneGood[l] = Math.max(0, st.laneGood[l] - dt);
-      }
-      const dropPxPerSec = 105 * cfg.speed;
-      const missY = CH - 3;
-      for (let i = 0; i < st.notes.length; i++) {
-        const n = st.notes[i];
-        if (n.hit || n.missed) continue;
-        if (st.elapsed >= n.spawnAt) {
-          n.y = -10 + (st.elapsed - n.spawnAt) * dropPxPerSec;
-          if (n.y > missY) {
-            n.missed = true;
-            st.missed += 1;
-            triggerSfx("miss");
+    // Empty tap feedback + boss anti-spam protection on Mythic+
+    const scale = SCALES[diff.scaleKey] || SCALES.folk;
+    PianoAudio.playMutedTap(scale[lane]);
+    if (diff.rank >= 6) {
+      const nearNote = best && bestDist <= 95;
+      if (!nearNote) {
+        session.ghostTaps[lane] += 1;
+        if (session.ghostTaps[lane] >= 2) {
+          session.ghostTaps[lane] = 0;
+          session.misses += 1;
+          session.combo = 0;
+          session.missFlash = 0.28;
+          setJudge("SPAM!", "#f45b69");
+          PianoAudio.playMiss();
+          if (session.misses > diff.maxMiss) {
+            finishSong(false, "piano_spam_fail");
           }
         }
       }
-      if (st.hits >= cfg.need) {
-        advanceOrFinish(true, "rhythm_clear");
-        return;
-      }
-      const remaining = st.notes.length - st.hits - st.missed;
-      if (st.hits + remaining < cfg.need) {
-        advanceOrFinish(false, "rhythm_failed");
-      }
-      return;
     }
+  }
 
-    // Track (Stardew-style vertical reel column)
-    st.timer -= dt;
-    if (st.timer <= 0) {
-      advanceOrFinish(false, "timeout");
-      return;
-    }
+  function releaseLaneHoldCheck(lane) {
+    if (!session || session.finished) return;
+    if (session.laneKeyDown[lane] || session.lanePointers[lane].size > 0) return;
 
-    // Player bar physics (0 = top, 1 = bottom)
-    const grav = 1.85;
-    const lift = -3.95;
-    const holding = st.holding || session.keyHold;
-    st.barVel += (holding ? lift : grav) * dt;
-    st.barVel *= Math.pow(0.84, dt * 60);
-    st.barY += st.barVel * dt;
-    const minBar = 0;
-    const maxBar = 1 - cfg.barSize;
-    if (st.barY < minBar) { st.barY = minBar; st.barVel = Math.max(0, -st.barVel * 0.25); }
-    if (st.barY > maxBar) { st.barY = maxBar; st.barVel = Math.min(0, -st.barVel * 0.35); }
+    const hn = session.activeHoldByLane[lane];
+    if (!hn || hn.missed || hn.completed) return;
 
-    // Fish AI movement & telegraphed lunges
-    if (cfg.lunge) {
-      st.lungeTimer -= dt;
-      if (st.lungeTimer <= 0.42 && st.lungeTimer > 0 && st.lungeWarn <= 0) {
-        st.lungeWarn = 0.42;
-        st.lungeDir = st.fishY > 0.5 ? -1 : 1;
-        triggerSfx("tick");
-      }
-      if (st.lungeTimer <= 0) {
-        st.lungeWarn = 0;
-        const jump = 0.32 + Math.random() * 0.38;
-        st.fishTarget = Math.max(0.06, Math.min(0.94, st.fishY + st.lungeDir * jump));
-        st.fishMoveTimer = 0.45;
-        st.lungeTimer = cfg.lungeCd * (0.85 + Math.random() * 0.4);
-      }
-    }
-    st.fishMoveTimer -= dt;
-    if (st.fishMoveTimer <= 0) {
-      st.fishTarget = 0.08 + Math.random() * 0.84;
-      st.fishMoveTimer = 0.55 + Math.random() * 0.75;
-    }
-    const dashMul = st.lungeWarn > 0 ? 0.35 : (cfg.lunge ? 1.35 : 1.0);
-    const diff = st.fishTarget - st.fishY;
-    st.fishY += Math.sign(diff) * Math.min(Math.abs(diff), cfg.fishSpd * dashMul * dt);
+    session.activeHoldByLane[lane] = null;
+    hn.holding = false;
+    PianoAudio.stopHold(`h_${lane}_${hn.id}`);
 
-    // Check overlap
-    const fishHalf = 0.045;
-    const barTop = st.barY;
-    const barBot = st.barY + cfg.barSize;
-    const inside = (st.fishY + fishHalf >= barTop) && (st.fishY - fishHalf <= barBot);
-    if (inside) {
-      st.progress += cfg.fill * dt;
-      st.flash = 1;
+    const remain = (hn.hitTime + hn.holdDur) - session.elapsed;
+    const grace = Math.max(0.14, hn.holdDur * 0.22);
+    if (remain <= grace) {
+      hn.completed = true;
+      session.clearedNotes += 1;
+      session.score += 80;
+      session.combo += 1;
+      if (session.combo > session.maxCombo) session.maxCombo = session.combo;
+      session.laneGood[lane] = 0.24;
+      setJudge("HOLD OK!", "#6fdbbf");
+      addParticles(lane, "#6fdbbf", 6);
+      PianoAudio.playNote(hn.freq * 1.5, 0.24, 0.065);
     } else {
-      st.progress -= cfg.drain * dt;
-      st.flash = 0;
+      hn.missed = true;
+      session.misses += 1;
+      session.combo = 0;
+      session.missFlash = 0.28;
+      setJudge(session.lang !== "en" ? "THẢ SỚM!" : "EARLY UP!", "#f45b69");
+      PianoAudio.playMiss();
+      if (session.misses > session.diff.maxMiss) {
+        finishSong(false, "piano_hold_dropped");
+      }
     }
-    if (st.progress >= 1) {
-      advanceOrFinish(true, "caught_in_bar");
-    } else if (st.progress <= 0) {
-      advanceOrFinish(false, "escaped_bar");
+  }
+
+  function stepSession(dt) {
+    if (!session || session.finished) return;
+    session.elapsed += dt;
+    if (session.missFlash > 0) session.missFlash = Math.max(0, session.missFlash - dt);
+    if (session.judgeTimer > 0) session.judgeTimer = Math.max(0, session.judgeTimer - dt);
+
+    for (let l = 0; l < LANE_COUNT; l++) {
+      if (session.laneFlash[l] > 0) session.laneFlash[l] = Math.max(0, session.laneFlash[l] - dt);
+      if (session.laneGood[l] > 0) session.laneGood[l] = Math.max(0, session.laneGood[l] - dt);
+    }
+
+    for (let i = session.particles.length - 1; i >= 0; i--) {
+      const p = session.particles[i];
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vy += 150 * dt;
+      p.life -= dt;
+      if (p.life <= 0) session.particles.splice(i, 1);
+    }
+
+    const diff = session.diff;
+    const notes = session.notes;
+    const missY = HIT_Y + diff.goodPx + 18;
+    let unresolved = 0;
+
+    for (let i = 0; i < notes.length; i++) {
+      const n = notes[i];
+      n.y = HIT_Y - (n.hitTime - session.elapsed) * diff.scroll;
+      if (n.holdDur > 0) {
+        n.tailY = HIT_Y - ((n.hitTime + n.holdDur) - session.elapsed) * diff.scroll;
+      }
+
+      if (n.completed || n.missed) continue;
+
+      if (n.holding) {
+        if (session.elapsed >= n.hitTime + n.holdDur) {
+          n.holding = false;
+          n.completed = true;
+          session.activeHoldByLane[n.lane] = null;
+          PianoAudio.stopHold(`h_${n.lane}_${n.id}`);
+          session.clearedNotes += 1;
+          session.score += 80;
+          session.combo += 1;
+          if (session.combo > session.maxCombo) session.maxCombo = session.combo;
+          session.laneGood[n.lane] = 0.25;
+          setJudge("HOLD OK!", "#ecc570");
+          addParticles(n.lane, "#ecc570", 7);
+          PianoAudio.playNote(n.freq * 1.5, 0.26, 0.065);
+          continue;
+        }
+        unresolved += 1;
+        continue;
+      }
+
+      if (!n.hit && n.y > missY) {
+        n.missed = true;
+        session.misses += 1;
+        session.combo = 0;
+        session.missFlash = 0.30;
+        setJudge("MISS!", "#f45b69");
+        PianoAudio.playMiss();
+        if (session.misses > diff.maxMiss) {
+          finishSong(false, "piano_missed");
+          return;
+        }
+        continue;
+      }
+
+      unresolved += 1;
+    }
+
+    updateLightweightHud();
+
+    if (unresolved === 0 && session.elapsed >= notes[notes.length - 1].hitTime + 0.18) {
+      finishSong(true, "piano_clear");
+    }
+  }
+
+  function updateLightweightHud() {
+    if (!session) return;
+    const hpRem = Math.max(0, (session.diff.maxMiss + 1) - session.misses);
+    const hpTotal = session.diff.maxMiss + 1;
+    const hpKey = `${hpRem}/${hpTotal}`;
+    if (session.lastHud.hp !== hpKey && session.hudHpEl) {
+      session.lastHud.hp = hpKey;
+      session.hudHpEl.textContent = session.lang !== "en" ? `Mạng: ${hpKey}` : `Lives: ${hpKey}`;
+      session.hudHpEl.style.color = hpRem <= 1 ? "#f45b69" : "#6fdbbf";
+    }
+    if (session.lastHud.combo !== session.combo && session.hudComboEl) {
+      session.lastHud.combo = session.combo;
+      session.hudComboEl.textContent = `COMBO ×${session.combo}`;
+      session.hudComboEl.style.color = session.combo >= 10 ? "#ecc570" : "#7ec8d9";
+    }
+    const done = session.clearedNotes + session.misses;
+    const progKey = `${done}/${session.notes.length}`;
+    if (session.lastHud.prog !== progKey && session.hudProgEl) {
+      session.lastHud.prog = progKey;
+      session.hudProgEl.textContent = progKey;
     }
   }
 
   function renderChallengeCanvas() {
     if (!session || !session.ctx) return;
     const ctx = session.ctx;
+    const diff = session.diff;
+    const isVi = session.lang !== "en";
     ctx.imageSmoothingEnabled = false;
 
-    // Frame background
-    ctx.fillStyle = "#08121f";
+    // Background & outer frame
+    ctx.fillStyle = "#060e1a";
     ctx.fillRect(0, 0, CW, CH);
-    ctx.strokeStyle = session.rarityColor || "#6fdbbf";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(1, 1, CW - 2, CH - 2);
 
-    const cfg = currentPhaseCfg();
-    const st = session.phase;
-    const accent = session.rarityColor || "#6fdbbf";
-    const isVi = session.lang !== "en";
+    // Subtle 16px beat grid
+    ctx.fillStyle = "#0a1728";
+    const gridOffset = Math.round((session.elapsed * diff.scroll) % 28);
+    for (let gy = gridOffset; gy < HIT_Y; gy += 28) {
+      ctx.fillRect(START_X, gy, LANE_W * LANE_COUNT, 1);
+    }
 
-    if (cfg.type === "strike" || cfg.type === "double_strike") {
-      // Title & hits counter
-      ctx.fillStyle = "#cbd5e1";
-      ctx.font = "bold 11px monospace";
-      ctx.fillText(
-        isVi ? `CANH ĐIỂM VÀNG (${st.hits}/${cfg.hits})` : `STRIKE SWEET ZONE (${st.hits}/${cfg.hits})`,
-        16, 26
-      );
-      ctx.fillStyle = st.timer < 2 ? "#f45b69" : "#ecc570";
-      ctx.fillText(`${Math.max(0, st.timer).toFixed(1)}s`, CW - 48, 26);
+    // 4 Vertical piano lanes
+    for (let l = 0; l < LANE_COUNT; l++) {
+      const lx = START_X + l * LANE_W;
+      const isPressed = session.laneKeyDown[l] || session.lanePointers[l].size > 0;
+      const lCol = LANE_COLORS[l];
 
-      // Bar track
-      const bx = 18, by = 60, bw = CW - 36, bh = 34;
-      ctx.fillStyle = "#040811";
-      ctx.fillRect(bx - 2, by - 2, bw + 4, bh + 4);
-      ctx.fillStyle = "#102236";
-      ctx.fillRect(bx, by, bw, bh);
+      ctx.fillStyle = isPressed ? "#132944" : (l % 2 === 0 ? "#091525" : "#0b192d");
+      ctx.fillRect(lx + 1, 8, LANE_W - 2, CH - 14);
 
-      // Sweet zone
-      const zw = Math.round(st.zoneWidth * bw);
-      const zx = Math.round(bx + st.zoneCenter * bw - zw / 2);
-      ctx.fillStyle = st.hitAnim > 0 ? "#ffffff" : "#176b5b";
-      ctx.fillRect(zx, by + 2, zw, bh - 4);
-      ctx.fillStyle = "#6fdbbf";
-      ctx.fillRect(zx, by + 2, zw, 4);
-      ctx.fillRect(zx, by + bh - 6, zw, 4);
-
-      // Moving needle
-      const nx = Math.round(bx + st.pos * bw);
-      ctx.fillStyle = st.flash > 0 ? "#f45b69" : "#ecc570";
-      ctx.fillRect(nx - 3, by - 6, 6, bh + 12);
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(nx - 1, by - 4, 2, bh + 8);
-
-      ctx.fillStyle = "#84a0bd";
-      ctx.font = "10px monospace";
-      ctx.fillText(
-        isVi ? `Trượt cho phép: ${cfg.maxMiss - st.misses}` : `Retries left: ${cfg.maxMiss - st.misses}`,
-        18, 126
-      );
-    } else if (cfg.type === "ring") {
-      const cx = 110, cy = 78;
-      const maxR = 54;
-      const tR = Math.round(st.target * maxR);
-      const cR = Math.round(st.radius * maxR);
-      const zPx = Math.max(4, Math.round(st.zone * maxR));
-
-      // Target golden band
-      ctx.strokeStyle = "#ecc570";
-      ctx.lineWidth = zPx;
-      ctx.strokeRect(cx - tR, cy - tR, tR * 2, tR * 2);
-
-      // Shrinking ring
-      ctx.strokeStyle = st.flash < 0 ? "#f45b69" : (st.flash > 0 ? "#ffffff" : "#6fdbbf");
-      ctx.lineWidth = 3;
-      ctx.strokeRect(cx - cR, cy - cR, cR * 2, cR * 2);
-
-      // Right info panel
-      ctx.fillStyle = "#f1f5f9";
-      ctx.font = "bold 12px monospace";
-      ctx.fillText(isVi ? `KHÓA TÂM (${st.hits}/${cfg.hits})` : `LOCK RING (${st.hits}/${cfg.hits})`, 184, 52);
-      ctx.fillStyle = accent;
-      ctx.fillText(`${Math.max(0, st.timer).toFixed(1)}s`, 184, 74);
-      ctx.fillStyle = "#84a0bd";
-      ctx.font = "10px monospace";
-      ctx.fillText(isVi ? `Trượt còn: ${cfg.maxMiss - st.misses}` : `Lives: ${cfg.maxMiss - st.misses}`, 184, 98);
-      ctx.fillText(isVi ? "Chạm khi vòng khớp" : "Tap inside gold box", 184, 116);
-    } else if (cfg.type === "rhythm") {
-      const laneW = 68;
-      const gap = 14;
-      const startX = Math.round((CW - (laneW * 3 + gap * 2)) / 2);
-      const hitY = CH - 26;
-
-      for (let l = 0; l < 3; l++) {
-        const lx = startX + l * (laneW + gap);
-        ctx.fillStyle = st.laneGood[l] > 0 ? "#16463b" : (st.laneFlash[l] > 0 ? "#1a3652" : "#0b192b");
-        ctx.fillRect(lx, 24, laneW, CH - 32);
-        ctx.strokeStyle = "#2c4e73";
-        ctx.lineWidth = 1;
-        ctx.strokeRect(lx, 24, laneW, CH - 32);
-
-        // Hit receptor box
-        ctx.fillStyle = st.laneFlash[l] > 0 ? "#ecc570" : "#1c3c5c";
-        ctx.fillRect(lx + 4, hitY - 7, laneW - 8, 14);
-        ctx.strokeStyle = "#ecc570";
-        ctx.strokeRect(lx + 4, hitY - 7, laneW - 8, 14);
+      if (session.laneFlash[l] > 0 || isPressed) {
+        ctx.fillStyle = session.laneGood[l] > 0 ? "rgba(111, 219, 191, 0.16)" : "rgba(255, 255, 255, 0.08)";
+        ctx.fillRect(lx + 3, 12, LANE_W - 6, HIT_Y - 12);
       }
 
-      // Draw falling shockwave notes
-      for (let i = 0; i < st.notes.length; i++) {
-        const n = st.notes[i];
-        if (n.hit || n.missed || st.elapsed < n.spawnAt) continue;
-        const nx = startX + n.lane * (laneW + gap) + 10;
-        ctx.fillStyle = accent;
-        ctx.fillRect(nx, Math.round(n.y - 6), laneW - 20, 12);
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(nx + 4, Math.round(n.y - 3), laneW - 28, 6);
-      }
+      ctx.fillStyle = "#193352";
+      ctx.fillRect(lx, 8, 1, CH - 14);
+      if (l === LANE_COUNT - 1) ctx.fillRect(lx + LANE_W - 1, 8, 1, CH - 14);
 
-      // Header progress
-      ctx.fillStyle = "#f1f5f9";
-      ctx.font = "bold 11px monospace";
-      ctx.fillText(isVi ? `ĐỠ SÓNG: ${st.hits}/${cfg.need}` : `PARRY: ${st.hits}/${cfg.need}`, startX, 16);
+      // Receptor box on strike line
+      ctx.fillStyle = isPressed ? lCol : "#10233a";
+      ctx.fillRect(lx + 5, HIT_Y - 8, LANE_W - 10, 16);
+      ctx.strokeStyle = isPressed ? "#ffffff" : lCol;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(lx + 5, HIT_Y - 8, LANE_W - 10, 16);
+
+      ctx.fillStyle = isPressed ? "#06101c" : lCol;
+      ctx.font = "bold 10px monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(KEY_LABELS[l], lx + LANE_W / 2, HIT_Y + 3);
+    }
+
+    // Golden horizontal strike line
+    ctx.fillStyle = "#ecc570";
+    ctx.fillRect(START_X, HIT_Y - 1, LANE_W * LANE_COUNT, 2);
+
+    // Draw golden chord connector lines between simultaneous notes
+    const visibleChords = new Map();
+    for (let i = 0; i < session.notes.length; i++) {
+      const n = session.notes[i];
+      if (!n.chordGroupId || n.hit || n.missed) continue;
+      if (n.y < -12 || n.y > CH + 12) continue;
+      const arr = visibleChords.get(n.chordGroupId) || [];
+      arr.push(n);
+      visibleChords.set(n.chordGroupId, arr);
+    }
+    visibleChords.forEach((arr) => {
+      if (arr.length < 2) return;
+      const a = arr[0];
+      const b = arr[1];
+      const x1 = START_X + Math.min(a.lane, b.lane) * LANE_W + LANE_W / 2;
+      const x2 = START_X + Math.max(a.lane, b.lane) * LANE_W + LANE_W / 2;
+      const cy = Math.round(a.y);
       ctx.fillStyle = "#ecc570";
-      ctx.fillText(isVi ? `Bỏ lỡ: ${st.missed}` : `Miss: ${st.missed}`, startX + 165, 16);
-    } else {
-      // Stardew / Boss Tracking Column
-      const colX = 32, colY = 14, colW = 34, colH = 128;
+      ctx.fillRect(x1, cy - 2, x2 - x1, 4);
+    });
+
+    // Draw Hold Tails & Tile Bodies
+    for (let i = 0; i < session.notes.length; i++) {
+      const n = session.notes[i];
+      if (n.completed || n.missed) continue;
+      const lx = START_X + n.lane * LANE_W;
+      const col = LANE_COLORS[n.lane];
+
+      if (n.holdDur > 0) {
+        const headY = n.holding ? HIT_Y : n.y;
+        const topY = Math.max(6, Math.round(n.tailY));
+        const botY = Math.min(CH - 6, Math.round(headY));
+        if (botY > topY && botY >= 0 && topY <= CH) {
+          ctx.fillStyle = n.holding ? "#ffffff" : col;
+          ctx.globalAlpha = n.holding ? 0.55 : 0.36;
+          ctx.fillRect(lx + 18, topY, LANE_W - 36, botY - topY);
+          ctx.globalAlpha = 1;
+          ctx.strokeStyle = n.holding ? "#ecc570" : col;
+          ctx.lineWidth = 2;
+          ctx.strokeRect(lx + 18, topY, LANE_W - 36, Math.max(4, botY - topY));
+          // Hold cap bar
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(lx + 14, topY - 2, LANE_W - 28, 4);
+        }
+      }
+
+      if (n.hit && !n.holding) continue;
+      const drawY = n.holding ? HIT_Y : Math.round(n.y);
+      if (drawY < -18 || drawY > CH + 18) continue;
+
+      const tileX = lx + 7;
+      const tileW = LANE_W - 14;
+      const tileH = 14;
+      const tileTop = drawY - 7;
+
+      // Crisp 16-bit Piano Tile block
       ctx.fillStyle = "#040811";
-      ctx.fillRect(colX - 2, colY - 2, colW + 4, colH + 4);
-      ctx.fillStyle = "#0b1e33";
-      ctx.fillRect(colX, colY, colW, colH);
-
-      // Catch Bar
-      const bH = Math.max(12, Math.round(cfg.barSize * colH));
-      const bY = Math.round(colY + st.barY * colH);
-      ctx.fillStyle = st.flash ? "#6fdbbf" : "#2ea88d";
-      ctx.fillRect(colX + 3, bY, colW - 6, bH);
+      ctx.fillRect(tileX - 1, tileTop - 1, tileW + 2, tileH + 2);
+      ctx.fillStyle = n.holding ? "#ecc570" : col;
+      ctx.fillRect(tileX, tileTop, tileW, tileH);
       ctx.fillStyle = "#ffffff";
-      ctx.fillRect(colX + 5, bY + 2, colW - 10, 3);
-
-      // Fish icon marker inside column
-      const fY = Math.round(colY + st.fishY * colH);
-      ctx.fillStyle = "#07111e";
-      ctx.fillRect(colX + 7, fY - 6, 20, 12);
-      ctx.fillStyle = st.lungeWarn > 0 ? "#f45b69" : "#ecc570";
-      ctx.fillRect(colX + 9, fY - 4, 16, 8);
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(colX + 12, fY - 2, 4, 4);
-
-      // Progress gauge & info on right
-      const rx = 86;
-      ctx.fillStyle = "#f1f5f9";
-      ctx.font = "bold 12px monospace";
-      ctx.fillText(isVi ? "GIỮ CÁ TRONG THANH XANH" : "KEEP FISH IN GREEN BAR", rx, 34);
-
-      ctx.fillStyle = "#040811";
-      ctx.fillRect(rx, 48, 190, 20);
-      const fillW = Math.round(Math.max(0, Math.min(1, st.progress)) * 184);
-      ctx.fillStyle = st.progress > 0.65 ? "#6fdbbf" : (st.progress < 0.25 ? "#f45b69" : "#ecc570");
-      ctx.fillRect(rx + 3, 51, fillW, 14);
-
-      ctx.fillStyle = "#cbd5e1";
-      ctx.font = "bold 11px monospace";
-      ctx.fillText(`${Math.round(st.progress * 100)}% · ${Math.max(0, st.timer).toFixed(1)}s`, rx, 88);
-
-      if (st.lungeWarn > 0) {
-        ctx.fillStyle = "#f45b69";
-        ctx.font = "bold 12px monospace";
-        ctx.fillText(
-          cfg.polarity
-            ? (isVi ? "CẢNH BÁO: ĐẢO CỰC LAO MẠNH!" : "WARNING: POLARITY LUNGE!")
-            : (isVi ? "CẢNH BÁO: CÁ SẮP LAO!" : "WARNING: LUNGE INCOMING!"),
-          rx, 114
-        );
-      } else {
-        ctx.fillStyle = "#84a0bd";
-        ctx.font = "10px monospace";
-        ctx.fillText(isVi ? "Nhấn giữ nút KÉO để đẩy thanh lên" : "Hold REEL button to lift bar", rx, 114);
+      ctx.fillRect(tileX + 3, tileTop + 2, tileW - 6, 4);
+      if (n.chordGroupId) {
+        ctx.fillStyle = "#ecc570";
+        ctx.fillRect(tileX + tileW - 10, tileTop + 3, 6, 6);
       }
     }
 
-    if (session.phaseBanner > 0) {
-      ctx.fillStyle = "rgba(7, 17, 30, 0.84)";
-      ctx.fillRect(36, 54, CW - 72, 42);
-      ctx.strokeStyle = "#ecc570";
-      ctx.strokeRect(36, 54, CW - 72, 42);
+    // Particles
+    for (let i = 0; i < session.particles.length; i++) {
+      const p = session.particles[i];
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+      ctx.fillRect(Math.round(p.x), Math.round(p.y), p.sz, p.sz);
+    }
+    ctx.globalAlpha = 1;
+
+    // Opening READY / PLAY banner (first 1.2s, first note arrives cleanly at 1.85s)
+    if (session.elapsed < 1.20) {
+      ctx.fillStyle = "rgba(6, 14, 26, 0.86)";
+      ctx.fillRect(46, 84, CW - 92, 46);
+      ctx.strokeStyle = session.rarityColor;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(46, 84, CW - 92, 46);
+      ctx.textAlign = "center";
       ctx.fillStyle = "#ecc570";
-      ctx.font = "bold 15px monospace";
+      ctx.font = "bold 14px monospace";
       ctx.fillText(
-        `PHASE ${session.phaseIdx + 1}/${session.profile.phases.length}`,
-        CW / 2 - 42, 80
+        session.elapsed < 0.75
+          ? (isVi ? "CHUẨN BỊ ĐÁNH ĐÀN!" : "GET READY!")
+          : (isVi ? "BẮT ĐẦU!" : "PLAY NOW!"),
+        CW / 2, 105
       );
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "10px monospace";
+      ctx.fillText(`${diff.bpm} BPM · ${diff.notes} ${isVi ? "NỐT" : "NOTES"}`, CW / 2, 122);
+    } else if (session.judgeTimer > 0 && session.judgeText) {
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#040811";
+      ctx.font = "bold 14px monospace";
+      ctx.fillText(session.judgeText, CW / 2 + 1, 169);
+      ctx.fillStyle = session.judgeColor || "#ffffff";
+      ctx.fillText(session.judgeText, CW / 2, 168);
+    }
+
+    // Live score top bar inside canvas
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#f1f5f9";
+    ctx.font = "bold 10px monospace";
+    ctx.fillText(`${Math.round(session.score)} PTS`, START_X + 4, 18);
+    ctx.textAlign = "right";
+    ctx.fillStyle = session.combo >= 8 ? "#ecc570" : "#7ec8d9";
+    ctx.fillText(session.combo > 0 ? `×${session.combo}` : "", START_X + LANE_W * LANE_COUNT - 4, 18);
+    ctx.textAlign = "left";
+
+    // Miss edge flash + outer border
+    if (session.missFlash > 0) {
+      ctx.strokeStyle = "#f45b69";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(2, 2, CW - 4, CH - 4);
+    } else {
+      ctx.strokeStyle = session.rarityColor;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, CW - 2, CH - 2);
     }
   }
 
@@ -617,172 +925,194 @@
     if (!session.lastTs) session.lastTs = ts;
     const dt = Math.min(0.05, Math.max(0.001, (ts - session.lastTs) / 1000));
     session.lastTs = ts;
-    stepChallenge(dt);
+    stepSession(dt);
     if (!session || session.finished) return;
     renderChallengeCanvas();
     session.rafId = requestAnimationFrame(loop);
   }
 
-  function updateHudAndControls() {
-    if (!session || !session.rootEl) return;
-    const cfg = currentPhaseCfg();
-    const isVi = session.lang !== "en";
-    const totalPh = session.profile.phases.length;
-    const p = session.profile;
-
-    const phaseLabel = isVi
-      ? (totalPh > 1 ? `Hiệp ${session.phaseIdx + 1}/${totalPh}` : "Thử Thách")
-      : (totalPh > 1 ? `Phase ${session.phaseIdx + 1}/${totalPh}` : "Challenge");
-
-    const cueMap = {
-      strike: isVi ? "Canh kim chạm vùng xanh rồi bấm ĐÁNH BẬT!" : "Tap STRIKE inside the green sweet spot!",
-      double_strike: isVi ? "Đánh trúng 2 lần liên tiếp — mục tiêu sẽ thu nhỏ!" : "Hit 2 moving targets in a row!",
-      ring: isVi ? "Chạm đúng lúc vòng thu nhỏ khớp khung vàng!" : "Tap when the shrinking ring enters the gold box!",
-      rhythm: isVi ? "Chạm 3 làn (hoặc phím A / W / D) để đỡ sóng tấn công!" : "Parry 3 lanes (tap buttons or press A / W / D)!",
-      track: cfg.lunge
-        ? (isVi ? "Nhấn giữ nút KÉO DÂY để giữ cá khi cá lao bất ngờ!" : "Hold REEL UP to track lunging fish!")
-        : (isVi ? "Nhấn giữ nút KÉO DÂY để giữ cá trong thanh xanh!" : "Hold REEL UP to keep fish in green bar!")
-    };
-
-    let controlsHtml = "";
-    if (cfg.type === "rhythm") {
-      controlsHtml = `
-        <div class="mg-lanes-pads">
-          <button type="button" class="btn btn-primary mg-lane-btn" id="mg-lane-0">${pxIconSafe("target", 16)} TRÁI (A)</button>
-          <button type="button" class="btn btn-emerald mg-lane-btn" id="mg-lane-1">${pxIconSafe("bolt", 16)} GIỮA (W)</button>
-          <button type="button" class="btn btn-gold mg-lane-btn" id="mg-lane-2">${pxIconSafe("sword", 16)} PHẢI (D)</button>
-        </div>`;
-    } else if (cfg.type === "track") {
-      controlsHtml = `
-        <button type="button" class="btn btn-emerald mg-pad" id="mg-hold-pad">
-          ${pxIconSafe("rod", 18)} ${isVi ? "GIỮ ĐỂ KÉO LÊN (SPACE / CHẠM GIỮ)" : "HOLD TO REEL UP (SPACE / TOUCH)"}
-        </button>`;
-    } else {
-      controlsHtml = `
-        <button type="button" class="btn btn-gold mg-pad" id="mg-strike-pad">
-          ${pxIconSafe("bolt", 18)} ${isVi ? "ĐÁNH BẬT NGAY! (SPACE / CHẠM)" : "STRIKE NOW! (SPACE / TAP)"}
-        </button>`;
-    }
-
-    session.rootEl.innerHTML = `
-      <div class="mg-shell" style="border-color:${session.rarityColor};">
-        <div class="row-between" style="flex-wrap:wrap;gap:6px;">
-          <div class="inline-ico">
-            <span class="rarity-pill" style="color:${session.rarityColor};">${p.labelEn}</span>
-            <span class="tab-badge" style="color:var(--px-gold);">${starStr(p.stars)}</span>
-          </div>
-          <span class="tab-badge">${phaseLabel}</span>
-        </div>
-        <div class="muted" style="font-size:11.5px;margin-top:4px;">${cueMap[cfg.type]}</div>
-        <div class="mg-canvas-box">
-          <canvas id="mg-canvas" width="${CW}" height="${CH}"></canvas>
-        </div>
-        ${controlsHtml}
-      </div>`;
-
-    session.canvas = document.getElementById("mg-canvas");
-    session.ctx = session.canvas ? session.canvas.getContext("2d") : null;
-
-    if (cfg.type === "rhythm") {
-      [0, 1, 2].forEach(l => {
-        const b = document.getElementById(`mg-lane-${l}`);
-        if (b) {
-          b.addEventListener("pointerdown", (ev) => {
-            ev.preventDefault();
-            handleRhythmLane(l);
-          });
-        }
-      });
-    } else if (cfg.type === "track") {
-      const holdPad = document.getElementById("mg-hold-pad");
-      const setHold = (v) => { if (session && session.phase) session.phase.holding = v; };
-      if (holdPad) {
-        holdPad.addEventListener("pointerdown", (ev) => { ev.preventDefault(); setHold(true); });
-        holdPad.addEventListener("pointerup", () => setHold(false));
-        holdPad.addEventListener("pointercancel", () => setHold(false));
-        holdPad.addEventListener("pointerleave", () => setHold(false));
-      }
-      if (session.canvas) {
-        session.canvas.addEventListener("pointerdown", (ev) => { ev.preventDefault(); setHold(true); });
-        session.canvas.addEventListener("pointerup", () => setHold(false));
-        session.canvas.addEventListener("pointercancel", () => setHold(false));
-      }
-    } else {
-      const sp = document.getElementById("mg-strike-pad");
-      if (sp) sp.addEventListener("pointerdown", (ev) => { ev.preventDefault(); handleStrikeInput(); });
-      if (session.canvas) session.canvas.addEventListener("pointerdown", (ev) => { ev.preventDefault(); handleStrikeInput(); });
-    }
-    renderChallengeCanvas();
+  function keyToLane(ev) {
+    if (ev.code === "KeyD" || ev.code === "ArrowLeft") return 0;
+    if (ev.code === "KeyF" || ev.code === "ArrowDown") return 1;
+    if (ev.code === "KeyJ" || ev.code === "ArrowUp") return 2;
+    if (ev.code === "KeyK" || ev.code === "ArrowRight") return 3;
+    return -1;
   }
 
   function onKeyDown(ev) {
     if (!session || session.finished) return;
-    const cfg = currentPhaseCfg();
-    if (cfg.type === "rhythm") {
-      if (ev.code === "KeyA" || ev.code === "ArrowLeft") { ev.preventDefault(); handleRhythmLane(0); }
-      else if (ev.code === "KeyW" || ev.code === "ArrowUp" || ev.code === "Space") { ev.preventDefault(); handleRhythmLane(1); }
-      else if (ev.code === "KeyD" || ev.code === "ArrowRight") { ev.preventDefault(); handleRhythmLane(2); }
-      return;
-    }
-    if (ev.code === "Space" || ev.code === "ArrowUp" || ev.code === "KeyW") {
-      ev.preventDefault();
-      if (cfg.type === "track") {
-        session.keyHold = true;
-      } else if (!ev.repeat) {
-        handleStrikeInput();
-      }
-    }
+    const lane = keyToLane(ev);
+    if (lane === -1) return;
+    ev.preventDefault();
+    if (ev.repeat) return;
+    session.laneKeyDown[lane] = true;
+    updateDomKeyVisual(lane);
+    triggerLaneHit(lane);
   }
 
   function onKeyUp(ev) {
     if (!session) return;
-    if (ev.code === "Space" || ev.code === "ArrowUp" || ev.code === "KeyW") {
-      session.keyHold = false;
-    }
+    const lane = keyToLane(ev);
+    if (lane === -1) return;
+    session.laneKeyDown[lane] = false;
+    updateDomKeyVisual(lane);
+    releaseLaneHoldCheck(lane);
+  }
+
+  function onWindowPointerUp(ev) {
+    if (!session) return;
+    const lane = session.pointerToLane.get(ev.pointerId);
+    if (lane === undefined) return;
+    session.pointerToLane.delete(ev.pointerId);
+    session.lanePointers[lane].delete(ev.pointerId);
+    updateDomKeyVisual(lane);
+    releaseLaneHoldCheck(lane);
+  }
+
+  function bindPointerDown(el, laneResolver) {
+    if (!el) return;
+    el.addEventListener("pointerdown", (ev) => {
+      if (!session || session.finished) return;
+      ev.preventDefault();
+      const lane = laneResolver(ev);
+      if (lane < 0 || lane >= LANE_COUNT) return;
+      session.pointerToLane.set(ev.pointerId, lane);
+      session.lanePointers[lane].add(ev.pointerId);
+      updateDomKeyVisual(lane);
+      triggerLaneHit(lane);
+    });
+  }
+
+  function renderHudAndMount() {
+    if (!session || !session.rootEl) return;
+    const diff = session.diff;
+    const isVi = session.lang !== "en";
+    const songTitle = isVi ? diff.songVi : diff.songEn;
+    const badgesHtml = diff.badges.map(b => `<span class="tab-badge" style="color:var(--px-gold);">${b}</span>`).join("");
+
+    const keysHtml = [0, 1, 2, 3].map(l => `
+      <button type="button" class="mg-piano-key lane-${l}" id="mg-pkey-${l}" aria-label="${NOTE_NAMES[l]} (${KEY_LABELS[l]})">
+        <span style="font-size:11px;font-weight:700;color:${LANE_COLORS[l]};">${NOTE_NAMES[l]}</span>
+        <span class="px-num" style="font-size:18px;color:#f1f5f9;">${KEY_LABELS[l]}</span>
+      </button>`).join("");
+
+    session.rootEl.innerHTML = `
+      <div class="mg-shell" style="border-color:${session.rarityColor};">
+        <div class="row-between" style="flex-wrap:wrap;gap:6px;">
+          <div class="inline-ico" style="flex-wrap:wrap;gap:5px;">
+            <span class="rarity-pill" style="color:${session.rarityColor};">${diff.labelEn}</span>
+            <span class="tab-badge" style="color:var(--px-gold);">${starStr(diff.stars)}</span>
+            <strong style="font-size:12.5px;color:#f1f5f9;">${songTitle}</strong>
+            ${badgesHtml}
+          </div>
+          <span class="tab-badge" style="color:var(--px-cyan);">${diff.bpm} BPM</span>
+        </div>
+        <div class="mg-hud-strip">
+          <span id="mg-hud-hp" style="font-weight:700;color:#6fdbbf;">${isVi ? `Mạng: ${diff.maxMiss + 1}/${diff.maxMiss + 1}` : `Lives: ${diff.maxMiss + 1}/${diff.maxMiss + 1}`}</span>
+          <span id="mg-hud-combo" style="font-weight:700;color:#7ec8d9;">COMBO ×0</span>
+          <span id="mg-hud-prog" style="font-weight:700;color:var(--px-gold);">0/${session.notes.length}</span>
+        </div>
+        <div class="muted" style="font-size:11px;margin-top:5px;">
+          ${isVi
+            ? "Chạm 4 phím đàn hoặc bấm D - F - J - K đúng lúc nốt rơi chạm vạch vàng (giữ nốt dài!)."
+            : "Tap 4 piano keys or press D - F - J - K on the gold line (hold long notes!)."}
+        </div>
+        <div class="mg-canvas-box">
+          <canvas id="mg-canvas" width="${CW}" height="${CH}"></canvas>
+        </div>
+        <div class="mg-piano-deck">${keysHtml}</div>
+      </div>`;
+
+    session.canvas = document.getElementById("mg-canvas");
+    session.ctx = session.canvas ? session.canvas.getContext("2d") : null;
+    session.hudHpEl = document.getElementById("mg-hud-hp");
+    session.hudComboEl = document.getElementById("mg-hud-combo");
+    session.hudProgEl = document.getElementById("mg-hud-prog");
+    session.keyEls = [0, 1, 2, 3].map(l => document.getElementById(`mg-pkey-${l}`));
+
+    session.keyEls.forEach((el, l) => bindPointerDown(el, () => l));
+    bindPointerDown(session.canvas, (ev) => {
+      const rect = session.canvas.getBoundingClientRect();
+      const relX = (ev.clientX - rect.left) / Math.max(1, rect.width);
+      const cx = relX * CW;
+      const l = Math.floor((cx - START_X) / LANE_W);
+      return Math.max(0, Math.min(LANE_COUNT - 1, l));
+    });
+
+    renderChallengeCanvas();
   }
 
   function stopSession() {
     if (!session) return;
     if (session.rafId) cancelAnimationFrame(session.rafId);
+    PianoAudio.stopAllHolds();
     window.removeEventListener("keydown", onKeyDown);
     window.removeEventListener("keyup", onKeyUp);
+    window.removeEventListener("pointerup", onWindowPointerUp);
+    window.removeEventListener("pointercancel", onWindowPointerUp);
     session = null;
   }
 
   window.HaruMiniGame = {
     RARITY_PROFILES,
     getProfile,
+    computeDifficulty,
     isActive() { return Boolean(session && !session.finished); },
     stop() { stopSession(); },
     start(rootEl, opts) {
       stopSession();
       if (!rootEl) return;
       const preview = (opts && opts.catchPreview) || {};
-      const rarityId = String(preview.rarity_id || "common").toLowerCase();
-      const profile = getProfile(rarityId);
+      const lang = (opts && opts.lang) || "vi";
+      const diff = computeDifficulty(preview, lang);
+      const chart = generateChart(diff);
 
       session = {
         rootEl,
-        lang: (opts && opts.lang) || "vi",
-        rarityId,
+        lang,
+        rarityId: diff.rarityId,
         rarityColor: preview.rarity_color || "#6fdbbf",
-        profile,
-        phaseIdx: 0,
-        phase: makePhaseState(profile.phases[0]),
-        phaseBanner: profile.phases.length > 1 ? 0.9 : 0,
+        diff,
+        notes: chart.notes,
+        elapsed: 0,
         score: 0,
+        combo: 0,
+        maxCombo: 0,
+        perfects: 0,
+        greats: 0,
+        goods: 0,
+        misses: 0,
+        clearedNotes: 0,
+        missFlash: 0,
+        judgeText: "",
+        judgeColor: "#ffffff",
+        judgeTimer: 0,
+        particles: [],
+        laneFlash: [0, 0, 0, 0],
+        laneGood: [0, 0, 0, 0],
+        laneKeyDown: [false, false, false, false],
+        lanePointers: [new Set(), new Set(), new Set(), new Set()],
+        pointerToLane: new Map(),
+        activeHoldByLane: [null, null, null, null],
+        ghostTaps: [0, 0, 0, 0],
+        lastHud: { hp: "", combo: -1, prog: "" },
         finished: false,
-        keyHold: false,
         lastTs: 0,
         rafId: 0,
         canvas: null,
         ctx: null,
+        keyEls: null,
+        hudHpEl: null,
+        hudComboEl: null,
+        hudProgEl: null,
         onDone: (opts && opts.onComplete) || (() => {})
       };
 
-      updateHudAndControls();
+      renderHudAndMount();
       window.addEventListener("keydown", onKeyDown);
       window.addEventListener("keyup", onKeyUp);
+      window.addEventListener("pointerup", onWindowPointerUp);
+      window.addEventListener("pointercancel", onWindowPointerUp);
       session.rafId = requestAnimationFrame(loop);
     }
   };

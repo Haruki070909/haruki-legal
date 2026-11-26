@@ -588,6 +588,7 @@
       box-shadow: 5px 5px 0 var(--px-shadow);
       padding: 12px;
       text-align: left;
+      scroll-margin-bottom: 84px;
     }
     .mg-canvas-box {
       margin: 10px 0;
@@ -599,32 +600,56 @@
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 300 / 156;
+      aspect-ratio: 320 / 248;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
     }
-    .mg-pad {
-      width: 100%;
-      padding: 13px 12px;
-      font-size: 13px;
-      touch-action: none;
-      user-select: none;
-      -webkit-user-select: none;
+    .mg-hud-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 5px 8px;
+      background: #060e1a;
+      border: 1.5px solid var(--px-border);
+      font-size: 11px;
     }
-    .mg-lanes-pads {
+    .mg-piano-deck {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 8px;
     }
-    .mg-lane-btn {
-      padding: 12px 4px;
-      font-size: 12px;
+    .mg-piano-key {
+      position: relative;
+      min-height: 68px;
+      border: 2px solid var(--px-border);
+      background: linear-gradient(180deg, #172b42 0%, #0d1a2c 100%);
+      box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.16), 0 4px 0 #040811;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 4px 7px;
+      cursor: pointer;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.04s, box-shadow 0.04s, background 0.06s;
+    }
+    .mg-piano-key.lane-0 { border-color: #38bdf8; color: #38bdf8; }
+    .mg-piano-key.lane-1 { border-color: #6fdbbf; color: #6fdbbf; }
+    .mg-piano-key.lane-2 { border-color: #ecc570; color: #ecc570; }
+    .mg-piano-key.lane-3 { border-color: #e879f9; color: #e879f9; }
+    .mg-piano-key.pressed {
+      transform: translateY(3px);
+      background: linear-gradient(180deg, #21466b 0%, #132841 100%);
+      box-shadow: inset 0 2px 12px currentColor, 0 1px 0 #040811;
     }
 
     .island-banner {
@@ -1327,6 +1352,7 @@
       .tension-moves { grid-template-columns: 1fr; }
       .cast-btn-main { width: 100%; min-width: 0; font-size: 24px; }
       .cast-btn-main .cast-key-hint { display: none; }
+      .mg-piano-key { min-height: 60px; padding: 6px 4px; }
       #toast-wrap { bottom: calc(82px + env(safe-area-inset-bottom, 0px)); left: 10px; right: 10px; max-width: none; }
 
       #px-mobile-hotbar.visible {
@@ -1417,7 +1443,7 @@
 
   <script src="./fishing-pixel-icons.js?v=2"></script>
   <script src="./fishing-stage-engine.js?v=2"></script>
-  <script src="./fishing-minigame.js?v=1"></script>
+  <script src="./fishing-minigame.js?v=2"></script>
   <script>
     const CLIENT_ID = "1573727590538289283";
     const REDIRECT_URI = "https://haruki070909.github.io/haruki-legal/dashboard.html";
@@ -2445,18 +2471,18 @@
     }
 
     const CHALLENGE_LADDER = [
-      { id: "common", name: "Common", color: "#94a3b8", fish: "Cá Mú Đá", weight: 2.8, value: 48, archVi: "Canh nhịp 1 lần" },
-      { id: "uncommon", name: "Uncommon", color: "#22c55e", fish: "Cá Chim Bạc", weight: 6.4, value: 165, archVi: "Canh nhịp kép 2 pha" },
-      { id: "rare", name: "Rare", color: "#38bdf8", fish: "Cá Sấu Hỏa Tiễn", weight: 42.5, value: 6800, archVi: "Thanh kéo Stardew" },
-      { id: "epic", name: "Epic", color: "#a855f7", fish: "Cá Koi Dung Nham", weight: 412.5, value: 32500, archVi: "Thanh kéo cá lao mạnh" },
-      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "Radar Ring + Kéo" },
-      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "Đỡ sóng 3 làn + Kéo" },
-      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "3 Làn tốc độ cao" },
-      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "Chuỗi 3 hiệp Liên Hoàn" },
-      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "3 hiệp Vĩnh Hằng" },
-      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "3 hiệp Vô Cực" },
-      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "3 hiệp Khởi Nguyên" },
-      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "3 hiệp Omega Cực Hạn" }
+      { id: "common", name: "Common", color: "#94a3b8", fish: "Cá Mú Đá", weight: 2.8, value: 48, archVi: "96 BPM · 7 nốt đơn" },
+      { id: "uncommon", name: "Uncommon", color: "#22c55e", fish: "Cá Chim Bạc", weight: 6.4, value: 165, archVi: "108 BPM · 10 nốt · Có nốt giữ" },
+      { id: "rare", name: "Rare", color: "#38bdf8", fish: "Cá Sấu Hỏa Tiễn", weight: 42.5, value: 6800, archVi: "122 BPM · 14 nốt · Hợp âm đôi nhẹ" },
+      { id: "epic", name: "Epic", color: "#a855f7", fish: "Cá Koi Dung Nham", weight: 412.5, value: 32500, archVi: "136 BPM · 18 nốt · Hợp âm & giữ dài" },
+      { id: "legendary", name: "Legendary", color: "#ecc570", fish: "Rồng Biển Vàng", weight: 980.0, value: 96000, archVi: "150 BPM · 22 nốt · Giao hưởng nhanh" },
+      { id: "mythic", name: "Mythic", color: "#f472b6", fish: "Cá Voi Tinh Hư", weight: 1850.5, value: 245000, archVi: "164 BPM · 26 nốt · Chặn bấm bừa" },
+      { id: "ancient", name: "Ancient", color: "#fb923c", fish: "Thủy Tổ Đầm Cổ", weight: 2640.0, value: 390000, archVi: "176 BPM · 30 nốt · Hợp âm dồn dập" },
+      { id: "transcendent", name: "Transcendent", color: "#6fdbbf", fish: "Phượng Hoàng Biển", weight: 4100.0, value: 520000, archVi: "188 BPM · 34 nốt · Tối đa 2 trượt" },
+      { id: "eternity", name: "Eternity", color: "#818cf8", fish: "Hải Thần Vĩnh Cửu", weight: 5900.0, value: 640000, archVi: "200 BPM · 38 nốt · Độc tấu siêu tốc" },
+      { id: "infinity", name: "Infinity", color: "#c084fc", fish: "Cá Hắc Tinh Vô Cực", weight: 7400.0, value: 730000, archVi: "212 BPM · 42 nốt · Hợp âm đôi 48%" },
+      { id: "genesis", name: "Genesis", color: "#fde047", fish: "Cự Long Khởi Nguyên", weight: 8800.0, value: 810000, archVi: "224 BPM · 46 nốt · Khúc Boss Cổ" },
+      { id: "omega", name: "Omega", color: "#38bdf8", fish: "Thủy Quái Ngân Hà Omega", weight: 9820.5, value: 850000, archVi: "238 BPM · 52 nốt · Hợp âm đôi & giữ dài" }
     ];
 
     function startPracticeChallenge(rarityId) {
@@ -2556,10 +2582,10 @@
         </div>`).join("");
       openModal(`
         <div class="row-between" style="margin-bottom:8px;">
-          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-cyan);">${pxIcon("target", 18)} TẬP THỬ THÁCH 12 ĐỘ HIẾM</h3>
+          <h3 class="px-num inline-ico" style="margin:0;font-size:24px;color:var(--px-cyan);">${pxIcon("target", 18)} TẬP ĐÁNH ĐÀN 12 ĐỘ HIẾM</h3>
           <button class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
         </div>
-        <p class="muted" style="font-size:12px;margin-top:0;">Luyện tay mọi cấp độ từ Common đến Omega ngay trên sân khấu biển (không mất cá hay cooldown thật).</p>
+        <p class="muted" style="font-size:12px;margin-top:0;line-height:1.45;">Đàn 4 phím pixel (chạm trực tiếp 4 phím đàn hoặc bấm D - F - J - K). Cá độ hiếm càng cao, giá trị lớn hoặc có Mutation sẽ tăng tốc độ BPM, nốt đôi và nốt giữ dài!</p>
         <div class="stack" style="max-height:58vh;overflow-y:auto;">${rows}</div>`);
     }
 
@@ -2648,11 +2674,11 @@
           if (window.HaruOceanStage) {
             HaruOceanStage.triggerCatchBurst(pv.rarity_id, rk, pv.rarity_color, 0, false, "LUYỆN XONG!");
           }
-          toast(`Luyện ${pv.rarity_name || ""} thành công!`, "ok", "trophy");
+          toast(`Luyện ${pv.rarity_name || ""} thành công! Hạng ${result.grade || "S"} · Combo ×${result.maxCombo || 0} (${result.accuracy || 100}%)`, "ok", "trophy");
         } else {
           SFX.snap();
           if (window.HaruOceanStage) HaruOceanStage.triggerEscape("TRƯỢT TẬP!");
-          toast(`Thất bại ở chế độ luyện tập (${pv.rarity_name || ""}).`, "err", "puff");
+          toast(`Thất bại ở chế độ luyện đàn (${pv.rarity_name || ""} · Hạng F).`, "err", "puff");
         }
         return;
       }
@@ -3388,8 +3414,12 @@
             APP._scrolledChallengeId = APP.activeChallenge.pending_id;
             if (window.innerWidth < 768) {
               requestAnimationFrame(() => {
-                const stg = document.querySelector(".waters-stage");
-                if (stg) stg.scrollIntoView({ behavior: "smooth", block: "start" });
+                const stg = document.querySelector(".mg-shell") || document.querySelector(".waters-stage");
+                if (stg) {
+                  const r = stg.getBoundingClientRect();
+                  const targetY = Math.max(0, window.scrollY + r.bottom - window.innerHeight + 76);
+                  window.scrollTo({ top: targetY, behavior: "smooth" });
+                }
               });
             }
           }
@@ -3560,7 +3590,7 @@
               <button type="button" class="dock-btn" onclick="openBaitQuickModal()">${pxIcon("bait", 14)} ${eq.bait ? esc(eq.bait.name) + " ×" + eq.bait.quantity : "Chọn Mồi"}</button>
               <button type="button" class="dock-btn${APP.idleMode ? " idle-on" : ""}" onclick="toggleIdleFishing()">${pxIcon("bolt", 14)} ${APP.idleMode ? "Idle: ĐANG CHẠY" : "Idle Tự Động"}</button>
               <button type="button" class="dock-btn${afk.active ? (afk.completed ? " afk-ready" : " afk-active") : ""}" onclick="openAfkModal()">${pxIcon(afk.boost_tier === "pro" ? "afk_boost_pro" : "afk_boost", 15)} ${afk.active ? `<span id="afk-dock-clock">${afk.completed ? "NHẬN AFK!" : formatDurationHMS(afkRemNow)}</span>` : "Treo AFK 8H"}</button>
-              <button type="button" class="dock-btn" onclick="openChallengeGuideModal()">${pxIcon("target", 14)} Tập Thử Thách</button>
+              <button type="button" class="dock-btn" onclick="openChallengeGuideModal()">${pxIcon("target", 14)} Tập Đánh Đàn</button>
               <button type="button" class="dock-btn gold" onclick="doSellAll()">${pxIcon("moneybag", 14)} Bán (${fmt(st.stats.kept_catches)})</button>
             </div>
           </div>
@@ -4176,7 +4206,7 @@
         if (modalClock) modalClock.textContent = afkRem > 0 ? formatDurationHMS(afkRem) : "HOÀN TẤT 8/8 GIỜ!";
         const modalBar = document.getElementById("afk-modal-bar");
         if (modalBar) modalBar.style.width = `${Math.min(100, Math.round((elapsedNow / dur) * 100))}%`;
-        if (afkRem === 0 && !APP.state.afk.completed) {
+        if (afkRem === 0 && !APP.state.afk.completed && !APP.activeChallenge) {
           APP.state.afk.completed = true;
           APP.state.afk.can_claim = true;
           render();
