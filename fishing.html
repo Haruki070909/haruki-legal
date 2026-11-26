@@ -38,6 +38,22 @@
     }
 
     * { box-sizing: border-box; }
+    button, input, select, textarea {
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 0;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] { -moz-appearance: textfield; }
+    button:focus-visible, input:focus-visible {
+      outline: 2px solid var(--px-gold);
+      outline-offset: 1px;
+    }
     html, body {
       margin: 0;
       padding: 0;
@@ -118,7 +134,7 @@
       padding: 5px 10px;
       background: var(--px-panel);
       border: 2px solid var(--px-border);
-      box-shadow: 2px 2px 0 var(--px-shadow);
+      box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.14), inset -1px -1px 0 rgba(0, 0, 0, 0.35), 2px 2px 0 var(--px-shadow);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -216,7 +232,7 @@
       object-fit: cover;
     }
 
-    /* Pixel Buttons */
+    /* Pixel Beveled Arcade Buttons */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -227,9 +243,9 @@
       font-size: 12.5px;
       font-weight: 700;
       border: 2px solid var(--px-border);
-      box-shadow: 3px 3px 0 var(--px-shadow);
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.15), inset -2px -2px 0 rgba(0, 0, 0, 0.36), 3px 3px 0 var(--px-shadow);
       cursor: pointer;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.12s ease;
+      transition: transform 0.06s steps(2), box-shadow 0.06s steps(2), border-color 0.12s ease;
       text-decoration: none;
       color: var(--px-text);
       background: var(--px-card);
@@ -239,7 +255,7 @@
     .btn:hover:not(:disabled) { border-color: var(--px-mint); color: #fff; }
     .btn:active:not(:disabled) {
       transform: translate(2px, 2px);
-      box-shadow: 1px 1px 0 var(--px-shadow);
+      box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.36), 1px 1px 0 var(--px-shadow);
     }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: none; }
     .btn-primary {
@@ -248,18 +264,19 @@
       color: #fff;
     }
     .btn-gold {
-      background: #b58326;
-      border-color: var(--px-gold);
+      background: #c89128;
+      border-color: #ffe28a;
       color: #091320;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
     }
-    .btn-gold:hover:not(:disabled) { color: #091320; border-color: #ffe8a3; }
+    .btn-gold:hover:not(:disabled) { color: #091320; border-color: #fff4b8; background: #dba12f; }
     .btn-emerald {
       background: #176b5b;
       border-color: var(--px-mint);
       color: #e6fff9;
     }
     .btn-danger {
-      background: #611d2a;
+      background: #732030;
       border-color: var(--px-coral);
       color: #ffd4d8;
     }
@@ -268,7 +285,11 @@
       border-color: var(--px-border);
       color: var(--px-text-2);
     }
-    .btn-sm { padding: 5px 10px; font-size: 11.5px; box-shadow: 2px 2px 0 var(--px-shadow); }
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 11.5px;
+      box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.14), inset -1px -1px 0 rgba(0, 0, 0, 0.34), 2px 2px 0 var(--px-shadow);
+    }
 
     /* Shell */
     .shell {
@@ -387,7 +408,7 @@
       padding: 8px 13px;
       background: var(--px-panel);
       border: 2px solid var(--px-border);
-      box-shadow: 3px 3px 0 var(--px-shadow);
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.1), inset -2px -2px 0 rgba(0, 0, 0, 0.35), 3px 3px 0 var(--px-shadow);
       color: var(--px-text-2);
       font-family: var(--font-ui);
       font-size: 12.5px;
@@ -401,7 +422,7 @@
       border-color: var(--px-mint);
       color: var(--px-mint);
       transform: translate(1px, 1px);
-      box-shadow: 2px 2px 0 var(--px-shadow);
+      box-shadow: inset 2px 2px 0 rgba(111, 219, 191, 0.22), 2px 2px 0 var(--px-shadow);
     }
     .tab-badge {
       padding: 1px 6px;
@@ -640,7 +661,7 @@
       background: #1a6b8a;
       color: #fff;
       border: 3px solid var(--px-mint);
-      box-shadow: 5px 5px 0 var(--px-shadow);
+      box-shadow: inset 3px 3px 0 rgba(184, 242, 255, 0.26), inset -3px -3px 0 rgba(4, 8, 17, 0.45), 5px 5px 0 var(--px-shadow);
       cursor: pointer;
       transition: transform 0.08s steps(2), box-shadow 0.08s steps(2);
       text-shadow: 2px 2px 0 var(--px-shadow);
@@ -693,10 +714,10 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 8px 10px;
+      padding: 9px 10px;
       background: var(--px-panel);
       border: 2px solid var(--px-border);
-      box-shadow: 2px 2px 0 var(--px-shadow);
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.1), inset -2px -2px 0 rgba(0, 0, 0, 0.36), 2px 2px 0 var(--px-shadow);
       color: var(--px-text);
       font-family: var(--font-ui);
       font-size: 12px;
@@ -913,6 +934,7 @@
     .input, .select {
       background: #08121f;
       border: 2px solid var(--px-border);
+      box-shadow: inset 2px 2px 0 rgba(4, 8, 17, 0.65);
       color: var(--px-text);
       padding: 7px 10px;
       font-family: var(--font-ui);
@@ -922,6 +944,181 @@
       border-radius: 0;
     }
     .input:focus, .select:focus { border-color: var(--px-mint); }
+
+    /* Custom 16-Bit Pixel Pickers, Steppers, Search & Confirm Dialog */
+    .px-picker-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      background: #081422;
+      border: 2px solid var(--px-border);
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.08), inset -2px -2px 0 rgba(0, 0, 0, 0.45), 2px 2px 0 var(--px-shadow);
+      color: var(--px-text);
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      min-width: 0;
+    }
+    .px-picker-btn:hover { border-color: var(--px-mint); color: #fff; }
+    .px-picker-btn:active { transform: translate(1px, 1px); box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.45), 1px 1px 0 var(--px-shadow); }
+    .px-picker-btn.compact {
+      width: auto;
+      max-width: 100%;
+      padding: 4px 8px;
+      font-size: 11.5px;
+      gap: 6px;
+    }
+    .px-picker-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .px-picker-chev {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--px-cyan);
+    }
+
+    .px-option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      max-height: 58vh;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .px-option-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 11px;
+      background: var(--px-card);
+      border: 2px solid var(--px-border);
+      box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.08), 2px 2px 0 var(--px-shadow);
+      color: var(--px-text);
+      font-family: var(--font-ui);
+      text-align: left;
+      cursor: pointer;
+    }
+    .px-option-row:hover { border-color: var(--px-cyan); background: var(--px-card-hi); }
+    .px-option-row.selected {
+      border-color: var(--px-mint);
+      background: #123346;
+      box-shadow: inset 2px 2px 0 rgba(111, 219, 191, 0.2), 2px 2px 0 var(--px-shadow);
+    }
+
+    .px-search-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+      background: #08121f;
+      border: 2px solid var(--px-border);
+      box-shadow: inset 2px 2px 0 rgba(4, 8, 17, 0.65);
+    }
+    .px-search-box:focus-within { border-color: var(--px-mint); }
+    .px-search-box input {
+      background: transparent;
+      border: none;
+      color: var(--px-text);
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 6px 2px;
+      outline: none;
+      width: 120px;
+      min-width: 0;
+    }
+    .px-search-clear {
+      background: transparent;
+      border: none;
+      color: var(--px-muted);
+      cursor: pointer;
+      padding: 2px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .px-search-clear:hover { color: var(--px-coral); }
+
+    .px-stepper {
+      display: inline-flex;
+      align-items: stretch;
+      background: #08121f;
+      border: 2px solid var(--px-border);
+      box-shadow: 2px 2px 0 var(--px-shadow);
+    }
+    .px-step-btn {
+      background: var(--px-card);
+      border: none;
+      border-right: 1px solid var(--px-border);
+      color: var(--px-cyan);
+      font-family: var(--font-px);
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    .px-step-btn.right { border-right: none; border-left: 1px solid var(--px-border); }
+    .px-step-btn:hover { background: #1a3b57; color: var(--px-mint); }
+    .px-step-btn:active { background: #0f2538; }
+    .px-step-val {
+      width: 44px;
+      background: transparent;
+      border: none;
+      color: var(--px-text);
+      font-family: var(--font-px);
+      font-size: 17px;
+      text-align: center;
+      padding: 2px 3px;
+      outline: none;
+    }
+
+    #confirm-modal-root { z-index: 980; }
+    .px-confirm-card {
+      width: 100%;
+      max-width: 400px;
+      background: #0c192b;
+      border: 3px solid var(--px-gold);
+      box-shadow: inset 0 0 0 2px #1a3552, 6px 6px 0 var(--px-shadow);
+      padding: 18px;
+      position: relative;
+    }
+    .px-confirm-card.danger { border-color: var(--px-coral); }
+    .px-confirm-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .px-confirm-ico {
+      width: 38px;
+      height: 38px;
+      background: #14273d;
+      border: 2px solid var(--px-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .px-confirm-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
 
     /* Auth & Install Hero */
     .auth-gate {
@@ -1158,6 +1355,7 @@
   <div id="modal-root" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
     <div class="modal-card" id="modal-body"></div>
   </div>
+  <div id="confirm-modal-root" class="modal-backdrop"></div>
   <div id="toast-wrap"></div>
 
   <script src="./fishing-pixel-icons.js?v=1"></script>
@@ -1395,6 +1593,9 @@
       bagRarityFilter: "all",
       shopFilter: "all",
       selectedGearItemId: "",
+      selectedPhoiItemId: "",
+      selectedAquaCatchId: "",
+      shopQty: {},
       activeChallenge: null,
       _scrolledChallengeId: null,
       lastCastResult: null,
@@ -2156,7 +2357,17 @@
     }
 
     async function doSellAll() {
-      if (!confirm(APP.lang === "en" ? "Sell all unlocked fish outside Aquarium?" : "Bán toàn bộ cá không khóa ngoài Thủy Cung?")) return;
+      const ok = await pxConfirm({
+        title: APP.lang === "en" ? "SELL ALL FISH?" : "BÁN TOÀN BỘ CÁ?",
+        message: APP.lang === "en"
+          ? "Sell all unlocked fish outside your Aquarium for RuCoin?"
+          : "Bán toàn bộ cá không khóa ngoài Thủy Cung để nhận RuCoin?",
+        icon: "moneybag",
+        confirmText: APP.lang === "en" ? "Sell All" : "Bán ngay",
+        cancelText: APP.lang === "en" ? "Cancel" : "Hủy",
+        tone: "gold"
+      });
+      if (!ok) return;
       const res = await fishRpc("sell_all", {});
       if (!res.ok) { toast(res.error || "Không có cá để bán", "err"); return; }
       SFX.coin();
@@ -2207,9 +2418,24 @@
       render();
     }
 
+    function setShopQty(itemId, rawVal) {
+      const n = Math.max(1, Math.min(10000, parseInt(String(rawVal || "1").replace(/[^0-9]/g, ""), 10) || 1));
+      APP.shopQty[itemId] = n;
+      const inp = document.getElementById("qty-" + itemId);
+      if (inp && inp.value !== String(n)) inp.value = String(n);
+      return n;
+    }
+
+    function stepShopQty(itemId, delta) {
+      SFX.tick();
+      const cur = Number(APP.shopQty[itemId] || 1);
+      setShopQty(itemId, cur + delta);
+    }
+
     async function doBuyItem(itemId) {
       const inp = document.getElementById("qty-" + itemId);
-      const qty = Math.max(1, parseInt((inp && inp.value) || "1", 10) || 1);
+      const raw = APP.shopQty[itemId] || (inp && inp.value) || 1;
+      const qty = Math.max(1, Math.min(10000, parseInt(raw, 10) || 1));
       const res = await fishRpc("buy_item", { item_id: itemId, quantity: qty });
       if (!res.ok) { toast(res.error || "Mua thất bại", "err"); return; }
       SFX.coin();
@@ -2252,8 +2478,7 @@
     }
 
     async function doForgeGear(mainId) {
-      const phoiSel = document.getElementById("phoi-select");
-      const phoiId = phoiSel ? phoiSel.value : mainId;
+      const phoiId = APP.selectedPhoiItemId || mainId;
       const res = await fishRpc("forge_gear", { main_id: mainId, phoi_id: phoiId });
       if (!res.ok) { toast(res.error || "Ghép thất bại", "err"); return; }
       res.outcome === "success" ? SFX.forge() : SFX.miss();
@@ -2274,7 +2499,17 @@
     }
 
     async function doUnlockSkip(rarityId) {
-      if (!confirm(`Mở khóa bỏ qua minigame ${rarityId.toUpperCase()} bằng RuCoin?`)) return;
+      const ok = await pxConfirm({
+        title: APP.lang === "en" ? "UNLOCK SKIP?" : "MỞ KHÓA BỎ MINIGAME?",
+        message: APP.lang === "en"
+          ? `Unlock permanent minigame skip for ${rarityId.toUpperCase()} using RuCoin?`
+          : `Mở khóa bỏ qua vĩnh viễn minigame ${rarityId.toUpperCase()} bằng RuCoin?`,
+        icon: "target",
+        confirmText: APP.lang === "en" ? "Unlock" : "Mở khóa",
+        cancelText: APP.lang === "en" ? "Cancel" : "Hủy",
+        tone: "gold"
+      });
+      if (!ok) return;
       const res = await fishRpc("unlock_minigame_skip", { rarity_id: rarityId });
       if (!res.ok) { toast(res.error || "Không mở được", "err"); return; }
       SFX.catch(true);
@@ -2411,6 +2646,127 @@
       document.getElementById("modal-root").classList.remove("open");
     }
 
+    function pxConfirm(opts) {
+      const cfg = opts || {};
+      const root = document.getElementById("confirm-modal-root");
+      if (!root) return Promise.resolve(true);
+      if (window._pxConfirmResolve) {
+        try { window._pxConfirmResolve(false); } catch (_) {}
+      }
+      SFX.tick();
+      return new Promise((resolve) => {
+        let done = false;
+        const finish = (ans) => {
+          if (done) return;
+          done = true;
+          root.classList.remove("open");
+          root.innerHTML = "";
+          document.removeEventListener("keydown", onKey);
+          window._pxConfirmResolve = null;
+          if (!ans) SFX.tick();
+          resolve(Boolean(ans));
+        };
+        const onKey = (ev) => {
+          if (ev.key === "Escape") { ev.preventDefault(); finish(false); }
+          else if (ev.key === "Enter") { ev.preventDefault(); finish(true); }
+        };
+        window._pxConfirmResolve = finish;
+        window._pxConfirmDone = finish;
+        document.addEventListener("keydown", onKey);
+        const ico = cfg.icon || "warn";
+        const toneCls = cfg.tone === "danger" ? "danger" : "";
+        const btnCls = cfg.tone === "danger" ? "btn-danger" : (cfg.tone === "emerald" ? "btn-emerald" : "btn-gold");
+        root.onclick = (e) => { if (e.target === root) finish(false); };
+        root.innerHTML = `
+          <div class="px-confirm-card ${toneCls}">
+            <div class="px-confirm-head">
+              <div class="px-confirm-ico">${pxIcon(ico, 22)}</div>
+              <div>
+                <div class="px-num" style="font-size:22px;line-height:1.05;color:${cfg.tone === "danger" ? "var(--px-coral)" : "var(--px-gold)"};">${esc(cfg.title || "XÁC NHẬN")}</div>
+              </div>
+            </div>
+            <div style="font-size:13px;line-height:1.5;color:var(--px-text-2);">${esc(cfg.message || "")}</div>
+            <div class="px-confirm-actions">
+              <button type="button" class="btn btn-ghost" onclick="window._pxConfirmDone && window._pxConfirmDone(false)">${pxIcon("cross", 13)} ${esc(cfg.cancelText || "Hủy")}</button>
+              <button type="button" class="btn ${btnCls}" onclick="window._pxConfirmDone && window._pxConfirmDone(true)">${pxIcon("check", 13)} ${esc(cfg.confirmText || "Xác nhận")}</button>
+            </div>
+          </div>`;
+        root.classList.add("open");
+      });
+    }
+
+    const PX_PICKERS = {};
+    function pxChevronSvg() {
+      return '<svg class="px-svg" width="12" height="12" viewBox="0 0 12 12" shape-rendering="crispEdges"><rect x="2" y="4" width="2" height="2" fill="currentColor"/><rect x="4" y="6" width="4" height="2" fill="currentColor"/><rect x="8" y="4" width="2" height="2" fill="currentColor"/></svg>';
+    }
+    function registerPxPicker(key, cfg) {
+      PX_PICKERS[key] = cfg;
+    }
+    function renderPxPickerBtn(key, opts) {
+      const cfg = PX_PICKERS[key];
+      const o = opts || {};
+      const sel = cfg ? (cfg.options.find(x => String(x.value) === String(cfg.value)) || cfg.options.find(x => x.selected)) : null;
+      const labelTxt = sel ? (sel.shortLabel || sel.label) : (o.placeholder || (cfg && cfg.placeholder) || "Chọn...");
+      const cls = o.compact ? "px-picker-btn compact" : "px-picker-btn";
+      const ico = o.prefixIcon ? pxIcon(o.prefixIcon, 13) : "";
+      const prefixTxt = o.prefixLabel ? `<span class="muted">${esc(o.prefixLabel)}:</span>` : "";
+      return `<button type="button" class="${cls}" data-picker="${esc(key)}" onclick="openPxPicker('${esc(key)}')"><span class="px-picker-label">${ico}${prefixTxt}<span>${esc(labelTxt)}</span></span><span class="px-picker-chev">${pxChevronSvg()}</span></button>`;
+    }
+    function renderPxPickerOptionsHtml(key, filterText) {
+      const cfg = PX_PICKERS[key];
+      if (!cfg) return "";
+      const needle = String(filterText || "").trim().toLowerCase();
+      const rows = cfg.options
+        .map((opt, idx) => ({ opt, idx }))
+        .filter(({ opt }) => !needle || String(opt.label || "").toLowerCase().includes(needle) || String(opt.sub || "").toLowerCase().includes(needle) || String(opt.badge || "").toLowerCase().includes(needle));
+      if (!rows.length) return '<p class="muted" style="font-size:12.5px;margin:8px 0;">Không tìm thấy mục phù hợp.</p>';
+      return rows.map(({ opt, idx }) => {
+        const isSel = String(opt.value) === String(cfg.value) || Boolean(opt.selected);
+        return `
+          <button type="button" class="px-option-row ${isSel ? "selected" : ""}" onclick="selectPxPickerOption('${esc(key)}', ${idx})">
+            <div class="wrap-row" style="flex:1;min-width:0;gap:10px;flex-wrap:nowrap;">
+              ${opt.spriteHtml || ""}
+              <div style="min-width:0;">
+                <div style="font-weight:700;font-size:13px;color:${opt.color ? esc(opt.color) : "var(--px-text)"};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(opt.label)}</div>
+                ${opt.sub ? `<div class="muted" style="font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(opt.sub)}</div>` : ""}
+              </div>
+            </div>
+            <div class="wrap-row" style="flex-shrink:0;gap:6px;">
+              ${opt.badge ? `<span class="tab-badge" style="${opt.color ? "color:" + esc(opt.color) + ";border-color:" + esc(opt.color) + ";" : ""}">${esc(opt.badge)}</span>` : ""}
+              ${isSel ? `<span style="color:var(--px-mint);">${pxIcon("check", 14)}</span>` : ""}
+            </div>
+          </button>`;
+      }).join("");
+    }
+    function filterPxPicker(key, val) {
+      const list = document.getElementById("px-picker-list");
+      if (list) list.innerHTML = renderPxPickerOptionsHtml(key, val);
+    }
+    function openPxPicker(key) {
+      const cfg = PX_PICKERS[key];
+      if (!cfg) return;
+      SFX.tick();
+      const showSearch = cfg.options.length >= 8;
+      openModal(`
+        <div class="row-between" style="margin-bottom:10px;">
+          <h3 class="px-num inline-ico" style="margin:0;font-size:23px;color:var(--px-gold);">${cfg.icon ? pxIcon(cfg.icon, 18) : ""} ${esc(cfg.title || "CHỌN MỤC")}</h3>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Đóng</button>
+        </div>
+        ${showSearch ? `<div class="px-search-box" style="width:100%;margin-bottom:10px;">${pxIcon("target", 13)}<input placeholder="Lọc nhanh..." oninput="filterPxPicker('${esc(key)}', this.value)" style="width:100%;" /></div>` : ""}
+        <div id="px-picker-list" class="px-option-list">${renderPxPickerOptionsHtml(key, "")}</div>
+      `);
+    }
+    function selectPxPickerOption(key, idx) {
+      const cfg = PX_PICKERS[key];
+      closeModal();
+      if (!cfg || !cfg.options[idx]) return;
+      const opt = cfg.options[idx];
+      SFX.tick();
+      if (typeof cfg.onSelect === "function") {
+        cfg.onSelect(opt.value, opt);
+      }
+    }
+
     function renderLoading(msg) {
       document.getElementById("app-root").innerHTML = `
         <div class="auth-gate">
@@ -2527,10 +2883,27 @@
       const wRem = Math.max(0, Math.round((APP.weatherExpiresMs - Date.now()) / 1000));
       const wClock = w ? `${Math.floor(wRem / 60)}:${String(wRem % 60).padStart(2, "0")}` : "";
 
-      const guildSelect = (st.context.guilds || []).length > 1 ? `
-        <select class="select" style="padding:3px 7px;font-size:11px;margin-top:2px;" onchange="APP.guildId=this.value;localStorage.setItem('harubot_fish_guild_id',this.value);loadState();">
-          ${(st.context.guilds || []).map(g => `<option value="${esc(g.id)}" ${g.id === st.context.guild_id ? "selected" : ""}>Server: ${esc(g.name)}</option>`).join("")}
-        </select>` : "";
+      const guilds = st.context.guilds || [];
+      let guildSelect = "";
+      if (guilds.length > 1) {
+        registerPxPicker("guild_picker", {
+          title: APP.lang === "en" ? "SELECT DISCORD SERVER" : "CHỌN SERVER DISCORD",
+          icon: "island",
+          value: st.context.guild_id,
+          options: guilds.map(g => ({
+            value: g.id,
+            label: g.name,
+            sub: g.id === st.context.guild_id ? (APP.lang === "en" ? "Active Sync Server" : "Đang đồng bộ") : ("ID: " + g.id),
+            selected: g.id === st.context.guild_id
+          })),
+          onSelect: (v) => {
+            APP.guildId = v;
+            localStorage.setItem("harubot_fish_guild_id", v);
+            loadState();
+          }
+        });
+        guildSelect = renderPxPickerBtn("guild_picker", { compact: true, prefixIcon: "island", prefixLabel: "Server" });
+      }
 
       const hud = APP.activeTab === "fish"
         ? `
@@ -2592,7 +2965,16 @@
       else if (APP.activeTab === "aqua") content = renderAquaTab();
       else content = renderCodexTab();
 
+      const prevFocusId = document.activeElement && document.activeElement.id;
+      const prevSelPos = prevFocusId === "bag-search-inp" ? document.activeElement.selectionStart : null;
       root.innerHTML = hud + tabs + content;
+      if (prevFocusId === "bag-search-inp") {
+        const inpEl = document.getElementById("bag-search-inp");
+        if (inpEl) {
+          inpEl.focus();
+          if (typeof prevSelPos === "number") inpEl.setSelectionRange(prevSelPos, prevSelPos);
+        }
+      }
 
       if (APP.activeTab === "fish") {
         if (window.HaruOceanStage) {
@@ -2808,7 +3190,11 @@
             <button class="btn ${APP.bagSubTab === "items" ? "btn-primary" : "btn-ghost"} btn-sm" onclick="APP.bagSubTab='items';render();">${pxIcon("chest", 14)} Vật Phẩm & Rương (${inv.items.length})</button>
           </div>
           <div class="wrap-row">
-            <input class="input" placeholder="Tìm tên..." value="${esc(APP.bagFilter)}" oninput="APP.bagFilter=this.value;render();" style="width:150px;" />
+            <div class="px-search-box">
+              ${pxIcon("target", 13)}
+              <input id="bag-search-inp" placeholder="Tìm tên..." value="${esc(APP.bagFilter)}" oninput="APP.bagFilter=this.value;render();" />
+              ${APP.bagFilter ? `<button type="button" class="px-search-clear" onclick="APP.bagFilter='';render();">${pxIcon("cross", 12)}</button>` : ""}
+            </div>
             <button class="btn btn-gold btn-sm" onclick="doSellAll()">${pxIcon("moneybag", 14)} ${t("sellAll")}</button>
           </div>
         </div>`;
@@ -2820,11 +3206,23 @@
           (APP.bagRarityFilter === "all" || c.rarity_id === APP.bagRarityFilter)
         );
         const rarities = Array.from(new Set(inv.catches.map(c => c.rarity_id)));
+        registerPxPicker("bag_rarity", {
+          title: "LỌC THEO ĐỘ HIẾM",
+          icon: "fish",
+          value: APP.bagRarityFilter,
+          options: [
+            { value: "all", label: `Mọi độ hiếm (${inv.catches.length})`, selected: APP.bagRarityFilter === "all" },
+            ...rarities.map(r => ({
+              value: r,
+              label: r.toUpperCase(),
+              badge: fmt(inv.catches.filter(x => x.rarity_id === r).length) + " cá",
+              selected: APP.bagRarityFilter === r
+            }))
+          ],
+          onSelect: (v) => { APP.bagRarityFilter = v; render(); }
+        });
         const rarBar = `<div class="wrap-row" style="margin-bottom:12px;">
-          <select class="select" onchange="APP.bagRarityFilter=this.value;render();">
-            <option value="all">Mọi độ hiếm (${inv.catches.length})</option>
-            ${rarities.map(r => `<option value="${esc(r)}" ${APP.bagRarityFilter === r ? "selected" : ""}>${esc(r.toUpperCase())}</option>`).join("")}
-          </select>
+          <div style="min-width:190px;">${renderPxPickerBtn("bag_rarity", { prefixIcon: "fish" })}</div>
           ${APP.bagRarityFilter !== "all" ? `<button class="btn btn-gold btn-sm" onclick="doSellRarity('${esc(APP.bagRarityFilter)}')">Bán hết bậc ${esc(APP.bagRarityFilter)}</button>` : ""}
         </div>`;
         const cards = list.slice(0, 80).map(c => `
@@ -2908,6 +3306,24 @@
       const slotCard = (slot) => {
         const eq = st.equipment.slots[slot];
         const choices = wearables.filter(w => w.slot === slot);
+        if (choices.length) {
+          registerPxPicker("gear_slot_" + slot, {
+            title: "TRANG BỊ Ô " + slot.toUpperCase(),
+            icon: slot === "head" ? "hat" : (slot === "body" ? "armor" : slot),
+            value: eq ? eq.item_id : "",
+            placeholder: `Chọn trang bị (${choices.length})`,
+            options: choices.map(c => ({
+              value: c.item_id,
+              label: c.name,
+              shortLabel: c.name + " (" + (c.forge_rank_name || "") + ")",
+              sub: `${c.rarity_name || ""} · ${c.forge_rank_name || ""}${c.effect_label ? " · " + c.effect_label : ""}`,
+              badge: c.forge_rank_name,
+              spriteHtml: spriteHtml(c.image_path, c.emoji, true),
+              selected: Boolean(eq && eq.item_id === c.item_id)
+            })),
+            onSelect: (v) => { if (v) doEquip("gear", v); }
+          });
+        }
         return `
           <div class="sub-card stack">
             <div class="row-between">
@@ -2915,7 +3331,7 @@
               ${eq ? `<button class="btn btn-ghost btn-sm" onclick="doEquip('clear_slot','','${slot}')">Tháo</button>` : ""}
             </div>
             ${eq ? `<div class="wrap-row">${spriteHtml(eq.image_path, eq.emoji, true)}<div><div style="font-weight:700;font-size:13px;">${esc(eq.name)}</div><div class="muted" style="font-size:11px;">${esc(eq.rarity_name)} · ${esc(eq.forge_rank_name)} · ${esc(eq.effect_label)}</div></div></div>` : '<div class="muted" style="font-size:12px;">Ô trống</div>'}
-            ${choices.length ? `<select class="select" onchange="if(this.value)doEquip('gear',this.value)"><option value="">-- Đổi trang bị (${choices.length}) --</option>${choices.map(c => `<option value="${esc(c.item_id)}" ${eq && eq.item_id === c.item_id ? "selected" : ""}>${esc(c.name)} (${esc(c.forge_rank_name)})</option>`).join("")}</select>` : ""}
+            ${choices.length ? renderPxPickerBtn("gear_slot_" + slot, { placeholder: `Đổi trang bị (${choices.length})` }) : ""}
           </div>`;
       };
 
@@ -2950,6 +3366,44 @@
           </div>
         </div>`).join("");
 
+      registerPxPicker("gear_rod", {
+        title: "CHỌN CẦN CÂU",
+        icon: "rod",
+        value: st.equipment.rod ? st.equipment.rod.item_id : "",
+        placeholder: "Chưa có cần",
+        options: rods.map(r => ({
+          value: r.item_id,
+          label: r.name,
+          shortLabel: `${r.name} · ${r.forge_rank_name || ""}`,
+          sub: `${r.rarity_name || ""} · ${r.forge_rank_name || ""} · +${r.luck || 0} Luck`,
+          badge: r.forge_rank_name,
+          spriteHtml: spriteHtml(r.image_path, r.emoji, true),
+          selected: Boolean(st.equipment.rod && st.equipment.rod.item_id === r.item_id)
+        })),
+        onSelect: (v) => { if (v) doEquip("rod", v); }
+      });
+      registerPxPicker("gear_bait", {
+        title: "CHỌN MỒI CÂU",
+        icon: "bait",
+        value: st.equipment.bait ? st.equipment.bait.item_id : "__none",
+        options: [
+          { value: "__none", label: "Không dùng mồi", selected: !st.equipment.bait },
+          ...baits.map(b => ({
+            value: b.item_id,
+            label: b.name,
+            shortLabel: `${b.name} (+${b.luck || 0} Luck · ×${b.quantity})`,
+            sub: `+${b.luck || 0} Luck · Còn ×${fmt(b.quantity)}`,
+            badge: "×" + fmt(b.quantity),
+            spriteHtml: spriteHtml(b.image_path, b.emoji, true),
+            selected: Boolean(st.equipment.bait && st.equipment.bait.item_id === b.item_id)
+          }))
+        ],
+        onSelect: (v) => {
+          if (v === "__none") doEquip("clear_bait", "");
+          else if (v) doEquip("bait", v);
+        }
+      });
+
       return `
         <div class="stack">
           <div class="panel stack">
@@ -2960,16 +3414,11 @@
             <div class="grid-2">
               <div class="sub-card stack">
                 <strong class="inline-ico" style="font-size:12.5px;">${pxIcon("rod", 14)} Cần Câu (${rods.length} sở hữu)</strong>
-                <select class="select" onchange="if(this.value)doEquip('rod',this.value)">
-                  ${rods.map(r => `<option value="${esc(r.item_id)}" ${st.equipment.rod && st.equipment.rod.item_id === r.item_id ? "selected" : ""}>${esc(r.name)} · ${esc(r.rarity_name || "")} ${esc(r.forge_rank_name || "")}</option>`).join("") || '<option>Chưa có cần</option>'}
-                </select>
+                ${rods.length ? renderPxPickerBtn("gear_rod", { prefixIcon: "rod" }) : '<div class="muted" style="font-size:12px;">Chưa có cần</div>'}
               </div>
               <div class="sub-card stack">
                 <strong class="inline-ico" style="font-size:12.5px;">${pxIcon("bait", 14)} Mồi Câu (${baits.length} loại)</strong>
-                <select class="select" onchange="if(this.value==='__none')doEquip('clear_bait','');else if(this.value)doEquip('bait',this.value)">
-                  <option value="__none">Không dùng mồi</option>
-                  ${baits.map(b => `<option value="${esc(b.item_id)}" ${st.equipment.bait && st.equipment.bait.item_id === b.item_id ? "selected" : ""}>${esc(b.name)} (+${b.luck} Luck · ×${b.quantity})</option>`).join("")}
-                </select>
+                ${renderPxPickerBtn("gear_bait", { prefixIcon: "bait" })}
               </div>
             </div>
             ${equipDiagram}
@@ -3004,7 +3453,12 @@
           <div class="row-between" style="margin-top:auto;padding-top:6px;">
             <strong class="px-num" style="color:var(--px-gold);font-size:20px;">${fmt(it.cost)} RC</strong>
             <div class="wrap-row" style="gap:6px;">
-              <input id="qty-${esc(it.item_id)}" type="number" min="1" max="10000" value="1" class="input px-num" style="width:64px;padding:4px 7px;font-size:16px;" />
+              <div class="px-stepper">
+                <button type="button" class="px-step-btn" onclick="stepShopQty('${esc(it.item_id)}', -1)">-</button>
+                <input id="qty-${esc(it.item_id)}" type="text" inputmode="numeric" value="${APP.shopQty[it.item_id] || 1}" class="px-step-val" oninput="setShopQty('${esc(it.item_id)}', this.value)" />
+                <button type="button" class="px-step-btn right" onclick="stepShopQty('${esc(it.item_id)}', 1)">+</button>
+                <button type="button" class="px-step-btn right" style="font-size:14px;color:var(--px-gold);" onclick="stepShopQty('${esc(it.item_id)}', 10)">+10</button>
+              </div>
               <button class="btn btn-primary btn-sm" onclick="doBuyItem('${esc(it.item_id)}')">Mua</button>
             </div>
           </div>
@@ -3050,6 +3504,45 @@
         const phoiPool = sel && sel.item_type !== "rod"
           ? eqList.filter(e => e.item_type !== "rod" && e.rarity_step === sel.rarity_step && (e.item_id !== sel.item_id || e.quantity >= 2))
           : [];
+        if (sel) {
+          registerPxPicker("forge_main", {
+            title: "CHỌN ĐỒ CẦN NÂNG / RÈN",
+            icon: "anvil",
+            value: sel.item_id,
+            options: eqList.map(e => ({
+              value: e.item_id,
+              label: e.name,
+              shortLabel: `[${e.item_type.toUpperCase()}] ${e.name} · ${e.rarity_name} (${e.rank_name})`,
+              sub: `${e.item_type.toUpperCase()} · ${e.rarity_name} · Rank ${e.rank_name} (×${e.quantity})`,
+              badge: e.rank_name,
+              spriteHtml: spriteHtml(e.image_path, e.emoji, true),
+              selected: e.item_id === sel.item_id
+            })),
+            onSelect: (v) => { APP.selectedGearItemId = v; APP.selectedPhoiItemId = ""; render(); }
+          });
+        }
+        if (phoiPool.length) {
+          if (!APP.selectedPhoiItemId || !phoiPool.some(p => p.item_id === APP.selectedPhoiItemId)) {
+            APP.selectedPhoiItemId = phoiPool[0].item_id;
+          }
+          registerPxPicker("forge_phoi", {
+            title: "CHỌN TRANG BỊ LÀM PHÔI",
+            icon: "anvil",
+            value: APP.selectedPhoiItemId,
+            options: phoiPool.map(p => ({
+              value: p.item_id,
+              label: p.name,
+              shortLabel: `Phôi: ${p.name} (×${p.quantity})`,
+              sub: `${p.rarity_name || ""} · Rank ${p.rank_name || ""}`,
+              badge: "×" + p.quantity,
+              spriteHtml: spriteHtml(p.image_path, p.emoji, true),
+              selected: p.item_id === APP.selectedPhoiItemId
+            })),
+            onSelect: (v) => { APP.selectedPhoiItemId = v; render(); }
+          });
+        } else {
+          APP.selectedPhoiItemId = "";
+        }
 
         return `
           <div class="panel stack">
@@ -3057,9 +3550,7 @@
             ${!sel ? '<p class="muted">Bạn chưa có cần hoặc trang bị để nâng cấp.</p>' : `
               <div class="sub-card stack">
                 <label class="muted" style="font-size:12px;">Chọn cần câu hoặc trang bị cần nâng:</label>
-                <select class="select" onchange="APP.selectedGearItemId=this.value;render();">
-                  ${eqList.map(e => `<option value="${esc(e.item_id)}" ${e.item_id === sel.item_id ? "selected" : ""}>[${esc(e.item_type.toUpperCase())}] ${esc(e.name)} · ${esc(e.rarity_name)} · Rank ${esc(e.rank_name)} (×${e.quantity})</option>`).join("")}
-                </select>
+                ${renderPxPickerBtn("forge_main", { prefixIcon: "anvil" })}
                 <div class="wrap-row" style="margin-top:8px;">
                   ${spriteHtml(sel.image_path, sel.emoji, false)}
                   <div>
@@ -3088,10 +3579,8 @@
                   <div style="border-top:2px solid var(--px-border);margin-top:10px;padding-top:12px;" class="stack">
                     <div class="inline-ico" style="font-weight:700;font-size:13px;">${pxIcon("anvil", 14)} Ghép 2 Trang Bị Cùng Rarity (Tiêu hao 1 phôi)</div>
                     ${phoiPool.length ? `
-                      <div class="wrap-row">
-                        <select id="phoi-select" class="select" style="flex:1;">
-                          ${phoiPool.map(p => `<option value="${esc(p.item_id)}">Phôi: ${esc(p.name)} (×${p.quantity})</option>`).join("")}
-                        </select>
+                      <div class="wrap-row" style="align-items:stretch;">
+                        <div style="flex:1;min-width:200px;">${renderPxPickerBtn("forge_phoi", { prefixIcon: "wrench" })}</div>
                         <button class="btn btn-emerald" onclick="doForgeGear('${esc(sel.item_id)}')">Ghép (${fmt(sel.forge_fee)} RC)</button>
                       </div>` : '<div class="muted" style="font-size:12px;">Cần ít nhất 2 trang bị cùng Rarity trong túi để làm phôi.</div>'}
                   </div>` : ""}
@@ -3172,6 +3661,26 @@
           <button class="btn btn-ghost btn-sm" onclick="doAquaRemove('${esc(p.catch_id)}')">Lấy ra</button>
         </div>`).join("");
 
+      if (aq.candidates.length) {
+        if (!APP.selectedAquaCatchId || !aq.candidates.some(c => c.catch_id === APP.selectedAquaCatchId)) {
+          APP.selectedAquaCatchId = aq.candidates[0].catch_id;
+        }
+        registerPxPicker("aqua_add", {
+          title: "CHỌN CÁ THẢ THỦY CUNG",
+          icon: "aqua",
+          value: APP.selectedAquaCatchId,
+          options: aq.candidates.slice(0, 50).map(c => ({
+            value: c.catch_id,
+            label: c.name,
+            shortLabel: `${c.name} · ${c.weight}kg (${c.rarity_id})`,
+            sub: `${c.weight} kg · ${c.rarity_id}${c.mutation_name ? " · " + c.mutation_name : ""}`,
+            badge: String(c.rarity_id || "").toUpperCase(),
+            selected: c.catch_id === APP.selectedAquaCatchId
+          })),
+          onSelect: (v) => { APP.selectedAquaCatchId = v; render(); }
+        });
+      }
+
       return `
         <div class="stack">
           ${bossCard}
@@ -3184,11 +3693,9 @@
               <button class="btn btn-gold" ${aq.total_accrued <= 0 ? "disabled" : ""} onclick="doAquaCollect()">${pxIcon("moneybag", 15)} ${t("collectAqua")} (+${fmt(aq.total_accrued)})</button>
             </div>
             ${aq.candidates.length ? `
-              <div class="wrap-row">
-                <select id="aqua-add-sel" class="select" style="flex:1;">
-                  ${aq.candidates.slice(0, 50).map(c => `<option value="${esc(c.catch_id)}">${esc(c.name)} · ${c.weight}kg (${esc(c.rarity_id)})${c.mutation_name ? " · " + esc(c.mutation_name) : ""}</option>`).join("")}
-                </select>
-                <button class="btn btn-emerald btn-sm" onclick="doAquaAdd(document.getElementById('aqua-add-sel').value)">${pxIcon("plus", 13)} Thả cá vào bể</button>
+              <div class="wrap-row" style="align-items:stretch;">
+                <div style="flex:1;min-width:200px;">${renderPxPickerBtn("aqua_add", { prefixIcon: "fish" })}</div>
+                <button class="btn btn-emerald btn-sm" onclick="doAquaAdd(APP.selectedAquaCatchId)">${pxIcon("plus", 13)} Thả cá vào bể</button>
               </div>` : ""}
             <div class="grid-2">${placedHtml || '<p class="muted">Chưa có cá nào trong Thủy Cung.</p>'}</div>
           </div>
