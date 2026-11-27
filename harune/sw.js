@@ -1,4 +1,7 @@
-const CACHE_NAME = "harune-pwa-v24";
+// Harune Controlled Release Service Worker
+// Does NOT force-reload users silently! Updates only activate when the user taps "Cập nhật ngay".
+const APP_RELEASE_VERSION = "1.0.0";
+const CACHE_NAME = `harune-release-${APP_RELEASE_VERSION}`;
 const SHELL_ASSETS = [
   "./",
   "./index.html",
@@ -16,7 +19,14 @@ self.addEventListener("install", (event) => {
       .then((cache) => Promise.allSettled(SHELL_ASSETS.map((u) => cache.add(u))))
       .catch(() => {})
   );
-  self.skipWaiting();
+  // IMPORTANT: Intentionally NO self.skipWaiting() here!
+  // A newly published release waits calmly until the user clicks "Cập nhật ngay" in the app.
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("activate", (event) => {
@@ -25,7 +35,13 @@ self.addEventListener("activate", (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((k) => k.startsWith("harune-pwa-") && k !== CACHE_NAME).map((k) => caches.delete(k))
+          keys
+            .filter(
+              (k) =>
+                (k.startsWith("harune-release-") || k.startsWith("harune-pwa-")) &&
+                k !== CACHE_NAME
+            )
+            .map((k) => caches.delete(k))
         )
       )
       .then(() => self.clients.claim())
@@ -37,20 +53,22 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // Never intercept API calls, live server.json discovery, audio range streams, or cross-origin media
+  // Never intercept API calls, live release.json / server.json checks, audio range streams, or cross-origin media
   if (
     url.origin !== self.location.origin ||
     url.pathname.includes("/api/") ||
+    url.pathname.endsWith("/release.json") ||
     url.pathname.endsWith("/server.json") ||
     req.headers.has("range")
   ) {
     return;
   }
 
-  // Network-First for HTML & bundles (iOS PWA always receives newest version)
-  if (req.mode === "navigate" || /\.(html|js|css)$/.test(url.pathname)) {
-    event.respondWith(
-      fetch(req)
+  // Cache-First for pinned release shell & assets (keeps installed version rock-solid until user updates!)
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+      return fetch(req)
         .then((res) => {
           if (res && res.status === 200 && res.type === "basic") {
             const clone = res.clone();
@@ -58,23 +76,7 @@ self.addEventListener("fetch", (event) => {
           }
           return res;
         })
-        .catch(() => caches.match(req).then((hit) => hit || caches.match("./index.html")))
-    );
-    return;
-  }
-
-  // Cache-First for icons & static assets
-  event.respondWith(
-    caches.match(req).then(
-      (cached) =>
-        cached ||
-        fetch(req).then((res) => {
-          if (res && res.status === 200) {
-            const clone = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(req, clone)).catch(() => {});
-          }
-          return res;
-        })
-    )
+        .catch(() => (req.mode === "navigate" ? caches.match("./index.html") : undefined));
+    })
   );
 });
