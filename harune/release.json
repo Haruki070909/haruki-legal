@@ -1,17 +1,16 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "released_at": "2026-11-27",
   "channel": "stable",
-  "title": "Harune 1.2.0",
+  "title": "Harune 1.2.1",
   "notes": [
-    "Phát nhạc tức thì với pre-warm & Zero-Buffering Edge",
-    "Đồng bộ lời Karaoke 6 nguồn (thêm QQ Music, NetEase từng chữ, đổi bản khớp 1 chạm)",
-    "Nhịp sóng êm tự động theo nhạc Chill/Ballad trên iPhone & PC",
-    "Khớp đúng bản gốc studio không còn chọn nhầm bản Stripped/Remix"
+    "Làm lại cơ chế đồng bộ lời Karaoke theo audio.currentTime + sửa lỗi lệch nhịp hàng loạt & thêm nút Khớp nhịp 1 chạm",
+    "Nhạc Chill chỉ gợn sóng êm nhẹ, tới nhịp bass sâu mới đập lên 1 nhịp rồi lắng về 0",
+    "Ưu tiên bản Studio gốc theo thời lượng chuẩn & sửa nút Custom gọn đẹp khi xoay ngang iPhone"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.0/Harune-Setup-1.2.0.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.0/Harune-Portable-1.2.0.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.1/Harune-Setup-1.2.1.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.1/Harune-Portable-1.2.1.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
