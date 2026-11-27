@@ -1,6 +1,5 @@
 {
-  "api_base": "https://vintage-compared-process-ranging.trycloudflare.com",
-  "direct_http": "http://node.sang0023.io.vn:2052",
-  "server_id": "f0d999f5",
-  "updated_at": 1795720300
+  "api_base": "",
+  "edge_api": "https://harune-edge-api.spkgm321.workers.dev/api/v1",
+  "updated_at": 1795767000
 }

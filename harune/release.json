@@ -1,17 +1,15 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "released_at": "2026-11-27",
   "channel": "stable",
-  "title": "Harune 1.1.0 — Tìm kiếm đa nguồn, Nghe Offline & Giao diện Di động mới",
+  "title": "Harune 1.1.1 — Sửa triệt để lỗi Load failed & Engine phát nhạc M4A tốc độ cao",
   "notes": [
-    "Thanh tìm kiếm đa nguồn kiểu Spotify hiển thị ngay đầu màn hình trên cả PC và điện thoại (YouTube, Deezer, Kugou, Apple Music, NetEase)",
-    "Tải nhạc nghe Offline thực thụ kèm ảnh bìa & lời đồng bộ Karaoke, có tiến trình %, Kho Nhạc Offline, tải cả Playlist và xuất file .m4a",
-    "Sửa triệt để lỗi nút Phát / Chuyển bài / Chạm trên iPhone khi link cũ hết hạn",
-    "Thiết kế lại trình phát điện thoại chuẩn 1 tay, hết cắt viền và Mini-Player mỏng gọn hơn"
+    "Chuyển thẳng tuyến giải mã phát nhạc sang Cloudflare Edge M4A 160kbps (HTTP 206 Range chuẩn Safari iOS & Chrome, không còn lỗi Load failed)",
+    "Gỡ tunnel cũ đã hết hạn giúp phát nhạc, chuyển bài và tải Offline hoạt động 100% ổn định trên 5G/Wi-Fi"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.0/Harune-Setup-1.1.0.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.0/Harune-Portable-1.1.0.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.1/Harune-Setup-1.1.1.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.1/Harune-Portable-1.1.1.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
