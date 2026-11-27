@@ -1,6 +1,6 @@
 // Harune Controlled Release Service Worker
 // Does NOT force-reload users silently! Updates only activate when the user taps "Cập nhật ngay".
-const APP_RELEASE_VERSION = "1.2.1";
+const APP_RELEASE_VERSION = "1.2.2";
 const CACHE_NAME = `harune-release-${APP_RELEASE_VERSION}`;
 const SHELL_ASSETS = [
   "./",

@@ -1,16 +1,17 @@
 {
-  "version": "1.2.1",
+  "version": "1.2.2",
   "released_at": "2026-11-27",
   "channel": "stable",
-  "title": "Harune 1.2.1",
+  "title": "Harune v1.2.2 — AI Whisper Auto-Sync & Liquid Silk",
   "notes": [
-    "Làm lại cơ chế đồng bộ lời Karaoke theo audio.currentTime + sửa lỗi lệch nhịp hàng loạt & thêm nút Khớp nhịp 1 chạm",
-    "Nhạc Chill chỉ gợn sóng êm nhẹ, tới nhịp bass sâu mới đập lên 1 nhịp rồi lắng về 0",
-    "Ưu tiên bản Studio gốc theo thời lượng chuẩn & sửa nút Custom gọn đẹp khi xoay ngang iPhone"
+    "AI Whisper nghe nhac that tu dong khop loi Karaoke ngay tu giay dau",
+    "Hieu ung Luu quang Lua Da Tang QQ Music cho nhac Chill va Soi dong",
+    "Ho tro phat remix da tieng YouTube .m3u8 HLS & tu dong luu thuvien",
+    "Giao dien Spotify, BXH hop nhat, Cai dat 6 o tich hop EQ, Profile & Liquid Glass iOS 26+"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.1/Harune-Setup-1.2.1.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.1/Harune-Portable-1.2.1.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.2/Harune-Setup-1.2.2.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.2/Harune-Portable-1.2.2.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
