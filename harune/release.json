@@ -1,18 +1,17 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "released_at": "2026-11-27",
   "channel": "stable",
-  "title": "Harune 1.0.0 — Bản phát hành chính thức",
+  "title": "Harune 1.1.0 — Tìm kiếm đa nguồn, Nghe Offline & Giao diện Di động mới",
   "notes": [
-    "Ứng dụng nghe nhạc Hi-Fi độc lập cho Windows (.exe), iPhone/iPad và Android",
-    "Hệ thống cập nhật chủ động ngay trong app với nút Cập nhật ngay & lịch sử phiên bản",
-    "Đề xuất nhạc cá nhân hóa Taste DNA + Autoplay Radio 20 bài vô tận theo gu từng người",
-    "Lời bài hát đồng bộ Karaoke đa nguồn (LRCLIB · NetEase · Kugou · Lyrics.ovh)",
-    "Bảng xếp hạng tổng hợp 4 nguồn (Spotify · Apple Music · YouTube · Deezer) & lưu nhạc nghe Offline"
+    "Thanh tìm kiếm đa nguồn kiểu Spotify hiển thị ngay đầu màn hình trên cả PC và điện thoại (YouTube, Deezer, Kugou, Apple Music, NetEase)",
+    "Tải nhạc nghe Offline thực thụ kèm ảnh bìa & lời đồng bộ Karaoke, có tiến trình %, Kho Nhạc Offline, tải cả Playlist và xuất file .m4a",
+    "Sửa triệt để lỗi nút Phát / Chuyển bài / Chạm trên iPhone khi link cũ hết hạn",
+    "Thiết kế lại trình phát điện thoại chuẩn 1 tay, hết cắt viền và Mini-Player mỏng gọn hơn"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.0.0/Harune-Setup-1.0.0.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.0.0/Harune-Portable-1.0.0.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.0/Harune-Setup-1.1.0.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.1.0/Harune-Portable-1.1.0.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
