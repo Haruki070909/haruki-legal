@@ -1,15 +1,16 @@
 {
-  "version": "1.2.9",
+  "version": "1.2.10",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.9 — 120fps Zero-Stutter Liquid Glass",
+  "title": "Harune v1.2.10 — Instant HLS Playback & Duration Fix",
   "notes": [
-    "Tối ưu Liquid Glass trên iOS chạy mượt 120fps trực tiếp qua GPU (bỏ double backdrop-filter & zero React lag khi kéo)",
-    "Giữ logo Harune mới sạch viền, tự động nhận diện Dynamic Island & nút cứng chống copy"
+    "Phát trực tiếp SoundCloud AAC qua VOD HLS .m3u8 (<250ms TTFB, hết đơ 0:00)",
+    "Loại bỏ lỗi kẹt thời lượng 9s-10s (strip fMP4 sidx từng phân đoạn + guard tự khôi phục)",
+    "Watchdog 4.5s tự làm mới luồng nếu mạng CDN bị nghẽn"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.9/Harune-Setup-1.2.9.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.9/Harune-Portable-1.2.9.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.10/Harune-Setup-1.2.10.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.10/Harune-Portable-1.2.10.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
