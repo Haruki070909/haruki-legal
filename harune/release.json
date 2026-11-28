@@ -1,16 +1,16 @@
 {
-  "version": "1.2.11",
+  "version": "1.2.12",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.11 — Quantum AutoMix Stage & 120fps Scrubbing",
+  "title": "Harune v1.2.12 — Instant Stream Playback & Custom Symmetric Controls",
   "notes": [
-    "Nâng cấp sân khấu AutoMix tương lai 60fps: sóng lượng tử, hạt ánh sáng & vòng gyroscope hiển thị % mix",
-    "Thanh tua thời gian mới mượt 120fps (SmoothSeekBar GPU, hết giật lag & nhảy ngược khi kéo)",
-    "Giữ nguyên tốc độ phát HLS tức thì, vá thời lượng 9s-10s & Liquid Glass 120fps"
+    "Sửa triệt để lỗi 'Không phát được luồng âm thanh' trên iPhone do CORS OPTIONS preflight của HLS CDN + tự fallback trực tiếp sang HTTP 206 Edge",
+    "Khóa cứng nút Phát/Dừng ở trung tâm, 2 nút Lặp lại Playlist & Lặp lại 1 bài custom đối xứng 2 bên",
+    "Giữ nguyên sân khấu AutoMix lượng tử, thanh tua mượt 120fps & Liquid Glass 120fps"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.11/Harune-Setup-1.2.11.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.11/Harune-Portable-1.2.11.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.12/Harune-Setup-1.2.12.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.12/Harune-Portable-1.2.12.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
