@@ -1,16 +1,14 @@
 {
-  "version": "1.2.12",
+  "version": "1.2.13",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.12 — Instant Stream Playback & Custom Symmetric Controls",
+  "title": "Harune v1.2.13 - Soft Chill Vibe, Fast Rap Lyrics, iPhone Bass Flash & Mobile AutoMix Fix",
   "notes": [
-    "Sửa triệt để lỗi 'Không phát được luồng âm thanh' trên iPhone do CORS OPTIONS preflight của HLS CDN + tự fallback trực tiếp sang HTTP 206 Edge",
-    "Khóa cứng nút Phát/Dừng ở trung tâm, 2 nút Lặp lại Playlist & Lặp lại 1 bài custom đối xứng 2 bên",
-    "Giữ nguyên sân khấu AutoMix lượng tử, thanh tua mượt 120fps & Liquid Glass 120fps"
+    "Nang cap Chill beat nhe nhang hon, hien chu sang ngay khi rap nhanh khong bi giat, them Den Flash theo Bass danh rieng cho iPhone, va sua triet de loi dien thoai khong hien hieu ung AutoMix ngang hoac bi dung khi qua bai."
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.12/Harune-Setup-1.2.12.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.12/Harune-Portable-1.2.12.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.13/Harune-Setup-1.2.13.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.13/Harune-Portable-1.2.13.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
