@@ -1,16 +1,15 @@
 {
-  "version": "1.2.7",
+  "version": "1.2.8",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.7 — Interactive Liquid Glass & Hard Native Buttons",
+  "title": "Harune v1.2.8 — Borderless Logo & Interactive Liquid Glass",
   "notes": [
-    "Chống bôi đen / Copy khi nhấn giữ nút trên toàn bộ App & Web (trừ ô nhập liệu)",
-    "Nâng cấp thanh điều hướng iOS 26 Liquid Glass thật: nhấn giữ & vuốt trượt đổi tab mượt với thấu kính khúc xạ",
-    "Giữ nguyên tối ưu iPhone Dynamic Island, logo Harune mới và sóng nhạc iOS"
+    "Cập nhật logo Harune mới bỏ viền xanh ngoài cho đồng bộ trên App, PC, iOS & Haru Ecosystem",
+    "Giữ toàn bộ tính năng Liquid Glass vuốt trượt & nút cứng chống copy"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Setup-1.2.7.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Portable-1.2.7.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.8/Harune-Setup-1.2.8.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.8/Harune-Portable-1.2.8.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }

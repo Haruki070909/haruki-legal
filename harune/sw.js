@@ -1,15 +1,15 @@
 // Harune Controlled Release Service Worker
 // Does NOT force-reload users silently! Updates only activate when the user taps "Cập nhật ngay".
-const APP_RELEASE_VERSION = "1.2.7";
+const APP_RELEASE_VERSION = "1.2.8";
 const CACHE_NAME = `harune-release-${APP_RELEASE_VERSION}`;
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./icons/harune-logo.png?v=2",
-  "./icons/apple-touch-icon-180.png?v=2",
-  "./icons/icon-192.png?v=2",
-  "./icons/icon-512.png?v=2",
+  "./icons/harune-logo.png?v=3",
+  "./icons/apple-touch-icon-180.png?v=3",
+  "./icons/icon-192.png?v=3",
+  "./icons/icon-512.png?v=3",
 ];
 
 self.addEventListener("install", (event) => {
