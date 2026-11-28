@@ -1703,13 +1703,13 @@
       <article class="bot-card harubot" id="harune" style="margin-top: 32px; border-color: rgba(56,189,248,0.28);">
         <div>
           <div class="bot-header">
-            <div class="bot-avatar-box cyan" style="background:#050b14;">
-              <img src="./harune/icons/harune-logo.png" alt="Harune Exclusive Logo" class="bot-avatar" loading="lazy" decoding="async">
+            <div class="bot-avatar-box cyan" style="background:transparent;">
+              <img src="./harune/icons/harune-logo.png?v=2" alt="Harune Exclusive Logo" class="bot-avatar" loading="lazy" decoding="async">
             </div>
             <div class="bot-header-info">
               <h3>
                 Harune
-                <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35); padding:3px 10px; border-radius:12px;">Hi-Fi Music App · PWA</span>
+                <span id="harune-version-badge" style="font-size:0.75rem; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35); padding:3px 10px; border-radius:12px;">v1.2.7 · Hi-Fi Music App</span>
               </h3>
               <p class="bot-tagline" data-i18n="haruneTagline">Nhạc Full Hi-Fi 32-bit · Sân khấu Wave · AI DJ Remix · Nghe Cùng Nhau (Jam)</p>
             </div>
@@ -1737,18 +1737,26 @@
           </ul>
         </div>
         <div class="bot-card-footer">
-          <div class="bot-btn-row">
+          <div class="bot-btn-row" style="flex-wrap:wrap; gap:10px;">
             <a href="./harune/" class="btn btn-primary" style="background:linear-gradient(135deg,#0ea5e9,#2563eb);border:1px solid rgba(125,211,252,0.45);">
               <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               <span data-i18n="btnOpenHarune">Mở App Harune</span>
             </a>
-            <a href="./harune/?install=1" class="btn btn-secondary" style="border-color:rgba(56,189,248,0.45);color:#bae6fd;">
+            <a id="harune-dl-setup" href="https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Setup-1.2.7.exe" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="border-color:rgba(56,189,248,0.5);background:rgba(56,189,248,0.12);color:#e0f2fe;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <span data-i18n="btnDownloadHarunePC">Tải PC Windows (.exe)</span>
+            </a>
+            <a id="harune-dl-portable" href="https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Portable-1.2.7.exe" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="border-color:rgba(148,163,184,0.35);color:#cbd5e1;">
               <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span data-i18n="btnInstallHarune">Cài App (iOS · Android · PC)</span>
+              <span data-i18n="btnDownloadHarunePortable">PC Portable (.exe)</span>
+            </a>
+            <a href="./harune/?install=1" class="btn btn-secondary" style="border-color:rgba(56,189,248,0.45);color:#bae6fd;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              <span data-i18n="btnInstallHaruneMobile">Cài Điện Thoại (iOS · Android)</span>
             </a>
           </div>
           <div class="bot-legal-links">
-            <span style="font-size:0.82rem;color:#94a3b8;font-family:monospace;">Permanent URL: haruki070909.github.io/haruki-legal/harune/ · VibeHost 24/7</span>
+            <span style="font-size:0.82rem;color:#94a3b8;font-family:monospace;">Web/PWA: haruki070909.github.io/haruki-legal/harune/ · PC: GitHub Releases · VibeHost 24/7</span>
           </div>
         </div>
       </article>
@@ -2176,6 +2184,9 @@
         navWatcher: "Watcher",
         navLegal: "Điều Khoản & Bảo Mật",
         btnOpenHarune: "Mở App Harune",
+        btnDownloadHarunePC: "Tải PC Windows (.exe)",
+        btnDownloadHarunePortable: "PC Portable (.exe)",
+        btnInstallHaruneMobile: "Cài Điện Thoại (iOS · Android)",
         btnInstallHarune: "Cài App (iOS · Android · PC)",
         haruneTagline: "Nhạc Full Hi-Fi 32-bit · Sân khấu Wave · AI DJ Remix · Nghe Cùng Nhau (Jam)",
         haruneDesc: "Harune là ứng dụng nghe nhạc Hi-Fi độc quyền trong hệ sinh thái Haru, chạy trên hạ tầng VibeHost 24/7 và cài trực tiếp như App gốc trên iPhone, Android, iPad &amp; PC. Hỗ trợ chạy nền màn hình khóa như Spotify, EQ 10 băng, Karaoke, AI DJ remix trực tiếp, phòng nghe cùng bạn bè và phát đa tai nghe AirPods/Bluetooth Lossless.",
@@ -2240,6 +2251,9 @@
         navWatcher: "Watcher",
         navLegal: "Legal & Privacy",
         btnOpenHarune: "Open Harune App",
+        btnDownloadHarunePC: "Download PC (.exe)",
+        btnDownloadHarunePortable: "PC Portable (.exe)",
+        btnInstallHaruneMobile: "Install Mobile (iOS · Android)",
         btnInstallHarune: "Install App (iOS · Android · PC)",
         haruneTagline: "Full 32-bit Hi-Fi Audio · Wave Stage · Live AI DJ · Listen Together (Jam)",
         haruneDesc: "Harune is the exclusive Hi-Fi music app of the Haru Ecosystem, powered 24/7 by dedicated VibeHost infrastructure and installable as a native-feel PWA on iPhone, Android, iPad &amp; PC. Supports Spotify-grade background playback, 10-band EQ, Karaoke, Live AI DJ remixing, real-time Jam rooms with friends, and Multi-AirPods / Bluetooth Lossless output.",
@@ -2537,6 +2551,28 @@
       } else {
         revealItems.forEach(el => el.classList.add("is-revealed"));
       }
+    })();
+  </script>
+
+  <!-- Auto-sync Harune PC download links & latest version pill from ./harune/release.json -->
+  <script>
+    (function() {
+      fetch("./harune/release.json?t=" + Date.now(), { cache: "no-store" })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(rel) {
+          if (!rel || !rel.version) return;
+          var badge = document.getElementById("harune-version-badge");
+          if (badge) badge.textContent = "v" + rel.version + " · Hi-Fi Music App";
+          var setupEl = document.getElementById("harune-dl-setup");
+          if (setupEl && rel.downloads && rel.downloads.windows_installer) {
+            setupEl.href = rel.downloads.windows_installer;
+          }
+          var portEl = document.getElementById("harune-dl-portable");
+          if (portEl && rel.downloads && rel.downloads.windows_portable) {
+            portEl.href = rel.downloads.windows_portable;
+          }
+        })
+        .catch(function() {});
     })();
   </script>
 
