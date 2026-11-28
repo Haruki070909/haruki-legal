@@ -4,11 +4,9 @@
   "channel": "stable",
   "title": "Harune v1.2.4 — QQ AutoMix, Smart Shuffle & Smooth Karaoke",
   "notes": [
-    "Hiệu ứng cầu nối AutoMix 2 avatar mượt mà & sửa lỗi nhảy bài khi bật Xáo trộn",
-    "Sửa khớp lời AI & nhịp rap nhanh, làm mượt GPU sân khấu Wave",
-    "Gộp nút Xáo trộn & Xáo trộn thông minh ✨ bo cong mềm mại",
-    "Ưu tiên nhạc trước Podcast, chặn Follow khi chưa đăng nhập & kéo sắp xếp Hàng phát",
-    "Thu gọn thanh điều khiển & bảng tùy chỉnh lời gọn gàng"
+    "Bỏ Playlist, AutoMix, AI DJ khỏi thanh mini ngoài (giữ bên trong màn hình phát)",
+    "Thu gọn nút Nghe ngay & Xáo trộn thành logo tròn",
+    "Sửa sóng nhạc 2 bên trên iPhone + tối ưu lời xoay ngang + đưa thông báo xuống dưới"
   ],
   "downloads": {
     "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.4/Harune-Setup-1.2.4.exe",
