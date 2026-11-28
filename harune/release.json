@@ -1,17 +1,16 @@
 {
-  "version": "1.2.6",
+  "version": "1.2.7",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.6 — Auto iPhone & Dynamic Island Safe UI + New Logo",
+  "title": "Harune v1.2.7 — Interactive Liquid Glass & Hard Native Buttons",
   "notes": [
-    "Tự động nhận diện iPhone/iPad (iOS) và vùng an toàn Dynamic Island/Notch trên toàn bộ giao diện",
-    "Sửa ngăn Hàng phát/Tai nghe/Tin mới và các modal không bị Dynamic Island che",
-    "Logo Harune mới tách nền xanh làm icon App (iOS/Android/Windows) & logo trong app",
-    "Sửa sóng nhạc iPhone + bỏ nút thừa ngoài mini player + thu gọn nút Nghe ngay/Xáo trộn"
+    "Chống bôi đen / Copy khi nhấn giữ nút trên toàn bộ App & Web (trừ ô nhập liệu)",
+    "Nâng cấp thanh điều hướng iOS 26 Liquid Glass thật: nhấn giữ & vuốt trượt đổi tab mượt với thấu kính khúc xạ",
+    "Giữ nguyên tối ưu iPhone Dynamic Island, logo Harune mới và sóng nhạc iOS"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.6/Harune-Setup-1.2.6.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.6/Harune-Portable-1.2.6.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Setup-1.2.7.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.7/Harune-Portable-1.2.7.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
