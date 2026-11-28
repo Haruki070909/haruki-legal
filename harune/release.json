@@ -1,16 +1,16 @@
 {
-  "version": "1.2.10",
+  "version": "1.2.11",
   "released_at": "2026-11-28",
   "channel": "stable",
-  "title": "Harune v1.2.10 — Instant HLS Playback & Duration Fix",
+  "title": "Harune v1.2.11 — Quantum AutoMix Stage & 120fps Scrubbing",
   "notes": [
-    "Phát trực tiếp SoundCloud AAC qua VOD HLS .m3u8 (<250ms TTFB, hết đơ 0:00)",
-    "Loại bỏ lỗi kẹt thời lượng 9s-10s (strip fMP4 sidx từng phân đoạn + guard tự khôi phục)",
-    "Watchdog 4.5s tự làm mới luồng nếu mạng CDN bị nghẽn"
+    "Nâng cấp sân khấu AutoMix tương lai 60fps: sóng lượng tử, hạt ánh sáng & vòng gyroscope hiển thị % mix",
+    "Thanh tua thời gian mới mượt 120fps (SmoothSeekBar GPU, hết giật lag & nhảy ngược khi kéo)",
+    "Giữ nguyên tốc độ phát HLS tức thì, vá thời lượng 9s-10s & Liquid Glass 120fps"
   ],
   "downloads": {
-    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.10/Harune-Setup-1.2.10.exe",
-    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.10/Harune-Portable-1.2.10.exe",
+    "windows_installer": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.11/Harune-Setup-1.2.11.exe",
+    "windows_portable": "https://github.com/Haruki070909/haruki-legal/releases/download/v1.2.11/Harune-Portable-1.2.11.exe",
     "web_app": "https://haruki070909.github.io/haruki-legal/harune/"
   }
 }
